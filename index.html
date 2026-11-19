@@ -1,0 +1,2765 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f7fd8'/%3E%3Cpath d='M18 40l9-16 8 12 5-7 6 11z' fill='white'/%3E%3C/svg%3E">
+  <title>VK Free Farm — лимиты и очередь бесплатной накрутки</title>
+<style>
+/* ============================ дизайн-токены ============================ */
+:root{
+  /* светлая тема — по умолчанию */
+  --bg:#f4f6fb; --bg2:#ffffff; --bg3:#f1f4f9; --bg4:#fafbfe;
+  --line:#e5eaf2; --line2:#eef2f8;
+  --txt:#0f1724; --dim:#66748b;
+  --acc:#2563eb; --acc-h:#1d55d0; --acc-soft:#eaf1ff;
+  --ok:#0e9f6e; --ok-soft:#e8f8f1; --ok-line:#b9e7d5;
+  --warn:#b46a06; --warn-soft:#fdf4e6; --warn-line:#f2dcb6;
+  --err:#d92d3c; --err-soft:#fdecee; --err-line:#f7c8cd;
+  --vk:#4c75a3;
+  --r:16px; --r-sm:10px;
+  --sh1:0 1px 2px rgba(16,24,40,.05), 0 1px 3px rgba(16,24,40,.04);
+  --sh2:0 8px 24px rgba(16,24,40,.09);
+  --sh3:0 28px 70px rgba(16,24,40,.20);
+  --ring:0 0 0 3px rgba(37,99,235,.15);
+  --hl:#f7f9fd;
+}
+body[data-theme="dark"]{
+  --bg:#0e1116; --bg2:#151a22; --bg3:#1b222c; --bg4:#11161d;
+  --line:#252d3a; --line2:#1e2531;
+  --txt:#e7ebf3; --dim:#8b95a8;
+  --acc:#5b8cff; --acc-h:#4a7bf0; --acc-soft:rgba(91,140,255,.16);
+  --ok:#3ecf8e; --ok-soft:rgba(62,207,142,.14); --ok-line:rgba(62,207,142,.42);
+  --warn:#e8b34b; --warn-soft:rgba(232,179,75,.14); --warn-line:rgba(232,179,75,.42);
+  --err:#ef6a6a; --err-soft:rgba(239,106,106,.14); --err-line:rgba(239,106,106,.42);
+  --sh1:0 1px 2px rgba(0,0,0,.25); --sh2:0 10px 28px rgba(0,0,0,.45);
+  --sh3:0 24px 60px rgba(0,0,0,.55);
+  --ring:0 0 0 3px rgba(91,140,255,.25);
+  --hl:rgba(255,255,255,.03);
+}
+
+/* ============================ база ============================ */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--txt);
+  font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--acc);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{margin:0}
+::selection{background:rgba(37,99,235,.18)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#cfd8e6;border-radius:99px;border:2px solid transparent;background-clip:content-box}
+body[data-theme="dark"] ::-webkit-scrollbar-thumb{background:#333d4d;background-clip:content-box}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ============================ кнопки, поля ============================ */
+button{
+  font:inherit; cursor:pointer; border-radius:var(--r-sm); border:1px solid var(--line);
+  background:var(--bg2); color:var(--txt); padding:7px 13px; transition:background .15s,border-color .15s,box-shadow .15s,transform .08s;
+  box-shadow:var(--sh1);
+}
+button:hover{background:var(--hl);border-color:#d3dbe8}
+body[data-theme="dark"] button:hover{border-color:#3a4a63;background:#222b38}
+button:active{transform:translateY(.5px)}
+button:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+button.primary{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600;box-shadow:0 1px 2px rgba(37,99,235,.3)}
+button.primary:hover{background:var(--acc-h);border-color:var(--acc-h)}
+button.primary:disabled{background:var(--acc);opacity:.45}
+button.ok{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok);font-weight:600}
+button.danger{background:var(--err-soft);border-color:var(--err-line);color:var(--err)}
+button.small{padding:4px 10px;font-size:12.5px;border-radius:8px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:none;box-shadow:var(--ring)}
+input,select{
+  background:var(--bg2); border:1px solid var(--line); color:var(--txt); border-radius:var(--r-sm);
+  padding:8px 11px; font:inherit; width:100%; transition:border-color .15s,box-shadow .15s;
+}
+input::placeholder{color:#9aa7ba}
+input:focus,select:focus{outline:none;border-color:var(--acc);box-shadow:var(--ring)}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--dim) 50%),linear-gradient(135deg,var(--dim) 50%,transparent 50%);
+  background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:30px}
+
+/* ============================ шапка ============================ */
+header{
+  position:sticky; top:0; z-index:20; border-bottom:1px solid var(--line);
+  background:color-mix(in srgb, var(--bg2) 88%, transparent);
+  backdrop-filter:saturate(180%) blur(12px);
+}
+body[data-theme="dark"] header{background:rgba(14,17,22,.9)}
+.hd{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:12px 22px;max-width:1440px;margin:0 auto}
+.logo{display:flex;gap:10px;align-items:center;font-weight:800;font-size:16px;letter-spacing:-.01em}
+.logo .dot{width:10px;height:10px;border-radius:3px;display:inline-block;box-shadow:0 0 0 3px var(--acc-soft)}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto;align-items:center}
+.badge{
+  display:flex;gap:6px;align-items:center;background:var(--bg2);border:1px solid var(--line);
+  border-radius:999px;padding:4px 11px;font-size:12px;color:var(--dim);box-shadow:var(--sh1);white-space:nowrap;
+}
+.badge b{color:var(--txt);font-weight:650}
+/* ---------- цели: «сколько и за какой срок» ---------- */
+.gl-metric{display:grid;grid-template-columns:1.4fr .8fr .8fr 34px;gap:8px;align-items:center;margin-bottom:8px}
+.gl-metric select,.gl-metric input{width:100%}
+.gl-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px}
+.gl-badge{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600}
+.gl-badge.ok{background:#e9f8ef;color:#177245;border:1px solid #c6e9d5}
+.gl-badge.warn{background:#fdf6e7;color:#8a5a06;border:1px solid #f0dcb4}
+.gl-badge.err{background:#fdeef0;color:#a3283c;border:1px solid #f4cdd4}
+.gl-badge.dim{background:#f2f5f9;color:#5d6b7a;border:1px solid #dfe5ec}
+.gl-metric-line{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;padding:8px 0;border-bottom:1px dashed #e7ecf3}
+.gl-metric-line:last-child{border-bottom:0}
+.gl-big{font-size:19px;font-weight:700;letter-spacing:-.2px}
+.gl-bar{height:9px;border-radius:99px;background:#eef2f8;overflow:hidden;margin:7px 0 4px}
+.gl-bar > i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#5aa9f2,#2f7fd8)}
+.gl-card{border:1px solid #e7ecf3;border-radius:14px;padding:13px 15px;margin-bottom:11px;background:#fff}
+.gl-card .top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.gl-card .top b{font-size:15px}
+.gl-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+
+nav{display:flex;gap:4px;overflow-x:auto;padding:0 18px 10px;max-width:1440px;margin:0 auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{
+  background:transparent;border:1px solid transparent;color:var(--dim);padding:8px 14px;white-space:nowrap;
+  border-radius:999px;box-shadow:none;font-weight:500;
+}
+nav button:hover{background:var(--bg3);color:var(--txt);border-color:transparent}
+nav button.active{background:var(--acc-soft);border-color:transparent;color:var(--acc);font-weight:650}
+
+/* ============================ раскладка ============================ */
+.wrap{max-width:1440px;margin:0 auto;padding:20px 22px 70px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:16px 0}
+.card{
+  background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;
+  box-shadow:var(--sh1);transition:box-shadow .18s,transform .18s;
+}
+.card:hover{box-shadow:var(--sh2);transform:translateY(-1px)}
+.card .k{font-size:11.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.card .v{font-size:26px;font-weight:750;margin-top:6px;letter-spacing:-.02em}
+.card .s{font-size:12px;color:var(--dim);margin-top:3px}
+.panel{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:16px;box-shadow:var(--sh1)}
+.panel h2{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px;font-weight:700;letter-spacing:-.01em}
+.panel h2 .sub{font-weight:400;color:var(--dim);font-size:12.5px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:960px){.grid2{grid-template-columns:1fr}}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.field{display:flex;flex-direction:column;gap:6px;min-width:150px}
+.field label{font-size:12px;color:var(--dim);font-weight:600}
+.hint{font-size:12px;color:var(--dim);margin-top:4px}
+.note{font-size:12.5px;color:var(--dim);line-height:1.55}
+.muted{color:var(--dim)}
+.right{text-align:right}
+.mono{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.empty{padding:34px 20px;text-align:center;color:var(--dim);font-size:13px}
+
+/* ============================ таблица ============================ */
+.tbl-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--bg2)}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line2);vertical-align:middle}
+th{
+  color:var(--dim);font-weight:650;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  position:sticky;top:0;background:var(--bg4);z-index:2;border-bottom:1px solid var(--line);
+}
+body[data-theme="dark"] th{background:var(--bg3)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:var(--hl)}
+td b{font-weight:650}
+
+/* ============================ метки ============================ */
+.tag{
+  display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:600;
+  border:1px solid var(--line);color:var(--dim);background:var(--bg3);white-space:nowrap;
+}
+.tag.vk{color:#3d6591;border-color:#d6e2f0;background:#eef3fa}
+.tag.t-followers{color:#1f6fb2;border-color:#cfe4f5;background:#eef7fd}
+.tag.t-likes{color:#b83b63;border-color:#f7d5e0;background:#fdf1f5}
+.tag.t-views{color:#6b4fc4;border-color:#e0d8f8;background:#f5f2fd}
+.tag.t-plays{color:#0e8a72;border-color:#c8ece2;background:#eefaf6}
+.tag.t-friends{color:#16704f;border-color:#cbe9da;background:#effaf4}
+.tag.t-reposts,.tag.t-comments{color:#8a5a06;border-color:#f2dcb6;background:#fdf6e9}
+.tag.sub-community{color:#1b6b4c;border-color:#c6e7d6;background:#eef9f3}
+.tag.sub-person{color:#9a4b12;border-color:#f3dcc4;background:#fdf4ea}
+.tag.sub-post{color:#5b4a8f;border-color:#ded7f4;background:#f4f1fd}
+.tag.sub-any{color:#5d6b7a;border-color:#dfe5ec;background:#f3f6f9}
+body[data-theme="dark"] .tag.sub-community{color:#9fe6c8;border-color:#2c5745;background:rgba(60,190,140,.1)}
+body[data-theme="dark"] .tag.sub-person{color:#f0bd8a;border-color:#5d4426;background:rgba(220,150,60,.1)}
+body[data-theme="dark"] .tag.sub-post{color:#c0b3ff;border-color:#3f3566;background:rgba(140,120,255,.1)}
+body[data-theme="dark"] .tag.sub-any{color:#9fb0c2;border-color:#33414f;background:rgba(140,160,180,.1)}
+.chip.nofit{opacity:.5;border-style:dashed}
+/* --- навигация: главное крупно, «для профи» мелко --- */
+nav button.hot{font-size:15px;padding:9px 18px}
+nav button.hot.active{background:var(--acc);color:#fff;box-shadow:0 4px 12px rgba(53,111,214,.28);font-weight:700}
+nav button[data-tab="dash"],nav button[data-tab="targets"],nav button[data-tab="catalog"],
+nav button[data-tab="log"],nav button[data-tab="settings"]{font-size:13px;opacity:.85}
+.navsep{align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);opacity:.6;padding:0 6px 0 10px;border-left:1px solid var(--line2);margin-left:6px}
+.navbadge{display:inline-block;min-width:16px;padding:0 5px;border-radius:8px;background:var(--acc);color:#fff;font-size:11px;font-weight:700;line-height:16px;text-align:center}
+.navbadge:empty{display:none}
+/* --- мастер накрутки --- */
+.wz-step{display:flex;gap:14px;padding:18px 0;border-bottom:1px solid var(--line)}
+.wz-step:last-child{border-bottom:none;padding-bottom:4px}
+.wz-num{flex:0 0 34px;height:34px;border-radius:50%;background:var(--acc-soft);color:var(--acc);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px}
+.wz-step.done .wz-num{background:var(--ok-soft);color:var(--ok)}
+.wz-body{flex:1;min-width:0}
+.wz-title{font-weight:700;font-size:15px;margin-bottom:8px}
+.wz-sub{font-size:13px;color:var(--dim);margin-bottom:10px}
+.pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.pickcard{border:1.5px solid var(--line2);border-radius:var(--r-sm);padding:12px 14px;cursor:pointer;background:var(--bg2);transition:.15s;position:relative}
+.pickcard:hover{border-color:var(--acc);transform:translateY(-1px);box-shadow:var(--sh2)}
+.pickcard.on{border-color:var(--acc);background:var(--acc-soft)}
+.pickcard .pc-name{font-weight:650;margin-bottom:3px}
+.pickcard .pc-url{font-size:11.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pickcard .pc-chips{margin-top:7px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.wzgroup-title{margin:16px 0 8px;font-weight:700;font-size:14px;display:flex;gap:8px;align-items:center}
+.svcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.svccard{border:1px solid var(--line2);border-radius:var(--r-sm);padding:14px;background:var(--bg2);display:flex;flex-direction:column;gap:8px}
+.svccard.off{opacity:.62}
+.svccard .sc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.svccard .sc-gives{font-weight:750;font-size:15px}
+.svccard .sc-site{font-size:12.5px;color:var(--dim)}
+.svccard .sc-note{font-size:12px;color:var(--dim);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.svccard button{width:100%}
+.wz-run{border:1.5px solid var(--acc);border-radius:var(--r);padding:18px;background:var(--acc-soft)}
+.wz-run h3{margin:0 0 4px;font-size:16px}
+.wz-steps{counter-reset:st;margin:12px 0;padding:0;list-style:none}
+.wz-steps li{counter-increment:st;position:relative;padding:7px 0 7px 34px;font-size:14px}
+.wz-steps li:before{content:counter(st);position:absolute;left:0;top:5px;width:22px;height:22px;border-radius:50%;
+  background:#fff;border:1.5px solid var(--acc);color:var(--acc);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+.wz-timer{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.onboard{display:flex;gap:14px;align-items:center;background:linear-gradient(90deg,var(--acc-soft),transparent);
+  border:1px solid var(--line2);border-radius:var(--r);padding:14px 16px;margin-bottom:14px}
+.onboard .ob-steps{display:flex;gap:18px;flex-wrap:wrap;font-size:13.5px}
+.onboard b{color:var(--acc)}
+.chip.nofit.on{opacity:.75}
+.kindsel{font-size:12px;padding:5px 6px;border-radius:8px;border:1px solid var(--line2);background:var(--bg2);color:var(--txt);width:178px;flex:0 0 178px;max-width:178px}
+.subjnote{font-size:12px;color:var(--dim);margin-top:4px}
+.tag.ok{color:var(--ok);border-color:var(--ok-line);background:var(--ok-soft)}
+.tag.warn{color:var(--warn);border-color:var(--warn-line);background:var(--warn-soft)}
+.tag.err{color:var(--err);border-color:var(--err-line);background:var(--err-soft)}
+.tag.dim{opacity:.75}
+body[data-theme="dark"] .tag.vk{color:#9db8dd;border-color:#2f4560;background:rgba(81,129,184,.12)}
+body[data-theme="dark"] .tag.t-followers{color:#8fd3ff;border-color:#274b63;background:rgba(78,170,220,.1)}
+body[data-theme="dark"] .tag.t-likes{color:#ffa8b8;border-color:#5d2c3a;background:rgba(220,90,120,.1)}
+body[data-theme="dark"] .tag.t-views{color:#c0b3ff;border-color:#3f3566;background:rgba(140,120,255,.1)}
+body[data-theme="dark"] .tag.t-plays{color:#9fe6c8;border-color:#2c5745;background:rgba(60,190,140,.1)}
+body[data-theme="dark"] .tag.t-friends{color:#9fe6c8;border-color:#2c5745;background:rgba(60,190,140,.1)}
+body[data-theme="dark"] .tag.t-reposts,body[data-theme="dark"] .tag.t-comments{color:#e8c987;border-color:#5c4a22;background:rgba(220,170,60,.1)}
+
+/* ============================ баннеры, предупреждения ============================ */
+.banner{
+  border:1px solid var(--line);border-left:4px solid var(--acc);background:var(--acc-soft);
+  border-radius:12px;padding:11px 15px;font-size:13px;color:var(--txt);margin-bottom:16px;line-height:1.55;
+}
+.banner.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+.warnbox{
+  background:var(--warn-soft);border:1px solid var(--warn-line);color:#7a4a05;border-radius:12px;
+  padding:11px 14px;margin-bottom:14px;font-size:13px;line-height:1.55;
+}
+body[data-theme="dark"] .warnbox{color:#f2d79b}
+body[data-theme="dark"] .banner{color:#c7d2e8}
+
+/* ============================ модальные окна ============================ */
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.42);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px;z-index:60}
+body[data-theme="dark"] .modal{background:rgba(0,0,0,.62)}
+.modal.on{display:flex;animation:fade .16s ease-out}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal .box{
+  background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:24px;
+  max-width:640px;width:100%;box-shadow:var(--sh3);animation:pop .18s cubic-bezier(.2,.8,.3,1);
+}
+@keyframes pop{from{transform:scale(.97) translateY(6px);opacity:0}to{transform:none;opacity:1}}
+.modal .box.wide{max-width:680px}
+.copybox{display:flex;gap:8px;margin:10px 0}
+.copybox input{font-size:13px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.grid-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+@media(max-width:640px){.grid-fields{grid-template-columns:1fr}}
+.timer{font-size:36px;font-weight:750;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.timer.warn{color:var(--warn)} .timer.ok{color:var(--ok)}
+
+/* ============================ прочее ============================ */
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:5px 11px;border:1px solid var(--line);border-radius:999px;font-size:12.5px;color:var(--dim);cursor:pointer;user-select:none;background:var(--bg2)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+
+.btn-fullauto{
+  background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700;padding:10px 18px;border-radius:10px;
+  box-shadow:0 4px 12px rgba(37,99,235,.35);font-size:14px;
+}
+.btn-fullauto:hover{background:var(--acc-h);box-shadow:0 6px 16px rgba(37,99,235,.45)}
+.btn-fullauto:active{transform:translateY(1px)}
+.chip.on{background:var(--acc-soft);border-color:transparent;color:var(--acc);font-weight:600}
+.ev{display:grid;grid-template-columns:78px 64px 1fr;gap:10px;padding:8px 6px;border-bottom:1px solid var(--line2);font-size:12.5px;border-radius:6px}
+.ev:hover{background:var(--hl)}
+.ev .lv{text-transform:uppercase;font-size:10.5px;letter-spacing:.06em;padding-top:2px;font-weight:700}
+.lv.info{color:var(--acc)} .lv.warn{color:var(--warn)} .lv.error{color:var(--err)}
+.toast{
+  position:fixed;right:20px;bottom:20px;background:var(--bg2);border:1px solid var(--line);border-left:4px solid var(--acc);
+  border-radius:12px;padding:13px 17px;max-width:430px;font-size:13px;z-index:80;box-shadow:var(--sh2);display:none;
+}
+.toast.on{display:block;animation:pop .18s ease-out}
+.toast.err{border-left-color:var(--err)} .toast.ok{border-left-color:var(--ok)}
+.kbd{background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:11.5px;font-family:ui-monospace,Menlo,Consolas,monospace}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin-top:8px}
+
+/* ============================ переключатель режимов ============================ */
+.modesw{
+  display:inline-flex;background:var(--bg3);border:1px solid var(--line);border-radius:999px;padding:4px;gap:3px;
+}
+.modesw button{
+  background:transparent;border:0;color:var(--dim);padding:6px 15px;border-radius:999px;font-size:13px;
+  cursor:pointer;white-space:nowrap;box-shadow:none;font-weight:550;
+}
+.modesw button:hover{color:var(--txt);background:transparent}
+.modesw button.active{background:var(--bg2);color:var(--acc);font-weight:700;box-shadow:0 1px 3px rgba(16,24,40,.14)}
+.modesw button.active[data-mode="nocaptcha"]{color:var(--ok)}
+.modesw button.active[data-mode="captcha"]{color:var(--warn)}
+
+/* ============================ капча ============================ */
+.cap{display:inline-flex;gap:6px;align-items:center}
+.cap button{
+  border:1px solid var(--line);background:var(--bg2);color:var(--dim);border-radius:999px;
+  padding:3px 10px;font-size:11.5px;cursor:pointer;box-shadow:none;font-weight:600;
+}
+.cap button:hover{border-color:#cfd8e6}
+.cap button.on-yes{background:var(--err-soft);border-color:var(--err-line);color:var(--err)}
+.cap button.on-no{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok)}
+.cap button.on-unk{background:var(--bg3);border-color:var(--line);color:var(--dim)}
+.capchip{
+  border:1px solid var(--line);background:var(--bg3);color:var(--dim);border-radius:999px;
+  padding:3px 11px;font-size:11.5px;font-weight:650;cursor:pointer;box-shadow:none;min-width:52px;text-align:center;
+}
+.capchip:hover{border-color:#cfd8e6;background:var(--hl)}
+.capchip.yes{background:var(--err-soft);border-color:var(--err-line);color:var(--err)}
+.capchip.no{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok)}
+
+/* ============================ тумблеры ============================ */
+.switch{display:inline-flex;align-items:center;gap:9px;cursor:pointer;user-select:none;font-size:13px}
+.switch input{display:none}
+.switch .tr{
+  width:40px;height:23px;border-radius:999px;background:#dde3ec;border:1px solid var(--line);
+  position:relative;transition:background .18s,border-color .18s;flex:none;
+}
+body[data-theme="dark"] .switch .tr{background:#2c3546}
+.switch .tr:after{
+  content:"";position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;
+  background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.25);transition:left .18s;
+}
+.switch input:checked + .tr{background:var(--ok);border-color:var(--ok)}
+.switch input:checked + .tr:after{left:19px}
+.toolbar{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:12px}
+.manualmark{display:inline-flex;color:var(--warn);vertical-align:-2px}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <div class="logo"><span class="dot" style="background:var(--vk)"></span> VK Free Farm</div>
+    <div class="modesw" id="mode-switch" title="Какие сайты трогать: все, только без капчи (полный автомат) или только с капчей (с вашим участием)">
+      <button data-mode="all" onclick="setMode('all')">Все сайты</button>
+      <button data-mode="nocaptcha" onclick="setMode('nocaptcha')">Без капчи</button>
+      <button data-mode="captcha" onclick="setMode('captcha')">С капчей</button>
+    </div>
+    <div class="badges" id="badges"></div>
+    <button class="btn-fullauto" onclick="openFullAuto()" title="Полная автоматизация: ссылка → количество → софт крутит сам">FULL AUTO MODE</button>
+  </div>
+  <nav id="nav">
+    <button data-tab="wizard" class="active hot">Накрутить</button>
+    <button data-tab="goals" class="hot">Цели</button>
+    <button data-tab="queue" class="hot">Очередь <span id="nav-queue-n" class="navbadge"></span></button>
+    <span class="navsep">для профи</span>
+    <button data-tab="dash">Сводка</button>
+    <button data-tab="targets">Ссылки</button>
+    <button data-tab="catalog">Все услуги</button>
+    <button data-tab="platforms">Площадки</button>
+    <button data-tab="log">Журнал</button>
+    <button data-tab="settings">Настройки</button>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div id="error-bar"></div>
+
+  <!-- ================= ДАШБОРД ================= -->
+  <section id="tab-dash" style="display:none">
+    <div id="dash-mode"></div>
+    <div class="cards" id="dash-cards"></div>
+
+    <div class="grid2">
+      <div class="panel">
+        <h2>Быстрый запуск <span class="sub">выбери ссылку, тип и объём — задачи встанут в очередь по таймерам</span></h2>
+        <div class="field" style="margin-bottom:10px">
+          <label>Куда крутить</label>
+          <select id="plan-target" onchange="onPlanTargetChange()"></select>
+        </div>
+        <div class="field" style="margin-bottom:10px">
+          <label>Площадка</label>
+          <select id="plan-platform"></select>
+        </div>
+        <div class="field" style="margin-bottom:10px">
+          <label>Тип накрутки (можно несколько)</label>
+          <div class="chips" id="plan-types"></div>
+        </div>
+        <div class="row" style="margin-bottom:12px">
+          <div class="field" style="width:180px">
+            <label>Заходов на каждую услугу</label>
+            <input id="plan-claims" type="number" min="1" max="50" value="1">
+          </div>
+          <button class="primary" onclick="planSelected()">Спланировать</button>
+          <button onclick="runNext()">Крутить ближайшее</button>
+        </div>
+        <div class="note" id="plan-hint">Выбери типы — программа сложит бесплатные лимиты всех сайтов и покажет, сколько получится за сутки.</div>
+      </div>
+
+      <div class="panel">
+        <h2>Что можно взять сегодня <span class="sub">остаток с учётом уже сделанного</span></h2>
+        <div class="tbl-wrap" style="max-height:320px">
+          <table><thead><tr><th>Площадка</th><th>Тип</th><th class="right">Сделано</th><th class="right">Остаток</th><th class="right">Сайтов</th></tr></thead>
+          <tbody id="dash-types"></tbody></table>
+        </div>
+        <div class="note" style="margin-top:8px">Остаток — теоретический максимум по опубликованным лимитам. Реально успеть всё можно только вручную по таймерам.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Готово к запуску сейчас <span class="sub">кулдаун прошёл, лимит не исчерпан</span></h2>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Сайт</th><th>Площадка</th><th>Услуга</th><th class="right">За заход</th><th class="right">Осталось сегодня</th><th>Режим</th><th></th></tr></thead>
+          <tbody id="dash-ready"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ================= НАКРУТИТЬ (мастер для новичка) ================= -->
+  <section id="tab-wizard">
+    <div id="wz-onboard"></div>
+    <div class="panel">
+      <div class="wz-step" id="wz-step-1">
+        <div class="wz-num">1</div>
+        <div class="wz-body">
+          <div class="wz-title">Куда накручиваем</div>
+          <div class="wz-sub">Выберите ссылку. Если её ещё нет — вставьте адрес, программа сама поймёт, сообщество это или личная страница.</div>
+          <div id="wz-pick"></div>
+          <div class="row" style="margin-top:10px">
+            <button class="small" onclick="wzToggleAdd()" id="wz-add-btn">+ Добавить ссылку</button>
+          </div>
+          <div id="wz-add" style="display:none;margin-top:12px;border-top:1px dashed var(--line2);padding-top:12px">
+            <div class="row" style="align-items:flex-end;flex-wrap:wrap">
+              <div class="field" style="flex:1;min-width:260px"><label>Ссылка</label>
+                <input id="wz-url" placeholder="https://vk.com/moj_pablik" oninput="wzDetect()"></div>
+              <div class="field" style="width:170px"><label>Площадка</label><select id="wz-platform" onchange="wzDetect()"></select></div>
+              <div class="field" style="width:210px"><label>Что это</label>
+                <select id="wz-kind" onchange="wzKindHint()">
+                  <option value="auto">Определить по ссылке</option>
+                  <option value="community">Сообщество</option>
+                  <option value="person">Личная страница</option>
+                  <option value="post">Запись</option>
+                </select></div>
+              <div class="field" style="width:190px"><label>Название (не обязательно)</label>
+                <input id="wz-name" placeholder="Мой паблик"></div>
+              <button class="primary" onclick="wzAddTarget()">Добавить</button>
+            </div>
+            <div class="subjnote" id="wz-kind-hint">Вставьте ссылку — тип определится сам.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wz-step" id="wz-step-2">
+        <div class="wz-num">2</div>
+        <div class="wz-body">
+          <div class="wz-title">Что накрутить</div>
+          <div class="wz-sub" id="wz-what-sub">Сначала выберите ссылку выше.</div>
+          <div id="wz-groups"></div>
+        </div>
+      </div>
+
+      <div class="wz-step" id="wz-step-3" style="display:none">
+        <div class="wz-num">3</div>
+        <div class="wz-body">
+          <div class="wz-title">Сделайте заход</div>
+          <div id="wz-run"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= КАТАЛОГ ================= -->
+  <section id="tab-catalog" style="display:none">
+    <div class="banner">
+      Все лимиты — из публичных условий сервисов на 09.11.2026. Метка <b>✓</b> — цифры подтверждены на сайте, <b>≈</b> — из обзоров.
+      Любой кулдаун, объём и лимит можно поменять вручную (кнопка с карандашом): сайты меняют правила молча, а очередь пересчитается сама.<br>
+      Колонка <b>«Объект»</b> — что именно крутит услуга: <b>сообщество</b> (группа/паблик), <b>личная страница</b> человека или конкретная <b>запись</b>.
+      «Любой объект» значит, что сервис не разделяет и принимает и группы, и страницы.
+    </div>
+    <div id="cat-mode-warn"></div>
+    <div class="panel">
+      <div class="row" style="margin-bottom:12px">
+        <div class="field" style="min-width:220px"><label>Поиск</label><input id="cat-q" placeholder="сайт или услуга" oninput="render()"></div>
+        <div class="field"><label>Площадка</label><select id="cat-platform" onchange="render()"></select></div>
+        <div class="field"><label>Тип</label><select id="cat-type" onchange="render()"></select></div>
+        <div class="field"><label>Объект</label><select id="cat-subject" onchange="render()">
+          <option value="">любой</option>
+          <option value="community">сообщество</option>
+          <option value="person">личная страница</option>
+          <option value="post">запись</option>
+          <option value="any">не разделяет</option>
+        </select></div>
+        <div class="field"><label>Сайт</label><select id="cat-site" onchange="render()"></select></div>
+        <div class="field"><label>Капча</label><select id="cat-captcha" onchange="render()">
+          <option value="">любая</option>
+          <option value="0">нет капчи</option>
+          <option value="1">есть капча</option>
+          <option value="-1">не проверено</option>
+        </select></div>
+        <label class="switch" style="margin-left:auto"><input type="checkbox" id="cat-enabled" onchange="render()"><span class="tr"></span> только включённые</label>
+        <label class="switch"><input type="checkbox" id="cat-ready" onchange="render()"><span class="tr"></span> только готовые</label>
+      </div>
+      <div id="cat-site-panel"></div>
+      <div class="tbl-wrap" style="max-height:none">
+        <table>
+          <thead><tr>
+            <th>Сайт</th><th>Площадка</th><th>Тип</th><th>Объект</th><th>Услуга</th>
+            <th class="right">За заход</th><th class="right">Кулдаун</th><th>Капча</th>
+            <th class="right">Сделано сегодня</th><th class="right">Осталось</th>
+            <th>Следующее окно</th><th>Статус</th><th></th>
+          </tr></thead>
+          <tbody id="cat-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ССЫЛКИ ================= -->
+  <section id="tab-targets" style="display:none">
+    <div class="grid2">
+      <div class="panel">
+        <h2>Добавить ссылку</h2>
+        <div class="field" style="margin-bottom:10px"><label>Название</label><input id="tg-name" placeholder="Например: Паблик «Кофейня»"></div>
+        <div class="field" style="margin-bottom:10px"><label>Площадка</label><select id="tg-platform"></select></div>
+        <div class="field" style="margin-bottom:10px"><label>Ссылка</label><input id="tg-url" placeholder="https://vk.com/…" oninput="detectKind()" onblur="detectKind()"></div>
+        <div class="field" style="margin-bottom:10px">
+          <label>Что это за объект</label>
+          <select id="tg-kind" onchange="kindHintFromSelect()">
+            <option value="auto">Определить по ссылке (если получится)</option>
+            <option value="community">Сообщество — группа, паблик, встреча</option>
+            <option value="person">Личная страница человека</option>
+            <option value="post">Запись, фото, видео, трек</option>
+          </select>
+          <div class="subjnote" id="tg-kind-hint">Подписчики на сообщество и на личную страницу — разные услуги. Тип нужно указать, чтобы не гнать заходы не туда.</div>
+        </div>
+        <button class="primary" onclick="addTarget()">Сохранить</button>
+        <div class="note" style="margin-top:10px">Пароль нигде не запрашивается и не хранится — только публичная ссылка.</div>
+      </div>
+      <div class="panel">
+        <h2>Мои ссылки <span class="sub" id="tg-count"></span></h2>
+        <div id="tg-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ЦЕЛИ ================= -->
+  <section id="tab-goals" style="display:none">
+    <div class="grid2">
+      <div class="panel">
+        <h2>Что нужно получить</h2>
+        <div class="field" style="margin-bottom:10px">
+          <label>Куда</label>
+          <select id="gl-target"></select>
+          <div class="subjnote" id="gl-kind-hint">Ссылка на пост — лайки, просмотры, репосты. Ссылка на сообщество или профиль — подписчики и друзья.</div>
+        </div>
+
+        <div id="gl-metrics"></div>
+        <button class="small" onclick="glAddRow()" style="margin-bottom:14px">＋ ещё метрика</button>
+
+        <div class="gl-row">
+          <div class="field" style="margin:0;width:120px">
+            <label>Срок</label>
+            <input id="gl-term" type="number" min="1" value="2">
+          </div>
+          <div class="field" style="margin:0;width:150px">
+            <label>&nbsp;</label>
+            <select id="gl-term-unit">
+              <option value="days" selected>дней</option>
+              <option value="hours">часов</option>
+            </select>
+          </div>
+          <div class="field" style="margin:0;flex:1;min-width:170px">
+            <label>Темп</label>
+            <select id="gl-pace">
+              <option value="human" selected>по-человечески — 1–3 захода в час</option>
+              <option value="quiet">потише — 2–3 захода в час с паузами</option>
+              <option value="max">на максимум — быстро, но заметнее</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <button class="primary" onclick="glPreview()">Посчитать</button>
+          <button id="gl-detect" onclick="glDetect(false)">Определить «уже есть»</button>
+          <button onclick="glReset()">Сбросить</button>
+        </div>
+        <div class="note" style="margin-top:10px">Поля «уже есть» можно оставить пустыми: при создании цели софт сам снимет актуальные значения с ВК и зафиксирует их как точку отсчёта прироста. Ничего не начнётся, пока вы не нажмёте «Запустить цель».</div>
+      </div>
+
+      <div class="panel">
+        <h2>Что получится <span class="sub" id="gl-verdict"></span></h2>
+        <div id="gl-result"><div class="note">Заполните, сколько нужно, и нажмите «Посчитать». Софт проверит, сколько успеют бесплатные площадки.</div></div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:14px">
+      <h2>Мои цели <span class="sub" id="gl-count"></span></h2>
+      <div id="gl-list"><div class="note">Пока целей нет.</div></div>
+    </div>
+  </section>
+
+  <!-- ================= ПЛОЩАДКИ ================= -->
+  <section id="tab-platforms" style="display:none">
+    <div class="panel">
+      <h2 style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        Площадки: что реально работает
+        <span class="sub" id="pf-summary"></span>
+        <span style="flex:1"></span>
+        <button class="small" onclick="pfCheckAll()" id="pf-check-all">Проверить все</button>
+      </h2>
+      <div id="pf-browsers" class="note" style="margin-bottom:12px"></div>
+      <div id="pf-robot-box" style="display:none;margin-bottom:12px"></div>
+      <div class="note" style="margin-bottom:12px">
+        Каждая площадка проверяется сама: софт открывает страницу заказа и смотрит, на месте ли поле для
+        ссылки, кнопка и не появилась ли капча. Если форма изменилась — площадка выключается из планов,
+        чтобы заходы не улетали в пустоту.
+      </div>
+      <div class="legend" style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;font-size:13px">
+        <span><span class="tag ok">A</span> полный автопилот — форма простая, без капчи</span>
+        <span><span class="tag warn">B</span> автопилот с ожиданием — есть таймер/очередь</span>
+        <span><span class="tag dim">C</span> нужен браузер и человек на капче</span>
+      </div>
+      <div id="pf-list"></div>
+    </div>
+  </section>
+
+  <!-- ================= ОЧЕРЕДЬ ================= -->
+  <section id="tab-queue" style="display:none">
+    <div class="panel">
+      <h2>Активные задачи <span class="sub">таймеры считаются по серверному времени</span></h2>
+      <div class="tbl-wrap" style="max-height:none">
+        <table>
+          <thead><tr><th>#</th><th>Сайт</th><th>Услуга</th><th>Ссылка</th><th class="right">Единиц</th>
+            <th>Статус</th><th>Таймер</th><th></th></tr></thead>
+          <tbody id="queue-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ЖУРНАЛ ================= -->
+  <section id="tab-log" style="display:none">
+    <div class="panel">
+      <h2>Журнал <span class="sub">последние 200 событий</span></h2>
+      <div id="log-body"></div>
+    </div>
+  </section>
+
+  <!-- ================= НАСТРОЙКИ ================= -->
+  <section id="tab-settings" style="display:none">
+    <div class="grid2">
+      <div class="panel">
+        <h2>Предохранители</h2>
+        <div class="row" style="margin-bottom:14px">
+          <label class="switch"><input type="checkbox" id="st-full_auto" onchange="quickSetting('full_auto', this.checked)"><span class="tr"></span> Полная автоматизация: последовательно и с проверкой прироста</label>
+        </div>
+        <div class="hint" id="counter-status" style="margin:-4px 0 14px 2px">Только подписчики сообществ ВК с числовой ссылкой. Используется публичный счётчик ВК; прочие метрики в этом режиме не запускаются. Автопилот должен быть включён. Капчи и ошибки сайта могут потребовать человека.</div>
+        <div class="row" style="margin-bottom:14px">
+          <label class="switch"><input type="checkbox" id="st-autopilot" onchange="quickSetting('autopilot', this.checked)"><span class="tr"></span> Автопилот — выполнять заходы по расписанию</label>
+        </div>
+        <div class="row" style="margin-bottom:14px">
+          <label class="switch"><input type="checkbox" id="st-auto_open" onchange="quickSetting('auto_open', this.checked)"><span class="tr"></span> Автопилот сам открывает страницы (режим assisted)</label>
+        </div>
+        <div class="row" style="margin-bottom:14px">
+          <label class="switch"><input type="checkbox" id="st-open_browser" onchange="quickSetting('open_browser', this.checked)"><span class="tr"></span> Открывать страницу в браузере</label>
+        </div>
+        <div class="row" style="margin-bottom:14px">
+          <label class="switch"><input type="checkbox" id="st-captcha_browser_visible" onchange="quickSetting('captcha_browser_visible', this.checked)"><span class="tr"></span> Показывать окно браузера (чтобы решать капчу руками)</label>
+        </div>
+        <div class="row" style="margin-bottom:14px">
+          <label class="switch"><input type="checkbox" id="st-dry_run" onchange="quickSetting('dry_run', this.checked)"><span class="tr"></span> Dry-run (ничего не открывать и не отправлять)</label>
+        </div>
+        <div class="row" style="margin-bottom:14px">
+          <label class="switch"><input type="checkbox" id="st-strict_subject" onchange="quickSetting('strict_subject', this.checked)"><span class="tr"></span> Проверять объект: не крутить услугу на неподходящей ссылке</label>
+        </div>
+        <div class="hint" style="margin:-8px 0 14px 2px">Подписчики в сообщество и в личную страницу — разные услуги. С включённой проверкой задача на неподходящий объект просто не создастся.</div>
+        <div class="row" style="margin-bottom:14px">
+          <label class="switch"><input type="checkbox" id="st-dark" onchange="applyTheme(this.checked)"><span class="tr"></span> Тёмная тема (по умолчанию светлая)</label>
+        </div>
+        <div class="row">
+          <div class="field" style="width:150px"><label>Рабочие часы</label><input id="st-work_hours" onchange="quickSetting('work_hours', this.value)" placeholder="8-23"></div>
+          <div class="field" style="width:190px"><label>Мин. интервал, сек</label><input id="st-global_min_gap_sec" onchange="quickSetting('global_min_gap_sec', this.value)" type="number" min="0"></div>
+          <div class="field" style="width:200px"><label>Лимит заходов в сутки (0 = нет)</label><input id="st-daily_total_limit" onchange="quickSetting('daily_total_limit', this.value)" type="number" min="0"></div>
+          <div class="field" style="width:230px"><label>Ждать решения капчи, сек</label><input id="st-captcha_wait_sec" onchange="quickSetting('captcha_wait_sec', this.value)" type="number" min="30" max="3600"><div class="hint">сколько робот держит окно открытым</div></div>
+        </div>
+        <h2 style="margin-top:20px">Робот</h2>
+        <div class="row" style="margin-bottom:12px">
+          <div class="field" style="width:260px">
+            <label>Браузерный движок</label>
+            <select id="st-browser_backend" onchange="quickSetting('browser_backend', this.value)">
+              <option value="auto">авто — лучший доступный</option>
+              <option value="patchright">Patchright — без следов автоматизации</option>
+              <option value="camoufox">Camoufox — Firefox с подменой отпечатка</option>
+              <option value="nodriver">Nodriver — Chrome через CDP</option>
+              <option value="playwright">Playwright — обычный</option>
+            </select>
+          </div>
+          <div class="field" style="width:230px">
+            <label>E-mail для заказов</label>
+            <input id="st-order_email" onchange="quickSetting('order_email', this.value)" placeholder="you@mail.ru">
+            <div class="hint">только для площадок, которые просят e-mail для отчёта</div>
+          </div>
+        </div>
+        <div class="row" style="margin-bottom:10px">
+          <label class="switch"><input type="checkbox" id="st-nojs_enabled" onchange="quickSetting('nojs_enabled', this.checked)"><span class="tr"></span> Пробовать быстрый путь без браузера (простые формы)</label>
+        </div>
+        <h2 style="margin-top:20px">Капчи</h2>
+        <div class="row" style="margin-bottom:10px">
+          <label class="switch"><input type="checkbox" id="st-captcha_autosolve" onchange="quickSetting('captcha_autosolve', this.checked)"><span class="tr"></span> Решать капчи автоматически</label>
+        </div>
+        <div class="row" style="margin-bottom:10px">
+          <label class="switch"><input type="checkbox" id="st-captcha_ocr" onchange="quickSetting('captcha_ocr', this.checked)"><span class="tr"></span> Распознавать капчи с картинки (локальный OCR)</label>
+        </div>
+        <div class="hint" style="margin:-4px 0 12px 2px">
+          Робот пробует чекбокс и локально распознаёт простые текстовые капчи. Успех не гарантирован:
+          сложные задания и защита Cloudflare могут требовать ручного захода. После отказа
+          при видимом окне задача ждёт ручного решения, иначе потребуется ручной заход.
+          Платные сервисы не подключены.
+        </div>
+        <div id="st-solvers" class="note" style="margin-bottom:14px"></div>
+        <div id="st-browsers" class="note" style="margin-bottom:14px"></div>
+        <div style="margin-top:14px"><button class="primary" onclick="saveSettings()">Сохранить</button></div>
+        <div class="note" style="margin-top:12px">Мин. интервал — пауза между любыми заходами, чтобы не долбить сайты и не ловить капчу. Рабочие часы — окно, в которое разрешены запуски.</div>
+      </div>
+      <div class="panel">
+        <h2>Обслуживание</h2>
+        <div class="row" style="margin-bottom:12px">
+          <button onclick="api('/api/catalog/reload','POST',{}).then(t=>{toast('Каталог перезагружен','ok');load()})">Перезагрузить каталог</button>
+          <button onclick="window.location='/api/export'">Экспорт истории CSV</button>
+          <button onclick="location.reload()">Перезагрузить интерфейс</button>
+        </div>
+        <div class="note" style="margin-bottom:12px">Каталог лежит в <span class="kbd">data/catalog.json</span> — можно править руками и перезагружать без перезапуска. База: <span class="kbd">data/app.db</span>, бэкапы раз в сутки в <span class="kbd">data/backups</span>.</div>
+        <h2 style="margin-top:16px">Как это работает</h2>
+        <div class="note">
+          <b>assisted (по умолчанию).</b> Программа копирует вашу ссылку в буфер, открывает точную страницу с бесплатной кнопкой,
+          держит таймер сайта и записывает результат. Финальный клик — ваш: на всех этих сайтах стоят собственные таймеры и проверки,
+          обходить их бессмысленно.<br><br>
+          <b>auto (экспериментальный).</b> Playwright-робот сам ищет поле, вставляет ссылку и жмёт кнопку.
+          Нужно <span class="kbd">pip install playwright &amp;&amp; playwright install chromium</span>.
+          Селекторы эвристические: после 3 неудач сайт отключается на 6 часов, чтобы не тратить время.
+        </div>
+        <div class="note" style="margin-top:12px" id="health-line"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- модалка FULL AUTO MODE -->
+<div class="modal" id="modal-fullauto">
+  <div class="box wide">
+    <div style="display:flex;justify-content:space-between;align-items:start;gap:12px">
+      <div>
+        <h2 style="font-size:18px;margin:0">FULL AUTO MODE</h2>
+        <div class="note" style="margin-top:4px">Ссылка → количество подписчиков → софт крутит сам. Переключает методы при неудачах.</div>
+      </div>
+      <button class="small" onclick="closeFullAuto()">✕</button>
+    </div>
+
+    <div class="grid-fields" style="margin-top:18px">
+      <div class="field">
+        <label>Ссылка на сообщество</label>
+        <input id="fa-link" placeholder="https://vk.ru/club243217731">
+      </div>
+      <div class="field">
+        <label>Цель подписчиков</label>
+        <input id="fa-count" type="number" min="1" max="10000" value="500">
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:14px">
+      <label>Тип ссылки</label>
+      <select id="fa-kind">
+        <option value="community">Сообщество / группа / паблик</option>
+        <option value="person">Личная страница</option>
+        <option value="auto">Определить автоматически</option>
+      </select>
+    </div>
+
+    <div class="note" id="fa-hint" style="margin-top:12px"></div>
+
+    <div class="row" style="margin-top:18px">
+      <button class="primary" onclick="startFullAuto()">Запустить FULL AUTO</button>
+      <button onclick="closeFullAuto()">Отмена</button>
+    </div>
+
+    <div id="fa-progress" style="display:none;margin-top:16px;padding:14px;background:var(--bg3);border-radius:12px">
+      <div style="display:flex;justify-content:space-between;gap:10px;margin-bottom:8px">
+        <span class="note">Создано задач:</span>
+        <b id="fa-created">0</b>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Сайт</th><th>Услуга</th><th class="right">За заход</th><th class="right">Статус</th></tr></thead>
+          <tbody id="fa-table"></tbody>
+        </table>
+      </div>
+      <div class="note" id="fa-status" style="margin-top:8px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- модалка выполнения -->
+<div class="modal" id="modal">
+  <div class="box">
+    <div style="display:flex;justify-content:space-between;align-items:start;gap:12px">
+      <div>
+        <h2 id="m-title" style="font-size:17px"></h2>
+        <div class="note" id="m-site" style="margin-top:4px"></div>
+      </div>
+      <button class="small" onclick="closeModal()">✕</button>
+    </div>
+
+    <div style="margin:16px 0 8px" class="note">Ссылка уже в буфере — вставьте её в поле на сайте:</div>
+    <div class="copybox">
+      <input id="m-link" readonly onclick="this.select()">
+      <button class="small" onclick="copyManual()">Копировать</button>
+    </div>
+
+    <div style="display:flex;gap:12px;align-items:center;margin:16px 0">
+      <div class="timer" id="m-timer">00:00</div>
+      <div class="note" id="m-hint" style="flex:1"></div>
+    </div>
+
+    <div class="row">
+      <button class="primary" onclick="openSiteLink()">Открыть сайт снова</button>
+      <button class="ok" onclick="finishTask(true)">Готово — засчитать</button>
+      <button class="danger" onclick="finishTask(false)">Не получилось</button>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="small" id="m-captcha" onclick="markTaskCaptcha()">На сайте была капча — запомнить</button>
+      <span class="note" id="m-captcha-note"></span>
+    </div>
+    <div class="note" style="margin-top:12px">Если на сайте была капча или «лимит исчерпан» — жмите «Не получилось»: задача уйдёт в ошибки, а сайт после трёх таких подряд отключится сам.</div>
+  </div>
+</div>
+
+<!-- модалка ручной настройки услуги -->
+<div class="modal" id="edit">
+  <div class="box wide">
+    <div style="display:flex;justify-content:space-between;align-items:start;gap:12px">
+      <div>
+        <h2 id="e-title" style="font-size:17px">Настройка услуги</h2>
+        <div class="note" id="e-site" style="margin-top:4px"></div>
+      </div>
+      <button class="small" onclick="closeEdit()">✕</button>
+    </div>
+
+    <div class="grid-fields">
+      <div class="field">
+        <label>Сколько за один заход</label>
+        <input id="e-amount" type="number" min="1" max="100000">
+        <div class="hint" id="e-amount-hint"></div>
+      </div>
+      <div class="field">
+        <label>Кулдаун, минут</label>
+        <input id="e-cooldown" type="number" min="0" max="10080">
+        <div class="hint" id="e-cooldown-hint"></div>
+      </div>
+      <div class="field">
+        <label>Заходов в сутки (пусто = без лимита)</label>
+        <input id="e-max" type="number" min="1" max="1000">
+        <div class="hint" id="e-max-hint"></div>
+      </div>
+      <div class="field">
+        <label>Капча на этом сайте</label>
+        <div class="cap" id="e-captcha">
+          <button data-val="-1" onclick="setEditCaptcha(-1)">не проверено</button>
+          <button data-val="0" onclick="setEditCaptcha(0)">нет</button>
+          <button data-val="1" onclick="setEditCaptcha(1)">есть</button>
+        </div>
+        <div class="hint">Без капчи — сайт работает полностью автоматически. С капчей — программа откроет окно, чтобы вы её решили.</div>
+      </div>
+    </div>
+
+    <label class="switch" style="margin-bottom:14px"><input type="checkbox" id="e-sitewide"><span class="tr"></span> применить кулдаун ко всем услугам этого сайта</label>
+
+    <div class="row">
+      <button class="primary" onclick="saveEdit()">Сохранить и пересчитать очередь</button>
+      <button onclick="resetEdit()">Вернуть как в каталоге</button>
+      <button onclick="closeEdit()">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ------------------------------------------------------------------ состояние
+let ST = null;
+let TAB = 'wizard';
+let CLOCK_OFFSET = 0;           // серверное время - локальное
+let currentTask = null;
+let planTypes = new Set(['followers']);
+let chipsTouched = false;   // false = чип подбирается автоматически под тип ссылки
+let planPlatform = 'vk';
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const TYPE_LABEL = {};
+const PLATFORM_LABEL = {};
+
+function toast(msg, kind = '') {
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast on ' + kind;
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.className = 'toast ' + kind, 4200);
+}
+
+async function api(path, method = 'GET', body = null) {
+  const opt = { method, headers: {} };
+  if (body !== null) { opt.headers['Content-Type'] = 'application/json'; opt.body = JSON.stringify(body); }
+  const r = await fetch(path, opt);
+  let data = {};
+  try { data = await r.json(); } catch (e) { data = { ok: false, error: 'Сервер вернул не JSON (HTTP ' + r.status + ')' }; }
+  if (!r.ok || data.ok === false) throw new Error(data.error || ('HTTP ' + r.status));
+  return data;
+}
+
+// ------------------------------------------------------------------ загрузка
+async function load() {
+  try {
+    const d = await api('/api/state');
+    CLOCK_OFFSET = d.now * 1000 - Date.now();
+    ST = d;
+    document.body.dataset.theme = (d.settings.theme === 'dark') ? 'dark' : 'light';
+    TYPE_LABEL_VALUES(d.stats.types);
+    PLATFORM_VALUES(d.stats.platforms);
+    SUBJECT_VALUES(d.stats.subjects, d.stats.subject_short);
+    $('error-bar').innerHTML = '';
+    render();
+    if (TAB === 'wizard' && (!WZ || Date.now() - (window.__wzAt || 0) > 15000)) {
+      window.__wzAt = Date.now();
+      if (wzTargetId === null && ST.targets.length) wzTargetId = ST.targets[0].id;
+      wzLoad();
+    }
+  } catch (e) {
+    $('error-bar').innerHTML = '<div class="banner warn">Связь с сервером потеряна: ' + esc(e.message) +
+      '. Программа продолжает работать, страница переподключится сама.</div>';
+  }
+}
+
+let TYPES = {}, PLATFORMS = {}, SUBJECTS = {}, SUBJ_SHORT = {};
+function SUBJECT_VALUES(x, y) { SUBJECTS = x || {}; SUBJ_SHORT = y || {}; }
+
+// объект накрутки услуги против объекта ссылки
+function subjectFits(subject, kind) {
+  subject = subject || 'any'; kind = kind || '';
+  return subject === 'any' || !kind || subject === kind;
+}
+function kindTag(kind, auto) {
+  if (!kind) return '<span class="tag sub-any" title="Тип не определён — укажите в «Мои ссылки»">объект?</span>';
+  return '<span class="tag sub-' + kind + '" title="' + esc(SUBJECTS[kind] || kind) +
+    (auto ? ' (определено по ссылке)' : '') + '">' + esc(SUBJ_SHORT[kind] || kind) + '</span>';
+}
+function subjectTag(subject) {
+  subject = subject || 'any';
+  const short = { community: 'сообщество', person: 'личная страница', post: 'запись', any: 'любой объект' };
+  return '<span class="tag sub-' + subject + '" title="' + esc(SUBJECTS[subject] || '') + '">' +
+    esc(short[subject] || subject) + '</span>';
+}
+function TYPE_LABEL_VALUES(t) { TYPES = t; }
+function PLATFORM_VALUES(p) { PLATFORMS = p; }
+
+function srvNow() { return Date.now() + CLOCK_OFFSET; }
+function left(sec) {
+  sec = Math.max(0, Math.round(sec));
+  if (sec < 60) return sec + ' с';
+  const m = Math.floor(sec / 60), s = sec % 60;
+  if (m < 60) return m + ' мин ' + (s < 10 ? '0' : '') + s + ' с';
+  const h = Math.floor(m / 60), mm = m % 60;
+  return h + ' ч ' + (mm < 10 ? '0' : '') + mm + ' мин';
+}
+function hhmm(ts) {
+  if (!ts) return '—';
+  const d = new Date(ts * 1000);
+  return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+}
+function dt(ts) {
+  if (!ts) return '';
+  const d = new Date(ts * 1000);
+  return String(d.getDate()).padStart(2,'0') + '.' + String(d.getMonth()+1).padStart(2,'0') + ' ' + hhmm(ts);
+}
+const ICON_EDIT = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+  'stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px">' +
+  '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+
+function typeTag(t) { return '<span class="tag t-' + esc(t) + '">' + esc(TYPES[t] || t) + '</span>'; }
+function platTag(p) { return p === 'vk' ? '<span class="tag vk">ВК</span>' : '<span class="tag dim">' + esc(PLATFORMS[p] || p) + '</span>'; }
+function confirmTag(c) { return c ? '<span class="tag ok" title="Проверено на сайте 09.11.2026">✓</span>' : '<span class="tag warn" title="Из обзоров — проверьте перед заходом">≈</span>'; }
+
+// ===================================================== МАСТЕР «НАКРУТИТЬ»
+// Простой путь для новичка: выбрал ссылку → выбрал услугу → сделал заход по подсказке.
+let WZ = null;            // ответ /api/targets/{id}/services
+let wzTargetId = null;
+let wzTask = null;        // {task_id, deadline, ...} текущий заход
+let wzDetected = '';      // тип объекта, определённый по ссылке
+let wzOnlyReady = true;   // показывать только то, что доступно сейчас
+let wzShowAll = {};       // key группы -> показать все услуги
+
+function wzState() {
+  return { WZ, wzTargetId, wzTask, wzOnlyReady, wzShowAll };
+}
+
+function renderWizard() {
+  renderOnboard();
+  renderWzPick();
+  renderWzGroups();
+  renderWzRun();
+}
+
+// ---------- подсказка при первом запуске
+function renderOnboard() {
+  const box = $('wz-onboard');
+  if (!box) return;
+  let seen = false;
+  try { seen = localStorage.getItem('vkf_onboarded') === '1'; } catch (e) {}
+  if (seen) { box.innerHTML = ''; return; }
+  box.innerHTML = '<div class="onboard">' +
+      '<div style="flex:1"><b>Три шага, и пошло.</b>' +
+        '<div class="ob-steps" style="margin-top:6px">' +
+          '<span><b>1.</b> Выберите ссылку на сообщество или страницу</span>' +
+          '<span><b>2.</b> Выберите, что накрутить (например, «+10 подписчиков»)</span>' +
+          '<span><b>3.</b> Нажмите «Накрутить» и повторите за программой</span>' +
+        '</div>' +
+        '<div class="note" style="margin-top:6px">Всё бесплатно: программа знает лимиты сайтов и открывает только те окна, где сейчас можно взять.</div>' +
+      '</div>' +
+      '<button class="small" onclick="wzOnboardDone()">Понятно</button>' +
+    '</div>';
+}
+function wzOnboardDone() {
+  try { localStorage.setItem('vkf_onboarded', '1'); } catch (e) {}
+  renderOnboard();
+}
+
+// ---------- шаг 1: выбор ссылки
+function renderWzPick() {
+  const box = $('wz-pick');
+  if (!box || !ST) return;
+  const sel = $('wz-platform');
+  if (sel && !sel.dataset.filled) {
+    sel.innerHTML = Object.entries(PLATFORMS).filter(([k]) => k !== 'traffic')
+      .map(([k, v]) => '<option value="' + k + '">' + esc(v) + '</option>').join('');
+    sel.dataset.filled = '1';
+  }
+  if (!ST.targets.length) {
+    box.innerHTML = '<div class="empty" style="padding:14px 0">Пока нет ни одной ссылки. Нажмите «+ Добавить ссылку» — это займёт полминуты.</div>';
+    return;
+  }
+  if (!wzTargetId || !ST.targets.some(t => String(t.id) === String(wzTargetId))) {
+    wzTargetId = ST.targets[0].id;
+  }
+  box.innerHTML = '<div class="pick">' + ST.targets.map(t =>
+    '<div class="pickcard ' + (String(t.id) === String(wzTargetId) ? 'on' : '') + '" onclick="wzPick(' + t.id + ')">' +
+      '<div class="pc-name">' + esc(t.name) + '</div>' +
+      '<div class="pc-url">' + esc(t.url) + '</div>' +
+      '<div class="pc-chips">' + platTag(t.platform) + ' ' + kindTag(t.kind, t.kind_auto) + '</div>' +
+    '</div>').join('') + '</div>';
+}
+
+function wzPick(id) {
+  wzTargetId = id;
+  WZ = null;
+  wzTask = null;
+  renderWizard();
+  wzLoad();
+}
+
+async function wzLoad() {
+  if (!wzTargetId) return;
+  try {
+    WZ = await api('/api/targets/' + wzTargetId + '/services', 'GET');
+  } catch (e) {
+    WZ = null;
+    toast(e.message, 'err');
+  }
+  renderWzGroups();
+}
+
+function wzToggleAdd() {
+  const box = $('wz-add');
+  const open = box.style.display === 'none';
+  box.style.display = open ? '' : 'none';
+  $('wz-add-btn').textContent = open ? 'Скрыть' : '+ Добавить ссылку';
+  if (open) $('wz-url').focus();
+}
+
+let wzKindTimer = null;
+function wzDetect() {
+  const url = ($('wz-url').value || '').trim();
+  const platform = $('wz-platform').value || 'vk';
+  clearTimeout(wzKindTimer);
+  if (!url) { wzDetected = ''; wzKindHint(); return; }
+  wzKindTimer = setTimeout(async () => {
+    try {
+      const r = await api('/api/detect', 'POST', { platform, url });
+      wzDetected = r.kind || '';
+    } catch (e) { wzDetected = ''; }
+    wzKindHint();
+  }, 350);
+}
+
+function wzKindHint() {
+  const box = $('wz-kind-hint');
+  if (!box) return;
+  const chosen = $('wz-kind').value;
+  if (chosen !== 'auto') {
+    box.innerHTML = 'Будет сохранено как <b>' + esc(SUBJECTS[chosen] || chosen) + '</b>.';
+    return;
+  }
+  box.innerHTML = wzDetected
+    ? 'Похоже, это <b>' + esc(SUBJECTS[wzDetected] || wzDetected) + '</b> — так и сохраню. Если не угадал, выберите вручную.'
+    : 'Вставьте ссылку — тип определю сам. Если не получится, выберите вручную.';
+}
+
+async function wzAddTarget() {
+  const url = ($('wz-url').value || '').trim();
+  const platform = $('wz-platform').value || 'vk';
+  const kind = $('wz-kind').value;
+  const name = ($('wz-name').value || '').trim();
+  if (!url) { toast('Вставьте ссылку', 'err'); return; }
+  if (kind === 'auto' && !wzDetected) {
+    toast('Не смог определить тип по ссылке — выберите «Сообщество» или «Личная страница» вручную', 'err');
+    return;
+  }
+  try {
+    const r = await api('/api/targets', 'POST', { name: name || url, platform, url, kind });
+    $('wz-url').value = ''; $('wz-name').value = ''; $('wz-kind').value = 'auto';
+    wzDetected = ''; wzKindHint(); wzToggleAdd();
+    await load();
+    wzPick(r.id);
+    toast('Ссылка добавлена — выбирайте, что накрутить', 'ok');
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+// ---------- шаг 2: что накрутить
+function renderWzGroups() {
+  const box = $('wz-groups');
+  const sub = $('wz-what-sub');
+  if (!box) return;
+  if (!WZ) {
+    if (sub) sub.textContent = wzTargetId ? 'Загружаю…' : 'Сначала выберите ссылку выше.';
+    box.innerHTML = '';
+    return;
+  }
+  const t = WZ.target;
+  if (sub) {
+    sub.innerHTML = 'Ссылка: <b>' + esc(t.name) + '</b> · ' + esc(WZ.kind_short || WZ.kind_label) +
+      (WZ.kind_auto ? ' (определил по адресу)' : '') +
+      '. Готово к запуску сейчас: <b>' + WZ.ready_total + '</b>.';
+  }
+  if (!WZ.work_hours_ok) {
+    box.innerHTML = '<div class="warnbox">Сейчас вне рабочих часов (' + esc(WZ.work_hours) + '). ' +
+      'Заходы запрещены настройками — окно можно поменять в «Настройках».</div>';
+    return;
+  }
+  if (!WZ.groups.length) {
+    box.innerHTML = '<div class="empty" style="padding:12px 0">Для этого типа ссылки подходящих услуг нет. ' +
+      'Проверьте, правильно ли указан тип ссылки в шаге 1.</div>';
+    return;
+  }
+
+  const parts = [];
+  let shownAny = false;
+  for (const g of WZ.groups) {
+    let items = g.items.filter(i => !wzOnlyReady || !i.blocked);
+    if (!items.length) continue;
+    shownAny = true;
+    const all = wzShowAll[g.key];
+    const limit = all ? items.length : 6;
+    const visible = items.slice(0, limit);
+    const rest = items.length - visible.length;
+    parts.push('<div class="wzgroup" data-key="' + esc(g.key) + '">' +
+      '<div class="wzgroup-title">' + esc(g.title) +
+        '<span class="tag dim">' + items.length + '</span></div>' +
+      '<div class="svcgrid">' + visible.map(i => {
+        const cls = i.blocked ? ' off' : '';
+        return '<div class="svccard' + cls + '">' +
+          '<div class="sc-top">' +
+            '<div><div class="sc-gives">' + esc(i.gives) + '</div>' +
+            '<div class="sc-site">' + esc(i.site_name) + '</div></div>' +
+            kindTag(i.subject) +
+          '</div>' +
+          '<div class="sc-note">' + esc(i.mode_hint) + '</div>' +
+          (i.blocked
+            ? '<div class="sc-note" style="color:var(--warn)">' + esc(i.blocked) + '</div>' +
+              '<button class="small" disabled>Подождать</button>'
+            : '<button class="primary" onclick="wzRun(\'' + i.id + '\')">Накрутить</button>') +
+        '</div>';
+      }).join('') + '</div>' +
+      (rest > 0 ? '<div style="margin-top:8px"><button class="small" onclick="wzShowMore(\'' + g.key + '\')">Показать ещё ' + rest + '</button></div>' : '') +
+      '</div>');
+  }
+
+  if (!shownAny) {
+    parts.unshift('<div class="warnbox">Сейчас все окна закрыты — сайты держат паузу между заходами. ' +
+      'Можно включить показ недоступных и посмотреть, когда откроется.</div>');
+  }
+  parts.push('<div class="row" style="margin-top:14px">' +
+      '<label class="switch"><input type="checkbox" id="wz-only-ready" ' + (wzOnlyReady ? 'checked' : '') +
+        ' onchange="wzSetOnlyReady(this.checked)"><span class="tr"></span> только доступные сейчас</label>' +
+      (WZ.ready_total ? '<button onclick="wzQueueAll()">Поставить всё доступное в очередь</button>' : '') +
+    '</div>');
+  box.innerHTML = parts.join('');
+}
+
+function wzShowMore(key) { wzShowAll[key] = true; renderWzGroups(); }
+function wzSetOnlyReady(v) { wzOnlyReady = v; renderWzGroups(); }
+
+async function wzQueueAll() {
+  if (!WZ) return;
+  const items = [];
+  for (const g of WZ.groups) {
+    for (const i of g.items) if (!i.blocked) items.push({ service_id: i.id, claims: 1 });
+  }
+  if (!items.length) { toast('Нечего ставить в очередь', 'err'); return; }
+  try {
+    const r = await api('/api/plan', 'POST', { target_id: WZ.target.id, items, autostart: true });
+    toast('В очередь поставлено: ' + r.created.length + '. Дальше — по таймерам сайтов.', r.created.length ? 'ok' : 'err');
+    if (r.warnings && r.warnings.length) toast(r.warnings.slice(0, 2).join('; '), 'err');
+    await load();
+    wzLoad();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+// ---------- шаг 3: заход
+async function wzRun(serviceId) {
+  if (!WZ) return;
+  try {
+    const plan = await api('/api/plan', 'POST', {
+      target_id: WZ.target.id, items: [{ service_id: serviceId, claims: 1 }], autostart: false });
+    const created = (plan.created || [])[0];
+    if (!created) {
+      toast((plan.warnings || ['Не удалось создать задачу']).join('; '), 'err');
+      wzLoad();
+      return;
+    }
+    const res = await api('/api/tasks/' + created.id + '/start', 'POST', {});
+    wzTask = Object.assign({}, res, { task_id: created.id, service_id: serviceId,
+                                     label: created.label, site: created.site, amount: created.amount });
+    await load();
+    renderWzRun();
+    const el = $('wz-step-3');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } catch (e) {
+    toast(e.message, 'err');
+    wzLoad();
+  }
+}
+
+function renderWzRun() {
+  const step = $('wz-step-3'), box = $('wz-run');
+  if (!step || !box) return;
+  if (!wzTask) { step.style.display = 'none'; box.innerHTML = ''; return; }
+  step.style.display = '';
+  const t = wzTask;
+  const auto = t.mode === 'auto';
+  const secs = Math.max(0, Math.round(((t.deadline || (srvNow() / 1000 + (t.hold_seconds || 60))) - srvNow() / 1000)));
+  box.innerHTML =
+    '<div class="wz-run">' +
+      '<h3>' + esc(t.label || 'Заход') + ' · ' + esc(t.site || '') + '</h3>' +
+      '<div class="wz-sub">Ссылка, куда накручиваем: <span class="kbd">' + esc(t.target_url || '') + '</span></div>' +
+      (auto
+        ? '<ol class="wz-steps">' +
+            '<li>Робот уже работает в отдельном окне браузера — вам ничего делать не нужно.</li>' +
+            '<li>Если появится капча, решите её в том окне: заход продолжится сам.</li>' +
+            '<li>Когда закончится — нажмите «Готово» ниже.</li>' +
+          '</ol>'
+        : '<ol class="wz-steps">' +
+            '<li>Открылась страница сайта <b>' + esc(t.site || '') + '</b>. Ссылка на ваш объект уже в буфере обмена' +
+              (t.clipboard && t.clipboard !== 'file' ? ' (' + esc(t.clipboard) + ')' : '') + '.</li>' +
+            '<li>Вставьте её в поле на сайте (Ctrl+V) и нажмите их кнопку заказа.</li>' +
+            '<li>Подождите примерно <b>' + Math.round((t.hold_seconds || 60) / 60) + ' мин</b>, пока сайт выполнит заход.</li>' +
+            '<li>Вернитесь сюда и отметьте результат.</li>' +
+          '</ol>') +
+      '<div class="row" style="align-items:center;gap:14px;margin:10px 0">' +
+        '<div><div class="note">сколько ещё ждём ваш результат</div><div class="wz-timer" id="wz-timer">' + mmss(secs) + '</div></div>' +
+        '<a href="' + esc(t.open_url || '#') + '" target="_blank" rel="noopener"><button>Открыть сайт ещё раз</button></a>' +
+        '<button onclick="wzCopy()">Скопировать ссылку</button>' +
+      '</div>' +
+      '<div class="row">' +
+        '<button class="primary" onclick="wzFinish(true)">Готово, накрутилось</button>' +
+        '<button onclick="wzFinish(false)">Не получилось</button>' +
+      '</div>' +
+      (t.browser_opened === false
+        ? '<div class="note" style="margin-top:8px;color:var(--warn)">Браузер не открылся автоматически — нажмите «Открыть сайт ещё раз».</div>'
+        : '') +
+    '</div>';
+  clearInterval(wzTask._timer);
+  wzTask._timer = setInterval(() => {
+    const el = $('wz-timer');
+    if (!el || !wzTask) return;
+    const left = Math.max(0, Math.round(wzTask.deadline - srvNow() / 1000));
+    el.textContent = mmss(left);
+  }, 1000);
+}
+
+function mmss(sec) {
+  sec = Math.max(0, Math.round(sec));
+  const m = Math.floor(sec / 60), s = sec % 60;
+  return m + ':' + String(s).padStart(2, '0');
+}
+
+async function wzCopy() {
+  try {
+    await navigator.clipboard.writeText(wzTask.target_url || '');
+    toast('Ссылка скопирована', 'ok');
+  } catch (e) { toast('Не удалось скопировать: ' + (wzTask.target_url || ''), 'err'); }
+}
+
+async function wzFinish(ok) {
+  if (!wzTask) return;
+  const id = wzTask.task_id;
+  try {
+    await api('/api/tasks/' + id + '/finish', 'POST', { ok: !!ok, note: ok ? '' : 'не получилось вручную' });
+    clearInterval(wzTask._timer);
+    wzTask = null;
+    await load();
+    wzLoad();
+    toast(ok ? 'Записал! Следующее окно откроется по таймеру сайта.' : 'Ок, попробуем позже', ok ? 'ok' : 'err');
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+// ------------------------------------------------------------------ рендер
+function render() {
+  if (!ST) return;
+  renderBadges();
+  const qn = $('nav-queue-n');
+  if (qn) {
+    const active = ST.tasks.filter(t => ['ready', 'running', 'wait_confirm', 'captcha'].includes(t.status)).length;
+    qn.textContent = active ? String(active) : '';
+  }
+  if (TAB === 'wizard') renderWizard();
+  if (TAB === 'dash') renderDash();
+  if (TAB === 'catalog') renderCatalog();
+  if (TAB === 'targets') renderTargets();
+  if (TAB === 'queue') renderQueue();
+  if (TAB === 'settings') settingsRenderIfChanged(false);
+}
+
+function renderBadges() {
+  const s = ST.stats, ready = ST.services.filter(x => x.ready).length;
+  const b = [];
+  b.push('<span class="badge"><span class="dot" style="background:' + (s.global_ok ? 'var(--ok)' : 'var(--warn)') + '"></span>' +
+         (s.global_ok ? 'можно накручивать' : (s.in_work_hours ? 'пауза ' + left(s.gap_left / 1000) : 'вне рабочих часов')) + '</span>');
+  b.push('<span class="badge" title="услуги, доступные прямо сейчас">услуг доступно <b>' + ready + '</b></span>');
+  b.push('<span class="badge">заходов сегодня <b>' + s.total_claims_today + (s.daily_total_limit ? ' / ' + s.daily_total_limit : '') + '</b></span>');
+  b.push('<span class="badge">' + (ST.settings.autopilot === '1' ? 'автопилот <b>вкл</b>' : 'автопилот <b>выкл</b>') + '</span>');
+  const cap = s.captcha || {};
+  const MODE_SHORT = { all: 'все сайты', nocaptcha: 'без капчи', captcha: 'с капчей' };
+  b.push('<span class="badge" title="без капчи: ' + (cap.none || 0) + ', с капчей: ' + (cap.yes || 0) +
+         ', не проверено: ' + (cap.unknown || 0) + '">площадки: <b>' + (MODE_SHORT[cap.mode] || 'все сайты') + '</b></span>');
+  if (ST.health.captcha_tasks) b.push('<span class="badge" style="border-color:var(--warn)">ждут капчу <b>' + ST.health.captcha_tasks + '</b></span>');
+  document.querySelectorAll('#mode-switch button').forEach(x => x.classList.toggle('active', x.dataset.mode === (cap.mode || 'all')));
+  b.push('<span class="badge">' + ST.server_time + '</span>');
+  $('badges').innerHTML = b.join('');
+}
+
+function renderDashMode() {
+  const cap = (ST.stats.captcha) || {};
+  const box = $('dash-mode');
+  if (!box) return;
+  const info = {
+    all: ['Все сайты', 'var(--acc)', 'Программа крутит любые услуги. Если сайт покажет капчу — откроется окно браузера, вы решите её там, и заход продолжится сам.'],
+    nocaptcha: ['Без капчи', 'var(--ok)', 'Работает автоматически и без окна браузера. Если сайт покажет капчу — программа запомнит это и больше туда в этом режиме не пойдёт, ничего не спросив.'],
+    captcha: ['С капчей', 'var(--warn)', 'Только сайты с капчей: программа открывает окно и ждёт, пока вы её решите.'],
+  }[cap.mode || 'all'];
+  const autoSites = (ST.sites || []).filter(x => x.mode === 'auto' && x.enabled);
+  const onSites = (ST.sites || []).filter(x => x.enabled);
+  const assistedCount = onSites.filter(x => x.mode !== 'auto').length;
+  if (cap.mode === 'nocaptcha' && assistedCount) {
+    box.innerHTML = '<div class="warnbox">Режим «Без капчи» подразумевает полный автомат, но ' + assistedCount +
+      ' из ' + onSites.length + ' сайтов пока в режиме «assisted» (заход делает человек). ' +
+      '<button class="small" style="margin-left:8px" onclick="allSitesAuto()">Перевести все сайты в auto</button>' +
+      (ST.health.playwright ? '' : ' <span style="opacity:.8">Для auto нужен Playwright.</span>') + '</div>';
+    return;
+  }
+  const pwWarn = (!ST.health.playwright && autoSites.length)
+    ? '<div class="warnbox" style="margin-bottom:14px">Сайты в режиме «auto» (' + autoSites.length + '): ' + esc(autoSites.map(x => x.name).join(', ')) +
+      ' — но Playwright не установлен, робот работать не сможет. Установите: <span class="kbd">pip install playwright</span> и <span class="kbd">playwright install chromium</span>. ' +
+      'Либо переведите сайты в режим «assisted» — тогда всё делает человек, а программа готовит буфер и открывает страницу.</div>'
+    : '';
+  box.innerHTML = pwWarn + '<div class="panel" style="margin-bottom:14px">' +
+    '<div class="row" style="align-items:center">' +
+      '<div style="display:flex;align-items:center;gap:10px"><span class="dot" style="width:10px;height:10px;border-radius:50%;background:' + info[1] + '"></span>' +
+      '<b style="font-size:15px">Режим: ' + esc(info[0]) + '</b></div>' +
+      '<div class="note" style="flex:1;min-width:260px">' + esc(info[2]) + '</div>' +
+    '</div>' +
+    '<div class="note" style="margin-top:10px">Отмечено услуг: без капчи <b>' + (cap.none || 0) + '</b> · с капчей <b>' +
+      (cap.yes || 0) + '</b> · не проверено <b>' + (cap.unknown || 0) + '</b> · доступно в текущем режиме <b>' + (cap.allowed || 0) + '</b>' +
+      ' <a href="#" onclick="switchTab(\'catalog\');return false" style="color:var(--acc)">настроить в каталоге →</a></div>' +
+  '</div>';
+}
+
+function renderDash() {
+  renderDashMode();
+  const vkServices = ST.services.filter(x => x.platform === 'vk');
+  // подписчики на сообщества и на личные страницы — два разных продукта, считаем их порознь
+  const subLeft = kind => vkServices.filter(x => x.type === 'followers' && x.site_enabled &&
+      subjectFits(x.subject, kind)).reduce((a, x) => a + Math.max(0, x.daily_cap_units - x.units_today), 0);
+  const subDone = kind => vkServices.filter(x => x.type === 'followers' &&
+      subjectFits(x.subject, kind)).reduce((a, x) => a + x.units_today, 0);
+  const subSites = kind => new Set(vkServices.filter(x => x.type === 'followers' && x.site_enabled &&
+      subjectFits(x.subject, kind)).map(x => x.site_id)).size;
+  const followersLeft = subLeft('community');
+  const readyCount = ST.services.filter(x => x.ready).length;
+  const sitesOn = ST.sites.filter(s => s.enabled).length;
+
+  $('dash-cards').innerHTML = [
+    card('Подписчики сообществ', subLeft('community'), 'уже взято: ' + subDone('community') + ' · сайтов: ' + subSites('community')),
+    card('Подписчики личных страниц', subLeft('person'), 'уже взято: ' + subDone('person') + ' · сайтов: ' + subSites('person')),
+    card('Готово к запуску сейчас', readyCount, 'услуг с открытым окном'),
+    card('Сайтов включено', sitesOn + ' / ' + ST.sites.length, 'в каталоге услуг: ' + ST.services.length),
+    card('Заходов сегодня', ST.stats.total_claims_today, ST.stats.daily_total_limit ? 'лимит ' + ST.stats.daily_total_limit : 'без глобального лимита'),
+  ].join('');
+
+  $('dash-types').innerHTML = (ST.stats.by_subject || ST.stats.by_type).filter(x => x.platform === 'vk').map(t =>
+    '<tr><td>' + platTag(t.platform) + '</td><td>' + typeTag(t.type) + (t.subject ? ' ' + subjectTag(t.subject) : '') + '</td>' +
+    '<td class="right mono">' + t.done_units + '</td><td class="right mono"><b>' + t.left_units + '</b></td>' +
+    '<td class="right muted">' + t.sites + '</td></tr>').join('')
+    || '<tr><td colspan="5" class="empty">Нет данных по ВК</td></tr>';
+
+  const ready = ST.services.filter(x => x.ready).sort((a, b) => b.amount - a.amount).slice(0, 40);
+  $('dash-ready').innerHTML = ready.map(x =>
+    '<tr><td><b>' + esc(x.site_name) + '</b> ' + confirmTag(x.confirmed) + '</td>' +
+    '<td>' + platTag(x.platform) + '</td>' +
+    '<td>' + esc(x.label) + ' ' + subjectTag(x.subject) + '</td>' +
+    '<td class="right mono"><b>' + x.amount + '</b></td>' +
+    '<td class="right mono">' + (x.claims_left_today === null ? '∞' : x.claims_left_today + ' ' +
+      plural(x.claims_left_today, ['заход', 'захода', 'заходов'])) + '</td>' +
+    '<td><span class="tag ' + (x.mode === 'auto' ? 'ok' : 'dim') + '">' + x.mode + '</span></td>' +
+    '<td class="right"><button class="primary small" onclick="quickStart(\'' + x.id + '\')">Крутить</button></td></tr>').join('')
+    || '<tr><td colspan="7" class="empty">Сейчас нечего запускать — подождите таймер или добавьте ссылку</td></tr>';
+
+  // селекты
+  const tsel = $('plan-target'), cur = tsel.value;
+  tsel.innerHTML = ST.targets.length
+    ? ST.targets.map(t => '<option value="' + t.id + '">' + esc(t.name) + ' — ' +
+        esc(SUBJ_SHORT[t.kind] || 'тип не указан') + ' — ' + esc(t.url) + '</option>').join('')
+    : '<option value="">Сначала добавьте ссылку во вкладке «Мои ссылки»</option>';
+  const hasCur = ST.targets.some(t => String(t.id) === String(cur));
+  tsel.value = hasCur ? cur : (ST.targets.length ? String(ST.targets[0].id) : '');
+
+  const psel = $('plan-platform'), curp = psel.value || 'vk';
+  const plats = [...new Set(ST.services.map(s => s.platform))];
+  psel.innerHTML = plats.map(p => '<option value="' + p + '">' + esc(PLATFORMS[p] || p) + '</option>').join('');
+  psel.value = plats.includes(curp) ? curp : (plats.includes('vk') ? 'vk' : plats[0] || 'vk');
+  planPlatform = psel.value;
+
+  const keys = chipKeys();
+  if (!chipsTouched) {
+    // пока пользователь не выбрал чипы руками, подбираем их под объект ссылки
+    const auto = defaultChip(keys);
+    planTypes = new Set(auto ? [auto] : []);
+  } else {
+    // если выбранное больше не существует (сменили площадку) — ставим подходящее по умолчанию
+    const alive = [...planTypes].filter(k => keys.some(x => x.key === k));
+    if (!alive.length) planTypes = new Set([defaultChip(keys)]);
+    else if (alive.length !== planTypes.size) planTypes = new Set(alive);
+  }
+  $('plan-types').innerHTML = keys.map(x => {
+    const fits = chipFitsTarget(x.key);
+    return '<span class="chip ' + (planTypes.has(x.key) ? 'on' : '') + (fits ? '' : ' nofit') +
+      '" title="' + (fits ? 'Подходит к выбранной ссылке' : 'Не для этого объекта ссылки — программа отсеет') +
+      '" onclick="toggleType(\'' + x.key + '\')">' + esc(x.label) + '</span>';
+  }).join('');
+  updatePlanHint();
+}
+
+// «1 заход / 2 захода / 5 заходов» — без этого интерфейс выглядит машинным переводом
+function plural(n, forms) {
+  const a = Math.abs(n) % 100, b = a % 10;
+  if (a > 10 && a < 20) return forms[2];
+  if (b > 1 && b < 5) return forms[1];
+  if (b === 1) return forms[0];
+  return forms[2];
+}
+
+function card(k, v, s) {
+  return '<div class="card"><div class="k">' + esc(k) + '</div><div class="v mono">' + esc(v) + '</div><div class="s">' + esc(s) + '</div></div>';
+}
+
+function toggleType(t) {
+  chipsTouched = true;                       // дальше выбор только за пользователем
+  if (planTypes.has(t)) planTypes.delete(t); else planTypes.add(t);
+  render();
+}
+
+// ключ чипа: 'followers:community' / 'followers:person' для подписчиков, иначе просто тип
+function chipKeys() {
+  const list = ST.services.filter(s => s.platform === planPlatform);
+  const types = [...new Set(list.map(s => s.type))];
+  const out = [];
+  for (const t of types) {
+    const subs = [...new Set(list.filter(s => s.type === t).map(s => s.subject || 'any'))];
+    if (t === 'followers' && (subs.includes('community') || subs.includes('person'))) {
+      // «подписчики» — это два разных продукта, поэтому два отдельных чипа
+      out.push({ key: t + ':community', label: (TYPES[t] || t) + ' · сообщества' });
+      out.push({ key: t + ':person', label: (TYPES[t] || t) + ' · личные страницы' });
+    } else {
+      out.push({ key: t, label: TYPES[t] || t });
+    }
+  }
+  return out;
+}
+
+function defaultChip(keys) {
+  const kind = targetKind();
+  if (!kind) return keys.length ? keys[0].key : '';
+  const exact = keys.find(x => x.key === 'followers:' + kind);
+  if (exact) return exact.key;
+  // ссылка на запись: подписчики тут не при чём — берём контентную услугу
+  if (kind === 'post') {
+    for (const t of ['likes', 'views', 'plays', 'reposts', 'comments', 'reactions']) {
+      const chip = keys.find(x => x.key === t);
+      if (chip) return chip.key;
+    }
+  }
+  // иначе берём первый чип, под услуги которого объект ссылки подходит
+  const ok = keys.find(x => ST.services.some(sv => sv.platform === planPlatform &&
+    chipMatches(sv, x.key) && subjectFits(sv.subject, kind)));
+  return ok ? ok.key : (keys.length ? keys[0].key : '');
+}
+
+// подходит ли чип под текущую ссылку (для подсветки «не для этого объекта»)
+function chipFitsTarget(chip) {
+  const kind = targetKind();
+  if (!kind) return true;
+  return ST.services.some(sv => sv.platform === planPlatform && chipMatches(sv, chip) &&
+    subjectFits(sv.subject, kind));
+}
+
+function targetKind() {
+  const id = $('plan-target') ? $('plan-target').value : '';
+  const t = ST.targets.find(x => String(x.id) === String(id));
+  return t ? (t.kind || '') : '';
+}
+
+function chipMatches(svc, chip) {
+  const i = chip.indexOf(':');
+  const type = i < 0 ? chip : chip.slice(0, i);
+  const sub = i < 0 ? '' : chip.slice(i + 1);
+  if (svc.type !== type) return false;
+  return !sub || subjectFits(svc.subject, sub);
+}
+
+function updatePlanHint() {
+  if (!ST) return;
+  const kind = targetKind();
+  const picked = ST.services.filter(s => s.platform === planPlatform && [...planTypes].some(c => chipMatches(s, c)));
+  const sel = picked.filter(s => s.site_enabled && (s.enabled === undefined || s.enabled));
+  const perDay = sel.reduce((a, s) => {
+    const claims = s.claims_left_today === null ? s.per_day_theoretical : s.claims_left_today;
+    return a + claims * s.amount;
+  }, 0);
+  const sites = new Set(sel.map(s => s.site_id)).size;
+  const kindLine = kind
+    ? 'Ссылка: <b>' + esc(SUBJ_SHORT[kind] || kind) + '</b>. Учитываются только услуги, которые работают с этим объектом.'
+    : 'Тип ссылки не указан — <a href="#" onclick="switchTab(\'targets\');return false" style="color:var(--acc)">уточните в «Мои ссылки»</a>, иначе программа не сможет отсеять неподходящие услуги.';
+  $('plan-hint').innerHTML = (sel.length
+    ? 'Найдено <b>' + sel.length + '</b> ' + plural(sel.length, ['бесплатная услуга', 'бесплатные услуги', 'бесплатных услуг']) +
+      ' на <b>' + sites + '</b> ' + plural(sites, ['сайте', 'сайтах', 'сайтах']) +
+      '. В сумме за сутки по выбранному доступно <b>' + perDay + '</b> ' +
+      plural(perDay, ['единица', 'единицы', 'единиц']) + ' — программа расставит их по таймерам.'
+    : 'Под выбранный тип и объект бесплатных услуг нет — выберите другой чип.') + '<br>' + kindLine;
+}
+
+function renderCatalog() {
+  // наполняем фильтры один раз
+  if (!$('cat-platform').dataset.filled) {
+    const plats = [...new Set(ST.services.map(s => s.platform))];
+    $('cat-platform').innerHTML = '<option value="">все</option>' + plats.map(p => '<option value="' + p + '">' + esc(PLATFORMS[p] || p) + '</option>').join('');
+    const types = [...new Set(ST.services.map(s => s.type))];
+    $('cat-type').innerHTML = '<option value="">все</option>' + types.map(t => '<option value="' + t + '">' + esc(TYPES[t] || t) + '</option>').join('');
+    $('cat-site').innerHTML = '<option value="">все</option>' + ST.sites.map(s => '<option value="' + s.id + '">' + esc(s.name) + '</option>').join('');
+    $('cat-platform').dataset.filled = '1';
+  }
+  const q = ($('cat-q').value || '').toLowerCase();
+  const pf = $('cat-platform').value, tp = $('cat-type').value, st = $('cat-site').value;
+  const sb = $('cat-subject') ? $('cat-subject').value : '';
+  const capFilter = $('cat-captcha').value;
+  const onlyOn = $('cat-enabled').checked, onlyReady = $('cat-ready').checked;
+
+  // предупреждение, если в выбранном режиме нечего крутить
+  const capStat = ST.stats.captcha || {};
+  const warnBox = $('cat-mode-warn');
+  if (capStat.mode === 'nocaptcha' && capStat.yes > 0) {
+    warnBox.innerHTML = '<div class="warnbox">Режим «Без капчи»: ' + capStat.yes + ' услуг(и) уже помечены как «капча есть» и в этот режим не попадают. ' +
+      'Непроверенные сайты работают автоматически, пока не встретят капчу — тогда программа запомнит и исключит их сама.</div>';
+  } else if (capStat.mode === 'captcha' && !capStat.yes) {
+    warnBox.innerHTML = '<div class="warnbox">Режим «С капчей», но ни одна услуга пока не отмечена как «капча есть».</div>';
+  } else {
+    warnBox.innerHTML = '';
+  }
+
+  renderSitePanel(st);
+
+  const rows = ST.services.filter(s => {
+    if (pf && s.platform !== pf) return false;
+    if (tp && s.type !== tp) return false;
+    if (sb && (s.subject || 'any') !== sb) return false;
+    if (st && s.site_id !== st) return false;
+    if (capFilter !== '' && String(s.captcha) !== capFilter) return false;
+    if (onlyOn && !s.site_enabled) return false;
+    if (onlyReady && !s.ready) return false;
+    if (q && !(s.site_name + ' ' + s.label).toLowerCase().includes(q)) return false;
+    return true;
+  }).sort((a, b) => (b.ready - a.ready) || (a.site_name.localeCompare(b.site_name)));
+
+  $('cat-body').innerHTML = rows.map(s => {
+    const status = !s.site_enabled ? '<span class="tag err">выключен</span>'
+      : s.breaker_until > ST.now ? '<span class="tag err">пауза ' + left((s.breaker_until - ST.now)) + '</span>'
+      : s.ready ? '<span class="tag ok">готово</span>'
+      : s.claims_left_today === 0 ? '<span class="tag warn">лимит исчерпан</span>'
+      : '<span class="tag dim">ждёт</span>';
+    const nextText = s.ready ? '<span class="tag ok">сейчас</span>' :
+      (s.claims_left_today === 0 ? '<span class="muted">завтра</span>' : '<span class="mono">' + left(s.seconds_left) + '</span>');
+    const offMode = s.mode_ok ? '' : ' <span class="tag warn" title="Не входит в выбранный режим">не в режиме</span>';
+    const capCls = s.captcha === 1 ? 'yes' : s.captcha === 0 ? 'no' : 'unk';
+    const capTxt = s.captcha === 1 ? 'есть' : s.captcha === 0 ? 'нет' : '?';
+    const capCell = '<button class="capchip ' + capCls + '" title="капча: ' + esc(s.captcha_label) +
+      ' — клик, чтобы переключить" onclick="cycleCaptcha(\'' + s.id + '\')">' + capTxt + '</button>';
+    return '<tr style="' + (s.site_enabled ? (s.mode_ok ? '' : 'opacity:.6') : 'opacity:.45') + '">' +
+      '<td><b>' + esc(s.site_name) + '</b> ' + confirmTag(s.confirmed) + (s.reg_required ? ' <span class="tag dim" title="Нужна регистрация">reg</span>' : '') + '</td>' +
+      '<td>' + platTag(s.platform) + '</td>' +
+      '<td>' + typeTag(s.type) + '</td>' +
+      '<td>' + subjectTag(s.subject) + '</td>' +
+      '<td>' + esc(s.label) + (s.shared_slot ? ' <span class="tag dim" title="Один слот на весь сайт">слот</span>' : '') + offMode + '</td>' +
+      '<td class="right mono">' + s.amount + (s.amount_manual ? ' <span class="manualmark" title="изменено вручную">' + ICON_EDIT + '</span>' : '') + '</td>' +
+      '<td class="right mono">' + (s.cooldown_min >= 60 ? (s.cooldown_min / 60) + ' ч' : s.cooldown_min + ' мин') + (s.cooldown_manual ? ' <span class="manualmark" title="изменено вручную">' + ICON_EDIT + '</span>' : '') + '</td>' +
+      '<td>' + capCell + '</td>' +
+      '<td class="right mono">' + s.claims_today + (s.max_claims_day ? ' / ' + s.max_claims_day : '') + '</td>' +
+      '<td class="right mono">' + (s.claims_left_today === null ? '∞' : s.claims_left_today) + '</td>' +
+      '<td>' + nextText + '</td>' +
+      '<td>' + status + '</td>' +
+      '<td class="right" style="white-space:nowrap">' +
+        '<button class="primary small" ' + (s.ready ? '' : 'disabled') + ' onclick="quickStart(\'' + s.id + '\')">Крутить</button> ' +
+        '<a href="' + esc(s.url) + '" target="_blank" rel="noopener"><button class="small">Открыть</button></a> ' +
+        '<button class="small" title="Изменить кулдаун, объём, лимит и капчу" onclick="openEdit(\'' + s.id + '\')">' + ICON_EDIT + '</button>' +
+      '</td></tr>';
+  }).join('') || '<tr><td colspan="13" class="empty">Ничего не найдено по фильтрам</td></tr>';
+}
+
+function renderSitePanel(siteId) {
+  const box = $('cat-site-panel');
+  if (!siteId) { box.innerHTML = ''; return; }
+  const site = (ST.sites || []).find(x => x.id === siteId);
+  if (!site) { box.innerHTML = ''; return; }
+  const svcs = ST.services.filter(s => s.site_id === siteId);
+  const yes = svcs.filter(s => s.captcha === 1).length, no = svcs.filter(s => s.captcha === 0).length;
+  box.innerHTML = '<div class="panel" style="margin-bottom:12px">' +
+    '<h2 style="margin-bottom:10px">' + esc(site.name) + ' — настройка всего сайта</h2>' +
+    '<div class="row" style="align-items:flex-end">' +
+      '<div class="field" style="width:170px"><label>Кулдаун для всех услуг, мин</label><input id="site-cd" type="number" min="0" max="10080" placeholder="как в каталоге"></div>' +
+      '<button onclick="siteCooldown()">Применить ко всем</button>' +
+      '<div style="width:1px;height:34px;background:var(--line);margin:0 6px"></div>' +
+      '<div class="note">капча на сайте (отмечено: есть ' + yes + ', нет ' + no + ' из ' + svcs.length + '):</div>' +
+      '<button class="ok small" onclick="siteCaptcha(\'' + siteId + '\', 0)">капчи нет</button>' +
+      '<button class="danger small" onclick="siteCaptcha(\'' + siteId + '\', 1)">капча есть</button>' +
+      '<button class="small" onclick="siteCaptcha(\'' + siteId + '\', -1)">не проверено</button>' +
+      '<button class="small" onclick="siteReset()" style="margin-left:auto">Сбросить ручные настройки</button>' +
+    '</div></div>';
+}
+
+function renderTargets() {
+  const sel = $('tg-platform');
+  if (!sel.dataset.filled) {
+    sel.innerHTML = Object.entries(PLATFORMS).filter(([k]) => k !== 'traffic')
+      .map(([k, v]) => '<option value="' + k + '">' + esc(v) + '</option>').join('');
+    sel.dataset.filled = '1';
+  }
+  $('tg-count').textContent = ST.targets.length ? '(' + ST.targets.length + ')' : '';
+  $('tg-list').innerHTML = ST.targets.length ? ST.targets.map(t => {
+    const opts = [['community', 'Сообщество'], ['person', 'Личная страница'], ['post', 'Запись']]
+      .map(([k, l]) => '<option value="' + k + '"' + (t.kind === k && !t.kind_auto ? ' selected' : '') + '>' + l + '</option>').join('');
+    const autoOpt = '<option value="auto"' + (!t.kind || t.kind_auto ? ' selected' : '') + '>Определять по ссылке</option>';
+    return '<div style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)">' +
+      '<div style="flex:1 1 auto;min-width:0">' +
+        '<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><b>' + esc(t.name) + '</b> ' +
+          platTag(t.platform) + ' ' + kindTag(t.kind, t.kind_auto) + '</div>' +
+        '<div class="note" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + esc(t.url) + '</div>' +
+      '</div>' +
+      '<select class="kindsel" onchange="saveTargetKind(' + t.id + ', this.value)" title="Что накручиваем — на этот объект программа подберёт только подходящие услуги">' +
+        autoOpt + opts + '</select>' +
+      '<button class="small danger" onclick="delTarget(' + t.id + ')">Удалить</button>' +
+    '</div>';
+  }).join('')
+    : '<div class="empty">Пока нет ссылок. Добавьте первую — например, ссылку на паблик ВК.</div>';
+}
+
+function renderQueue() {
+  const order = { delivery_uncertain: 0, waiting_delivery: 1, captcha: 2, wait_confirm: 3, running: 2, ready: 3, queued: 4, failed: 5, missed: 6 };
+  const rows = ST.tasks.slice().sort((a, b) => (order[a.status] ?? 5) - (order[b.status] ?? 5));
+  $('queue-body').innerHTML = rows.map(t => {
+    let stCls = 'dim', stTxt = t.status;
+    if (t.status === 'waiting_delivery') { stCls = 'warn'; stTxt = 'жду прирост'; }
+    if (t.status === 'delivery_uncertain') { stCls = 'err'; stTxt = 'ответ заказа неясен'; }
+    if (t.status === 'ready') { stCls = 'ok'; stTxt = 'готово'; }
+    if (t.status === 'wait_confirm') { stCls = 'warn'; stTxt = 'жду подтверждения'; }
+    if (t.status === 'captcha') { stCls = 'err'; stTxt = 'нужна капча'; }
+    if (t.status === 'running') { stCls = 'warn'; stTxt = 'робот работает'; }
+    if (t.status === 'done') { stCls = 'ok'; stTxt = 'сделано'; }
+    if (t.status === 'missed') { stCls = 'err'; stTxt = 'пропущено'; }
+    if (t.status === 'failed') { stCls = 'err'; stTxt = 'ошибка'; }
+    if (t.status === 'queued') { stCls = 'dim'; stTxt = 'в очереди'; }
+    let timer = '—';
+    if (t.status === 'wait_confirm' && t.due_at) timer = '<span class="mono" data-deadline="' + t.due_at + '">' + left(t.due_at / 1000 - srvNow() / 1000) + '</span>';
+    if (t.status === 'queued' && t.due_at) timer = '<span class="mono muted">через ' + left(t.due_at / 1000 - srvNow() / 1000) + '</span>';
+    if (t.status === 'ready') timer = '<span class="tag ok">сейчас</span>';
+    if (t.status === 'captcha') timer = '<span class="tag err">решите в окне браузера</span>';
+    if (t.status === 'running') timer = '<span class="tag warn">идёт заход</span>';
+    return '<tr data-task="' + t.id + '"><td class="muted mono">' + t.id + '</td>' +
+      '<td><b>' + esc(t.site_name) + '</b></td>' +
+      '<td>' + esc(t.label) + '</td>' +
+      '<td class="note" style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
+        esc(t.target_name || t.target_url || '—') +
+        (t.target_kind ? ' ' + kindTag(t.target_kind) : '') + '</td>' +
+      '<td class="right mono">' + t.planned_units + '</td>' +
+      '<td><span class="tag ' + stCls + '">' + esc(stTxt) + '</span>' +
+      (t.note ? '<div class="hint" style="max-width:280px;white-space:normal">' + esc(t.note) + '</div>' : '') + '</td>' +
+      '<td>' + timer + '</td>' +
+      '<td class="act right" style="white-space:nowrap">' +
+        (t.status === 'ready' ? '<button class="primary small" onclick="startTask(' + t.id + ')">Крутить</button> ' : '') +
+        (t.status === 'wait_confirm' ? '<button class="ok small" onclick="startTask(' + t.id + ')">Открыть снова</button> ' : '') +
+        (t.status === 'missed' ? '<button class="small" onclick="retryTask(' + t.id + ')">Ещё раз</button> ' : '') +
+        (t.status === 'captcha' ? '<button class="ok small" onclick="captchaDone(' + t.id + ')">Я решил капчу</button> ' : '') +
+        (t.status === 'failed' ? '<button class="small" onclick="retryTask(' + t.id + ')">Повторить</button> ' : '') +
+        (['waiting_delivery','delivery_uncertain'].includes(t.status)
+          ? '<button class="small" onclick="deliveryCheck(' + t.id + ')">Проверить</button> ' +
+            (t.status === 'delivery_uncertain' ? '<button class="small" onclick="deliveryConfirm(' + t.id + ')">Заказ принят</button> ' : '') +
+            '<button class="small danger" onclick="deliveryAbandon(' + t.id + ')">Разблокировать</button>'
+          : '<button class="small danger" onclick="cancelTask(' + t.id + ')">Снять</button>') +
+      '</td></tr>';
+  }).join('') || '<tr><td colspan="8" class="empty">Очередь пуста. Спланируйте задачи на дашборде.</td></tr>';
+  // у задач, которые ждут человека, появится кнопка «Робот» — пусть попробует сам
+  document.querySelectorAll('#queue-body tr[data-task]').forEach(tr => {
+    const id = tr.dataset.task;
+    const cell = tr.querySelector('td.act');
+    if (cell && !cell.querySelector('.robot-btn')) {
+      const b = document.createElement('button');
+      b.className = 'small robot-btn';
+      b.textContent = '🤖';
+      b.title = 'Выполнить роботом';
+      b.onclick = () => taskRobot(id);
+      cell.appendChild(b);
+    }
+  });
+}
+
+// --- настройки: не даём поллингу затирать то, что печатает пользователь ---
+// Поллинг раз в 2.5 с перерисовывает вкладки; вкладка настроек перерисовывается ТОЛЬКО
+// когда пользователь ничего не правит (SETTINGS_DIRTY) и серверные значения изменились.
+let SETTINGS_DIRTY = false;
+let SETTINGS_SNAP = '';
+function settingsRenderIfChanged(force) {
+  if (SETTINGS_DIRTY && !force) return;         // пользователь правит — не трогаем его поля
+  const snap = JSON.stringify(ST.settings || {});
+  if (!force && snap === SETTINGS_SNAP) return; // на сервере ничего не менялось
+  renderSettings();
+  SETTINGS_SNAP = snap;
+}
+// любое касание полей настроек помечает вкладку «грязной» до сохранения
+const _stSection = document.getElementById('tab-settings');
+if (_stSection) {
+  _stSection.addEventListener('input', () => { SETTINGS_DIRTY = true; });
+  _stSection.addEventListener('change', () => { SETTINGS_DIRTY = true; });
+}
+// вернуть один контрол настроек к серверному значению (после ошибки сохранения)
+function settingsSyncControl(key) {
+  const el = document.getElementById('st-' + key);
+  if (!el) return;
+  const v = (ST.settings || {})[key];
+  if (el.type === 'checkbox') el.checked = (v === '1' || v === true);
+  else el.value = (v === undefined || v === null) ? '' : v;
+}
+// мгновенное сохранение одной настройки (переключатели, списки, поля по blur)
+async function quickSetting(key, value) {
+  const val = (value === true || value === false) ? (value ? '1' : '0') : String(value);
+  try {
+    const r = await api('/api/settings', 'POST', { [key]: val });
+    if (r && r.settings) { ST.settings = r.settings; }
+    SETTINGS_SNAP = JSON.stringify(ST.settings || {});
+    toast('Сохранено', 'ok');
+  } catch (e) {
+    toast(e.message, 'err');
+    settingsSyncControl(key);      // откатываем именно этот контрол, остальные не трогаем
+  }
+}
+
+function renderSettings() {
+  const s = ST.settings;
+  $('st-autopilot').checked = s.autopilot === '1';
+  $('st-full_auto').checked = s.full_auto === '1';
+  api('/api/counter').then(r => {
+    const x = $('counter-status');
+    if (x) x.textContent = (r.vk_token_configured ? 'Источник: VK API. ' : 'Источник: публичный виджет ВК. ') +
+      'Проверка поддерживает только подписчиков сообществ ВК с числовой ссылкой; автопилот должен быть включён. Срок и прохождение капч не гарантированы.';
+  }).catch(() => {});
+  if ($('st-strict_subject')) $('st-strict_subject').checked = (s.strict_subject || '1') === '1';
+  $('st-auto_open').checked = s.auto_open !== '0';
+  $('st-captcha_browser_visible').checked = s.captcha_browser_visible !== '0';
+  $('st-captcha_wait_sec').value = s.captcha_wait_sec || '300';
+  $('st-dark').checked = s.theme === 'dark';
+  $('st-open_browser').checked = s.open_browser === '1';
+  $('st-dry_run').checked = s.dry_run === '1';
+  $('st-work_hours').value = s.work_hours || '8-23';
+  $('st-global_min_gap_sec').value = s.global_min_gap_sec || '20';
+  $('st-daily_total_limit').value = s.daily_total_limit || '0';
+  if ($('st-browser_backend')) $('st-browser_backend').value = s.browser_backend || 'auto';
+  if ($('st-order_email')) $('st-order_email').value = s.order_email || '';
+  if ($('st-nojs_enabled')) $('st-nojs_enabled').checked = (s.nojs_enabled || '1') === '1';
+  if ($('st-captcha_autosolve')) $('st-captcha_autosolve').checked = (s.captcha_autosolve || '1') === '1';
+  if ($('st-captcha_ocr')) $('st-captcha_ocr').checked = (s.captcha_ocr || '1') === '1';
+  $('health-line').innerHTML = 'Готовых задач: <b>' + ST.health.ready_tasks + '</b> · с ошибками: <b>' +
+    ST.health.failed_tasks + '</b> · база: <span class="kbd">' + esc(ST.health.db) + '</span>';
+}
+
+// ------------------------------------------------------------------ действия
+// ------------------------------------------------------------------ режим капчи
+const MODE_LABEL = { all: 'Все сайты', nocaptcha: 'Без капчи', captcha: 'С капчей' };
+
+async function setMode(mode) {
+  try {
+    await api('/api/settings', 'POST', { captcha_mode: mode });
+    toast('Режим: ' + MODE_LABEL[mode], 'ok');
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+// ------------------------------------------------------------------ ручная настройка услуги
+let editService = null;
+
+function findService(id) { return (ST.services || []).find(s => s.id === id); }
+
+function openEdit(id) {
+  const s = findService(id);
+  if (!s) return;
+  editService = s;
+  $('e-title').textContent = s.site_name + ' · ' + s.label;
+  $('e-site').innerHTML = platTag(s.platform) + ' ' + typeTag(s.type) +
+    ' · <span class="kbd" style="display:inline-block;max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle">' +
+    esc(s.url) + '</span>';
+  $('e-amount').value = s.amount;
+  $('e-cooldown').value = s.cooldown_min;
+  $('e-max').value = (s.max_claims_day === null || s.max_claims_day === undefined) ? '' : s.max_claims_day;
+  $('e-sitewide').checked = false;
+  $('e-amount-hint').textContent = 'в каталоге: ' + s.amount_catalog + (s.amount_manual ? ' · сейчас изменено вручную' : '');
+  $('e-cooldown-hint').textContent = 'в каталоге: ' + s.cooldown_catalog + ' мин' + (s.cooldown_manual ? ' · изменено вручную' : '');
+  $('e-max-hint').textContent = 'в каталоге: ' + (s.max_claims_catalog === null ? 'без лимита' : s.max_claims_catalog) +
+    (s.max_claims_manual ? ' · изменено вручную' : '');
+  setEditCaptcha(s.captcha);
+  $('edit').classList.add('on');
+}
+
+function closeEdit() { $('edit').classList.remove('on'); editService = null; }
+
+function setEditCaptcha(v) {
+  document.querySelectorAll('#e-captcha button').forEach(b => {
+    b.className = (parseInt(b.dataset.val, 10) === v) ? (v === 1 ? 'on-yes' : v === 0 ? 'on-no' : 'on-unk') : '';
+  });
+  $('e-captcha').dataset.val = v;
+}
+
+async function saveEdit() {
+  if (!editService) return;
+  const body = {
+    amount: $('e-amount').value === '' ? null : parseInt($('e-amount').value, 10),
+    cooldown_min: $('e-cooldown').value === '' ? null : parseInt($('e-cooldown').value, 10),
+    max_claims_day: $('e-max').value === '' ? null : parseInt($('e-max').value, 10),
+    captcha: parseInt($('e-captcha').dataset.val, 10),
+    site_wide: $('e-sitewide').checked,
+  };
+  try {
+    await api('/api/services/' + encodeURIComponent(editService.id), 'POST', body);
+    toast('Сохранено, очередь пересчитана', 'ok');
+    closeEdit();
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function resetEdit() {
+  if (!editService) return;
+  try {
+    await api('/api/services/' + encodeURIComponent(editService.id), 'POST', { reset: true });
+    toast('Вернули значения из каталога', 'ok');
+    closeEdit();
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function cycleCaptcha(id) {
+  const s = findService(id);
+  if (!s) return;
+  const next = s.captcha === -1 ? 0 : s.captcha === 0 ? 1 : -1;
+  try {
+    await api('/api/services/' + encodeURIComponent(id), 'POST', { captcha: next });
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function siteCaptcha(siteId, val) {
+  try {
+    await api('/api/sites/' + encodeURIComponent(siteId), 'POST', { captcha: val });
+    toast('Капча отмечена у всех услуг сайта', 'ok');
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function siteCooldown() {
+  const siteId = $('cat-site').value;
+  if (!siteId) return;
+  const val = $('site-cd').value;
+  try {
+    await api('/api/sites/' + encodeURIComponent(siteId), 'POST',
+      { cooldown_min: val === '' ? null : parseInt(val, 10) });
+    toast('Кулдаун обновлён для всех услуг сайта', 'ok');
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function siteReset() {
+  const siteId = $('cat-site').value;
+  if (!siteId) return;
+  try {
+    await api('/api/sites/' + encodeURIComponent(siteId), 'POST', { reset_overrides: true });
+    toast('Ручные настройки сайта сброшены', 'ok');
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function allSitesAuto() {
+  try {
+    const r = await api('/api/sites_all/mode', 'POST', { mode: 'auto' });
+    toast('Сайтов в auto: ' + r.updated, 'ok');
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function captchaDone(taskId) {
+  try {
+    await api('/api/tasks/' + taskId + '/captcha_done', 'POST', {});
+    toast('Отправил роботу: капча решена', 'ok');
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+function serviceOfTask(taskId) {
+  const t = (ST.tasks || []).find(x => x.id === taskId);
+  if (!t) return null;
+  return findService(t.service_id);
+}
+
+async function markTaskCaptcha() {
+  if (!currentTask) return;
+  const svc = serviceOfTask(currentTask.task_id);
+  if (!svc) { toast('Не нашёл услугу задачи', 'err'); return; }
+  try {
+    await api('/api/services/' + encodeURIComponent(svc.id), 'POST', { captcha: 1 });
+    $('m-captcha-note').textContent = 'запомнил: у сайта есть капча';
+    toast('Запомнил: ' + svc.site_name + ' — с капчей', 'ok');
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function quickStart(serviceId) {
+  const tid = parseInt($('plan-target')?.value || ST.targets[0]?.id, 10);
+  if (!tid) { toast('Сначала добавьте ссылку во вкладке «Мои ссылки»', 'err'); TAB = 'targets'; switchTab('targets'); return; }
+  try {
+    const r = await api('/api/plan', 'POST', { target_id: tid, items: [{ service_id: serviceId, claims: 1 }], autostart: true });
+    const t = r.created && r.created[0];
+    if (!t) { toast((r.warnings || ['Не удалось создать задачу']).join('; '), 'err'); return; }
+    await load();
+    await startTask(t.id);
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function openFullAuto() {
+  // загружаем существующие цели для выпадающего списка (если они есть в ST)
+  const sel = $('fa-link');
+  sel.value = '';
+  $('fa-hint').textContent = '';
+  $('modal-fullauto').classList.add('on');
+}
+
+async function closeFullAuto() {
+  $('modal-fullauto').classList.remove('on');
+  $('fa-progress').style.display = 'none';
+}
+
+async function startFullAuto() {
+  const link = $('fa-link').value.trim();
+  const count = Math.max(1, parseInt($('fa-count').value || '0', 10));
+  const kind = $('fa-kind').value;
+
+  if (!link) { toast('Укажите ссылку на сообщество', 'err'); return; }
+  if (!count || count < 1) { toast('Укажите количество подписчиков', 'err'); return; }
+
+  try {
+    // 1. создаём цель (ссылку)
+    let targetId = null;
+    const existing = ST.targets.find(t => t.url === link);
+    if (existing) {
+      targetId = existing.id;
+    } else {
+      const tr = await api('/api/targets', 'POST', { name: link, platform: 'vk', url: link, kind: kind === 'auto' ? '' : kind });
+      targetId = tr.id;
+      toast('Ссылка добавлена: ' + esc(link), 'ok');
+    }
+
+    // 2. получаем подходящие услуги для этой цели
+    const wz = await api('/api/targets/' + targetId + '/services', 'GET');
+    const groups = wz.groups || [];
+    // ищем группу подписчиков
+    const followersGroup = groups.find(g => g.key.startsWith('followers:'));
+    if (!followersGroup || !followersGroup.items.length) {
+      toast('Нет подходящих услуг подписчиков для этой ссылки', 'err');
+      return;
+    }
+
+    const readyItems = followersGroup.items.filter(i => !i.blocked && i.ready);
+    if (!readyItems.length) {
+      toast('Все услуги подписчиков сейчас заблокированы или в кд', 'err');
+      return;
+    }
+
+    // 3. считаем сколько заходов нужно: цель / сумма amount по всем готовым услугам
+    const perRound = readyItems.reduce((s, i) => s + i.amount, 0);
+    const rounds = Math.ceil(count / perRound);
+    const items = readyItems.map(i => ({ service_id: i.id, claims: rounds }));
+
+    // 4. создаём план с автозапуском
+    const r = await api('/api/plan', 'POST', { target_id: targetId, items, autostart: true });
+    if (!r.created || !r.created.length) {
+      toast((r.warnings || ['Не удалось создать задачи']).join('; '), 'err');
+      return;
+    }
+
+    // 5. показываем прогресс
+    $('fa-hint').textContent = 'Создано задач: ' + r.created.length + '. Софт начнёт крутить сам по таймерам.';
+    $('fa-created').textContent = r.created.length;
+    $('fa-table').innerHTML = r.created.map(c =>
+      '<tr><td>' + esc(c.site) + '</td><td>' + esc(c.label) + '</td><td class="right">' + c.amount + '</td><td>' + (c.status || 'queued') + '</td></tr>'
+    ).join('');
+    $('fa-progress').style.display = 'block';
+    $('fa-status').textContent = 'Задачи в очереди. Автопилот запустит их по мере подхода кулдаунов.';
+    closeFullAuto();
+    await load();
+    switchTab('queue');
+    toast('FULL AUTO запущен: ' + r.created.length + ' задач на ' + count + ' подписчиков', 'ok');
+
+  } catch (e) { toast(e.message, 'err'); }
+}
+async function planSelected() {
+  const tid = parseInt($('plan-target').value, 10);
+  if (!tid) { toast('Выберите ссылку', 'err'); return; }
+  const claims = Math.max(1, parseInt($('plan-claims').value || '1', 10));
+  const items = ST.services
+    .filter(s => s.platform === planPlatform && [...planTypes].some(c => chipMatches(s, c)) && s.site_enabled && s.enabled)
+    .map(s => ({ service_id: s.id, claims }));
+  if (!items.length) { toast('Нет подходящих услуг', 'err'); return; }
+  try {
+    const r = await api('/api/plan', 'POST', { target_id: tid, items, autostart: true });
+    const w = r.warnings && r.warnings.length ? ' Предупреждения: ' + r.warnings.slice(0, 3).join('; ') : '';
+    toast('Создано задач: ' + r.created.length + '.' + w, r.created.length ? 'ok' : 'err');
+    await load();
+    switchTab('queue');
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function runNext() {
+  const t = ST.tasks.find(x => x.status === 'ready');
+  if (!t) { toast('Нет готовых задач — таймеры ещё идут', 'err'); return; }
+  await startTask(t.id);
+}
+
+async function startTask(id) {
+  try {
+    const r = await api('/api/tasks/' + id + '/start', 'POST', {});
+    if (r.mode === 'auto') {
+      if (r.ok) toast('Авто-заход выполнен: +' + (r.units || 0), 'ok');
+      else toast('Авто-заход не удался: ' + r.error, 'err');
+      await load();
+      return;
+    }
+    if (r.mode === 'auto' && r.pending) {
+      toast('Робот пошёл на сайт. Если появится капча — решите её в окне браузера.', 'ok');
+      await load();
+      return;
+    }
+    currentTask = r;
+    $('m-title').textContent = r.site + ' — ' + r.label;
+    $('m-captcha-note').textContent = '';
+    const svc = serviceOfTask(id);
+    if (svc) $('m-captcha-note').textContent = 'сейчас отмечено: ' + svc.captcha_label;
+    $('m-site').textContent = 'Открыть: ' + r.open_url + (r.browser_opened ? ' · браузер открыт' : ' · откройте вручную');
+    $('m-link').value = r.target_url;
+    $('m-hint').textContent = r.hint;
+    $('modal').classList.add('on');
+    tickModal();
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+function tickModal() {
+  if (!currentTask) return;
+  const leftSec = currentTask.deadline - srvNow() / 1000;
+  const el = $('m-timer');
+  const m = Math.floor(Math.max(0, leftSec) / 60), s = Math.floor(Math.max(0, leftSec) % 60);
+  el.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  el.className = 'timer ' + (leftSec <= 0 ? 'ok' : 'warn');
+}
+
+function closeModal() { $('modal').classList.remove('on'); currentTask = null; }
+
+function copyManual() {
+  const inp = $('m-link');
+  inp.select();
+  try { document.execCommand('copy'); toast('Скопировано', 'ok'); } catch (e) { toast('Скопируйте вручную: Ctrl+C', 'err'); }
+}
+
+function openSiteLink() { if (currentTask) window.open(currentTask.open_url, '_blank', 'noopener'); }
+
+async function finishTask(ok) {
+  if (!currentTask) return;
+  try {
+    await api('/api/tasks/' + currentTask.task_id + '/finish', 'POST', { ok });
+    toast(ok ? 'Засчитано +' + currentTask.hold_seconds + '… ок' : 'Отмечено как ошибка', ok ? 'ok' : 'err');
+    closeModal();
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function cancelTask(id) {
+  try { await api('/api/tasks/' + id + '/cancel', 'POST', {}); await load(); } catch (e) { toast(e.message, 'err'); }
+}
+async function retryTask(id) {
+  try { await api('/api/tasks/' + id + '/retry', 'POST', {}); await load(); } catch (e) { toast(e.message, 'err'); }
+}
+
+async function addTarget() {
+  const name = $('tg-name').value.trim();
+  const platform = $('tg-platform').value;
+  const url = $('tg-url').value.trim();
+  const kind = $('tg-kind').value;
+  if (!url) { toast('Вставьте ссылку', 'err'); return; }
+  if (kind === 'auto' && !detectedKind) {
+    toast('Не смог определить по ссылке, что это: сообщество, страница или запись. Выберите вручную.', 'err');
+    $('tg-kind').focus();
+    return;
+  }
+  try {
+    const r = await api('/api/targets', 'POST', { name: name || url, platform, url, kind });
+    $('tg-name').value = ''; $('tg-url').value = ''; $('tg-kind').value = 'auto';
+    detectedKind = '';
+    kindHintFromSelect();
+    toast('Ссылка добавлена: ' + (SUBJ_SHORT[r.kind] || 'объект не определён'), r.kind ? 'ok' : 'err');
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+// ---- тип объекта у ссылки
+let detectedKind = '';
+function kindHintFromSelect() {
+  const box = $('tg-kind-hint');
+  if (!box) return;
+  const chosen = $('tg-kind').value;
+  if (chosen !== 'auto') {
+    box.innerHTML = 'Сохраним как <b>' + esc(SUBJECTS[chosen] || chosen) + '</b>.';
+    return;
+  }
+  box.innerHTML = detectedKind
+    ? 'По ссылке определилось: <b>' + esc(SUBJECTS[detectedKind] || detectedKind) + '</b>. Если это не так — выберите вручную.'
+    : 'Подписчики на сообщество и на личную страницу — разные услуги. Укажите тип вручную, если по ссылке не понять.';
+}
+
+let kindTimer = null;
+function detectKind() {
+  const url = ($('tg-url').value || '').trim();
+  const platform = $('tg-platform').value;
+  clearTimeout(kindTimer);
+  if (!url) { detectedKind = ''; kindHintFromSelect(); return; }
+  kindTimer = setTimeout(async () => {
+    try {
+      const r = await api('/api/detect', 'POST', { platform, url });
+      detectedKind = r.kind || '';
+      if (detectedKind && $('tg-kind').value === 'auto') $('tg-kind-hint').innerHTML =
+        'По ссылке определилось: <b>' + esc(r.label) + '</b>. Если это не так — выберите вручную.';
+      else kindHintFromSelect();
+    } catch (e) { detectedKind = ''; kindHintFromSelect(); }
+  }, 350);
+}
+
+async function saveTargetKind(id, kind) {
+  try {
+    await api('/api/targets/' + id, 'POST', { kind });
+    toast('Тип ссылки: ' + (SUBJ_SHORT[kind] || 'определим по ссылке'), 'ok');
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+function onPlanTargetChange() {
+  chipsTouched = false;                      // под новую ссылку подберём чипы заново
+  planTypes = new Set([defaultChip(chipKeys())]);
+  render();
+}
+
+async function delTarget(id) {
+  try { await api('/api/targets/' + id, 'DELETE'); await load(); } catch (e) { toast(e.message, 'err'); }
+}
+
+async function deliveryCheck(id) {
+  try { await api('/api/tasks/' + id + '/delivery/check', 'POST', {}); await load(); }
+  catch (e) { toast(e.message, 'err'); }
+}
+async function deliveryConfirm(id) {
+  if (!confirm('Подтвердите только если сами проверили на площадке: заказ принят. Прирост всё равно будет проверен.')) return;
+  try { await api('/api/tasks/' + id + '/delivery/confirm', 'POST', {confirm:true}); await load(); }
+  catch (e) { toast(e.message, 'err'); }
+}
+async function deliveryAbandon(id) {
+  if (!confirm('Заказ может ещё выполняться. Разблокировка разрешит следующий сайт и может привести к перекрытию или переполнению. Продолжить?')) return;
+  try { await api('/api/tasks/' + id + '/delivery/abandon', 'POST', {confirm:true}); await load(); }
+  catch (e) { toast(e.message, 'err'); }
+}
+
+async function saveSettings() {
+  const body = {
+    autopilot: $('st-autopilot').checked ? '1' : '0',
+    full_auto: $('st-full_auto').checked ? '1' : '0',
+    auto_open: $('st-auto_open').checked ? '1' : '0',
+    captcha_browser_visible: $('st-captcha_browser_visible').checked ? '1' : '0',
+    captcha_wait_sec: $('st-captcha_wait_sec').value || '300',
+    open_browser: $('st-open_browser').checked ? '1' : '0',
+    dry_run: $('st-dry_run').checked ? '1' : '0',
+    work_hours: $('st-work_hours').value || '8-23',
+    global_min_gap_sec: $('st-global_min_gap_sec').value || '20',
+    daily_total_limit: $('st-daily_total_limit').value || '0',
+    strict_subject: $('st-strict_subject').checked ? '1' : '0',
+    browser_backend: $('st-browser_backend').value || 'auto',
+    order_email: ($('st-order_email').value || '').trim(),
+    nojs_enabled: $('st-nojs_enabled').checked ? '1' : '0',
+    captcha_autosolve: $('st-captcha_autosolve').checked ? '1' : '0',
+    captcha_ocr: $('st-captcha_ocr').checked ? '1' : '0',
+  };
+  try { await api('/api/settings', 'POST', body); SETTINGS_DIRTY = false; SETTINGS_SNAP = ''; toast('Сохранено', 'ok'); await load(); }
+  catch (e) { toast(e.message, 'err'); }
+}
+
+async function applyTheme(dark) {
+  document.body.dataset.theme = dark ? 'dark' : 'light';
+  try { await api('/api/settings', 'POST', { theme: dark ? 'dark' : 'light' }); await load(); }
+  catch (e) { toast(e.message, 'err'); }
+}
+
+async function loadLog() {
+  try {
+    const r = await api('/api/events?limit=200');
+    $('log-body').innerHTML = r.events.map(e =>
+      '<div class="ev"><div class="muted mono">' + dt(e.ts) + '</div>' +
+      '<div class="lv ' + esc(e.level) + '">' + esc(e.level) + '</div>' +
+      '<div>' + esc(e.message) + '</div></div>').join('') || '<div class="empty">Журнал пуст</div>';
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+// ------------------------------------------------------------------ табы и таймеры
+// ---------- робот: движки и проверка площадки ----------
+let BROWSERS = null;
+
+async function stLoadBrowsers() {
+  try {
+    const r = await api('/api/browsers');
+    const box = $('st-browsers');
+    if (!box) return;
+    const rows = (r.backends || []).map(b => {
+      const mark = b.ready ? '<span class="gl-badge ok">готов</span>'
+                           : '<span class="gl-badge dim">не установлен</span>';
+      const cmd = b.ready ? '' : '<div class="note">' + esc(b.pip) + (b.post ? ' && ' + esc(b.post) : '') + '</div>';
+      return '<div style="margin-bottom:8px">' + mark + ' <b>' + esc(b.title) + '</b> — ' +
+             esc(b.why) + cmd + '</div>';
+    }).join('');
+    const solvers = (r.solvers || []).map(x => {
+      const mark = x.ready ? '<span class="gl-badge ok">готов</span>'
+                           : '<span class="gl-badge dim">не установлен</span>';
+      return '<div style="margin-bottom:6px">' + mark + ' <b>' + esc(x.title) + '</b> — ' + esc(x.why) +
+             (x.ready || !x.pip ? '' : '<div class="note"><span class="kbd">' + esc(x.pip) + '</span></div>') +
+             '</div>';
+    }).join('');
+    box.innerHTML = rows + '<div class="note">Быстрый путь без браузера (curl_cffi): ' +
+      (r.curl ? '<b>есть</b>' : 'не установлен — <span class="kbd">pip install curl_cffi</span>') + '</div>';
+    const sbox = $('st-solvers');
+    if (sbox) sbox.innerHTML = '<div style="margin-bottom:6px"><b>Решение капч</b>' +
+      (r.autosolve ? '' : ' — <span style="color:#a3283c">выключено в настройках</span>') + '</div>' + solvers;
+  } catch (e) { /* не критично */ }
+}
+
+async function pfLoadBrowsers() {
+  try {
+    const r = await api('/api/browsers');
+    BROWSERS = r;
+    const box = $('pf-browsers');
+    if (!box) return;
+    const best = (r.backends || []).find(b => b.id === r.best);
+    const chosen = r.chosen && r.chosen !== 'auto'
+      ? ((r.backends || []).find(b => b.id === r.chosen) || {}).title + ' (выбран вручную)'
+      : (best ? best.title + ' — лучший доступный' : 'нет браузерного движка');
+    const cmd = (r.best || 'playwright') === 'patchright'
+      ? 'pip install patchright && python -m patchright install chromium'
+      : 'pip install playwright && python -m playwright install chromium';
+    const caps = (r.solvers || []).filter(x => x.id !== 'human');
+    const capsLine = caps.length
+      ? ' · капчи: ' + caps.map(x => esc(x.title) + (x.ready ? '' : ' (нет)')).join(', ')
+      : '';
+    box.innerHTML = '<b>Робот:</b> ' + esc(chosen) + capsLine +
+      (r.curl ? ' · быстрый путь без браузера: <b>curl_cffi</b> (есть)' : '') +
+      (best ? '' : ' · <span style="color:#a3283c">робот не сможет работать — установите: <code>' + esc(cmd) + '</code></span>');
+  } catch (e) { /* молча: экран площадок не должен падать из-за плашки */ }
+}
+
+function pfRobotResult(r) {
+  const box = $('pf-robot-box');
+  if (!box) return;
+  const good = r.ok === true || r.verdict === 'ok';
+  const steps = (r.steps || []).map(x => '<div class="note">· ' + esc(x) + '</div>').join('');
+  box.style.display = 'block';
+  box.innerHTML = '<div class="panel" style="padding:12px 14px;border-color:' +
+    (good ? '#c6e9d5' : '#f4cdd4') + '">' +
+    '<div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">' +
+      '<b>Робот: ' + esc(r.service_label || r.site_id || '') + '</b>' +
+      '<span class="gl-badge ' + (good ? 'ok' : 'err') + '">' + esc(r.verdict || '—') + '</span>' +
+      (r.backend ? '<span class="note">движок: ' + esc(r.backend) + '</span>' : '') +
+      (r.upgraded ? '<span class="gl-badge ok">класс ' + esc(r.upgraded) + '</span>' : '') +
+      '<span style="flex:1"></span>' +
+      '<button class="small" onclick="document.getElementById(\'pf-robot-box\').style.display=\'none\'">скрыть</button>' +
+    '</div>' +
+    '<div class="note" style="margin:6px 0">' + esc(r.detail || '') + '</div>' + steps +
+    (r.shot ? '<div class="note">скриншот: ' + esc(r.shot) + '</div>' : '') +
+    '</div>';
+}
+
+async function pfRobot(siteId) {
+  const box = $('pf-robot-box');
+  if (box) {
+    box.style.display = 'block';
+    box.innerHTML = '<div class="panel" style="padding:12px 14px"><b>Робот проверяет ' + esc(siteId) +
+      '…</b><div class="note">Открою страницу заказа, найду поле ссылки и кнопку. Ничего не отправляю. ' +
+      'Обычно это 10–25 секунд.</div></div>';
+  }
+  try {
+    const r = await api('/api/sites/' + siteId + '/robot_check', 'POST', { headless: true });
+    pfRobotResult(r);
+    await pfLoad();
+  } catch (e) {
+    if (box) box.innerHTML = '<div class="panel" style="padding:12px 14px;border-color:#f4cdd4">' +
+      '<b>Робот не смог проверить</b><div class="note">' + esc(e.message) + '</div></div>';
+  }
+}
+
+async function taskRobot(taskId) {
+  try {
+    const r = await api('/api/tasks/' + taskId + '/robot', 'POST', {});
+    if (r.ok === false) { toast(r.error || 'Робот занят', 'err'); return; }
+    toast('Робот пошёл на площадку — смотрите «Очередь»', 'ok');
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+// ---------- цели: «сколько и за какой срок» -> план заходов ----------
+const GL_METRICS = [['likes','лайки'],['views','просмотры'],['followers','подписчики'],
+                    ['friends','друзья'],['plays','прослушивания'],['reposts','репосты'],['comments','комментарии']];
+let GL_PREVIEW = null;
+
+function glMetricOptions(sel) {
+  return GL_METRICS.map(([k, t]) => '<option value="' + k + '"' + (k === sel ? ' selected' : '') + '>' + t + '</option>').join('');
+}
+
+function glAddRow(metric = 'likes', need = '', have = '') {
+  const box = $('gl-metrics');
+  const div = document.createElement('div');
+  div.className = 'gl-metric';
+  div.innerHTML = '<select onchange="glRecalcHint()">' + glMetricOptions(metric) + '</select>' +
+    '<input type="number" min="1" placeholder="сколько" value="' + need + '">' +
+    '<input type="number" min="0" placeholder="уже есть (можно пусто)" value="' + have + '">' +
+    '<button class="small" onclick="this.parentNode.remove()" title="убрать">✕</button>';
+  box.appendChild(div);
+}
+
+function glReset() {
+  $('gl-metrics').innerHTML = '';
+  glAddRow('likes');
+  $('gl-result').innerHTML = '<div class="note">Заполните, сколько нужно, и нажмите «Посчитать».</div>';
+  $('gl-verdict').textContent = '';
+  GL_PREVIEW = null;
+}
+
+function glRecalcHint() {}
+
+function glItems() {
+  const out = [];
+  document.querySelectorAll('#gl-metrics .gl-metric').forEach(r => {
+    const metric = r.querySelector('select').value;
+    const inputs = r.querySelectorAll('input');
+    const need = parseInt(inputs[0].value || '0', 10);
+    const haveRaw = (inputs[1].value || '').trim();
+    // пустое «уже есть» = софт сам определит актуальное значение при создании цели
+    const have = haveRaw === '' ? null : parseInt(haveRaw, 10);
+    if (need > 0) out.push({ metric, need, have_before: have });
+  });
+  return out;
+}
+
+function glPayload() {
+  const tid = parseInt($('gl-target').value || '0', 10);
+  if (!tid) throw new Error('Сначала добавьте ссылку на экране «Ссылки»');
+  const items = glItems();
+  if (!items.length) throw new Error('Укажите, сколько нужно накрутить');
+  const unit = $('gl-term-unit').value;
+  const term = Math.max(1, parseFloat($('gl-term').value || '1'));
+  const body = { target_id: tid, items, pace: $('gl-pace').value };
+  body[unit] = term;
+  return body;
+}
+
+const GL_VERDICT = { feasible: ['ok','выполнимо'], tight: ['warn','впритык'],
+                     impossible: ['err','невыполнимо'], done: ['dim','уже есть'] };
+
+function glFmtDate(ts) {
+  return ts ? new Date(ts * 1000).toLocaleString('ru-RU',
+    {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'}).replace(',', '') : '—';
+}
+function glVisits(n) {
+  const a = Math.abs(n) % 100, b = a % 10;
+  const w = (a > 10 && a < 20) ? 'заходов' : (b === 1 ? 'заход' : (b >= 2 && b <= 4 ? 'захода' : 'заходов'));
+  return n + ' ' + w;
+}
+const GL_WORDS = { likes:['лайк','лайка','лайков'], views:['просмотр','просмотра','просмотров'],
+  followers:['подписчик','подписчика','подписчиков'], friends:['друг','друга','друзей'],
+  plays:['прослушивание','прослушивания','прослушиваний'], reposts:['репост','репоста','репостов'],
+  comments:['комментарий','комментария','комментариев'] };
+function glWord(n, metric) {
+  const f = GL_WORDS[metric] || ['', '', ''];
+  const a = Math.abs(n) % 100, b = a % 10;
+  const w = (a > 10 && a < 20) ? f[2] : (b === 1 ? f[0] : (b >= 2 && b <= 4 ? f[1] : f[2]));
+  return n + ' ' + w;
+}
+
+async function glPreview() {
+  let body;
+  try { body = glPayload(); } catch (e) { toast(e.message, 'err'); return; }
+  toast('Считаю ёмкость площадок…');
+  try {
+    const r = await api('/api/goals/preview', 'POST', body);
+    GL_PREVIEW = { body, res: r };
+    renderGoalPreview(r);
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+function renderGoalPreview(r) {
+  const rows = r.items.map(it => {
+    const [cls, word] = GL_VERDICT[it.verdict] || ['dim', it.verdict];
+    let line = '<div class="gl-metric-line">' +
+      '<span class="gl-badge ' + cls + '">' + word + '</span>' +
+      '<b>' + esc(glWord(it.need, it.metric)) + '</b>' +
+      '<span class="note">площадок ' + it.sites_n + '</span>';
+    if (it.planned && it.verdict !== 'done') {
+      line += '<span class="note">· ' + glVisits(it.visits) + ' с ' + glFmtDate(it.first_at) + ' до ' + glFmtDate(it.last_at) + '</span>';
+    } else if (it.verdict === 'impossible') {
+      line += '<span class="note">· реальный максимум за этот срок: <b>' + (it.planned ? esc(glWord(it.planned, it.metric)) : '0 — площадки не дают такую метрику') + '</b></span>';
+    }
+    if (it.reasons && it.reasons.length) {
+      line += '<div class="note" style="flex-basis:100%;color:#8a5a06">' + it.reasons.map(esc).join('; ') + '</div>';
+    }
+    if (it.sites && it.sites.length && it.verdict !== 'feasible') {
+      line += '<div class="note" style="flex-basis:100%">' + it.sites.slice(0, 4).map(s =>
+        esc(s.site) + ' (по ' + s.per_visit + ' → ' + Math.round(s.capacity) + '; ' + esc(s.note) + ')').join(' · ') + '</div>';
+    }
+    return line + '</div>';
+  }).join('');
+
+  const sug = (r.suggestions || []).map((s, i) =>
+    '<button class="small" onclick="glSuggestion(' + i + ')">' + esc(s.text) + '</button>').join(' ');
+
+  $('gl-verdict').textContent = '· ' + glVisits(r.visits || 0) + ', до ' + glFmtDate(r.deadline_at);
+  $('gl-result').innerHTML =
+    '<div class="gl-big" style="margin-bottom:8px">' + esc(r.headline || '') + '</div>' + rows +
+    (sug ? '<div class="gl-actions">' + sug + '</div>' : '') +
+    '<div class="gl-actions"><button class="primary" onclick="glStart()">' + (r.feasible ? 'Запустить цель' : 'Запустить, что успеем') + '</button></div>';
+}
+
+function glSuggestion(i) {
+  if (!GL_PREVIEW) return;
+  const s = GL_PREVIEW.res.suggestions[i];
+  if (!s) return;
+  if (s.kind === 'extend') {
+    $('gl-term-unit').value = 'days';
+    $('gl-term').value = String((GL_PREVIEW.body.days || 1) + s.days);
+    glPreview();
+  } else if (s.kind === 'max') {
+    // оставляем столько, сколько реально влезает
+    const planned = {};
+    GL_PREVIEW.res.items.forEach(it => { planned[it.metric] = it.planned; });
+    document.querySelectorAll('#gl-metrics .gl-metric').forEach(row => {
+      const metric = row.querySelector('select').value;
+      const inputs = row.querySelectorAll('input');
+      if (planned[metric] !== undefined && planned[metric] > 0) inputs[0].value = String(planned[metric]);
+    });
+    glPreview();
+  } else {
+    toast(s.text);
+  }
+}
+
+async function glStart() {
+  if (!GL_PREVIEW) return;
+  try {
+    const r = await api('/api/goals', 'POST', GL_PREVIEW.body);
+    toast('Цель создана: ' + r.created_n + ' заходов в очереди', 'ok');
+    await goalsLoad();
+    await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function goalsLoad() {
+  await fillGoalTargets();
+  if (!$('gl-metrics').children.length) glAddRow('likes');   // сразу одна строка, чтобы было куда вписать
+  try {
+    const r = await api('/api/goals');
+    renderGoalList(r.goals || []);
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function fillGoalTargets() {
+  const sel = $('gl-target');
+  if (!sel) return;
+  const r = await api('/api/state');
+  ST = r;
+  const cur = sel.value;
+  sel.innerHTML = (r.targets || []).map(t => '<option value="' + t.id + '">' + esc(t.name) + ' — ' + esc(t.url) + '</option>').join('');
+  if (cur) sel.value = cur;
+  if (!(r.targets || []).length) sel.innerHTML = '<option value="">— сначала добавьте ссылку —</option>';
+  sel.onchange = () => glDetect(true);       // сменили ссылку — снимаем актуальные значения
+  if (sel.value) glDetect(true);
+}
+
+// «уже есть»: снять актуальные счётчики ВК для выбранной ссылки и подставить в поля
+let GL_LAST_TID = null;
+async function glDetect(auto) {
+  const sel = $('gl-target');
+  if (!sel || !sel.value) return;
+  const tid = parseInt(sel.value, 10);
+  if (auto && GL_LAST_TID === tid) return;   // эта ссылка уже проверена
+  GL_LAST_TID = tid;
+  const btn = $('gl-detect');
+  if (!auto && btn) { btn.disabled = true; btn.textContent = 'Определяю…'; }
+  try {
+    const r = await api('/api/vkstats?target_id=' + tid);
+    const c = r.counts || {};
+    let filled = 0; const parts = [];
+    document.querySelectorAll('#gl-metrics .gl-metric').forEach(row => {
+      const metric = row.querySelector('select').value;
+      const have = row.querySelectorAll('input')[1];
+      if (Object.prototype.hasOwnProperty.call(c, metric) && c[metric] !== null && c[metric] !== undefined) {
+        have.value = c[metric];
+        filled++; parts.push(glWord(c[metric], metric));
+      }
+    });
+    if (filled) toast('Актуальные значения: ' + parts.join(', '), 'ok');
+    else toast('Публичных счётчиков для выбранных метрик не видно (друзья и прослушивания ВК не показывает)');
+  } catch (e) { toast(e.message, 'err'); }
+  finally { if (!auto && btn) { btn.disabled = false; btn.textContent = 'Определить «уже есть»'; } }
+}
+
+function renderGoalList(goals) {
+  const box = $('gl-list');
+  $('gl-count').textContent = goals.length ? '· ' + goals.length + ' в работе и в истории' : '';
+  if (!goals.length) { box.innerHTML = '<div class="note">Пока целей нет. Посчитайте первую слева.</div>'; return; }
+  box.innerHTML = goals.map(g => {
+    const items = g.items.map(i =>
+      '<div style="margin-bottom:8px">' +
+      '<div style="display:flex;gap:10px;align-items:baseline">' +
+      '<b>' + esc(glWord(i.done, i.metric)) + '</b><span class="note">из ' + esc(glWord(i.need, i.metric)) + '</span>' +
+      '<span style="flex:1"></span><span class="note">' + i.percent + '%</span></div>' +
+      '<div class="gl-bar"><i style="width:' + i.percent + '%"></i></div>' +
+      (i.left ? '<div class="note">осталось ' + esc(glWord(i.left, i.metric)) + (i.next_at ? ' · следующий заход ' + glFmtDate(i.next_at) : '') + '</div>' : '') +
+      '</div>').join('');
+    const blockers = (g.blockers || []).map(b => '<div class="note" style="color:#8a5a06">⚠ ' + esc(b) + '</div>').join('');
+    const notes = (g.notes || []).map(n => '<div class="note" style="color:#5d6b7a">· ' + esc(n) + '</div>').join('');
+    const st = { running: 'в работе', planned: 'запланирована', paused: 'на паузе', done: 'выполнена' }[g.status] || g.status;
+    const canPause = g.status !== 'done' && g.status !== 'paused';
+    const canResume = g.status === 'paused';
+    return '<div class="gl-card">' +
+      '<div class="top"><b>' + esc(g.title) + '</b>' +
+      '<span class="note">к ' + glFmtDate(g.deadline_at) + '</span>' +
+      '<span style="flex:1"></span><span class="gl-badge ' + (g.status === 'done' ? 'ok' : (g.status === 'paused' ? 'warn' : 'dim')) + '">' + st + '</span></div>' +
+      '<div class="note" style="margin-bottom:8px">' + esc(g.headline) + '</div>' + items + blockers + notes +
+      '<div class="gl-actions">' +
+        (canPause ? '<button class="small" onclick="gAct(' + g.id + ',\'pause\')">Пауза</button>' : '') +
+        (canResume ? '<button class="small" onclick="gAct(' + g.id + ',\'resume\')">Продолжить</button>' : '') +
+        (g.status !== 'done' ? '<button class="small" onclick="gExtend(' + g.id + ')">+1 день</button>' : '') +
+        (g.status !== 'done' ? '<button class="small" onclick="gAct(' + g.id + ',\'replan\')">Пересчитать</button>' : '') +
+        '<button class="small" onclick="gRemove(' + g.id + ')">Удалить</button>' +
+      '</div></div>';
+  }).join('');
+}
+
+async function gAct(id, act) {
+  try {
+    const r = await api('/api/goals/' + id + '/' + act, 'POST', {});
+    toast(act === 'pause' ? 'На паузе' : (act === 'resume' ? 'Снова в работе' : 'Пересчитано'), 'ok');
+    await goalsLoad(); await load();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function gExtend(id) {
+  try { await api('/api/goals/' + id + '/extend', 'POST', { days: 1 }); toast('Срок продлён на день', 'ok'); await goalsLoad(); await load(); }
+  catch (e) { toast(e.message, 'err'); }
+}
+
+async function gRemove(id) {
+  if (!confirm('Удалить цель и снять её заходы из очереди?')) return;
+  try { await api('/api/goals/' + id, 'DELETE'); toast('Цель удалена', 'ok'); await goalsLoad(); await load(); }
+  catch (e) { toast(e.message, 'err'); }
+}
+
+// ---------- площадки: что работает, что с капчей, что сломалось ----------
+let PF = null;
+
+async function pfLoad() {
+  pfLoadBrowsers();
+  try {
+    const r = await api('/api/sites/health');
+    PF = r;
+    renderPlatforms();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+function pfClassTag(a) {
+  const map = { A: 'ok', B: 'warn', C: 'dim' };
+  return '<span class="tag ' + (map[a] || 'dim') + '" title="' +
+    ({A:'полный автопилот',B:'автопилот с ожиданием',C:'нужен браузер/человек'}[a] || '') + '">' + (a || '?') + '</span>';
+}
+
+function pfStatusTag(st) {
+  const cls = st === 'работает' ? 'ok' : (st === 'капча' ? 'warn' :
+              (st === 'форма изменилась' || st === 'не работает') ? 'err' : 'dim');
+  return '<span class="tag ' + cls + '">' + esc(st) + '</span>';
+}
+
+function renderPlatforms() {
+  const box = $('pf-list');
+  if (!box || !PF) return;
+  const sm = PF.summary || {};
+  $('pf-summary').textContent = '· ' + (sm.working || 0) + ' работают, ' + (sm.captcha || 0) +
+    ' с капчей, ' + (sm.broken || 0) + ' сломаны, ' + (sm.off || 0) + ' выключены';
+  const rows = PF.sites.map(s => {
+    const hold = s.hold_seconds ? mmss(s.hold_seconds) : '—';
+    const checked = s.checked_at ? new Date(s.checked_at * 1000).toLocaleString('ru-RU',
+        {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'}) : 'не проверялась';
+    const caps = (s.captcha || []).length ? s.captcha.join(', ') : '—';
+    return '<tr>' +
+      '<td><b>' + esc(s.name || s.site_id) + '</b>' +
+        (s.free_page ? ' <a href="' + esc(s.free_page) + '" target="_blank" rel="noopener" class="note">↗</a>' : '') +
+        (s.degraded_note ? '<div class="note" style="color:var(--warn)">' + esc(s.degraded_note) + '</div>' : '') +
+      '</td>' +
+      '<td>' + pfClassTag(s.automation) + '</td>' +
+      '<td>' + esc(caps) + '</td>' +
+      '<td>' + (s.pool_daily ? ('пул ' + s.pool_daily + '/сутки')
+                : (s.hold_label ? esc(s.hold_label.slice(0, 40))
+                : (s.hold_seconds ? hold : '—'))) + '</td>' +
+      '<td>' + pfStatusTag(s.status) + '</td>' +
+      '<td class="note">' + esc(checked) + '</td>' +
+      '<td style="text-align:right;white-space:nowrap">' +
+        '<button class="small" onclick="pfRobot(\'' + s.site_id + '\')">Робот</button> ' +
+        '<button class="small" onclick="pfCheck(\'' + s.site_id + '\')">Форма</button> ' +
+        '<button class="small" onclick="pfToggle(\'' + s.site_id + '\',' + (s.enabled ? 'false' : 'true') + ')">' +
+          (s.enabled ? 'Выключить' : 'Включить') + '</button>' +
+      '</td></tr>';
+  }).join('');
+  box.innerHTML = '<table class="table"><thead><tr><th>Площадка</th><th>Класс</th><th>Капча</th>' +
+    '<th>Таймер/пул</th><th>Статус</th><th>Проверена</th><th></th></tr></thead><tbody>' +
+    rows + '</tbody></table>';
+}
+
+async function pfCheck(siteId) {
+  toast('Проверяю площадку…');
+  try {
+    const r = await api('/api/sites/check', 'POST', { site_id: siteId });
+    toast(r.note || 'Готово', r.verdict === 'ok' || r.verdict === 'js' ? 'ok' : 'err');
+    await pfLoad();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+async function pfCheckAll() {
+  const btn = $('pf-check-all');
+  if (btn) { btn.disabled = true; btn.textContent = 'Проверяю…'; }
+  toast('Проверяю площадки, это займёт до минуты');
+  try {
+    const r = await api('/api/sites/check_all', 'POST', {});
+    toast('Проверено: ' + r.checked, 'ok');
+    await pfLoad();
+  } catch (e) { toast(e.message, 'err'); }
+  finally { if (btn) { btn.disabled = false; btn.textContent = 'Проверить все'; } }
+}
+
+async function pfToggle(siteId, enabled) {
+  try {
+    await api('/api/sites/' + siteId, 'POST', { enabled: enabled });
+    toast(enabled ? 'Площадка включена' : 'Площадка выключена', 'ok');
+    await pfLoad();
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+function switchTab(tab) {
+  TAB = tab;
+  document.querySelectorAll('nav button').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  ['wizard','dash','catalog','targets','queue','log','settings','platforms','goals'].forEach(t => {
+    const el = $('tab-' + t); if (el) el.style.display = (t === tab ? '' : 'none');
+  });
+  if (tab === 'log') loadLog();
+  if (tab === 'platforms') pfLoad();
+  if (tab === 'goals') goalsLoad();
+  if (tab === 'settings') { SETTINGS_DIRTY = false; stLoadBrowsers(); settingsRenderIfChanged(true); }
+  render();
+}
+document.querySelectorAll('nav button').forEach(b => b.onclick = () => switchTab(b.dataset.tab));
+switchTab(TAB);            // на старте видна только стартовая вкладка, остальные скрыты
+
+// обновление раз в 2.5 с
+setInterval(load, 2500);
+// локальный тик таймеров (не ждём сети)
+setInterval(() => {
+  tickModal();
+  document.querySelectorAll('[data-deadline]').forEach(el => {
+    const d = parseInt(el.dataset.deadline, 10);
+    el.textContent = left(d - srvNow() / 1000);
+  });
+}, 500);
+// смена площадки в планировщике
+document.addEventListener('change', (e) => {
+  if (e.target.id === 'plan-platform') { planPlatform = e.target.value; planTypes = new Set(); chipsTouched = false; render(); }
+});
+// Enter в поле ссылки
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && e.target.id === 'tg-url') addTarget();
+  if (e.key === 'Escape') closeModal();
+});
+
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+# Ядро VK Free Farm работает на чистом Python 3.9+ — стандартной библиотеки достаточно
+# для интерфейса, планирования и ручного режима (assisted).
+#
+# Ниже — необязательные компоненты «робота» (режим auto). run.py при первом запуске
+# сам поставит недостающее и сам же поставит браузер; этот файл — для тех, кто
+# предпочитает ставить зависимости вручную:
+#     pip install -r requirements.txt
+#     python -m patchright install chromium
+#
+# Все компоненты — БЕСПЛАТНЫЕ. Нет платных капча-ферм и прокси:
+#   * Patchright — патченный Playwright без следов автоматизации
+#   * playwright-stealth — дополнительные патчи утечек браузера
+#   * ddddocr — локальный OCR для текстовых картинок-капч
+#   * curl_cffi — HTTP с отпечатком Chrome TLS/JA3 (обход детекта скрипта)
+#   * cloudscraper — обход Cloudflare IUAM («Just a moment…») без браузера
+#   * pypasser — обход reCAPTCHA v3 через аудио-челлендж
+#   * proxybroker2 — поиск и проверка публичных прокси
+#   * stem / torpy — Tor-клиент с ротацией цепей (новый IP на каждый заход)
+#   * (опционально) humancursor — человекоподобное движение мыши (нужен дисплей)
+
+patchright>=1.49
+playwright-stealth>=2.0
+ddddocr>=1.5
+curl_cffi>=0.17
+cloudscraper>=1.2
+pypasser>=1.1
+proxybroker2>=2.0
+stem>=1.8
+torpy>=1.1
+xvfbwrapper>=0.2

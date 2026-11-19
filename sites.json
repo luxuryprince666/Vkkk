@@ -1,0 +1,1696 @@
+[
+  {
+    "id": "smm8",
+    "name": "SMM8",
+    "free_page": "https://smm8.com/free-vk-followers",
+    "home": "https://smm8.com",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [
+      "turnstile-интерактив (shadow DOM)"
+    ],
+    "hold": "таймер 30 минут, страница должна быть открыта",
+    "page_must_stay_open": false,
+    "automation_class": "B",
+    "obstacles": [
+      "форма на JS, капчи в HTML нет",
+      "кулдаун 30 мин на любой инструмент"
+    ],
+    "notes": "Отдельная бесплатная страница ВК-подписчиков без логина: 10 шт./заказ, кулдаун 30 мин, до 3 заказов в сутки (из API). Виджет ravin.js: POST /api/start {code,link,token} → ticket → POST /api {ticket} через 1800 с. Turnstile в закрытом shadow DOM: автоклик по фрейму возможен, но patchright-хром и camoufox с датацентрового IP отклоняются («Security check failed») — на домашнем IP должен проходить; при отказе драйвер ждёт ручного клика в окне задачи.",
+    "vk_services": [
+      {
+        "id": "smm8-vk-followers",
+        "label": "Подписчики ВК (профиль/группа/паблик)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 30,
+        "max_claims_day": 48,
+        "captcha": [],
+        "has_link_field": false
+      },
+      {
+        "id": "smm8-vk-likes",
+        "label": "Лайки ВК",
+        "type": "likes",
+        "subject": "post",
+        "amount": 10,
+        "cooldown_min": 30,
+        "max_claims_day": 48,
+        "captcha": [],
+        "has_link_field": false
+      },
+      {
+        "id": "smm8-vk-views",
+        "label": "Просмотры видео ВК",
+        "type": "views",
+        "subject": "post",
+        "amount": 100,
+        "cooldown_min": 30,
+        "max_claims_day": 48,
+        "captcha": [],
+        "has_link_field": false
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "",
+        "placeholder": "Filter, for example likes"
+      },
+      {
+        "name": "",
+        "placeholder": "https://instagram.com/yourprofile"
+      },
+      {
+        "name": "",
+        "placeholder": "Search the questions"
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "prskill",
+    "name": "PRSkill",
+    "free_page": "https://prskill.ru/#nakrutka-besplatno",
+    "home": "https://prskill.ru",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [
+      "turnstile"
+    ],
+    "hold": "мгновенно",
+    "page_must_stay_open": false,
+    "automation_class": "C",
+    "obstacles": [
+      "Turnstile на форме заказа",
+      "нужен e-mail в форме"
+    ],
+    "notes": "Бесплатно каждые 30 минут без ограничения количества заказов. ВК: 10 вступивших, 25 лайков, 100 просмотров. Самый щедрый по частоте, но с капчей Cloudflare.",
+    "vk_services": [
+      {
+        "id": "prskill-vk-followers",
+        "label": "Подписчики ВК (вступившие)",
+        "type": "followers",
+        "subject": "community",
+        "amount": 10,
+        "cooldown_min": 30,
+        "max_claims_day": 48,
+        "captcha": [
+          "turnstile"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "prskill-vk-likes",
+        "label": "Лайки на запись ВК",
+        "type": "likes",
+        "subject": "post",
+        "amount": 25,
+        "cooldown_min": 30,
+        "max_claims_day": 48,
+        "captcha": [
+          "turnstile"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "prskill-vk-views",
+        "label": "Просмотры записи ВК",
+        "type": "views",
+        "subject": "post",
+        "amount": 100,
+        "cooldown_min": 30,
+        "max_claims_day": 48,
+        "captcha": [
+          "turnstile"
+        ],
+        "has_link_field": true
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "",
+        "placeholder": "Пример: test@mail.ru"
+      },
+      {
+        "name": "",
+        "placeholder": "Кол-во"
+      },
+      {
+        "name": "",
+        "placeholder": "Пример: test@mail.ru"
+      },
+      {
+        "name": "",
+        "placeholder": "Кол-во"
+      },
+      {
+        "name": "",
+        "placeholder": "Пример: test@mail.ru"
+      },
+      {
+        "name": "",
+        "placeholder": "Кол-во"
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "smmmedia",
+    "name": "SMM.media",
+    "free_page": "https://smm.media",
+    "home": "https://smm.media",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [
+      "recaptcha"
+    ],
+    "hold": "очередь ~37 сек + 1 раз в 20 мин",
+    "page_must_stay_open": false,
+    "automation_class": "C",
+    "obstacles": [
+      "reCAPTCHA на странице заказа",
+      "CSRF-токен _token",
+      "очередь с таймером"
+    ],
+    "notes": "Один бесплатный слот на сайт раз в 20 минут (любая услуга на выбор). Форма внутри страницы услуги, поэтому нужен браузер, а не HTTP-запрос.",
+    "vk_services": [
+      {
+        "id": "smmmedia-vk-followers",
+        "label": "Подписчики ВК (СНГ)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 20,
+        "max_claims_day": 72,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "smmmedia-vk-views",
+        "label": "Просмотры поста ВК",
+        "type": "views",
+        "subject": "post",
+        "amount": 100,
+        "cooldown_min": 20,
+        "max_claims_day": 72,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "smmmedia-vk-video",
+        "label": "Просмотры видео/клипов ВК",
+        "type": "views",
+        "subject": "post",
+        "amount": 100,
+        "cooldown_min": 20,
+        "max_claims_day": 72,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "_token",
+        "placeholder": ""
+      },
+      {
+        "name": "",
+        "placeholder": "Фильтр по услугам"
+      },
+      {
+        "name": "count",
+        "placeholder": ""
+      },
+      {
+        "name": "_token",
+        "placeholder": ""
+      },
+      {
+        "name": "",
+        "placeholder": "Фильтр по услугам"
+      },
+      {
+        "name": "count",
+        "placeholder": ""
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "lowcostsmm",
+    "name": "LowcostSMM",
+    "free_page": "https://lowcostsmm.com/ru/free/",
+    "home": "https://lowcostsmm.com",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [
+      "recaptcha"
+    ],
+    "hold": "5 минут, страницу нельзя закрывать",
+    "page_must_stay_open": true,
+    "automation_class": "C",
+    "obstacles": [
+      "reCAPTCHA",
+      "заказ засчитывается только при открытой вкладке"
+    ],
+    "notes": "35 бесплатных услуг. ВК: 8–50 заявок за 5 минут. Требование держать вкладку открытой — ключевое ограничение для робота.",
+    "vk_services": [
+      {
+        "id": "lowcostsmm-vk-followers",
+        "label": "Подписчики ВК (страница)",
+        "type": "followers",
+        "subject": "person",
+        "amount": 20,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "lowcostsmm-vk-group",
+        "label": "Подписчики в группу ВК",
+        "type": "followers",
+        "subject": "community",
+        "amount": 20,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "lowcostsmm-vk-friends",
+        "label": "Друзья ВК",
+        "type": "friends",
+        "subject": "person",
+        "amount": 15,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "lowcostsmm-vk-likes",
+        "label": "Лайки ВК (посты)",
+        "type": "likes",
+        "subject": "post",
+        "amount": 25,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "lowcostsmm-vk-views",
+        "label": "Просмотры постов ВК",
+        "type": "views",
+        "subject": "post",
+        "amount": 100,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "lowcostsmm-vk-reposts",
+        "label": "Репосты ВК",
+        "type": "reposts",
+        "subject": "post",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "lowcostsmm-vk-plays",
+        "label": "Прослушивания ВК",
+        "type": "plays",
+        "subject": "post",
+        "amount": 50,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "lowcostsmm-vk-comments",
+        "label": "Комментарии ВК",
+        "type": "comments",
+        "subject": "post",
+        "amount": 5,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "link",
+        "placeholder": "Ссылка (URL) для продвижения"
+      },
+      {
+        "name": "link",
+        "placeholder": "Ссылка (URL) для продвижения"
+      },
+      {
+        "name": "link",
+        "placeholder": "Ссылка (URL) для продвижения"
+      },
+      {
+        "name": "link",
+        "placeholder": "Ссылка (URL) для продвижения"
+      },
+      {
+        "name": "link",
+        "placeholder": "Ссылка (URL) для продвижения"
+      },
+      {
+        "name": "link",
+        "placeholder": "Ссылка (URL) для продвижения"
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "smmnakrutka",
+    "name": "SMMnakrutka",
+    "free_page": "https://smmnakrutka.ru",
+    "home": "https://smmnakrutka.ru",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [],
+    "hold": "таймер 5 минут",
+    "page_must_stay_open": false,
+    "automation_class": "B",
+    "obstacles": [
+      "лимит: только первые 10 запросов в сутки",
+      "таймер 5 минут между заказами"
+    ],
+    "notes": "ВК: 10 подписчиков, 10 лайков, 100 просмотров поста, 200 просмотров видео, 50 прослушиваний. Капчи на страницах заказа нет — самый удобный для автоматизации.",
+    "vk_services": [
+      {
+        "id": "smmnakrutka-vk-followers",
+        "label": "Подписчики ВК",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 300,
+        "max_claims_day": 5,
+        "captcha": [],
+        "has_link_field": true
+      },
+      {
+        "id": "smmnakrutka-vk-likes",
+        "label": "Лайки ВК",
+        "type": "likes",
+        "subject": "post",
+        "amount": 10,
+        "cooldown_min": 300,
+        "max_claims_day": 5,
+        "captcha": [],
+        "has_link_field": true
+      },
+      {
+        "id": "smmnakrutka-vk-views",
+        "label": "Просмотры поста ВК",
+        "type": "views",
+        "subject": "post",
+        "amount": 100,
+        "cooldown_min": 180,
+        "max_claims_day": 5,
+        "captcha": [],
+        "has_link_field": true
+      },
+      {
+        "id": "smmnakrutka-vk-video",
+        "label": "Просмотры видео ВК",
+        "type": "views",
+        "subject": "post",
+        "amount": 200,
+        "cooldown_min": 180,
+        "max_claims_day": 5,
+        "captcha": [],
+        "has_link_field": true
+      },
+      {
+        "id": "smmnakrutka-vk-plays",
+        "label": "Прослушивания ВК",
+        "type": "plays",
+        "subject": "post",
+        "amount": 50,
+        "cooldown_min": 300,
+        "max_claims_day": 5,
+        "captcha": [],
+        "has_link_field": true
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "formservices[]",
+        "placeholder": ""
+      },
+      {
+        "name": "formservices[]",
+        "placeholder": ""
+      },
+      {
+        "name": "formservices[]",
+        "placeholder": ""
+      },
+      {
+        "name": "Url",
+        "placeholder": "Вставьте ссылку на профиль или группу ВК"
+      },
+      {
+        "name": "formservices[]",
+        "placeholder": ""
+      },
+      {
+        "name": "quantity",
+        "placeholder": ""
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "doctorsmm",
+    "name": "DoctorSMM",
+    "free_page": "https://doctorsmm.com/nakrutka-podpischikov-vk-platno/",
+    "home": "https://doctorsmm.com",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [],
+    "hold": "таймер на странице",
+    "page_must_stay_open": false,
+    "automation_class": "B",
+    "obstacles": [
+      "поле ссылки появляется после выбора услуги"
+    ],
+    "notes": "Тестовый заказ «до 50» раз в сутки ежедневно. Страницы заказа без капчи.",
+    "vk_services": [
+      {
+        "id": "doctorsmm-vk-followers",
+        "label": "Подписчики ВК (тест до 50)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 50,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      },
+      {
+        "id": "doctorsmm-vk-likes",
+        "label": "Лайки ВК (тест)",
+        "type": "likes",
+        "subject": "post",
+        "amount": 50,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "likeboom",
+    "name": "LikeBoom",
+    "free_page": "https://likeboom.ru/free-trial",
+    "home": "https://likeboom.ru",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [],
+    "hold": "таймер ~2 минуты",
+    "page_must_stay_open": true,
+    "automation_class": "C",
+    "obstacles": [
+      "дневной пул: бесплатный заказ только на 15 ₽",
+      "кнопка появляется после таймера"
+    ],
+    "notes": "Не «N подписчиков», а «заказ на сумму до 15 ₽». В платном каталоге есть выбор качества: боты / живые профили / микс — в бесплатном доступе выбора нет.",
+    "vk_services": [
+      {
+        "id": "likeboom-vk-followers",
+        "label": "Любая услуга до 15 ₽ (≈50 подписчиков ВК)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 50,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      },
+      {
+        "id": "likeboom-vk-likes",
+        "label": "Лайки ВК (в рамках 15 ₽)",
+        "type": "likes",
+        "subject": "post",
+        "amount": 50,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": null
+      },
+      {
+        "id": "likeboom-vk-views",
+        "label": "Просмотры ВК (в рамках 15 ₽)",
+        "type": "views",
+        "subject": "post",
+        "amount": 100,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": null
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "_csrf-frontend",
+        "placeholder": ""
+      },
+      {
+        "name": "LoginForm[username]",
+        "placeholder": "email@example.com"
+      },
+      {
+        "name": "LoginForm[password]",
+        "placeholder": "••••••••••••••"
+      },
+      {
+        "name": "_csrf-frontend",
+        "placeholder": ""
+      },
+      {
+        "name": "LoginForm[username]",
+        "placeholder": "email@example.com"
+      },
+      {
+        "name": "LoginForm[password]",
+        "placeholder": "••••••••••••••"
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "avi1",
+    "name": "Avi1",
+    "free_page": "https://avi1.ru",
+    "home": "https://avi1.ru",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [
+      "recaptcha"
+    ],
+    "hold": "мгновенно",
+    "page_must_stay_open": false,
+    "automation_class": "C",
+    "obstacles": [
+      "reCAPTCHA на части форм",
+      "страницы «бесплатно» часто ведут в платный каталог"
+    ],
+    "notes": "В платном каталоге явно разделены «живые» и «боты», есть гео. Бесплатные страницы — пробные, объёмы маленькие.",
+    "vk_services": [
+      {
+        "id": "avi1-vk-followers",
+        "label": "Подписчики в группу ВК",
+        "type": "followers",
+        "subject": "community",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "avi1-vk-friends",
+        "label": "Друзья ВК",
+        "type": "friends",
+        "subject": "person",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      },
+      {
+        "id": "avi1-vk-likes",
+        "label": "Лайки ВК",
+        "type": "likes",
+        "subject": "post",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      },
+      {
+        "id": "avi1-vk-views",
+        "label": "Просмотры ВК",
+        "type": "views",
+        "subject": "post",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "search_string",
+        "placeholder": "Поиск..."
+      },
+      {
+        "name": "search_string",
+        "placeholder": "Поиск..."
+      },
+      {
+        "name": "link",
+        "placeholder": "Ссылка (URL) для продвижения"
+      },
+      {
+        "name": "search_string",
+        "placeholder": "Поиск..."
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "nakruti",
+    "name": "Nakruti.net",
+    "free_page": "https://nakruti.net/besplatnaya-nakrutka",
+    "home": "https://nakruti.net",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [],
+    "hold": "до 10 минут",
+    "page_must_stay_open": false,
+    "automation_class": "A",
+    "obstacles": [],
+    "notes": "Самый простой для автоматизации: два поля, без капчи, без очереди. ВК: 10 подписчиков, 10 друзей, 10 лайков, 100 просмотров, 100 прослушиваний, 5 репостов, 5 комментариев. Повтор каждые 10 минут, дневной лимит зависит от услуги.",
+    "vk_services": [
+      {
+        "id": "nakruti-vk-followers",
+        "label": "Подписчики ВК",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 5,
+        "max_claims_day": 3,
+        "captcha": [],
+        "has_link_field": true
+      },
+      {
+        "id": "nakruti-vk-friends",
+        "label": "Друзья ВК",
+        "type": "friends",
+        "subject": "person",
+        "amount": 10,
+        "cooldown_min": 5,
+        "max_claims_day": 3,
+        "captcha": [],
+        "has_link_field": true
+      },
+      {
+        "id": "nakruti-vk-likes",
+        "label": "Лайки ВК",
+        "type": "likes",
+        "subject": "post",
+        "amount": 10,
+        "cooldown_min": 5,
+        "max_claims_day": 3,
+        "captcha": [],
+        "has_link_field": true
+      },
+      {
+        "id": "nakruti-vk-views",
+        "label": "Просмотры ВК",
+        "type": "views",
+        "subject": "post",
+        "amount": 100,
+        "cooldown_min": 5,
+        "max_claims_day": 3,
+        "captcha": [],
+        "has_link_field": true
+      },
+      {
+        "id": "nakruti-vk-plays",
+        "label": "Прослушивания ВК",
+        "type": "plays",
+        "subject": "post",
+        "amount": 100,
+        "cooldown_min": 5,
+        "max_claims_day": 3,
+        "captcha": [],
+        "has_link_field": true
+      },
+      {
+        "id": "nakruti-vk-reposts",
+        "label": "Репосты ВК",
+        "type": "reposts",
+        "subject": "post",
+        "amount": 5,
+        "cooldown_min": 5,
+        "max_claims_day": 3,
+        "captcha": [],
+        "has_link_field": true
+      },
+      {
+        "id": "nakruti-vk-comments",
+        "label": "Комментарии ВК",
+        "type": "comments",
+        "subject": "post",
+        "amount": 5,
+        "cooldown_min": 5,
+        "max_claims_day": 3,
+        "captcha": [],
+        "has_link_field": true
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "link",
+        "placeholder": "https://vk.com/nakruti"
+      },
+      {
+        "name": "rating",
+        "placeholder": ""
+      },
+      {
+        "name": "link",
+        "placeholder": "https://vk.com/nakruti"
+      },
+      {
+        "name": "rating",
+        "placeholder": ""
+      },
+      {
+        "name": "link",
+        "placeholder": "https://vk.com/wall-2812398_48234"
+      },
+      {
+        "name": "rating",
+        "placeholder": ""
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "smmcode",
+    "name": "SMMCode",
+    "free_page": "https://smmcode.shop",
+    "home": "https://smmcode.shop",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [
+      "recaptcha"
+    ],
+    "hold": "очередь ~37 сек, 1 раз в 30 мин",
+    "page_must_stay_open": false,
+    "automation_class": "C",
+    "obstacles": [
+      "reCAPTCHA",
+      "форма-виджет",
+      "ограничение по IP (сами пишут об этом)"
+    ],
+    "notes": "Бесплатная форма отдельная от платного каталога, 1 раз в 30 минут. ВК: подписчики, лайки, просмотры. Администрация сама предупреждает про IP-лимиты.",
+    "vk_services": [
+      {
+        "id": "smmcode-vk-followers",
+        "label": "Подписчики ВК",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 45,
+        "max_claims_day": 8,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "smmcode-vk-likes",
+        "label": "Лайки ВК",
+        "type": "likes",
+        "subject": "post",
+        "amount": 10,
+        "cooldown_min": 45,
+        "max_claims_day": 8,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      },
+      {
+        "id": "smmcode-vk-views",
+        "label": "Просмотры записей ВК",
+        "type": "views",
+        "subject": "post",
+        "amount": 100,
+        "cooldown_min": 45,
+        "max_claims_day": 8,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": true
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "_token",
+        "placeholder": ""
+      },
+      {
+        "name": "",
+        "placeholder": "Поиск по услугам"
+      },
+      {
+        "name": "count",
+        "placeholder": ""
+      },
+      {
+        "name": "_token",
+        "placeholder": ""
+      },
+      {
+        "name": "",
+        "placeholder": "Поиск по услугам"
+      },
+      {
+        "name": "count",
+        "placeholder": ""
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "mrpopular",
+    "name": "MRPOPULAR",
+    "free_page": "https://ru.mrpopular.net",
+    "home": "https://ru.mrpopular.net",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [
+      "hcaptcha",
+      "turnstile"
+    ],
+    "hold": "мгновенно",
+    "page_must_stay_open": false,
+    "automation_class": "C",
+    "obstacles": [
+      "hCaptcha / Turnstile",
+      "есть биржа заданий (в бесплатный список не берём)"
+    ],
+    "notes": "Платный каталог 2900+ услуг с публичным API. Бесплатные объёмы маленькие, форма за капчей. Ценен как источник стабильных платных слотов, а не бесплатных.",
+    "vk_services": [
+      {
+        "id": "mrpopular-vk-followers",
+        "label": "Подписчики ВК",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 15,
+        "max_claims_day": 6,
+        "captcha": [
+          "hcaptcha",
+          "turnstile"
+        ],
+        "has_link_field": false
+      },
+      {
+        "id": "mrpopular-vk-likes",
+        "label": "Лайки ВК",
+        "type": "likes",
+        "subject": "post",
+        "amount": 10,
+        "cooldown_min": 15,
+        "max_claims_day": 6,
+        "captcha": [],
+        "has_link_field": null
+      },
+      {
+        "id": "mrpopular-vk-views",
+        "label": "Просмотры ВК",
+        "type": "views",
+        "subject": "post",
+        "amount": 100,
+        "cooldown_min": 15,
+        "max_claims_day": 6,
+        "captcha": [],
+        "has_link_field": null
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "",
+        "placeholder": "Поиск"
+      },
+      {
+        "name": "",
+        "placeholder": "Поиск"
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "smmprime",
+    "name": "SMMPrime",
+    "free_page": "https://smmprime.com/free",
+    "home": "https://smmprime.com",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [],
+    "hold": "таймер 30 сек → 5 минут, растёт с каждым заказом",
+    "page_must_stay_open": false,
+    "automation_class": "C",
+    "obstacles": [
+      "общий пул заказов на всех посетителей (221 в сутки)",
+      "код дня",
+      "iframe free-api"
+    ],
+    "notes": "ПОДТВЕРЖДЕНО БОЕМ 2026-11-12: заказ «ВК Просмотры 100 шт» на wall-243157309_1 принят (POST free-api.smmprime.com/api/order → status accepted, demo false, пул 447→446). Механика автоматизирована в драйвере: iframe → кнопка ВК Просмотры → #link → таймер ~30 c → вопрос «N + M = ?» → POST /api/order. Пул общий ~450/день до 00:00 МСК.",
+    "vk_services": [
+      {
+        "id": "smmprime-vk-likes",
+        "label": "Лайки (10 шт. после регистрации)",
+        "type": "likes",
+        "subject": "post",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      },
+      {
+        "id": "smmprime-vk-views",
+        "label": "Просмотры (100 шт. после регистрации)",
+        "type": "views",
+        "subject": "post",
+        "amount": 100,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": null
+      }
+    ],
+    "order_page_fields": [],
+    "checked_at": "2026-11-10",
+    "verified": "site-2026-11-12"
+  },
+  {
+    "id": "likest",
+    "name": "Likest",
+    "free_page": "https://likest.ru",
+    "home": "https://likest.ru",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [],
+    "hold": "мгновенно",
+    "page_must_stay_open": false,
+    "automation_class": "B",
+    "obstacles": [
+      "бесплатно только лайки на фото"
+    ],
+    "notes": "20 лайков на фото. Остальное — за задания (обмен), в основной список не входит.",
+    "vk_services": [
+      {
+        "id": "likest-vk-likes",
+        "label": "20 лайков на фото ВК",
+        "type": "likes",
+        "subject": "post",
+        "amount": 20,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": true
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "",
+        "placeholder": "Поиск по всему каталогу..."
+      },
+      {
+        "name": "link",
+        "placeholder": "Ссылка ВКонтакте"
+      },
+      {
+        "name": "op",
+        "placeholder": ""
+      },
+      {
+        "name": "",
+        "placeholder": "Поиск по всему каталогу..."
+      },
+      {
+        "name": "link",
+        "placeholder": "Ссылка ВКонтакте"
+      },
+      {
+        "name": "op",
+        "placeholder": ""
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "likeinsta",
+    "name": "LikeInsta",
+    "free_page": "https://likeinsta.io",
+    "home": "https://likeinsta.io",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [
+      "recaptcha"
+    ],
+    "hold": "мгновенно",
+    "page_must_stay_open": true,
+    "automation_class": "C",
+    "obstacles": [
+      "reCAPTCHA",
+      "ориентирован на Instagram"
+    ],
+    "notes": "ВК-услуга одна, объём маленький.",
+    "vk_services": [
+      {
+        "id": "likeinsta-vk-followers",
+        "label": "Подписчики ВК (за баллы с заданий)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 60,
+        "max_claims_day": 2,
+        "captcha": [
+          "recaptcha"
+        ],
+        "has_link_field": false
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "FreeTask[url]",
+        "placeholder": "Вставьте ссылку"
+      },
+      {
+        "name": "FreeTask[user_id]",
+        "placeholder": ""
+      },
+      {
+        "name": "UserLogin[login]",
+        "placeholder": "Логин или E-mail"
+      },
+      {
+        "name": "UserLogin[password]",
+        "placeholder": "Пароль"
+      },
+      {
+        "name": "submitLogin",
+        "placeholder": ""
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "taplike",
+    "name": "TapLike",
+    "free_page": "https://taplike.ru",
+    "home": "https://taplike.ru",
+    "alive": true,
+    "http_status": 200,
+    "registration": true,
+    "captcha": [],
+    "hold": "мгновенно",
+    "page_must_stay_open": false,
+    "automation_class": "C",
+    "obstacles": [
+      "нужна регистрация",
+      "полная форма заказа"
+    ],
+    "notes": "Регистрация обязательна — держим как «платно/бонусы», не как бесплатный источник.",
+    "vk_services": [
+      {
+        "id": "taplike-vk-followers",
+        "label": "Подписчики ВК (бонусный тариф)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": true
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "email",
+        "placeholder": ""
+      },
+      {
+        "name": "service_id",
+        "placeholder": ""
+      },
+      {
+        "name": "quantity",
+        "placeholder": ""
+      },
+      {
+        "name": "email",
+        "placeholder": ""
+      },
+      {
+        "name": "service_id",
+        "placeholder": ""
+      },
+      {
+        "name": "quantity",
+        "placeholder": ""
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "prmotion",
+    "name": "PR Motion",
+    "free_page": "https://prmotion.ru",
+    "home": "https://prmotion.ru",
+    "alive": true,
+    "http_status": 200,
+    "registration": true,
+    "captcha": [],
+    "hold": "мгновенно",
+    "page_must_stay_open": false,
+    "automation_class": "C",
+    "obstacles": [
+      "нужна регистрация"
+    ],
+    "notes": "Требует аккаунт.",
+    "vk_services": [
+      {
+        "id": "prmotion-vk-followers",
+        "label": "Подписчики ВК (тест)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "name",
+        "placeholder": "Ваше имя"
+      },
+      {
+        "name": "phone",
+        "placeholder": "Номер телефона"
+      },
+      {
+        "name": "name",
+        "placeholder": "Ваше имя"
+      },
+      {
+        "name": "phone",
+        "placeholder": "Номер телефона"
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "nupago",
+    "name": "Nupago",
+    "free_page": "https://nupago.ru",
+    "home": "https://nupago.ru",
+    "alive": true,
+    "http_status": 200,
+    "registration": true,
+    "captcha": [],
+    "hold": "мгновенно",
+    "page_must_stay_open": false,
+    "automation_class": "C",
+    "obstacles": [
+      "нужна регистрация"
+    ],
+    "notes": "Требует аккаунт.",
+    "vk_services": [
+      {
+        "id": "nupago-vk-followers",
+        "label": "Подписчики ВК (бонус)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "q",
+        "placeholder": "Найти услугу"
+      },
+      {
+        "name": "q",
+        "placeholder": "Например, просмотры Telegram"
+      },
+      {
+        "name": "q",
+        "placeholder": "Найти услугу"
+      },
+      {
+        "name": "q",
+        "placeholder": "Например, просмотры Telegram"
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "feijoa",
+    "name": "Feijoa",
+    "free_page": "https://feijoa.pro",
+    "home": "https://feijoa.pro",
+    "alive": false,
+    "http_status": null,
+    "registration": true,
+    "captcha": [],
+    "hold": "—",
+    "page_must_stay_open": false,
+    "automation_class": "—",
+    "obstacles": [
+      "домен не резолвится"
+    ],
+    "notes": "Проверено 10.11.2026: домен feijoa.pro не резолвится, сайт недоступен.",
+    "vk_services": [
+      {
+        "id": "feijoa-vk-followers",
+        "label": "Подписчики ВК (бонусы рулетки)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 15,
+        "max_claims_day": 30,
+        "captcha": [],
+        "has_link_field": false
+      }
+    ],
+    "order_page_fields": [],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "spetsnakrutka",
+    "name": "Spetsnakrutka",
+    "free_page": "https://spetsnakrutka.ru",
+    "home": "https://spetsnakrutka.ru",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [],
+    "hold": "мгновенно",
+    "page_must_stay_open": false,
+    "automation_class": "B",
+    "obstacles": [
+      "фокус на Telegram"
+    ],
+    "notes": "Есть поле ссылки, без капчи; ВК-услуги ограничены.",
+    "vk_services": [
+      {
+        "id": "spetsnakrutka-vk-followers",
+        "label": "Подписчики ВК (тест)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": true
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "link",
+        "placeholder": "https://telegram.me/channel"
+      },
+      {
+        "name": "email",
+        "placeholder": "example@mail.ru"
+      },
+      {
+        "name": "link",
+        "placeholder": "https://telegram.me/channel"
+      },
+      {
+        "name": "email",
+        "placeholder": "example@mail.ru"
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "masslike",
+    "name": "Masslike",
+    "free_page": "https://masslike.ru",
+    "home": "https://masslike.ru",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [],
+    "hold": "мгновенно",
+    "page_must_stay_open": false,
+    "automation_class": "B",
+    "obstacles": [],
+    "notes": "Есть форма с полем ссылки, без капчи. Объёмы небольшие.",
+    "vk_services": [
+      {
+        "id": "masslike-vk-followers",
+        "label": "Подписчики ВК (тест)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": true
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "link",
+        "placeholder": "https://t.me/channel"
+      },
+      {
+        "name": "email",
+        "placeholder": "example@mail.ru"
+      },
+      {
+        "name": "link",
+        "placeholder": "https://t.me/channel"
+      },
+      {
+        "name": "email",
+        "placeholder": "example@mail.ru"
+      }
+    ],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "bestsmm",
+    "name": "BestSMM",
+    "free_page": "https://bestsmm.pro",
+    "home": "https://bestsmm.pro",
+    "alive": false,
+    "http_status": null,
+    "registration": false,
+    "captcha": [],
+    "hold": "—",
+    "page_must_stay_open": false,
+    "automation_class": "—",
+    "obstacles": [
+      "домен не резолвится"
+    ],
+    "notes": "Проверено 10.11.2026: домен bestsmm.pro не резолвится, сайт недоступен.",
+    "vk_services": [
+      {
+        "id": "bestsmm-vk-followers",
+        "label": "Подписчики ВК (тест)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      }
+    ],
+    "order_page_fields": [],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "smmyt",
+    "name": "SMMYT",
+    "free_page": "https://smmyt.ru",
+    "home": "https://smmyt.ru",
+    "alive": true,
+    "http_status": 403,
+    "registration": true,
+    "captcha": [],
+    "hold": "—",
+    "page_must_stay_open": false,
+    "automation_class": "—",
+    "obstacles": [
+      "отвечает 403 на автоматические запросы"
+    ],
+    "notes": "Сайт закрыт от ботов (403). Нужен ручной заход в браузере для проверки.",
+    "vk_services": [
+      {
+        "id": "smmyt-vk-followers",
+        "label": "Подписчики ВК (бесплатный тариф)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 10,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      }
+    ],
+    "order_page_fields": [],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "777like",
+    "name": "777Like",
+    "free_page": "https://777like.ru",
+    "home": "https://777like.ru",
+    "alive": true,
+    "http_status": 200,
+    "registration": true,
+    "captcha": [],
+    "hold": "—",
+    "page_must_stay_open": false,
+    "automation_class": "—",
+    "obstacles": [
+      "«бесплатно» только после первого пополнения"
+    ],
+    "notes": "Не бесплатный в чистом виде: 27 «бесплатных» услуг открываются после депозита.",
+    "vk_services": [],
+    "order_page_fields": [],
+    "checked_at": "2026-11-10"
+  },
+  {
+    "id": "prtut",
+    "name": "Prtut",
+    "free_page": "https://prtut.ru/free-smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+    "home": "https://prtut.ru",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [],
+    "hold": "таймер на странице",
+    "page_must_stay_open": false,
+    "automation_class": "B",
+    "obstacles": [
+      "поле ссылки появляется после выбора услуги"
+    ],
+    "notes": "Тестовый заказ «до 50» раз в сутки ежедневно. Страницы заказа без капчи.",
+    "vk_services": [
+      {
+        "id": "doctorsmm-vk-followers",
+        "label": "Подписчики ВК (тест до 50)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 50,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      },
+      {
+        "id": "doctorsmm-vk-likes",
+        "label": "Лайки ВК (тест)",
+        "type": "likes",
+        "subject": "post",
+        "amount": 50,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      }
+    ],
+    "checked_at": "2026-11-10",
+    "automation": "B",
+    "note": "движок /testknop; заявка принята 2026-11-11"
+  },
+  {
+    "id": "pricesmm",
+    "name": "PriceSMM",
+    "free_page": "https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+    "home": "https://pricesmm.com",
+    "alive": true,
+    "http_status": 200,
+    "registration": false,
+    "captcha": [],
+    "hold": "таймер на странице",
+    "page_must_stay_open": false,
+    "automation_class": "B",
+    "obstacles": [
+      "поле ссылки появляется после выбора услуги"
+    ],
+    "notes": "Тестовый заказ «до 50» раз в сутки ежедневно. Страницы заказа без капчи.",
+    "vk_services": [
+      {
+        "id": "doctorsmm-vk-followers",
+        "label": "Подписчики ВК (тест до 50)",
+        "type": "followers",
+        "subject": "any",
+        "amount": 50,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      },
+      {
+        "id": "doctorsmm-vk-likes",
+        "label": "Лайки ВК (тест)",
+        "type": "likes",
+        "subject": "post",
+        "amount": 50,
+        "cooldown_min": 1440,
+        "max_claims_day": 1,
+        "captcha": [],
+        "has_link_field": false
+      }
+    ],
+    "order_page_fields": [
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      },
+      {
+        "name": "amount",
+        "placeholder": ""
+      }
+    ],
+    "checked_at": "2026-11-10",
+    "automation": "B",
+    "note": "движок /testknop; заявка принята 2026-11-11"
+  }
+]

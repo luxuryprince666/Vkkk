@@ -1,0 +1,976 @@
+{
+  "meta": {
+    "version": "2026.11.09",
+    "source": "проверено вручную 09.11.2026 + обзоры vc.ru / otzyvmarketing / dtf",
+    "note": "Лимиты соответствуют публичным условиям сервисов на дату. Владельцы сайтов меняют их без предупреждения. Поле subject у услуги: что именно она накручивает — сообщество (группа/паблик), личную страницу человека, конкретную запись или не разделяет (any)."
+  },
+  "types": {
+    "followers": "Подписчики",
+    "likes": "Лайки",
+    "views": "Просмотры",
+    "reposts": "Репосты",
+    "comments": "Комментарии",
+    "friends": "Друзья",
+    "plays": "Прослушивания",
+    "reactions": "Реакции",
+    "traffic": "Трафик на сайт"
+  },
+  "platforms": {
+    "vk": "ВКонтакте",
+    "telegram": "Telegram",
+    "instagram": "Instagram",
+    "tiktok": "TikTok",
+    "youtube": "YouTube",
+    "twitch": "Twitch",
+    "likee": "Likee",
+    "twitter": "X (Twitter)",
+    "facebook": "Facebook",
+    "ok": "Одноклассники",
+    "max": "MAX",
+    "rutube": "Rutube",
+    "dzen": "Дзен",
+    "threads": "Threads",
+    "soundcloud": "SoundCloud",
+    "x": "X (Twitter)",
+    "traffic": "Сайт"
+  },
+  "sites": [
+    {
+      "id": "prskill",
+      "name": "PRSkill",
+      "home": "https://prskill.ru",
+      "free_page": "https://prskill.ru/#nakrutka-besplatno",
+      "platforms": [
+        "vk",
+        "telegram",
+        "instagram",
+        "tiktok",
+        "youtube",
+        "twitch",
+        "likee",
+        "twitter",
+        "facebook",
+        "soundcloud"
+      ],
+      "reg_required": false,
+      "verified": "site-2026-11-09",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Раздел «Бесплатная накрутка без заданий»: каждые 30 минут, число заказов не ограничено. Работает с РУЧНОЙ капчей Turnstile (подтверждено пользователем 2026-11-10).",
+      "services": [
+        {
+          "id": "prskill-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "community",
+          "amount": 10,
+          "cooldown_min": 30,
+          "max_claims_day": 48,
+          "hold_seconds": 60,
+          "url": "https://prskill.ru/services/vk-vstupivshie#giveaway-form",
+          "label": "Подписчики ВК (вступившие)",
+          "confirmed": true,
+          "subject_note": "услуга «вступившие» — только в группу/паблик"
+        },
+        {
+          "id": "prskill-vk-likes",
+          "platform": "vk",
+          "type": "likes",
+          "subject": "post",
+          "amount": 25,
+          "cooldown_min": 30,
+          "max_claims_day": 48,
+          "hold_seconds": 60,
+          "url": "https://prskill.ru/services/vk-lajki#giveaway-form",
+          "label": "Лайки на запись ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "prskill-vk-views",
+          "platform": "vk",
+          "type": "views",
+          "subject": "post",
+          "amount": 100,
+          "cooldown_min": 30,
+          "max_claims_day": 48,
+          "hold_seconds": 60,
+          "url": "https://prskill.ru/services/nakrutka-prosmotrov-v-vk-na-zapisi#giveaway-form",
+          "label": "Просмотры записи ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "prskill-tg-followers",
+          "platform": "telegram",
+          "type": "followers",
+          "subject": "any",
+          "amount": 10,
+          "cooldown_min": 30,
+          "max_claims_day": 48,
+          "hold_seconds": 60,
+          "url": "https://prskill.ru/services/telegram-podpischiki-na-kanal#giveaway-form",
+          "label": "Подписчики Telegram",
+          "confirmed": true
+        },
+        {
+          "id": "prskill-tg-reactions",
+          "platform": "telegram",
+          "type": "reactions",
+          "subject": "any",
+          "amount": 10,
+          "cooldown_min": 30,
+          "max_claims_day": 48,
+          "hold_seconds": 60,
+          "url": "https://prskill.ru/services/telegram-nakrutka-reaktsiy#giveaway-form",
+          "label": "Реакции Telegram",
+          "confirmed": true
+        },
+        {
+          "id": "prskill-yt-likes",
+          "platform": "youtube",
+          "type": "likes",
+          "subject": "any",
+          "amount": 20,
+          "cooldown_min": 30,
+          "max_claims_day": 48,
+          "hold_seconds": 60,
+          "url": "https://prskill.ru/services/youtube-lajki#giveaway-form",
+          "label": "Лайки YouTube",
+          "confirmed": true
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-10",
+        "captcha": [
+          "turnstile"
+        ],
+        "automation_class": "C",
+        "hold": "мгновенно"
+      }
+    },
+    {
+      "id": "smmnakrutka",
+      "name": "SMMnakrutka",
+      "home": "https://smmnakrutka.ru",
+      "free_page": "https://smmnakrutka.ru",
+      "platforms": [
+        "vk",
+        "telegram",
+        "max",
+        "instagram",
+        "tiktok",
+        "youtube",
+        "rutube",
+        "twitch"
+      ],
+      "reg_required": false,
+      "verified": "site-2026-11-09",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Таймер 5 минут на странице. Подписчики ВК — раз в 5 часов, просмотры — раз в 3 часа.",
+      "services": [
+        {
+          "id": "smmnakrutka-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "any",
+          "amount": 10,
+          "cooldown_min": 300,
+          "max_claims_day": 5,
+          "hold_seconds": 300,
+          "url": "https://smmnakrutka.ru/free-vk-followers",
+          "label": "Подписчики ВК",
+          "confirmed": true,
+          "subject_note": "сервис не уточняет объект — подойдёт и сообществу, и странице"
+        },
+        {
+          "id": "smmnakrutka-vk-likes",
+          "platform": "vk",
+          "type": "likes",
+          "subject": "post",
+          "amount": 10,
+          "cooldown_min": 300,
+          "max_claims_day": 5,
+          "hold_seconds": 300,
+          "url": "https://smmnakrutka.ru/free-vk-likes",
+          "label": "Лайки ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "smmnakrutka-vk-views",
+          "platform": "vk",
+          "type": "views",
+          "subject": "post",
+          "amount": 100,
+          "cooldown_min": 180,
+          "max_claims_day": 5,
+          "hold_seconds": 300,
+          "url": "https://smmnakrutka.ru/free-vk-views",
+          "label": "Просмотры поста ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "smmnakrutka-vk-video",
+          "platform": "vk",
+          "type": "views",
+          "subject": "post",
+          "amount": 200,
+          "cooldown_min": 180,
+          "max_claims_day": 5,
+          "hold_seconds": 300,
+          "url": "https://smmnakrutka.ru/free-vk-video-views",
+          "label": "Просмотры видео ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "smmnakrutka-vk-plays",
+          "platform": "vk",
+          "type": "plays",
+          "subject": "post",
+          "amount": 50,
+          "cooldown_min": 300,
+          "max_claims_day": 5,
+          "hold_seconds": 300,
+          "url": "https://smmnakrutka.ru/free-vk-plays",
+          "label": "Прослушивания ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "smmnakrutka-tg-followers",
+          "platform": "telegram",
+          "type": "followers",
+          "subject": "any",
+          "amount": 10,
+          "cooldown_min": 300,
+          "max_claims_day": 5,
+          "hold_seconds": 300,
+          "url": "https://smmnakrutka.ru/free-telegram-followers",
+          "label": "Подписчики Telegram",
+          "confirmed": true
+        },
+        {
+          "id": "smmnakrutka-max-followers",
+          "platform": "max",
+          "type": "followers",
+          "subject": "any",
+          "amount": 5,
+          "cooldown_min": 300,
+          "max_claims_day": 5,
+          "hold_seconds": 300,
+          "url": "https://smmnakrutka.ru/free-max-followers",
+          "label": "Подписчики MAX",
+          "confirmed": true
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-10",
+        "captcha": [],
+        "automation_class": "B",
+        "hold": "таймер 5 минут"
+      }
+    },
+    {
+      "id": "doctorsmm",
+      "name": "DoctorSMM",
+      "home": "https://doctorsmm.com",
+      "free_page": "https://doctorsmm.com/nakrutka-podpischikov-vk-platno/",
+      "platforms": [
+        "vk",
+        "telegram",
+        "instagram",
+        "youtube",
+        "tiktok",
+        "max",
+        "ok",
+        "rutube",
+        "twitch",
+        "dzen"
+      ],
+      "reg_required": false,
+      "verified": "site-2026-11-09",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Кнопка «Попробовать бесплатно»: тестовый заказ до 50 единиц, ежедневно, без регистрации, ~10 минут.",
+      "services": [
+        {
+          "id": "doctorsmm-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "any",
+          "amount": 50,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://doctorsmm.com/nakrutka-podpischikov-vk-platno/",
+          "label": "Подписчики ВК (тест до 50)",
+          "confirmed": true,
+          "subject_note": "сервис не уточняет объект — подойдёт и сообществу, и странице"
+        },
+        {
+          "id": "doctorsmm-vk-likes",
+          "platform": "vk",
+          "type": "likes",
+          "subject": "post",
+          "amount": 50,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://doctorsmm.com/nakrutka-lajkov-vk-platno-i-deshevo/",
+          "label": "Лайки ВК (тест)",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "doctorsmm-tg-followers",
+          "platform": "telegram",
+          "type": "followers",
+          "subject": "any",
+          "amount": 50,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://doctorsmm.com/nakrutka-podpischikov-v-telegramm-kanal/",
+          "label": "Подписчики Telegram (тест)",
+          "confirmed": true
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-10",
+        "captcha": [],
+        "automation_class": "B",
+        "hold": "таймер на странице"
+      }
+    },
+    {
+      "id": "likeboom",
+      "name": "LikeBoom",
+      "home": "https://likeboom.ru",
+      "free_page": "https://likeboom.ru/free-trial",
+      "platforms": [
+        "vk",
+        "telegram",
+        "max",
+        "tiktok",
+        "instagram",
+        "youtube",
+        "twitter",
+        "twitch",
+        "facebook",
+        "rutube",
+        "dzen"
+      ],
+      "reg_required": false,
+      "verified": "site-2026-11-09",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Бесплатный заказ до 15 ₽, таймер 2 минуты, 1 заказ в день. Дневной лимит разбирают — заходить лучше утром.",
+      "services": [
+        {
+          "id": "likeboom-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "any",
+          "amount": 50,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 120,
+          "url": "https://likeboom.ru/free-trial",
+          "label": "Любая услуга до 15 ₽ (≈50 подписчиков ВК)",
+          "confirmed": true,
+          "subject_note": "сервис не уточняет объект — подойдёт и сообществу, и странице"
+        },
+        {
+          "id": "likeboom-vk-likes",
+          "platform": "vk",
+          "type": "likes",
+          "subject": "post",
+          "amount": 50,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 120,
+          "url": "https://likeboom.ru/free-trial",
+          "label": "Лайки ВК (в рамках 15 ₽)",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "likeboom-vk-views",
+          "platform": "vk",
+          "type": "views",
+          "subject": "post",
+          "amount": 100,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 120,
+          "url": "https://likeboom.ru/free-trial",
+          "label": "Просмотры ВК (в рамках 15 ₽)",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-10",
+        "captcha": [],
+        "automation_class": "C",
+        "hold": "таймер ~2 минуты"
+      }
+    },
+    {
+      "id": "avi1",
+      "name": "Avi1",
+      "home": "https://avi1.ru",
+      "free_page": "https://avi1.ru",
+      "platforms": [
+        "vk",
+        "telegram",
+        "instagram",
+        "youtube",
+        "tiktok",
+        "max",
+        "dzen"
+      ],
+      "reg_required": false,
+      "verified": "site-2026-11-09",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Каждая услуга 1 раз в сутки. Таймер ~10 минут, приём заявок 08:00–22:00 МСК. Боты, часть отписывается.",
+      "services": [
+        {
+          "id": "avi1-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "community",
+          "amount": 10,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://avi1.ru/piar/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+          "label": "Подписчики в группу ВК",
+          "confirmed": true,
+          "subject_note": "отдельная услуга «в группу»"
+        },
+        {
+          "id": "avi1-vk-friends",
+          "platform": "vk",
+          "type": "friends",
+          "subject": "person",
+          "amount": 10,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://avi1.ru/nakrutka-druzej-vk/",
+          "label": "Друзья ВК",
+          "confirmed": true,
+          "subject_note": "друзья бывают только у личной страницы"
+        },
+        {
+          "id": "avi1-vk-likes",
+          "platform": "vk",
+          "type": "likes",
+          "subject": "post",
+          "amount": 10,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://avi1.ru/nakrutka-lajkov-vk-platno/",
+          "label": "Лайки ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "avi1-vk-views",
+          "platform": "vk",
+          "type": "views",
+          "subject": "post",
+          "amount": 10,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://avi1.ru/nakrutka-prosmotrov-vkontakte-platno/",
+          "label": "Просмотры ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-10",
+        "captcha": [
+          "recaptcha"
+        ],
+        "automation_class": "C",
+        "hold": "мгновенно"
+      }
+    },
+    {
+      "id": "nakruti",
+      "name": "Nakruti.net",
+      "home": "https://nakruti.net",
+      "free_page": "https://nakruti.net/besplatnaya-nakrutka",
+      "platforms": [
+        "vk",
+        "telegram",
+        "instagram",
+        "tiktok",
+        "youtube",
+        "rutube",
+        "threads"
+      ],
+      "reg_required": false,
+      "verified": "site-2026-11-09",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Без заданий и пароля. Повтор через 5 минут, но не более 3 оплат в сутки по услуге.",
+      "services": [
+        {
+          "id": "nakruti-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "any",
+          "amount": 10,
+          "cooldown_min": 5,
+          "max_claims_day": 3,
+          "hold_seconds": 60,
+          "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-podpischiki-vk",
+          "label": "Подписчики ВК",
+          "confirmed": true,
+          "subject_note": "сервис не уточняет объект — подойдёт и сообществу, и странице"
+        },
+        {
+          "id": "nakruti-vk-friends",
+          "platform": "vk",
+          "type": "friends",
+          "subject": "person",
+          "amount": 10,
+          "cooldown_min": 5,
+          "max_claims_day": 3,
+          "hold_seconds": 60,
+          "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-druzya-vk",
+          "label": "Друзья ВК",
+          "confirmed": true,
+          "subject_note": "друзья бывают только у личной страницы"
+        },
+        {
+          "id": "nakruti-vk-likes",
+          "platform": "vk",
+          "type": "likes",
+          "subject": "post",
+          "amount": 10,
+          "cooldown_min": 5,
+          "max_claims_day": 3,
+          "hold_seconds": 60,
+          "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-layki-vk",
+          "label": "Лайки ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "nakruti-vk-views",
+          "platform": "vk",
+          "type": "views",
+          "subject": "post",
+          "amount": 100,
+          "cooldown_min": 5,
+          "max_claims_day": 3,
+          "hold_seconds": 60,
+          "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-prosmotry-vk",
+          "label": "Просмотры ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "nakruti-vk-plays",
+          "platform": "vk",
+          "type": "plays",
+          "subject": "post",
+          "amount": 100,
+          "cooldown_min": 5,
+          "max_claims_day": 3,
+          "hold_seconds": 60,
+          "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-proslushivaniya-vk",
+          "label": "Прослушивания ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "nakruti-vk-reposts",
+          "platform": "vk",
+          "type": "reposts",
+          "subject": "post",
+          "amount": 5,
+          "cooldown_min": 5,
+          "max_claims_day": 3,
+          "hold_seconds": 60,
+          "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-reposty-vk",
+          "label": "Репосты ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "nakruti-vk-comments",
+          "platform": "vk",
+          "type": "comments",
+          "subject": "post",
+          "amount": 5,
+          "cooldown_min": 5,
+          "max_claims_day": 3,
+          "hold_seconds": 60,
+          "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-kommentarii-vk",
+          "label": "Комментарии ВК",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "nakruti-tg-followers",
+          "platform": "telegram",
+          "type": "followers",
+          "subject": "any",
+          "amount": 10,
+          "cooldown_min": 5,
+          "max_claims_day": 3,
+          "hold_seconds": 60,
+          "url": "https://nakruti.net/besplatnaya-nakrutka",
+          "label": "Подписчики Telegram",
+          "confirmed": true
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-10",
+        "captcha": [],
+        "automation_class": "A",
+        "hold": "до 10 минут"
+      }
+    },
+    {
+      "id": "mrpopular",
+      "name": "MRPOPULAR",
+      "home": "https://ru.mrpopular.net",
+      "free_page": "https://ru.mrpopular.net",
+      "platforms": [
+        "vk",
+        "ok",
+        "telegram",
+        "youtube"
+      ],
+      "reg_required": false,
+      "verified": "site+reviews",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Раздел «Бесплатное продвижение»: выдача ~15 минут, повтор через 5 минут с ростом ожидания. Автоматически Turnstile токен не выдаётся; режим ручной капчи.",
+      "services": [
+        {
+          "id": "mrpopular-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "any",
+          "amount": 10,
+          "cooldown_min": 15,
+          "max_claims_day": 6,
+          "hold_seconds": 60,
+          "url": "https://ru.mrpopular.net/",
+          "label": "Подписчики ВК",
+          "confirmed": false,
+          "subject_note": "сервис не уточняет объект — подойдёт и сообществу, и странице"
+        },
+        {
+          "id": "mrpopular-vk-likes",
+          "platform": "vk",
+          "type": "likes",
+          "subject": "post",
+          "amount": 10,
+          "cooldown_min": 15,
+          "max_claims_day": 6,
+          "hold_seconds": 60,
+          "url": "https://ru.mrpopular.net/",
+          "label": "Лайки ВК",
+          "confirmed": false,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        },
+        {
+          "id": "mrpopular-vk-views",
+          "platform": "vk",
+          "type": "views",
+          "subject": "post",
+          "amount": 100,
+          "cooldown_min": 15,
+          "max_claims_day": 6,
+          "hold_seconds": 60,
+          "url": "https://ru.mrpopular.net/",
+          "label": "Просмотры ВК",
+          "confirmed": false,
+          "subject_note": "нужна ссылка на конкретную запись/видео"
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-10",
+        "captcha": [
+          "hcaptcha",
+          "turnstile"
+        ],
+        "automation_class": "C",
+        "hold": "мгновенно"
+      }
+    },
+    {
+      "id": "smmyt",
+      "name": "SMMYT",
+      "home": "https://smmyt.ru",
+      "free_page": "https://smmyt.ru",
+      "platforms": [
+        "vk",
+        "telegram",
+        "youtube",
+        "instagram"
+      ],
+      "reg_required": true,
+      "verified": "reviews",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Бесплатный тариф + приветственный бонус.",
+      "services": [
+        {
+          "id": "smmyt-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "any",
+          "amount": 10,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 60,
+          "url": "https://smmyt.ru/",
+          "label": "Подписчики ВК (бесплатный тариф)",
+          "confirmed": false,
+          "subject_note": "сервис не уточняет объект — подойдёт и сообществу, и странице"
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-10",
+        "captcha": [],
+        "automation_class": "—",
+        "hold": "—"
+      }
+    },
+    {
+      "id": "prtut",
+      "name": "Prtut",
+      "home": "https://prtut.ru",
+      "free_page": "https://prtut.ru/free-smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "platforms": [
+        "vk"
+      ],
+      "reg_required": false,
+      "verified": "site-2026-11-11",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Движок /testknop (как DoctorSMM): таймер ~7 минут, затем одно нажатие «Бесплатный тест». Прямой POST молча создаёт заказ (ответ <br> = успех). Заявка принята 2026-11-11 («Вы уже воспользовались сегодня» при повторе).",
+      "services": [
+        {
+          "id": "prtut-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "any",
+          "amount": 50,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://prtut.ru/free-smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+          "label": "Подписчики ВК в группу (тест до 50)",
+          "confirmed": true,
+          "subject_note": "сервис не уточняет объект — подойдёт и сообществу, и странице"
+        },
+        {
+          "id": "prtut-vk-page-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "page",
+          "amount": 50,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://prtut.ru/free-smm/nakrutka-podpischikov-vk-besplatno/",
+          "label": "Подписчики на личную страницу ВК (тест до 50)",
+          "confirmed": true,
+          "subject_note": "бесплатные подписчики именно на страницу; страница должна быть открыта"
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-11",
+        "captcha": [],
+        "automation_class": "B",
+        "hold": "таймер на странице ~5-7 мин"
+      }
+    },
+    {
+      "id": "pricesmm",
+      "name": "PriceSMM",
+      "home": "https://pricesmm.com",
+      "free_page": "https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "platforms": [
+        "vk"
+      ],
+      "reg_required": false,
+      "verified": "site-2026-11-11",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Движок /testknop (ajax-getfree1.php): таймер «СТАРТ ЧЕРЕЗ ~5 мин», затем одно нажатие. 2026-11-11: «Ваш пробный заказ в работе! Ожидайте выполнения!» — заявка принята.",
+      "services": [
+        {
+          "id": "pricesmm-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "any",
+          "amount": 50,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+          "label": "Подписчики ВК в группу (тест до 50)",
+          "confirmed": true,
+          "subject_note": "сервис не уточняет объект — подойдёт и сообществу, и странице"
+        },
+        {
+          "id": "pricesmm-vk-page-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "page",
+          "amount": 50,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-vk-besplatno/",
+          "label": "Подписчики на личную страницу ВК (тест до 50)",
+          "confirmed": true,
+          "subject_note": "бесплатные подписчики именно на страницу; страница должна быть открыта"
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-11",
+        "captcha": [],
+        "automation_class": "B",
+        "hold": "таймер на странице ~5 мин"
+      }
+    },
+    {
+      "id": "smmcode",
+      "name": "SMMCode",
+      "home": "https://smmcode.shop",
+      "free_page": "https://smmcode.shop/nakrutka/vkontakte/podpischikov-na-akkaunt#free_boost",
+      "platforms": [
+        "vk"
+      ],
+      "reg_required": false,
+      "verified": "site-2026-11-11",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Бонусные услуги 0 ₽ (раз в 20 минут на каждый вид, включая «подписчиков на аккаунт в ВК»). Бонус-форма сейчас серверно выключена (в коде закомментирована); драйвер при каждом заходе проверяет её появление и подаёт заявку автоматически. Аккаунт: luxuryprince666+smmcode@gmail.com / Vkfree2026!KXCO (пароль в smmcode-register2.json).",
+      "services": [
+        {
+          "id": "smmcode-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "any",
+          "amount": 10,
+          "cooldown_min": 20,
+          "max_claims_day": null,
+          "hold_seconds": 0,
+          "url": "https://smmcode.shop/nakrutka/vkontakte/podpischikov-na-akkaunt#free_boost",
+          "label": "Бонус: подписчики на аккаунт ВК (0 ₽, раз в 20 мин)",
+          "confirmed": false,
+          "subject_note": "бонусная услуга объявлена сайтом; форма ожидает включения на стороне SMMCode"
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-11",
+        "captcha": [],
+        "automation_class": "B",
+        "hold": "без таймера"
+      }
+    },
+    {
+      "id": "smm8",
+      "name": "SMM8",
+      "home": "https://smm8.com",
+      "free_page": "https://smm8.com/free-vk-followers",
+      "platforms": [
+        "vk"
+      ],
+      "reg_required": false,
+      "verified": "site-2026-11-12",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Отдельный лендинг бесплатных подписчиков ВК БЕЗ логина: 10 шт. за заказ, раз в 30 минут, до 3 заказов в сутки (значения из API виджета telegramadviser.com/api/get). Механика: «Get It Now» → Turnstile-чекбокс (спрятан в закрытом shadow root, автоклик делаем через фреймы) → тикет → страница должна оставаться открытой 30 минут → финальная автоотправка заказа. С датацентровых IP Cloudflare чекбокс отклоняет — тогда драйвер ждёт клика человека в окне задачи (режим «С капчей») и доводит всё сам.",
+      "services": [
+        {
+          "id": "smm8-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "any",
+          "amount": 10,
+          "cooldown_min": 30,
+          "max_claims_day": 3,
+          "hold_seconds": 2100,
+          "url": "https://smm8.com/free-vk-followers",
+          "label": "Бесплатные подписчики ВК без логина (10 шт., раз в 30 мин, до 3/сутки)",
+          "confirmed": false,
+          "subject_note": "по тексту сайта работает для профилей, групп и пабликов; подтверждение ждёт клика «Я человек» на пользовательском IP"
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-12",
+        "captcha": [
+          "turnstile-интерактив (shadow DOM)"
+        ],
+        "automation_class": "C",
+        "hold": "таймер 30 минут, страница открыта"
+      }
+    },
+    {
+      "id": "smmprime",
+      "name": "SMMPrime",
+      "home": "https://smmprime.com",
+      "free_page": "https://smmprime.com/free",
+      "platforms": [
+        "vk"
+      ],
+      "reg_required": false,
+      "verified": "site-2026-11-12",
+      "mode": "assisted",
+      "enabled": true,
+      "notes": "Секция «Бонусы от SMMPrime» в iframe free-api.smmprime.com, без регистрации: «ВК Просмотры 100 шт. · бесплатно» на открытый пост/видео. Подтверждено боевой подачей 2026-11-12 (POST /api/order → status accepted, пул 447→446). Механика: выбор услуги → ссылка → личный таймер ~30 с → вопрос-проверка «N + M = ?» (решаем сами) → заказ. Пул общий на всех (~450/день, обновляется в 00:00 МСК) — может быть исчерпан. Есть мини-игра «сердце» для доп. бонусов (не требуется).",
+      "services": [
+        {
+          "id": "smmprime-vk-views",
+          "platform": "vk",
+          "type": "views",
+          "subject": "post",
+          "amount": 100,
+          "cooldown_min": 1,
+          "max_claims_day": null,
+          "hold_seconds": 0,
+          "url": "https://smmprime.com/free",
+          "label": "Бесплатные просмотры поста ВК (100 шт., личный таймер ~1 мин, общий пул ~450/день)",
+          "confirmed": true,
+          "subject_note": "нужна ссылка на открытый пост или видео; заказ подтверждён боем"
+        }
+      ],
+      "probe": {
+        "checked_at": "2026-11-12",
+        "captcha": [
+          "арифметический вопрос (решается автоматически)"
+        ],
+        "automation_class": "B",
+        "hold": "таймер ~30 c на посетителя"
+      }
+    }
+  ],
+  "subjects": {
+    "community": "Сообщество / группа / паблик",
+    "person": "Личная страница человека",
+    "post": "Запись, фото, видео, трек",
+    "any": "Сервис не разделяет — принимает любой объект"
+  }
+}

@@ -1,0 +1,2927 @@
+[
+  {
+    "id": "smm8-vk-followers",
+    "name": "SMM8 · Подписчики ВК (профиль/группа/паблик)",
+    "url": "https://smm8.com/free-vk-followers",
+    "status": 200,
+    "sec": 1.1,
+    "bytes": 255570,
+    "error": null,
+    "title": "Free VK Followers: 10 Every 30 Minutes, No Login | SMM8",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [],
+    "spa": false,
+    "checked_at": 1794330863,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "Search the questions",
+        "type": "search"
+      }
+    ],
+    "fields_n": 3,
+    "has_link_field": false,
+    "forms_n": 0,
+    "timers": [
+      "30:00"
+    ],
+    "about": "Free VK Followers: 10 Every 30 Minutes, No Login | SMM8 Services Free Tools Blog About Us Contact Us Legal Terms of Service Rules for using SMM8 Privacy Policy What data we keep and why Refund Policy When an order is refunded Read Before Ordering Check this before your first order Log in Sign Up Log in Sign Up Home &rsaquo; Free Services &rsaquo; Free VK Followers Free VK Followers Give a VK profile, group or public ",
+    "site_id": "smm8",
+    "service_id": "smm8-vk-followers"
+  },
+  {
+    "id": "smm8-vk-likes",
+    "name": "SMM8 · Лайки ВК",
+    "url": "https://smm8.com/free-vk-likes",
+    "status": 200,
+    "sec": 1.0,
+    "bytes": 233054,
+    "error": null,
+    "title": "Free VK Likes - Get Up to 480 Likes Daily | SMM8",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [],
+    "spa": false,
+    "checked_at": 1794330864,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "Search the questions",
+        "type": "search"
+      }
+    ],
+    "fields_n": 4,
+    "has_link_field": false,
+    "forms_n": 0,
+    "timers": [],
+    "about": "Free VK Likes - Get Up to 480 Likes Daily | SMM8 Services Free Tools Blog About Us Contact Us Legal Terms of Service Rules for using SMM8 Privacy Policy What data we keep and why Refund Policy When an order is refunded Read Before Ordering Check this before your first order Log in Sign Up Log in Sign Up Home &rsaquo; Free Services &rsaquo; Free VK Likes Free VK Post Likes Give a new VK post its first likes without si",
+    "site_id": "smm8",
+    "service_id": "smm8-vk-likes"
+  },
+  {
+    "id": "smm8-vk-views",
+    "name": "SMM8 · Просмотры видео ВК",
+    "url": "https://smm8.com/free-vk-video-views",
+    "status": 200,
+    "sec": 1.0,
+    "bytes": 223216,
+    "error": null,
+    "title": "Free VK Video Views - Get Up to 4,800 Daily | SMM8",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [],
+    "spa": false,
+    "checked_at": 1794330865,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "Find a term",
+        "type": "search"
+      },
+      {
+        "name": "",
+        "ph": "Search the questions",
+        "type": "search"
+      }
+    ],
+    "fields_n": 8,
+    "has_link_field": false,
+    "forms_n": 0,
+    "timers": [
+      "0:00",
+      "1:00",
+      "0:00",
+      "0:01",
+      "0:30",
+      "1:00"
+    ],
+    "about": "Free VK Video Views - Get Up to 4,800 Daily | SMM8 Services Free Tools Blog About Us Contact Us Legal Terms of Service Rules for using SMM8 Privacy Policy What data we keep and why Refund Policy When an order is refunded Read Before Ordering Check this before your first order Log in Sign Up Log in Sign Up Home &rsaquo; Free Services &rsaquo; Free VK Video Views Free VK Video Views Give a new VK video or clip its firs",
+    "site_id": "smm8",
+    "service_id": "smm8-vk-views"
+  },
+  {
+    "id": "prskill-vk-followers",
+    "name": "PRSkill · Подписчики ВК (вступившие)",
+    "url": "https://prskill.ru/services/vk-vstupivshie#giveaway-form",
+    "status": 200,
+    "sec": 1.6,
+    "bytes": 375177,
+    "error": null,
+    "title": "Накрутка подписчиков в ВК, живые подписчики для группы Вконтакте - PRSkill",
+    "captcha": [
+      "turnstile"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут"
+    ],
+    "spa": true,
+    "checked_at": 1794330867,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "checkbox"
+      },
+      {
+        "name": "",
+        "ph": "Пример: test@mail.ru",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "Кол-во",
+        "type": "number"
+      },
+      {
+        "name": "",
+        "ph": "https://vk.com/***",
+        "type": "text"
+      }
+    ],
+    "fields_n": 4,
+    "has_link_field": true,
+    "forms_n": 0,
+    "timers": [],
+    "about": "Накрутка подписчиков в ВК, живые подписчики для группы Вконтакте - PRSkill PRSkill Накрутка онлайн Instagram Подписчики Instagram Лайки Instagram Подписка на лайки (автолайки) Instagram Просмотры историй Instagram Сохранения фото или видео Instagram Клики на истории Instagram Охват, показы и посещение профиля Instagram Просмотры видео Instagram Взаимодействия Instagram Подписка на просмотры видео (автопросмотры) Inst",
+    "site_id": "prskill",
+    "service_id": "prskill-vk-followers"
+  },
+  {
+    "id": "prskill-vk-likes",
+    "name": "PRSkill · Лайки на запись ВК",
+    "url": "https://prskill.ru/services/vk-lajki#giveaway-form",
+    "status": 200,
+    "sec": 1.4,
+    "bytes": 412483,
+    "error": null,
+    "title": "Накрутка лайков в ВК — Заказать накрутку лайков - PRSkill",
+    "captcha": [
+      "turnstile"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут"
+    ],
+    "spa": true,
+    "checked_at": 1794330868,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "checkbox"
+      },
+      {
+        "name": "",
+        "ph": "Пример: test@mail.ru",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "Кол-во",
+        "type": "number"
+      },
+      {
+        "name": "",
+        "ph": "https://vk.com/feed?w=wall-***",
+        "type": "text"
+      }
+    ],
+    "fields_n": 4,
+    "has_link_field": true,
+    "forms_n": 0,
+    "timers": [],
+    "about": "Накрутка лайков в ВК — Заказать накрутку лайков - PRSkill PRSkill Накрутка онлайн Instagram Подписчики Instagram Лайки Instagram Подписка на лайки (автолайки) Instagram Просмотры историй Instagram Сохранения фото или видео Instagram Клики на истории Instagram Охват, показы и посещение профиля Instagram Просмотры видео Instagram Взаимодействия Instagram Подписка на просмотры видео (автопросмотры) Instagram Живые комме",
+    "site_id": "prskill",
+    "service_id": "prskill-vk-likes"
+  },
+  {
+    "id": "prskill-vk-views",
+    "name": "PRSkill · Просмотры записи ВК",
+    "url": "https://prskill.ru/services/nakrutka-prosmotrov-v-vk-na-zapisi#giveaway-form",
+    "status": 200,
+    "sec": 1.5,
+    "bytes": 325555,
+    "error": null,
+    "title": "Накрутка просмотров в ВК бесплатно – Как накрутить просмотры в ВК - PRSkill",
+    "captcha": [
+      "turnstile"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "очередь"
+    ],
+    "spa": true,
+    "checked_at": 1794330870,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "checkbox"
+      },
+      {
+        "name": "",
+        "ph": "Пример: test@mail.ru",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "Кол-во",
+        "type": "number"
+      },
+      {
+        "name": "",
+        "ph": "https://vk.com/feed?w=wall-***",
+        "type": "text"
+      }
+    ],
+    "fields_n": 4,
+    "has_link_field": true,
+    "forms_n": 0,
+    "timers": [],
+    "about": "Накрутка просмотров в ВК бесплатно – Как накрутить просмотры в ВК - PRSkill PRSkill Накрутка онлайн Instagram Подписчики Instagram Лайки Instagram Подписка на лайки (автолайки) Instagram Просмотры историй Instagram Сохранения фото или видео Instagram Клики на истории Instagram Охват, показы и посещение профиля Instagram Просмотры видео Instagram Взаимодействия Instagram Подписка на просмотры видео (автопросмотры) Ins",
+    "site_id": "prskill",
+    "service_id": "prskill-vk-views"
+  },
+  {
+    "id": "smmmedia-vk-followers",
+    "name": "SMM.media · Подписчики ВК (СНГ)",
+    "url": "https://smm.media/podpisciki-v-vk#free_boost",
+    "status": 200,
+    "sec": 1.1,
+    "bytes": 145756,
+    "error": null,
+    "title": "Накрутка подписчиков в ВК купить живых недорого и быстро",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "сек"
+    ],
+    "spa": false,
+    "checked_at": 1794330871,
+    "fields": [
+      {
+        "name": "_token",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "",
+        "ph": "Фильтр по услугам",
+        "type": "search"
+      },
+      {
+        "name": "count",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "Кол-во",
+        "type": "number"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка на накручиваемый объект",
+        "type": "text"
+      },
+      {
+        "name": "email",
+        "ph": "Укажите ваш E-mail",
+        "type": "email"
+      },
+      {
+        "name": "service_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "payment_method_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "impressions",
+        "ph": "Пример: Быстро, Качественно, надёжно",
+        "type": "text"
+      },
+      {
+        "name": "name",
+        "ph": "пр. Антонов Иван",
+        "type": "text"
+      }
+    ],
+    "fields_n": 13,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [],
+    "about": "Накрутка подписчиков в ВК купить живых недорого и быстро Оформить заказ Услуги API Войти Регистрация Накрутка подписчиков ВК SMM Media / Купить накрутку в ВКонтакте / Купить подписчиков на аккаунт в ВКонтакте 1 Укажите, что хотите накрутить 2 Заполните форму Подписчики на аккаунт Участники в группу или паблик Лайки на пост, фото и видео Лайки на несколько постов Просмотры на клипы Просмотры на видео Просмотры на запи",
+    "site_id": "smmmedia",
+    "service_id": "smmmedia-vk-followers"
+  },
+  {
+    "id": "smmmedia-vk-views",
+    "name": "SMM.media · Просмотры поста ВК",
+    "url": "https://smm.media/kupit-prosmotry-v-vk-na-zapisi#free_boost",
+    "status": 200,
+    "sec": 0.7,
+    "bytes": 169955,
+    "error": null,
+    "title": "Накрутка просмотров на записи в ВКонтакте",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "сек"
+    ],
+    "spa": false,
+    "checked_at": 1794330872,
+    "fields": [
+      {
+        "name": "_token",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "",
+        "ph": "Фильтр по услугам",
+        "type": "search"
+      },
+      {
+        "name": "count",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "Кол-во",
+        "type": "number"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка на накручиваемый объект",
+        "type": "text"
+      },
+      {
+        "name": "email",
+        "ph": "Укажите ваш E-mail",
+        "type": "email"
+      },
+      {
+        "name": "service_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "payment_method_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "impressions",
+        "ph": "Пример: Быстро, Качественно, надёжно",
+        "type": "text"
+      },
+      {
+        "name": "name",
+        "ph": "пр. Антонов Иван",
+        "type": "text"
+      }
+    ],
+    "fields_n": 13,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [],
+    "about": "Накрутка просмотров на записи в ВКонтакте Оформить заказ Услуги API Войти Регистрация Купить Просмотры в ВК на записи SMM Media / Купить накрутку в ВКонтакте / Купить просмотров на записи в ВКонтакте 1 Укажите, что хотите накрутить 2 Заполните форму Просмотры на записи Подписчики на аккаунт Участники в группу или паблик Лайки на пост, фото и видео Лайки на несколько постов Просмотры на клипы Просмотры на видео Просмо",
+    "site_id": "smmmedia",
+    "service_id": "smmmedia-vk-views"
+  },
+  {
+    "id": "smmmedia-vk-video",
+    "name": "SMM.media · Просмотры видео/клипов ВК",
+    "url": "https://smm.media/nakrutit-prosmotry-v-vk-na-video-ili-klipy#free_boost",
+    "status": 200,
+    "sec": 0.9,
+    "bytes": 198113,
+    "error": null,
+    "title": "Накрутить просмотры на видео и клипы в ВК без заданий",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "сек"
+    ],
+    "spa": false,
+    "checked_at": 1794330872,
+    "fields": [
+      {
+        "name": "_token",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "",
+        "ph": "Фильтр по услугам",
+        "type": "search"
+      },
+      {
+        "name": "count",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "Кол-во",
+        "type": "number"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка на накручиваемый объект",
+        "type": "text"
+      },
+      {
+        "name": "email",
+        "ph": "Укажите ваш E-mail",
+        "type": "email"
+      },
+      {
+        "name": "service_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "payment_method_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "impressions",
+        "ph": "Пример: Быстро, Качественно, надёжно",
+        "type": "text"
+      },
+      {
+        "name": "name",
+        "ph": "пр. Антонов Иван",
+        "type": "text"
+      }
+    ],
+    "fields_n": 13,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [],
+    "about": "Накрутить просмотры на видео и клипы в ВК без заданий Оформить заказ Услуги API Войти Регистрация Накрутить Просмотры в ВК на видео или клипы SMM Media / Купить накрутку в ВКонтакте / Купить просмотров на видео в ВКонтакте 1 Укажите, что хотите накрутить 2 Заполните форму Просмотры на видео Подписчики на аккаунт Участники в группу или паблик Лайки на пост, фото и видео Лайки на несколько постов Просмотры на клипы Про",
+    "site_id": "smmmedia",
+    "service_id": "smmmedia-vk-video"
+  },
+  {
+    "id": "lowcostsmm-vk-followers",
+    "name": "LowcostSMM · Подписчики ВК (страница)",
+    "url": "https://lowcostsmm.com/ru/free/nakrutka-podpischikov-vk-besplatno/",
+    "status": 200,
+    "sec": 0.9,
+    "bytes": 127809,
+    "error": null,
+    "title": "Бесплатная накрутка подписчиков ВК без регистрации ❤️",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "очередь"
+    ],
+    "spa": false,
+    "checked_at": 1794330873,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка (URL) для продвижения",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 3,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [
+      "5:01"
+    ],
+    "about": "Бесплатная накрутка подписчиков ВК без регистрации ❤️ Lowcost SMM Контакты FAQ Блог О нас Отзывы Попробовать Войти Регистрация Каталог услуг Телеграм Подписчики канала, группы Подписчики весь мир Просмотры ускоренные Просмотры микс Реакции живые Реакции рандом Бусты публичные Бусты приватные Голоса в опросы быстрые Голоса в опросы таргетинг Премиум на 1-12 мес. Премиум для любых каналов Рефералы уникальные Рефералы с",
+    "site_id": "lowcostsmm",
+    "service_id": "lowcostsmm-vk-followers"
+  },
+  {
+    "id": "lowcostsmm-vk-group",
+    "name": "LowcostSMM · Подписчики в группу ВК",
+    "url": "https://lowcostsmm.com/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+    "status": 200,
+    "sec": 0.8,
+    "bytes": 128609,
+    "error": null,
+    "title": "Накрутка подписчиков в группу ВК бесплатно в 1 клик ❤️",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330874,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка (URL) для продвижения",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 3,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [
+      "5:01"
+    ],
+    "about": "Накрутка подписчиков в группу ВК бесплатно в 1 клик ❤️ Lowcost SMM Контакты FAQ Блог О нас Отзывы Попробовать Войти Регистрация Каталог услуг Телеграм Подписчики канала, группы Подписчики весь мир Просмотры ускоренные Просмотры микс Реакции живые Реакции рандом Бусты публичные Бусты приватные Голоса в опросы быстрые Голоса в опросы таргетинг Премиум на 1-12 мес. Премиум для любых каналов Рефералы уникальные Рефералы ",
+    "site_id": "lowcostsmm",
+    "service_id": "lowcostsmm-vk-group"
+  },
+  {
+    "id": "lowcostsmm-vk-friends",
+    "name": "LowcostSMM · Друзья ВК",
+    "url": "https://lowcostsmm.com/ru/free/nakrutka-druzey-vk-besplatno/",
+    "status": 200,
+    "sec": 0.8,
+    "bytes": 130391,
+    "error": null,
+    "title": "Накрутка друзей в ВК бесплатно онлайн - 10k ❤️",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330875,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка (URL) для продвижения",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 3,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [
+      "5:01"
+    ],
+    "about": "Накрутка друзей в ВК бесплатно онлайн - 10k ❤️ Lowcost SMM Контакты FAQ Блог О нас Отзывы Попробовать Войти Регистрация Каталог услуг Телеграм Подписчики канала, группы Подписчики весь мир Просмотры ускоренные Просмотры микс Реакции живые Реакции рандом Бусты публичные Бусты приватные Голоса в опросы быстрые Голоса в опросы таргетинг Премиум на 1-12 мес. Премиум для любых каналов Рефералы уникальные Рефералы случайны",
+    "site_id": "lowcostsmm",
+    "service_id": "lowcostsmm-vk-friends"
+  },
+  {
+    "id": "lowcostsmm-vk-likes",
+    "name": "LowcostSMM · Лайки ВК (посты)",
+    "url": "https://lowcostsmm.com/ru/free/nakrutka-laykov-vk-besplatno/",
+    "status": 200,
+    "sec": 0.8,
+    "bytes": 129085,
+    "error": null,
+    "title": "Бесплатная накрутка лайков на посты ВК онлайн ❤️",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "сек",
+      "таймер"
+    ],
+    "spa": false,
+    "checked_at": 1794330876,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка (URL) для продвижения",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 3,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [
+      "5:01"
+    ],
+    "about": "Бесплатная накрутка лайков на посты ВК онлайн ❤️ Lowcost SMM Контакты FAQ Блог О нас Отзывы Попробовать Войти Регистрация Каталог услуг Телеграм Подписчики канала, группы Подписчики весь мир Просмотры ускоренные Просмотры микс Реакции живые Реакции рандом Бусты публичные Бусты приватные Голоса в опросы быстрые Голоса в опросы таргетинг Премиум на 1-12 мес. Премиум для любых каналов Рефералы уникальные Рефералы случай",
+    "site_id": "lowcostsmm",
+    "service_id": "lowcostsmm-vk-likes"
+  },
+  {
+    "id": "lowcostsmm-vk-views",
+    "name": "LowcostSMM · Просмотры постов ВК",
+    "url": "https://lowcostsmm.com/ru/free/nakrutka-prosmotrov-vk-besplatno/",
+    "status": 200,
+    "sec": 0.8,
+    "bytes": 124718,
+    "error": null,
+    "title": "Накрутка просмотров ВК бесплатно на посты - без заданий ❤️",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "сек",
+      "таймер"
+    ],
+    "spa": false,
+    "checked_at": 1794330877,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка (URL) для продвижения",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 3,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [
+      "5:01"
+    ],
+    "about": "Накрутка просмотров ВК бесплатно на посты - без заданий ❤️ Lowcost SMM Контакты FAQ Блог О нас Отзывы Попробовать Войти Регистрация Каталог услуг Телеграм Подписчики канала, группы Подписчики весь мир Просмотры ускоренные Просмотры микс Реакции живые Реакции рандом Бусты публичные Бусты приватные Голоса в опросы быстрые Голоса в опросы таргетинг Премиум на 1-12 мес. Премиум для любых каналов Рефералы уникальные Рефер",
+    "site_id": "lowcostsmm",
+    "service_id": "lowcostsmm-vk-views"
+  },
+  {
+    "id": "lowcostsmm-vk-reposts",
+    "name": "LowcostSMM · Репосты ВК",
+    "url": "https://lowcostsmm.com/ru/free/nakrutka-repostov-vk-besplatno/",
+    "status": 200,
+    "sec": 0.8,
+    "bytes": 124698,
+    "error": null,
+    "title": "Накрутка репостов ВК бесплатно - 1000 за 1 день ❤️",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "очередь"
+    ],
+    "spa": false,
+    "checked_at": 1794330877,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка (URL) для продвижения",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 3,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [
+      "5:01"
+    ],
+    "about": "Накрутка репостов ВК бесплатно - 1000 за 1 день ❤️ Lowcost SMM Контакты FAQ Блог О нас Отзывы Попробовать Войти Регистрация Каталог услуг Телеграм Подписчики канала, группы Подписчики весь мир Просмотры ускоренные Просмотры микс Реакции живые Реакции рандом Бусты публичные Бусты приватные Голоса в опросы быстрые Голоса в опросы таргетинг Премиум на 1-12 мес. Премиум для любых каналов Рефералы уникальные Рефералы случ",
+    "site_id": "lowcostsmm",
+    "service_id": "lowcostsmm-vk-reposts"
+  },
+  {
+    "id": "lowcostsmm-vk-plays",
+    "name": "LowcostSMM · Прослушивания ВК",
+    "url": "https://lowcostsmm.com/ru/free/nakrutka-proslushivaniy-vk-besplatno/",
+    "status": 200,
+    "sec": 0.9,
+    "bytes": 125845,
+    "error": null,
+    "title": "Накрутка прослушиваний ВК бесплатно - 10k на плейлист ❤️",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "сек",
+      "таймер"
+    ],
+    "spa": false,
+    "checked_at": 1794330878,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка (URL) для продвижения",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 3,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [
+      "5:01"
+    ],
+    "about": "Накрутка прослушиваний ВК бесплатно - 10k на плейлист ❤️ Lowcost SMM Контакты FAQ Блог О нас Отзывы Попробовать Войти Регистрация Каталог услуг Телеграм Подписчики канала, группы Подписчики весь мир Просмотры ускоренные Просмотры микс Реакции живые Реакции рандом Бусты публичные Бусты приватные Голоса в опросы быстрые Голоса в опросы таргетинг Премиум на 1-12 мес. Премиум для любых каналов Рефералы уникальные Реферал",
+    "site_id": "lowcostsmm",
+    "service_id": "lowcostsmm-vk-plays"
+  },
+  {
+    "id": "lowcostsmm-vk-comments",
+    "name": "LowcostSMM · Комментарии ВК",
+    "url": "https://lowcostsmm.com/ru/free/nakrutka-kommentariev-vk-besplatno/",
+    "status": 200,
+    "sec": 0.8,
+    "bytes": 124707,
+    "error": null,
+    "title": "Накрутка комментариев ВК бесплатно от 10 штук ❤️",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330879,
+    "fields": [
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка (URL) для продвижения",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 3,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [
+      "5:01"
+    ],
+    "about": "Накрутка комментариев ВК бесплатно от 10 штук ❤️ Lowcost SMM Контакты FAQ Блог О нас Отзывы Попробовать Войти Регистрация Каталог услуг Телеграм Подписчики канала, группы Подписчики весь мир Просмотры ускоренные Просмотры микс Реакции живые Реакции рандом Бусты публичные Бусты приватные Голоса в опросы быстрые Голоса в опросы таргетинг Премиум на 1-12 мес. Премиум для любых каналов Рефералы уникальные Рефералы случай",
+    "site_id": "lowcostsmm",
+    "service_id": "lowcostsmm-vk-comments"
+  },
+  {
+    "id": "smmnakrutka-vk-followers",
+    "name": "SMMnakrutka · Подписчики ВК",
+    "url": "https://smmnakrutka.ru/free-vk-followers",
+    "status": 200,
+    "sec": 1.1,
+    "bytes": 687732,
+    "error": null,
+    "title": "Бесплатная накрутка подписчиков ВК без регистрации и без заданий",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут",
+      "таймер"
+    ],
+    "spa": false,
+    "checked_at": 1794330880,
+    "fields": [
+      {
+        "name": "Url",
+        "ph": "Вставьте ссылку на профиль или группу ВК",
+        "type": "url"
+      },
+      {
+        "name": "formservices[]",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "quantity",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "Email",
+        "ph": "Email (необязательно)",
+        "type": "email"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка на группу или профиль",
+        "type": "url"
+      },
+      {
+        "name": "hours",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "rand",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "endtime",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "verify",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "url_page",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 14,
+    "has_link_field": true,
+    "forms_n": 3,
+    "timers": [],
+    "about": "Бесплатная накрутка подписчиков ВК без регистрации и без заданий МЕНЮ ОТЗЫВЫ БЕСПЛАТНО INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ЕЩЕ Гарантия доставки.&nbsp;Без регистрации! МЕНЮ ОТЗЫВЫ БЕСПЛАТНО INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ЕЩЕ главная меню бесплатно отзывы INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ОСТАЛЬНОЕ Подписчики Лайки Комментарии Просмотры Показы Сохранения ",
+    "site_id": "smmnakrutka",
+    "service_id": "smmnakrutka-vk-followers"
+  },
+  {
+    "id": "smmnakrutka-vk-likes",
+    "name": "SMMnakrutka · Лайки ВК",
+    "url": "https://smmnakrutka.ru/free-vk-likes",
+    "status": 200,
+    "sec": 1.1,
+    "bytes": 686982,
+    "error": null,
+    "title": "Бесплатная накрутка лайков ВК без регистрации и без заданий",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут",
+      "таймер"
+    ],
+    "spa": false,
+    "checked_at": 1794330881,
+    "fields": [
+      {
+        "name": "Url",
+        "ph": "Вставьте ссылку на ВК пост",
+        "type": "url"
+      },
+      {
+        "name": "formservices[]",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "quantity",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "Email",
+        "ph": "Email (необязательно)",
+        "type": "email"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка на пост",
+        "type": "url"
+      },
+      {
+        "name": "hours",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "rand",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "endtime",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "verify",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "url_page",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 14,
+    "has_link_field": true,
+    "forms_n": 3,
+    "timers": [],
+    "about": "Бесплатная накрутка лайков ВК без регистрации и без заданий МЕНЮ ОТЗЫВЫ БЕСПЛАТНО INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ЕЩЕ Гарантия доставки.&nbsp;Без регистрации! МЕНЮ ОТЗЫВЫ БЕСПЛАТНО INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ЕЩЕ главная меню бесплатно отзывы INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ОСТАЛЬНОЕ Подписчики Лайки Комментарии Просмотры Показы Сохранения Посещ",
+    "site_id": "smmnakrutka",
+    "service_id": "smmnakrutka-vk-likes"
+  },
+  {
+    "id": "smmnakrutka-vk-views",
+    "name": "SMMnakrutka · Просмотры поста ВК",
+    "url": "https://smmnakrutka.ru/free-vk-views",
+    "status": 200,
+    "sec": 0.9,
+    "bytes": 687205,
+    "error": null,
+    "title": "Бесплатная накрутка просмотров поста ВК без регистрации и без заданий",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут",
+      "таймер"
+    ],
+    "spa": false,
+    "checked_at": 1794330882,
+    "fields": [
+      {
+        "name": "Url",
+        "ph": "Вставьте ссылку на пост ВК",
+        "type": "url"
+      },
+      {
+        "name": "formservices[]",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "quantity",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "Email",
+        "ph": "Email (необязательно)",
+        "type": "email"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка на пост или видео",
+        "type": "url"
+      },
+      {
+        "name": "hours",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "rand",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "endtime",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "verify",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "url_page",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 14,
+    "has_link_field": true,
+    "forms_n": 3,
+    "timers": [],
+    "about": "Бесплатная накрутка просмотров поста ВК без регистрации и без заданий МЕНЮ ОТЗЫВЫ БЕСПЛАТНО INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ЕЩЕ Гарантия доставки.&nbsp;Без регистрации! МЕНЮ ОТЗЫВЫ БЕСПЛАТНО INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ЕЩЕ главная меню бесплатно отзывы INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ОСТАЛЬНОЕ Подписчики Лайки Комментарии Просмотры Показы Сохран",
+    "site_id": "smmnakrutka",
+    "service_id": "smmnakrutka-vk-views"
+  },
+  {
+    "id": "smmnakrutka-vk-video",
+    "name": "SMMnakrutka · Просмотры видео ВК",
+    "url": "https://smmnakrutka.ru/free-vk-video-views",
+    "status": 200,
+    "sec": 1.1,
+    "bytes": 687210,
+    "error": null,
+    "title": "Бесплатная накрутка просмотров видео ВК без регистрации и без заданий",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут",
+      "таймер"
+    ],
+    "spa": false,
+    "checked_at": 1794330883,
+    "fields": [
+      {
+        "name": "Url",
+        "ph": "Вставьте ссылку на видео ВК",
+        "type": "url"
+      },
+      {
+        "name": "formservices[]",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "quantity",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "Email",
+        "ph": "Email (необязательно)",
+        "type": "email"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка на видео",
+        "type": "url"
+      },
+      {
+        "name": "hours",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "rand",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "endtime",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "verify",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "url_page",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 14,
+    "has_link_field": true,
+    "forms_n": 3,
+    "timers": [],
+    "about": "Бесплатная накрутка просмотров видео ВК без регистрации и без заданий МЕНЮ ОТЗЫВЫ БЕСПЛАТНО INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ЕЩЕ Гарантия доставки.&nbsp;Без регистрации! МЕНЮ ОТЗЫВЫ БЕСПЛАТНО INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ЕЩЕ главная меню бесплатно отзывы INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ОСТАЛЬНОЕ Подписчики Лайки Комментарии Просмотры Показы Сохран",
+    "site_id": "smmnakrutka",
+    "service_id": "smmnakrutka-vk-video"
+  },
+  {
+    "id": "smmnakrutka-vk-plays",
+    "name": "SMMnakrutka · Прослушивания ВК",
+    "url": "https://smmnakrutka.ru/free-vk-plays",
+    "status": 200,
+    "sec": 0.8,
+    "bytes": 687896,
+    "error": null,
+    "title": "Бесплатная накрутка прослушиваний ВК без регистрации и без заданий",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут",
+      "таймер"
+    ],
+    "spa": false,
+    "checked_at": 1794330884,
+    "fields": [
+      {
+        "name": "Url",
+        "ph": "Вставьте ссылку на плейлист",
+        "type": "url"
+      },
+      {
+        "name": "formservices[]",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "quantity",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "Email",
+        "ph": "Email (необязательно)",
+        "type": "email"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка на плейлист",
+        "type": "url"
+      },
+      {
+        "name": "hours",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "rand",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "endtime",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "verify",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "url_page",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 14,
+    "has_link_field": true,
+    "forms_n": 3,
+    "timers": [],
+    "about": "Бесплатная накрутка прослушиваний ВК без регистрации и без заданий МЕНЮ ОТЗЫВЫ БЕСПЛАТНО INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ЕЩЕ Гарантия доставки.&nbsp;Без регистрации! МЕНЮ ОТЗЫВЫ БЕСПЛАТНО INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ЕЩЕ главная меню бесплатно отзывы INSTAGRAM ВК TIK TOK YOUTUBE TELEGRAM TWITCH MAX OK.RU ОСТАЛЬНОЕ Подписчики Лайки Комментарии Просмотры Показы Сохранени",
+    "site_id": "smmnakrutka",
+    "service_id": "smmnakrutka-vk-plays"
+  },
+  {
+    "id": "doctorsmm-vk-followers",
+    "name": "DoctorSMM · Подписчики ВК (тест до 50)",
+    "url": "https://doctorsmm.com/nakrutka-podpischikov-vk-platno/",
+    "status": 200,
+    "sec": 0.9,
+    "bytes": 211525,
+    "error": null,
+    "title": "Накрутка подписчиков ВК бесплатно – 1000 без заданий ❤️",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут",
+      "сек",
+      "таймер"
+    ],
+    "spa": false,
+    "checked_at": 1794330885,
+    "fields": [
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      }
+    ],
+    "fields_n": 14,
+    "has_link_field": false,
+    "forms_n": 13,
+    "timers": [],
+    "about": "`` Накрутка подписчиков ВК бесплатно – 1000 без заданий ❤️ Контакты О нас Попробовать О компании Партнёрам Гарантии Как оформить заказ Требования сайта Сроки выполнения Конфиденциальность Отзывы Блог Помощь Кабинет Подписчики живые Подписчики таргетинг Просмотры быстрые Просмотры гео Реакции микс Реакции уникальные Бусты на 1-180 дней Бусты поштучно Голоса в опросы Рефералы для бота Рефералы для игр Боты для канала Б",
+    "site_id": "doctorsmm",
+    "service_id": "doctorsmm-vk-followers"
+  },
+  {
+    "id": "doctorsmm-vk-likes",
+    "name": "DoctorSMM · Лайки ВК (тест)",
+    "url": "https://doctorsmm.com/nakrutka-lajkov-vk-platno-i-deshevo/",
+    "status": 200,
+    "sec": 0.9,
+    "bytes": 212255,
+    "error": null,
+    "title": "Накрутка лайков ВК бесплатно на фото — онлайн 24 / 7 ❤️",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут",
+      "сек",
+      "таймер"
+    ],
+    "spa": false,
+    "checked_at": 1794330886,
+    "fields": [
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "text"
+      }
+    ],
+    "fields_n": 14,
+    "has_link_field": false,
+    "forms_n": 13,
+    "timers": [],
+    "about": "`` Накрутка лайков ВК бесплатно на фото — онлайн 24 / 7 ❤️ Контакты О нас Попробовать О компании Партнёрам Гарантии Как оформить заказ Требования сайта Сроки выполнения Конфиденциальность Отзывы Блог Помощь Кабинет Подписчики живые Подписчики таргетинг Просмотры быстрые Просмотры гео Реакции микс Реакции уникальные Бусты на 1-180 дней Бусты поштучно Голоса в опросы Рефералы для бота Рефералы для игр Боты для канала Б",
+    "site_id": "doctorsmm",
+    "service_id": "doctorsmm-vk-likes"
+  },
+  {
+    "id": "likeboom-vk-followers",
+    "name": "LikeBoom · Любая услуга до 15 ₽ (≈50 подписчиков ВК)",
+    "url": "https://likeboom.ru/free-trial",
+    "status": 200,
+    "sec": 0.9,
+    "bytes": 264639,
+    "error": null,
+    "title": "Попробуйте бесплатно — likeboom",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": false,
+    "hold_hints": [
+      "дождитесь",
+      "минут",
+      "не закрывать",
+      "таймер"
+    ],
+    "spa": false,
+    "checked_at": 1794330887,
+    "fields": [
+      {
+        "name": "_csrf-frontend",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "LoginForm[username]",
+        "ph": "email@example.com",
+        "type": "text"
+      },
+      {
+        "name": "LoginForm[password]",
+        "ph": "••••••••••••••",
+        "type": "password"
+      },
+      {
+        "name": "_csrf-frontend",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "PasswordResetRequestForm[email]",
+        "ph": "email@example.com",
+        "type": "email"
+      },
+      {
+        "name": "_csrf-frontend",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "SignupPopupForm[email]",
+        "ph": "email@example.com",
+        "type": "email"
+      },
+      {
+        "name": "SignupPopupForm[password]",
+        "ph": "••••••••••••••",
+        "type": "password"
+      },
+      {
+        "name": "SignupPopupForm[passwordRepeat]",
+        "ph": "••••••••••••••",
+        "type": "password"
+      },
+      {
+        "name": "SignupPopupForm[acceptPrivacy]",
+        "ph": "",
+        "type": "checkbox"
+      }
+    ],
+    "fields_n": 17,
+    "has_link_field": false,
+    "forms_n": 4,
+    "timers": [
+      "02:00",
+      "08:00",
+      "23:00"
+    ],
+    "about": "Попробуйте бесплатно — likeboom Быстрая раскрутка и продвижение в соцсетях Услуги Кейсы Отзывы Вопрос-ответ О сервисе Гарантии и правила Бонусы Блог API Telegram МАХ TikTok Instagram VK YouTube Twitter Twitch Facebook Rutube Дзен LinkedIn Telegram Подписчики Просмотры Реакции Премиум Подписчики Бусты Старты бота Истории Голоса в опрос Рефералы Репосты Комментарии Жалобы Клики TG ADS Смотреть все МАХ Подписчики Просмо",
+    "site_id": "likeboom",
+    "service_id": "likeboom-vk-followers"
+  },
+  {
+    "id": "avi1-vk-followers",
+    "name": "Avi1 · Подписчики в группу ВК",
+    "url": "https://avi1.ru/piar/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+    "status": 200,
+    "sec": 0.7,
+    "bytes": 144452,
+    "error": null,
+    "title": "Накрутка подписчиков в группу ВК бесплатно 100, 1000 и 10000",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут",
+      "сек",
+      "таймер"
+    ],
+    "spa": false,
+    "checked_at": 1794330888,
+    "fields": [
+      {
+        "name": "search_string",
+        "ph": "Поиск...",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка (URL) для продвижения",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 4,
+    "has_link_field": true,
+    "forms_n": 2,
+    "timers": [
+      "5:00"
+    ],
+    "about": "Накрутка подписчиков в группу ВК бесплатно 100, 1000 и 10000 Подписчики премиум Подписчики таргет Просмотры постов, историй Просмотры весь мир Реакции позитив Реакции эмодзи Бусты для всех каналов Бусты до 6 мес. Голоса в опросы Комментарии по Вашему тексту Комментарии микс Лайки на любые посты Лайки рандом Премиум Боты быстрые Боты базовые Репосты Рефералы для ботов Рефералы для игр Эмоции на посты Реклама канала Ра",
+    "site_id": "avi1",
+    "service_id": "avi1-vk-followers"
+  },
+  {
+    "id": "avi1-vk-friends",
+    "name": "Avi1 · Друзья ВК",
+    "url": "https://avi1.ru/nakrutka-druzej-vk/",
+    "status": 200,
+    "sec": 0.8,
+    "bytes": 181757,
+    "error": null,
+    "title": "Накрутка друзей ВК бесплатно и дёшево - 100 заявок от 14р ❤️",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "сек"
+    ],
+    "spa": false,
+    "checked_at": 1794330888,
+    "fields": [
+      {
+        "name": "search_string",
+        "ph": "Поиск...",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      }
+    ],
+    "fields_n": 18,
+    "has_link_field": false,
+    "forms_n": 15,
+    "timers": [],
+    "about": "Накрутка друзей ВК бесплатно и дёшево - 100 заявок от 14р ❤️ Подписчики премиум Подписчики таргет Просмотры постов, историй Просмотры весь мир Реакции позитив Реакции эмодзи Бусты для всех каналов Бусты до 6 мес. Голоса в опросы Комментарии по Вашему тексту Комментарии микс Лайки на любые посты Лайки рандом Премиум Боты быстрые Боты базовые Репосты Рефералы для ботов Рефералы для игр Эмоции на посты Реклама канала Ра",
+    "site_id": "avi1",
+    "service_id": "avi1-vk-friends"
+  },
+  {
+    "id": "avi1-vk-likes",
+    "name": "Avi1 · Лайки ВК",
+    "url": "https://avi1.ru/nakrutka-lajkov-vk-platno/",
+    "status": 200,
+    "sec": 0.7,
+    "bytes": 182971,
+    "error": null,
+    "title": "Накрутка лайков в ВК бесплатно по ссылке и от 0,09р ❤️",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330889,
+    "fields": [
+      {
+        "name": "search_string",
+        "ph": "Поиск...",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      }
+    ],
+    "fields_n": 18,
+    "has_link_field": false,
+    "forms_n": 15,
+    "timers": [],
+    "about": "Накрутка лайков в ВК бесплатно по ссылке и от 0,09р ❤️ Подписчики премиум Подписчики таргет Просмотры постов, историй Просмотры весь мир Реакции позитив Реакции эмодзи Бусты для всех каналов Бусты до 6 мес. Голоса в опросы Комментарии по Вашему тексту Комментарии микс Лайки на любые посты Лайки рандом Премиум Боты быстрые Боты базовые Репосты Рефералы для ботов Рефералы для игр Эмоции на посты Реклама канала Раскрутк",
+    "site_id": "avi1",
+    "service_id": "avi1-vk-likes"
+  },
+  {
+    "id": "avi1-vk-views",
+    "name": "Avi1 · Просмотры ВК",
+    "url": "https://avi1.ru/nakrutka-prosmotrov-vkontakte-platno/",
+    "status": 200,
+    "sec": 0.8,
+    "bytes": 185376,
+    "error": null,
+    "title": "Накрутка просмотров ВК бесплатно онлайн - 5 минут старт ❤️",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "сек"
+    ],
+    "spa": false,
+    "checked_at": 1794330890,
+    "fields": [
+      {
+        "name": "search_string",
+        "ph": "Поиск...",
+        "type": "text"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      },
+      {
+        "name": "amount",
+        "ph": "",
+        "type": "number"
+      }
+    ],
+    "fields_n": 18,
+    "has_link_field": false,
+    "forms_n": 15,
+    "timers": [],
+    "about": "Накрутка просмотров ВК бесплатно онлайн - 5 минут старт ❤️ Подписчики премиум Подписчики таргет Просмотры постов, историй Просмотры весь мир Реакции позитив Реакции эмодзи Бусты для всех каналов Бусты до 6 мес. Голоса в опросы Комментарии по Вашему тексту Комментарии микс Лайки на любые посты Лайки рандом Премиум Боты быстрые Боты базовые Репосты Рефералы для ботов Рефералы для игр Эмоции на посты Реклама канала Раск",
+    "site_id": "avi1",
+    "service_id": "avi1-vk-views"
+  },
+  {
+    "id": "nakruti-vk-followers",
+    "name": "Nakruti.net · Подписчики ВК",
+    "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-podpischiki-vk",
+    "status": 200,
+    "sec": 1.2,
+    "bytes": 307203,
+    "error": null,
+    "title": "Бесплатные подписчики ВК — накрутка 2026",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут",
+      "сек"
+    ],
+    "spa": false,
+    "checked_at": 1794330891,
+    "fields": [
+      {
+        "name": "link",
+        "ph": "https://vk.com/nakruti",
+        "type": "text"
+      },
+      {
+        "name": "rating",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 2,
+    "has_link_field": true,
+    "forms_n": 2,
+    "timers": [],
+    "about": "Бесплатные подписчики ВК — накрутка 2026 NA KRUTI Главная Вход Регистрация Цены Instagram Подписчики Лайки Просмотры Reels Комментарии Stories Статистика Telegram Подписчики Просмотры Реакции Комментарии Репосты Звёзды Голосования Бусты Старты бота ВКонтакте Подписчики Друзья Лайки Просмотры Репосты Комментарии Голосования Зрители VK Video Live TikTok Подписчики Лайки Просмотры Репосты Комментарии YouTube Подписчики ",
+    "site_id": "nakruti",
+    "service_id": "nakruti-vk-followers"
+  },
+  {
+    "id": "nakruti-vk-friends",
+    "name": "Nakruti.net · Друзья ВК",
+    "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-druzya-vk",
+    "status": 200,
+    "sec": 1.0,
+    "bytes": 215359,
+    "error": null,
+    "title": "Бесплатные друзья ВК — накрутка бесплатно 2026",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330892,
+    "fields": [
+      {
+        "name": "link",
+        "ph": "https://vk.com/nakruti",
+        "type": "text"
+      },
+      {
+        "name": "rating",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 2,
+    "has_link_field": true,
+    "forms_n": 2,
+    "timers": [],
+    "about": "Бесплатные друзья ВК — накрутка бесплатно 2026 NA KRUTI Главная Вход Регистрация Цены Instagram Подписчики Лайки Просмотры Reels Комментарии Stories Статистика Telegram Подписчики Просмотры Реакции Комментарии Репосты Звёзды Голосования Бусты Старты бота ВКонтакте Подписчики Друзья Лайки Просмотры Репосты Комментарии Голосования Зрители VK Video Live TikTok Подписчики Лайки Просмотры Репосты Комментарии YouTube Подпи",
+    "site_id": "nakruti",
+    "service_id": "nakruti-vk-friends"
+  },
+  {
+    "id": "nakruti-vk-likes",
+    "name": "Nakruti.net · Лайки ВК",
+    "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-layki-vk",
+    "status": 200,
+    "sec": 1.0,
+    "bytes": 320144,
+    "error": null,
+    "title": "Бесплатные лайки ВК — накрутка лайков 2026",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330893,
+    "fields": [
+      {
+        "name": "link",
+        "ph": "https://vk.com/wall-2812398_48234",
+        "type": "text"
+      },
+      {
+        "name": "rating",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 2,
+    "has_link_field": true,
+    "forms_n": 2,
+    "timers": [],
+    "about": "Бесплатные лайки ВК — накрутка лайков 2026 NA KRUTI Главная Вход Регистрация Цены Instagram Подписчики Лайки Просмотры Reels Комментарии Stories Статистика Telegram Подписчики Просмотры Реакции Комментарии Репосты Звёзды Голосования Бусты Старты бота ВКонтакте Подписчики Друзья Лайки Просмотры Репосты Комментарии Голосования Зрители VK Video Live TikTok Подписчики Лайки Просмотры Репосты Комментарии YouTube Подписчик",
+    "site_id": "nakruti",
+    "service_id": "nakruti-vk-likes"
+  },
+  {
+    "id": "nakruti-vk-views",
+    "name": "Nakruti.net · Просмотры ВК",
+    "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-prosmotry-vk",
+    "status": 200,
+    "sec": 0.9,
+    "bytes": 237678,
+    "error": null,
+    "title": "Бесплатные просмотры ВК — накрутка 2026",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330894,
+    "fields": [
+      {
+        "name": "link",
+        "ph": "https://vk.com/wall-2812398_48234",
+        "type": "text"
+      },
+      {
+        "name": "rating",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 2,
+    "has_link_field": true,
+    "forms_n": 2,
+    "timers": [],
+    "about": "Бесплатные просмотры ВК — накрутка 2026 NA KRUTI Главная Вход Регистрация Цены Instagram Подписчики Лайки Просмотры Reels Комментарии Stories Статистика Telegram Подписчики Просмотры Реакции Комментарии Репосты Звёзды Голосования Бусты Старты бота ВКонтакте Подписчики Друзья Лайки Просмотры Репосты Комментарии Голосования Зрители VK Video Live TikTok Подписчики Лайки Просмотры Репосты Комментарии YouTube Подписчики П",
+    "site_id": "nakruti",
+    "service_id": "nakruti-vk-views"
+  },
+  {
+    "id": "nakruti-vk-plays",
+    "name": "Nakruti.net · Прослушивания ВК",
+    "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-proslushivaniya-vk",
+    "status": 200,
+    "sec": 0.8,
+    "bytes": 221949,
+    "error": null,
+    "title": "Бесплатные прослушивания ВК бесплатно 2026",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330895,
+    "fields": [
+      {
+        "name": "link",
+        "ph": "https://vk.com/music/playlist/-2000476808_9476808",
+        "type": "text"
+      },
+      {
+        "name": "rating",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 2,
+    "has_link_field": true,
+    "forms_n": 2,
+    "timers": [],
+    "about": "Бесплатные прослушивания ВК бесплатно 2026 NA KRUTI Главная Вход Регистрация Цены Instagram Подписчики Лайки Просмотры Reels Комментарии Stories Статистика Telegram Подписчики Просмотры Реакции Комментарии Репосты Звёзды Голосования Бусты Старты бота ВКонтакте Подписчики Друзья Лайки Просмотры Репосты Комментарии Голосования Зрители VK Video Live TikTok Подписчики Лайки Просмотры Репосты Комментарии YouTube Подписчик",
+    "site_id": "nakruti",
+    "service_id": "nakruti-vk-plays"
+  },
+  {
+    "id": "nakruti-vk-reposts",
+    "name": "Nakruti.net · Репосты ВК",
+    "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-reposty-vk",
+    "status": 200,
+    "sec": 0.8,
+    "bytes": 229040,
+    "error": null,
+    "title": "Бесплатные репосты ВК — накрутка 2026",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330896,
+    "fields": [
+      {
+        "name": "link",
+        "ph": "https://vk.com/wall-2812398_48234",
+        "type": "text"
+      },
+      {
+        "name": "rating",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 2,
+    "has_link_field": true,
+    "forms_n": 2,
+    "timers": [],
+    "about": "Бесплатные репосты ВК — накрутка 2026 NA KRUTI Главная Вход Регистрация Цены Instagram Подписчики Лайки Просмотры Reels Комментарии Stories Статистика Telegram Подписчики Просмотры Реакции Комментарии Репосты Звёзды Голосования Бусты Старты бота ВКонтакте Подписчики Друзья Лайки Просмотры Репосты Комментарии Голосования Зрители VK Video Live TikTok Подписчики Лайки Просмотры Репосты Комментарии YouTube Подписчики Про",
+    "site_id": "nakruti",
+    "service_id": "nakruti-vk-reposts"
+  },
+  {
+    "id": "nakruti-vk-comments",
+    "name": "Nakruti.net · Комментарии ВК",
+    "url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-kommentarii-vk",
+    "status": 200,
+    "sec": 1.0,
+    "bytes": 227402,
+    "error": null,
+    "title": "Бесплатные комментарии ВК бесплатно 2026",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "дождитесь",
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330897,
+    "fields": [
+      {
+        "name": "link",
+        "ph": "https://vk.com/wall-2812398_48234",
+        "type": "text"
+      },
+      {
+        "name": "rating",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 2,
+    "has_link_field": true,
+    "forms_n": 2,
+    "timers": [],
+    "about": "Бесплатные комментарии ВК бесплатно 2026 NA KRUTI Главная Вход Регистрация Цены Instagram Подписчики Лайки Просмотры Reels Комментарии Stories Статистика Telegram Подписчики Просмотры Реакции Комментарии Репосты Звёзды Голосования Бусты Старты бота ВКонтакте Подписчики Друзья Лайки Просмотры Репосты Комментарии Голосования Зрители VK Video Live TikTok Подписчики Лайки Просмотры Репосты Комментарии YouTube Подписчики ",
+    "site_id": "nakruti",
+    "service_id": "nakruti-vk-comments"
+  },
+  {
+    "id": "smmcode-vk-followers",
+    "name": "SMMCode · Подписчики ВК",
+    "url": "https://smmcode.shop/nakrutka/vkontakte/podpischikov-na-akkaunt",
+    "status": 200,
+    "sec": 1.1,
+    "bytes": 170435,
+    "error": null,
+    "title": "Купить подписчиков ВКонтакте - SMMCode",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": false,
+    "mentions_vk": true,
+    "hold_hints": [
+      "очередь"
+    ],
+    "spa": false,
+    "checked_at": 1794330898,
+    "fields": [
+      {
+        "name": "_token",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "",
+        "ph": "Поиск по услугам",
+        "type": "search"
+      },
+      {
+        "name": "count",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "Кол-во",
+        "type": "number"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка на накручиваемый объект",
+        "type": "url"
+      },
+      {
+        "name": "email",
+        "ph": "Укажите ваш E-mail",
+        "type": "email"
+      },
+      {
+        "name": "service_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "payment_method_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "",
+        "ph": "Поиск соцсети",
+        "type": "search"
+      },
+      {
+        "name": "",
+        "ph": "Поиск по услугам",
+        "type": "search"
+      }
+    ],
+    "fields_n": 10,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [],
+    "about": "Купить подписчиков ВКонтакте - SMMCode API Услуги Личный кабинет ВКонтакте Телеграм Рефералы для ботов ВКонтакте Max Инстаграм Ютуб ТикТок Twitch Threads RuTube Твиттер FaceBook* Одноклассники LinkedIn Likee Трафик на website Все соцсети (46) Выбрать соцсеть Откроется полный список с поиском Накрутка подписчиков ВКонтакте Накрутка соц сетей / ВКонтакте / Подписчики на аккаунт 1 Выберите услугу 0.63 ₽/шт Мир | Старт ~",
+    "site_id": "smmcode",
+    "service_id": "smmcode-vk-followers"
+  },
+  {
+    "id": "smmcode-vk-likes",
+    "name": "SMMCode · Лайки ВК",
+    "url": "https://smmcode.shop/nakrutka/vkontakte/laikov",
+    "status": 200,
+    "sec": 3.3,
+    "bytes": 256284,
+    "error": null,
+    "title": "Накрутка лайков ВКонтакте на пост и фото — SMMCode",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": false,
+    "mentions_vk": true,
+    "hold_hints": [],
+    "spa": false,
+    "checked_at": 1794330901,
+    "fields": [
+      {
+        "name": "_token",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "",
+        "ph": "Поиск по услугам",
+        "type": "search"
+      },
+      {
+        "name": "count",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "Кол-во",
+        "type": "number"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка на накручиваемый объект",
+        "type": "url"
+      },
+      {
+        "name": "email",
+        "ph": "Укажите ваш E-mail",
+        "type": "email"
+      },
+      {
+        "name": "service_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "payment_method_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "",
+        "ph": "Поиск соцсети",
+        "type": "search"
+      },
+      {
+        "name": "",
+        "ph": "Поиск по услугам",
+        "type": "search"
+      }
+    ],
+    "fields_n": 10,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [],
+    "about": "Накрутка лайков ВКонтакте на пост и фото — SMMCode API Услуги Личный кабинет ВКонтакте Телеграм Рефералы для ботов ВКонтакте Max Инстаграм Ютуб ТикТок Twitch Threads RuTube Твиттер FaceBook* Одноклассники LinkedIn Likee Трафик на website Все соцсети (46) Выбрать соцсеть Откроется полный список с поиском Накрутка лайков на посты, фотографии и видео ВКонтакте Накрутка соц сетей / ВКонтакте / Лайки на пост, фото и видео",
+    "site_id": "smmcode",
+    "service_id": "smmcode-vk-likes"
+  },
+  {
+    "id": "smmcode-vk-views",
+    "name": "SMMCode · Просмотры записей ВК",
+    "url": "https://smmcode.shop/nakrutka/vkontakte/prosmotry-na-zapisi",
+    "status": 200,
+    "sec": 1.7,
+    "bytes": 226551,
+    "error": null,
+    "title": "Накрутка просмотров на записи ВКонтакте — SMMCode",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": false,
+    "mentions_vk": true,
+    "hold_hints": [],
+    "spa": false,
+    "checked_at": 1794330903,
+    "fields": [
+      {
+        "name": "_token",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "",
+        "ph": "Поиск по услугам",
+        "type": "search"
+      },
+      {
+        "name": "count",
+        "ph": "",
+        "type": "range"
+      },
+      {
+        "name": "",
+        "ph": "Кол-во",
+        "type": "number"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка на накручиваемый объект",
+        "type": "url"
+      },
+      {
+        "name": "email",
+        "ph": "Укажите ваш E-mail",
+        "type": "email"
+      },
+      {
+        "name": "service_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "payment_method_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "",
+        "ph": "Поиск соцсети",
+        "type": "search"
+      },
+      {
+        "name": "",
+        "ph": "Поиск по услугам",
+        "type": "search"
+      }
+    ],
+    "fields_n": 10,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [],
+    "about": "Накрутка просмотров на записи ВКонтакте — SMMCode API Услуги Личный кабинет ВКонтакте Телеграм Рефералы для ботов ВКонтакте Max Инстаграм Ютуб ТикТок Twitch Threads RuTube Твиттер FaceBook* Одноклассники LinkedIn Likee Трафик на website Все соцсети (46) Выбрать соцсеть Откроется полный список с поиском Накрутка просмотров на записи ВКонтакте Накрутка соц сетей / ВКонтакте / Просмотры на записи 1 Выберите услугу 0.067",
+    "site_id": "smmcode",
+    "service_id": "smmcode-vk-views"
+  },
+  {
+    "id": "mrpopular-vk-followers",
+    "name": "MRPOPULAR · Подписчики ВК",
+    "url": "https://ru.mrpopular.net/",
+    "status": 200,
+    "sec": 1.5,
+    "bytes": 356571,
+    "error": null,
+    "title": "Накрутка подписчиков, лайков, просмотров и комментариев\r\n | mrpopular",
+    "captcha": [
+      "hcaptcha",
+      "turnstile"
+    ],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330904,
+    "fields": [
+      {
+        "name": "",
+        "ph": "Поиск",
+        "type": "text"
+      }
+    ],
+    "fields_n": 1,
+    "has_link_field": false,
+    "forms_n": 0,
+    "timers": [
+      "12:48",
+      "14:02"
+    ],
+    "about": "Накрутка подписчиков, лайков, просмотров и комментариев | mrpopular вход регистрация Магазин главная биржа заданий инструменты корзина подписки история заказов Аккаунт пополнить баланс активировать промокод партнерская программа юридическим лицам Помощь служба поддержки частые вопросы информация отзывы блог новости Разработчикам public API reseller API Тёмная тема mr popular 0 руб. English Español Русский Français De",
+    "site_id": "mrpopular",
+    "service_id": "mrpopular-vk-followers"
+  },
+  {
+    "id": "smmprime-vk-likes",
+    "name": "SMMPrime · Лайки (10 шт. после регистрации)",
+    "url": "https://smmprime.com/free",
+    "status": 200,
+    "sec": 1.0,
+    "bytes": 382154,
+    "error": null,
+    "title": "Бесплатная накрутка подписчиков, лайков и просмотров | SMMPrime",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "сек"
+    ],
+    "spa": false,
+    "checked_at": 1794330905,
+    "fields": [],
+    "fields_n": 0,
+    "has_link_field": false,
+    "forms_n": 0,
+    "timers": [],
+    "about": "Бесплатная накрутка подписчиков, лайков и просмотров | SMMPrime SMM PRIME с 2017 года помогаем продвигаться в соцсетях Вход Цены 🔥 Бесплатная накрутка 🔥 Наш Бот Новости Регистрация Вход SMM PRIME с 2017 года помогаем продвигаться в соцсетях Услуги Цены Лайки Подписчики Комментарии Просмотры Репосты 🔥 Бесплатная накрутка 🔥 Накрутка ботов Телеграм Главная Звезды Подписчики Просмотры Реакции Голосования Комментарии Репо",
+    "site_id": "smmprime",
+    "service_id": "smmprime-vk-likes"
+  },
+  {
+    "id": "likest-vk-likes",
+    "name": "Likest · 20 лайков на фото ВК",
+    "url": "https://likest.ru/",
+    "status": 200,
+    "sec": 1.1,
+    "bytes": 97957,
+    "error": null,
+    "title": "Likest.ru — накрутка лайков, подписчиков, реакций, репостов, комментариев, просмотров",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330906,
+    "fields": [
+      {
+        "name": "",
+        "ph": "Поиск по всему каталогу...",
+        "type": "text"
+      },
+      {
+        "name": "link",
+        "ph": "Ссылка ВКонтакте",
+        "type": "text"
+      },
+      {
+        "name": "op",
+        "ph": "",
+        "type": "submit"
+      },
+      {
+        "name": "form_build_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "form_id",
+        "ph": "",
+        "type": "hidden"
+      }
+    ],
+    "fields_n": 5,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [
+      "09:43"
+    ],
+    "about": "Likest.ru — накрутка лайков, подписчиков, реакций, репостов, комментариев, просмотров likest понравится вам еще больше со включенным JavaScript Перейти к основному содержанию Накрутка лайков, подписчиков, реакций, репостов, комментариев, просмотров Вход Регистрация Десятки платформ, сотни услуг — удобно, быстро, эффективно! Начните без регистрации — кабинет создастся сам при первом заказе ВК МАКС МАКС закрытые TG TG ",
+    "site_id": "likest",
+    "service_id": "likest-vk-likes"
+  },
+  {
+    "id": "likeinsta-vk-followers",
+    "name": "LikeInsta · Подписчики ВК (за баллы с заданий)",
+    "url": "https://likeinsta.io/login/",
+    "status": 200,
+    "sec": 0.8,
+    "bytes": 13283,
+    "error": null,
+    "title": "Вход и регистрация на сайте - Likeinsta.io",
+    "captcha": [
+      "recaptcha"
+    ],
+    "blocked": false,
+    "says_free": false,
+    "mentions_vk": false,
+    "hold_hints": [],
+    "spa": false,
+    "checked_at": 1794330907,
+    "fields": [
+      {
+        "name": "UserLogin[login]",
+        "ph": "Логин или E-mail",
+        "type": "text"
+      },
+      {
+        "name": "UserLogin[password]",
+        "ph": "Пароль",
+        "type": "password"
+      },
+      {
+        "name": "submitLogin",
+        "ph": "",
+        "type": "submit"
+      },
+      {
+        "name": "UserReg[email]",
+        "ph": "E-mail",
+        "type": "text"
+      },
+      {
+        "name": "UserReg[password]",
+        "ph": "Пароль",
+        "type": "password"
+      },
+      {
+        "name": "UserReg[password_repeat]",
+        "ph": "Повторить пароль",
+        "type": "password"
+      },
+      {
+        "name": "submitRegistration",
+        "ph": "",
+        "type": "submit"
+      },
+      {
+        "name": "User[login]",
+        "ph": "Логин или E-mail",
+        "type": "text"
+      },
+      {
+        "name": "submitRestore1",
+        "ph": "",
+        "type": "submit"
+      }
+    ],
+    "fields_n": 9,
+    "has_link_field": false,
+    "forms_n": 3,
+    "timers": [],
+    "about": "Вход и регистрация на сайте - Likeinsta.io Likeinsta Вход в панель Регистрация Логин или E-mail Пароль Забыли пароль? E-mail Пароль Повторить пароль Регистрируясь, вы принимаете наши правила сервиса , пользовательское соглашение , политику конфиденциальности и даете согласие на обработку персональных данных . Likeinsta Забыли пароль? Не переживайте. Просто введите свою эл.&nbsp;почту или логин, и мы вышлем инструкцию",
+    "site_id": "likeinsta",
+    "service_id": "likeinsta-vk-followers"
+  },
+  {
+    "id": "taplike-vk-followers",
+    "name": "TapLike · Подписчики ВК (бонусный тариф)",
+    "url": "https://taplike.ru/",
+    "status": 200,
+    "sec": 1.0,
+    "bytes": 95777,
+    "error": null,
+    "title": "TapLike - качественная накрутка подписчиков и лайков в Telegram и ВКонтакте: сервис для привлечения подписчико",
+    "captcha": [],
+    "blocked": false,
+    "says_free": true,
+    "mentions_vk": true,
+    "hold_hints": [],
+    "spa": false,
+    "checked_at": 1794330908,
+    "fields": [
+      {
+        "name": "email",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "service_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "quantity",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "link",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "promocode",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "comment_owner",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "category_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "type_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "service_id",
+        "ph": "",
+        "type": "hidden"
+      },
+      {
+        "name": "quantity",
+        "ph": "",
+        "type": "text"
+      }
+    ],
+    "fields_n": 15,
+    "has_link_field": true,
+    "forms_n": 0,
+    "timers": [],
+    "about": "TapLike - качественная накрутка подписчиков и лайков в Telegram и ВКонтакте: сервис для привлечения подписчиков в ВК и ТГ на TapLike.Ru T AP L ike Накрутка подписчиков и лайков в социальных сетях Меню Сделать заказ Для кого? Преимущества Частые вопросы Вход / Регистрация Безопасная накрутка подписчиков и лайков Оформите заказ прямо сейчас без регистрации и ожидания Автопросмотры и автолайки по подписке! Больше не над",
+    "site_id": "taplike",
+    "service_id": "taplike-vk-followers"
+  },
+  {
+    "id": "prmotion-vk-followers",
+    "name": "PR Motion · Подписчики ВК (тест)",
+    "url": "https://prmotion.ru/",
+    "status": 200,
+    "sec": 0.4,
+    "bytes": 11014,
+    "error": null,
+    "title": "Pro.Motion",
+    "captcha": [],
+    "blocked": false,
+    "says_free": false,
+    "mentions_vk": false,
+    "hold_hints": [],
+    "spa": false,
+    "checked_at": 1794330908,
+    "fields": [
+      {
+        "name": "name",
+        "ph": "Ваше имя",
+        "type": "text"
+      },
+      {
+        "name": "phone",
+        "ph": "Номер телефона",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "submit"
+      }
+    ],
+    "fields_n": 3,
+    "has_link_field": false,
+    "forms_n": 1,
+    "timers": [],
+    "about": "Pro.Motion Разработка О Нас Вакансии Контакты RU EN Разработка О Нас Вакансии Контакты RU EN Внедряем современные технологии в ваш бизнес Выводим интернет—маркетинг на новый уровень Создаем сервисы для крупных торговых площадок Мы создаем кросс-платформенные, высоконагруженные приложения Сервисы мониторинга и фильтрации интернет-трафика Решения для автоматизации бизнес-процессов Структурирование и анализ больших масс",
+    "site_id": "prmotion",
+    "service_id": "prmotion-vk-followers"
+  },
+  {
+    "id": "nupago-vk-followers",
+    "name": "Nupago · Подписчики ВК (бонус)",
+    "url": "https://nupago.ru/",
+    "status": 200,
+    "sec": 2.0,
+    "bytes": 125520,
+    "error": null,
+    "title": "Нупаго: Накрутка в соцсетях. Вконтакте, Telegram, YouTube, TikTok",
+    "captcha": [],
+    "blocked": false,
+    "says_free": false,
+    "mentions_vk": true,
+    "hold_hints": [],
+    "spa": false,
+    "checked_at": 1794330910,
+    "fields": [
+      {
+        "name": "q",
+        "ph": "Найти услугу",
+        "type": "search"
+      },
+      {
+        "name": "q",
+        "ph": "Например, просмотры Telegram",
+        "type": "search"
+      }
+    ],
+    "fields_n": 2,
+    "has_link_field": false,
+    "forms_n": 2,
+    "timers": [],
+    "about": "Нупаго: Накрутка в соцсетях. Вконтакте, Telegram, YouTube, TikTok Нупаго Поиск услуг Услуги и цены Статьи Войти Создать аккаунт Bluesky DTF Discord Facebook Kick Likee LinkedIn MAX Pinterest Quora Reddit Shazam SoundCloud Spotify Threads Trovo Tumblr Twitter/X VC.ru WhatsApp Wibes Yappy YouTube Вконтакте Дзен Инстаграм Одноклассники Рутуб Твич Телеграм ТикТок Яндекс Музыка Нупаго 32 платформ · 56 услуг Накрутка в соц",
+    "site_id": "nupago",
+    "service_id": "nupago-vk-followers"
+  },
+  {
+    "id": "feijoa-vk-followers",
+    "name": "Feijoa · Подписчики ВК (бонусы рулетки)",
+    "url": "https://feijoa.pro/",
+    "status": null,
+    "sec": 0.1,
+    "bytes": null,
+    "error": "URLError: <urlopen error [Errno -2] Name or service not known>",
+    "title": "",
+    "captcha": [],
+    "blocked": false,
+    "says_free": false,
+    "mentions_vk": false,
+    "hold_hints": [],
+    "spa": false,
+    "checked_at": 1794330911,
+    "fields": [],
+    "fields_n": 0,
+    "has_link_field": false,
+    "forms_n": 0,
+    "timers": [],
+    "about": "",
+    "site_id": "feijoa",
+    "service_id": "feijoa-vk-followers"
+  },
+  {
+    "id": "spetsnakrutka-vk-followers",
+    "name": "Spetsnakrutka · Подписчики ВК (тест)",
+    "url": "https://spetsnakrutka.ru/",
+    "status": 200,
+    "sec": 1.1,
+    "bytes": 227652,
+    "error": null,
+    "title": "Накрутка подписчиков в Телеграм канал | SpetsNakrutka",
+    "captcha": [],
+    "blocked": false,
+    "says_free": false,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут",
+      "очередь",
+      "сек"
+    ],
+    "spa": false,
+    "checked_at": 1794330912,
+    "fields": [
+      {
+        "name": "link",
+        "ph": "https://telegram.me/channel",
+        "type": "text"
+      },
+      {
+        "name": "email",
+        "ph": "example@mail.ru",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "checkbox"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "checkbox"
+      }
+    ],
+    "fields_n": 5,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [
+      "9:00",
+      "21:00"
+    ],
+    "about": "Накрутка подписчиков в Телеграм канал | SpetsNakrutka Spetsnakrutka Услуги Контакты FAQ Накрутка подписчиков в Телеграм-канал Продвижение с умом — результат без забот Telegram Telegram Вконтакте Instagram TikTok Likee Facebook Twitch Twitter (x) Одноклассники Яндекс Дзен Rutube YouTube Pinterest MAX Подписчики Подписчики Подписчики в приват канал Просмотры Просмотры на последние посты Просмотры на будущие посты Просм",
+    "site_id": "spetsnakrutka",
+    "service_id": "spetsnakrutka-vk-followers"
+  },
+  {
+    "id": "masslike-vk-followers",
+    "name": "Masslike · Подписчики ВК (тест)",
+    "url": "https://masslike.ru/",
+    "status": 200,
+    "sec": 1.1,
+    "bytes": 222042,
+    "error": null,
+    "title": "Масслайк — накрутка и продвижение в соцсетях",
+    "captcha": [],
+    "blocked": false,
+    "says_free": false,
+    "mentions_vk": true,
+    "hold_hints": [
+      "минут"
+    ],
+    "spa": false,
+    "checked_at": 1794330913,
+    "fields": [
+      {
+        "name": "link",
+        "ph": "https://t.me/channel",
+        "type": "text"
+      },
+      {
+        "name": "email",
+        "ph": "example@mail.ru",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "text"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "checkbox"
+      },
+      {
+        "name": "",
+        "ph": "",
+        "type": "checkbox"
+      }
+    ],
+    "fields_n": 5,
+    "has_link_field": true,
+    "forms_n": 1,
+    "timers": [
+      "9:00",
+      "21:00"
+    ],
+    "about": "Масслайк — накрутка и продвижение в соцсетях Masslike Ваш путь к популярности начинается здесь! Услуги Контакты FAQ Накрутка подписчиков и лайков в соцсетях Ваша аудитория — наша забота. Telegram Telegram Вконтакте YouTube Instagram Яндекс Дзен Twitch Facebook TikTok Twitter (x) Одноклассники Likee MAX Telegram Вконтакте YouTube Instagram Яндекс Дзен Twitch Facebook TikTok Twitter (x) Одноклассники Likee MAX Подписчи",
+    "site_id": "masslike",
+    "service_id": "masslike-vk-followers"
+  },
+  {
+    "id": "bestsmm-vk-followers",
+    "name": "BestSMM · Подписчики ВК (тест)",
+    "url": "https://bestsmm.pro/",
+    "status": null,
+    "sec": 0.1,
+    "bytes": null,
+    "error": "URLError: <urlopen error [Errno -2] Name or service not known>",
+    "title": "",
+    "captcha": [],
+    "blocked": false,
+    "says_free": false,
+    "mentions_vk": false,
+    "hold_hints": [],
+    "spa": false,
+    "checked_at": 1794330913,
+    "fields": [],
+    "fields_n": 0,
+    "has_link_field": false,
+    "forms_n": 0,
+    "timers": [],
+    "about": "",
+    "site_id": "bestsmm",
+    "service_id": "bestsmm-vk-followers"
+  },
+  {
+    "id": "smmyt-vk-followers",
+    "name": "SMMYT · Подписчики ВК (бесплатный тариф)",
+    "url": "https://smmyt.ru/",
+    "status": 403,
+    "sec": 0.6,
+    "bytes": 6384,
+    "error": null,
+    "title": "",
+    "captcha": [],
+    "blocked": false,
+    "says_free": false,
+    "mentions_vk": false,
+    "hold_hints": [],
+    "spa": false,
+    "checked_at": 1794330913,
+    "fields": [],
+    "fields_n": 0,
+    "has_link_field": false,
+    "forms_n": 0,
+    "timers": [],
+    "about": "�\b\u0000\u0000\u0000\u0000\u0000\u0000\u0003�{yo�ؕ���)� �l�m��\u0016Kv�\u0012K\u0016��E�).\u0012�@��J�ĭI�Z2 $�3� fɛ\u0007 : ��� 7&�x� &zLL=4J:�15t � \u0011�c��b \u0007�b�\u0012uD\u0004�o:���=�a�qw��n\u0018$H;���h���Z@��UJ��$E\u0018�)�+�rv�j\u0013���^ �G��c��,t��KV��,-E�D5 �L֦:h�\"Bh��� V���NP�N8�j��#�\u0006���\u0010,\u001a��� ��,\b\u0014'8\u000e�o��ץ�\u0013����8��\u0012��:g\u0004���M��j�:�\b� �T��Z��UM��z�M���,v\u0000�;sB��� �3\u000f�S\u0007 ���\u000fL\u0007 �\u0003 ��\u0016��B������A�������c_��qpF�yoz��\u0019Q�\u0014n\u0013]�6��\u0012�&�h\u001a +�9��\u001a ��$��r�\u0011�y29���� �\b���\u0007���\u0019y������#O\u000e�9\u00029�I�����@��\bψ���Q�",
+    "site_id": "smmyt",
+    "service_id": "smmyt-vk-followers"
+  }
+]
