@@ -152,6 +152,13 @@ class FreeFormBrowserTests(unittest.TestCase):
                 self.assertFalse(guard())
                 self.assertFalse(drivers.free_form_guard(self.page, '#link', '#paid', TARGET, url))
 
+    def test_countdown_accepts_colon_after_word_on_martinismm(self):
+        self.page._p.goto(EXTRA_URLS['martinismm.com'])
+        self.page._p.locator('#get_free_start').evaluate("e => e.innerText = 'ЗАПУСТИМ ЧЕРЕЗ: 6:58'")
+        self.assertEqual(drivers._button_countdown(self.page, '#get_free_form #get_free_start'), 418)
+        self.page._p.locator('#get_free_start').evaluate("e => e.innerText = 'ЗАПУСТИМ ЧЕРЕЗ 0:03'")
+        self.assertEqual(drivers._button_countdown(self.page, '#get_free_form #get_free_start'), 3)
+
     def test_mrpopular_free_form_requires_site_provided_captcha_token(self):
         self.page._p.goto(MRPOPULAR_URL)
         guard = lambda url=MRPOPULAR_URL: drivers.free_form_guard(

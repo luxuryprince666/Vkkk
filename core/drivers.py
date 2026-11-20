@@ -779,7 +779,7 @@ def _button_countdown(page: stealth.Page, sel: str) -> int:
           const el = document.querySelector(sel);
           if (!el) return '';
           let t = (el.innerText || el.value || '') + ' ' + ((el.parentElement || {}).innerText || '');
-          const m = t.match(/(?:ЧЕРЕЗ|через)\s*(\d{1,2}):(\d{2})/);
+          const m = t.match(/через\s*[:—-]?\s*(\d{1,2})\s*:\s*(\d{2})/i);
           if (!m) return '';
           return String(parseInt(m[1], 10) * 60 + parseInt(m[2], 10));
         })""" + "(" + repr(sel) + ")")

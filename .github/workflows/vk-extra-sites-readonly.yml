@@ -4,6 +4,7 @@ name: Additional VK free-site inspection (read only)
 # requests are blocked; only form structure, public service IDs, request key
 # names, safe handler structure and the VK counter are read. Never record input
 # values or request bodies; no target is entered and no buttons are clicked.
+# The scoped free-form candidate and countdown are checked without input.
 on:
   push:
     branches:

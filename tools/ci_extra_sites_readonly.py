@@ -116,11 +116,18 @@ def main() -> int:
                             def js(self, expression):
                                 return page.evaluate(expression)
                         adapter = Adapter()
-                        # Existing empty input only: no community link is entered.
+                        # Same discovery and form-scoping as the real driver,
+                        # but the existing empty input is never filled.
+                        discovered = drivers.discover(adapter)
+                        field = drivers.pick_link_field(discovered.get('fields') or [])
+                        scoped = drivers.same_form_state(adapter, discovered, field['sel']) if field else None
+                        button = drivers.pick_submit_button(scoped.get('buttons') or []) if scoped else None
                         info['candidate_check'] = {
-                            'free_guard_on_empty_field': drivers.free_form_guard(
-                                adapter, '#link', '#get_free_start', '', url),
-                            'visible_countdown_sec': drivers._button_countdown(adapter, '#get_free_start'),
+                            'field_selector': field.get('sel') if field else None,
+                            'button_selector': button.get('sel') if button else None,
+                            'free_guard_on_empty_field': bool(field and button and drivers.free_form_guard(
+                                adapter, field['sel'], button['sel'], '', url)),
+                            'visible_countdown_sec': drivers._button_countdown(adapter, button['sel']) if button else None,
                         }
                 except Exception as exc:
                     info['error'] = verifier._safe_detail(str(exc) or type(exc).__name__)
