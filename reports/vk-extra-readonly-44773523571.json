@@ -1,0 +1,719 @@
+{
+  "phase": "завершено",
+  "orders_sent": 0,
+  "sites": [
+    {
+      "site": "Boost-Like",
+      "url": "https://boost-like.ru/vk/besplatnaya-nakrutka-podpischikov-v-vk",
+      "orders_sent": 0,
+      "final": "https://boost-like.ru/vk/besplatnaya-nakrutka-podpischikov-v-vk",
+      "structure": {
+        "title": "Бесплатная накрутка подписчиков ВК",
+        "mainText": "Главная Услуги Блог Отзывы Контакты RU EN Отследить заказы Войти Регистрация TikTok Instagram Telegram VK MAX YouTube Likee Rutube Twitch Одноклассники Spotify Трафик Wibes Яндекс Музыка Главная VK Бесплатные подписчики ВК VK Бесплатно Бесплатная накрутка подписчиков VK Демо-версия сервиса накрутки +10 БЕСПЛАТНО Осталось 2 попытки Пробная услуга накрутки подписчиков ВК в количестве 10 штук. Есть ограничения Получить После активации не покидайте страницу до завершения таймера. По истечении времени нажмите кнопку «Получить». Последние заказы 65 онлайн Пользователь получил +20 лайков TIKTOK 19 minutes ago Пользователь получил +100 просмотров TELEGRAM 28 minutes ago Пользователь получил +10 подписчиков TIKTOK 38 minutes ago Пользователь получил +20 лайков TIKTOK 40 minutes ago Пользователь получил +20 лайков TIKTOK 48 minutes ago Бесплатная накрутка подписчиков ВКонтакте Хотите быстро увеличить аудиторию группы или паблика ВК? Бесплатная накрутка подписчиков ВКонтакте — простой способ набрать первых участников без вложений и сложных настроек. Подписчики влияют на восприятие сообщества: чем их больше, тем выше доверие новых посетителей и охват публикаций. На этой странице вы можете получить бесплатных подписчиков — достаточно вставить ссылку на группу формата https://vk.com/yourgroup ",
+        "forms": [
+          {
+            "id": "",
+            "classes": "space-y-5",
+            "method": "get",
+            "actionPath": "https://boost-like.ru/vk/besplatnaya-nakrutka-podpischikov-v-vk",
+            "visible": true,
+            "text": "СОЦ. СЕТЬ Выберите TikTok Instagram Telegram VK MAX YouTube Likee Rutube Twitch Kick Одноклассники Facebook Spotify Яндекс Трафик Wibes Яндекс Музыка КАТЕГОРИЯ Выберите ВЫБЕРИТЕ УСЛУГУ Выберите услугу ССЫЛКА КОЛИЧЕСТВО Стоимость заказа 0,00 ₽ Добавить в корзину Есть аккаунт? Войти для больших скидок",
+            "fields": [
+              {
+                "id": "",
+                "name": "",
+                "type": "select-one",
+                "visible": true,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": false,
+                "options": [
+                  {
+                    "text": "Выберите"
+                  },
+                  {
+                    "text": "TikTok"
+                  },
+                  {
+                    "text": "Instagram"
+                  },
+                  {
+                    "text": "Telegram"
+                  },
+                  {
+                    "text": "VK"
+                  },
+                  {
+                    "text": "MAX"
+                  },
+                  {
+                    "text": "YouTube"
+                  },
+                  {
+                    "text": "Likee"
+                  },
+                  {
+                    "text": "Rutube"
+                  },
+                  {
+                    "text": "Twitch"
+                  },
+                  {
+                    "text": "Kick"
+                  },
+                  {
+                    "text": "Одноклассники"
+                  },
+                  {
+                    "text": "Facebook"
+                  },
+                  {
+                    "text": "Spotify"
+                  },
+                  {
+                    "text": "Яндекс"
+                  },
+                  {
+                    "text": "Трафик"
+                  },
+                  {
+                    "text": "Wibes"
+                  },
+                  {
+                    "text": "Яндекс Музыка"
+                  }
+                ]
+              },
+              {
+                "id": "",
+                "name": "",
+                "type": "select-one",
+                "visible": true,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": false,
+                "options": [
+                  {
+                    "text": "Выберите"
+                  }
+                ]
+              },
+              {
+                "id": "",
+                "name": "",
+                "type": "select-one",
+                "visible": true,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": false,
+                "options": [
+                  {
+                    "text": "Выберите услугу"
+                  }
+                ]
+              },
+              {
+                "id": "",
+                "name": "",
+                "type": "text",
+                "visible": true,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "https://...",
+                "hasValue": false,
+                "options": null
+              },
+              {
+                "id": "quick-order-quantity",
+                "name": "",
+                "type": "number",
+                "visible": true,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "0",
+                "hasValue": false,
+                "options": null
+              }
+            ],
+            "buttons": [
+              {
+                "id": "",
+                "type": "submit",
+                "text": "Добавить в корзину",
+                "visible": true,
+                "disabled": true
+              }
+            ]
+          }
+        ],
+        "looseControls": [
+          {
+            "id": "",
+            "text": "Получить"
+          },
+          {
+            "id": "",
+            "text": "Сколько подписчиков можно получить бесплатно?"
+          },
+          {
+            "id": "",
+            "text": "Нужно ли давать доступ к группе?"
+          },
+          {
+            "id": "",
+            "text": "Подписчики отпишутся?"
+          },
+          {
+            "id": "",
+            "text": "Заблокирует ли ВК группу за накрутку?"
+          },
+          {
+            "id": "",
+            "text": "Что делать, если подписчики не пришли?"
+          },
+          {
+            "id": "",
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "site": "LowcostSMM",
+      "url": "https://lowcostsmm.com/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "orders_sent": 0,
+      "final": "https://lowcostsmm.com/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "structure": {
+        "title": "Накрутка подписчиков в группу ВК бесплатно в 1 клик ❤️",
+        "mainText": "Lowcost SMM Контакты FAQ Блог О нас Попробовать Войти Регистрация Накрутка подписчиков в группу ВК бесплатно и быстро Главная → Бесплатная накрутка Накрутите подписчиков в группу бесплатно или купите подписчиков ВК сообщества по ссылке Ожидание 7 минут. Бесплатно! Купите дешево! Живые мгновенно. Пример ссылки: https://vk.com/***** СТАРТ ЧЕРЕЗ 5:01 СДЕЛАТЬ БОЛЬШЕ! Добавим 5-7 подписчиков Хотите получить подарок? Старт ПОДАРОК! Близко Горячо Ну... Вплотную Рядом Нажмите \"Старт\" и накрутите в 2х раза больше подписчиков сразу же, если выпадет подарок! Бесплатные игры: Шарики Lines98 15 puzzle Можно ли накрутить подписчиков в группу ВК, если у Вас небольшое сообщество, нет средств и минимум знаний маркетинга? Все думают, что для раскрутки паблика нужны миллионы, связи и два высших образования, но на деле важно иметь под рукой один лишь инструмент. Им пользуются маркетологи, крупные блогеры и даже новички, которые только осваиваются соцсети – и это бесплатная накрутка. Это универсальное руководство, которое может Вам приблизиться к первой 1000 подписчиков за 1 месяц. Вместе с экспертом Мироновой Анной, мы расскажем, где безопаснее всего забирать трафик, почему много подписок – это возможный путь к бану, зачем Вам нужны участники для рекламы и как их количество влияет на репутацию блога",
+        "forms": [
+          {
+            "id": "get_free_form",
+            "classes": "",
+            "method": "get",
+            "actionPath": "https://lowcostsmm.com/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+            "visible": true,
+            "text": "Накрутите подписчиков в группу бесплатно или купите подписчиков ВК сообщества по ссылке Ожидание 7 минут. Бесплатно! Купите дешево! Живые мгновенно. Пример ссылки: https://vk.com/***** СТАРТ ЧЕРЕЗ 5:01 СДЕЛАТЬ БОЛЬШЕ! Добавим 5-7 подписчиков",
+            "fields": [
+              {
+                "id": "get_free_hidden",
+                "name": "",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "get_free_id",
+                "name": "get_free_id",
+                "type": "select-one",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": [
+                  {
+                    "text": "service"
+                  }
+                ]
+              },
+              {
+                "id": "link",
+                "name": "link",
+                "type": "text",
+                "visible": true,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "Ссылка (URL) для продвижения",
+                "hasValue": false,
+                "options": null
+              },
+              {
+                "id": "get_free_key",
+                "name": "",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              }
+            ],
+            "buttons": [
+              {
+                "id": "get_free_start",
+                "type": "submit",
+                "text": "СТАРТ ЧЕРЕЗ 5:01",
+                "visible": true,
+                "disabled": false
+              },
+              {
+                "id": "",
+                "type": "button",
+                "text": "СДЕЛАТЬ БОЛЬШЕ!",
+                "visible": true,
+                "disabled": false
+              }
+            ]
+          }
+        ],
+        "looseControls": [
+          {
+            "id": "",
+            "text": "Старт"
+          },
+          {
+            "id": "opener",
+            "text": "ПОМОЩЬ"
+          }
+        ]
+      }
+    },
+    {
+      "site": "MartiniSMM",
+      "url": "https://martinismm.com/social-media/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "orders_sent": 0,
+      "final": "https://martinismm.com/social-media/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "structure": {
+        "title": "Накрутка подписчиков в группу ВК бесплатно 50, 500 и 5000",
+        "mainText": "MartiniSMM Главная Услуги оптом Услуги в розницу Блог Попробовать Отзывы Войти Регистрация Бесплатная накрутка подписчиков в группу ВК 50, 500 и 5000 Ниже укажите ссылку и накрутите подписчиков бесплатно или купите подписчиков в группу ВК, перейдя по ссылке! Пример ссылки: https://vk.com/***** ЗАПУСТИМ ЧЕРЕЗ: 6:58 ПОЛУЧИТЬ БОЛЬШЕ! Прибавим 10 подписчиков Не покидайте страницу и не сворачивайте её, иначе таймер будет остановлен. Подождите 5 минут. Чтобы заказать качественные смм услуги быстро, переходите по ссылке. Скрасьте своё 5-ти минутное ожидание за одной из игр: Хотите испытать удачу? Нажмите кнопку «старт», и накрутите в 10x больше подписчиков без ожидания, если выпадет подарок! Старт ПОДАРОК! Холодно Горячо Иии... Почти Рядом ПОКА ИДЁТ ОТСЧЁТ, СЫГРАТЬ В КАРТЫ ПЯТНАДЦАТЬ ИЛИ ШАРИКИ × Подписчиков в группу Вк - без ожидания Купить за 18р. - 100шт. Накрутка без заданий. Дёшево и быстро. В поисках своей целевой аудитории для группы? Привлеките её через накрутку подписчиков в ВК сообщество бесплатно. В новой статье мы расскажем о популярных способах, в том числе про услуги Мартини смм. А чтобы Вы были уверены в безопасности своего блога, раскроем важные секреты и тонкости, которые помогут утроить изначальные результаты. Нюансы накрутки подписчиков в ВК сообщество Основной нюанс ",
+        "forms": [
+          {
+            "id": "get_free_form",
+            "classes": "",
+            "method": "get",
+            "actionPath": "https://martinismm.com/social-media/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+            "visible": true,
+            "text": "Ниже укажите ссылку и накрутите подписчиков бесплатно или купите подписчиков в группу ВК, перейдя по ссылке! Пример ссылки: https://vk.com/***** ЗАПУСТИМ ЧЕРЕЗ: 6:58 ПОЛУЧИТЬ БОЛЬШЕ! Прибавим 10 подписчиков",
+            "fields": [
+              {
+                "id": "get_free_hidden",
+                "name": "",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "get_free_id",
+                "name": "get_free_id",
+                "type": "select-one",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": [
+                  {
+                    "text": "service"
+                  }
+                ]
+              },
+              {
+                "id": "link",
+                "name": "link",
+                "type": "text",
+                "visible": true,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "Ссылка (URL) для продвижения",
+                "hasValue": false,
+                "options": null
+              },
+              {
+                "id": "get_free_key",
+                "name": "",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              }
+            ],
+            "buttons": [
+              {
+                "id": "get_free_start",
+                "type": "submit",
+                "text": "ЗАПУСТИМ ЧЕРЕЗ: 6:58",
+                "visible": true,
+                "disabled": false
+              },
+              {
+                "id": "",
+                "type": "button",
+                "text": "ПОЛУЧИТЬ БОЛЬШЕ!",
+                "visible": true,
+                "disabled": false
+              }
+            ]
+          }
+        ],
+        "looseControls": [
+          {
+            "id": "",
+            "text": "Старт"
+          },
+          {
+            "id": "get_free_start",
+            "text": "ПОКА ИДЁТ ОТСЧЁТ,\nСЫГРАТЬ В КАРТЫ"
+          },
+          {
+            "id": "get_free_start",
+            "text": "ПЯТНАДЦАТЬ"
+          },
+          {
+            "id": "get_free_start",
+            "text": "ИЛИ ШАРИКИ"
+          },
+          {
+            "id": "",
+            "text": "Купить за 18р. - 100шт."
+          },
+          {
+            "id": "",
+            "text": "Хорошо"
+          }
+        ]
+      }
+    },
+    {
+      "site": "CapitanSMM",
+      "url": "https://capitansmm.com/ru/smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "orders_sent": 0,
+      "final": "https://capitansmm.com/ru/smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "structure": {
+        "title": "Накрутка подписчиков в группу ВК бесплатно и онлайн",
+        "mainText": "CapitanSMM Услуги Секреты Бесплатно Войти Регистрация Бесплатная накрутка подписчиков в группу ВК онлайн Укажите нужный линк для бесплатной накрутки подписчиков в группу. А чтобы купить подписчиков в группу ВК - перейдите по ссылке! Пример ссылки: https://vk.com/***** ПУСК ЧЕРЕЗ 5:00 МИНУТ НАБРАТЬ БОЛЬШЕ! Строго до 10 подписчиков Таймер будет остановлен, если Вы покинете или свернёте страницу. Не хотите ждать? Переходите по ссылке и заказывайте качественные услуги! Пока ожидаете сыграйте в одну из игр. Шарики Lines98 15 puzzle Накрутка подписчиков в группу ВК бесплатно и онлайн Хотите организовать полноценную накрутку подписчиков в группу вк бесплатно онлайн? Но не знаете, как это организовать. Капитансмм поможет решить Вам эту не простую задачу! Мы с огромным удовольствием раскроем инструменты, которые дают возможность на безвозмездной основе пиарить соц. сети. Начнём с одного из самых эффективных и выгодных предложений — это безвозмездная тестовая опция, которую Вы можете пройти на нашем сайте. Чтобы начать её использовать на практике, Вам не потребуются особые умения и навыки. Нужно лишь следовать данной инструкции: Заходите на наш сайт. Вверху страницы находите вкладку «бесплатно». Кликаете по ней и попадаете в меню. Выбираете желаемую услугу. Вставляете свой линк на сообщест",
+        "forms": [
+          {
+            "id": "get_free_form",
+            "classes": "",
+            "method": "get",
+            "actionPath": "https://capitansmm.com/ru/smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+            "visible": true,
+            "text": "Укажите нужный линк для бесплатной накрутки подписчиков в группу. А чтобы купить подписчиков в группу ВК - перейдите по ссылке! Пример ссылки: https://vk.com/***** ПУСК ЧЕРЕЗ 5:00 МИНУТ НАБРАТЬ БОЛЬШЕ! Строго до 10 подписчиков",
+            "fields": [
+              {
+                "id": "get_free_hidden",
+                "name": "",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "get_free_id",
+                "name": "get_free_id",
+                "type": "select-one",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": [
+                  {
+                    "text": "service"
+                  }
+                ]
+              },
+              {
+                "id": "link",
+                "name": "link",
+                "type": "text",
+                "visible": true,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "Ссылка (URL) для продвижения",
+                "hasValue": false,
+                "options": null
+              },
+              {
+                "id": "get_free_key",
+                "name": "",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              }
+            ],
+            "buttons": [
+              {
+                "id": "get_free_start",
+                "type": "submit",
+                "text": "ПУСК ЧЕРЕЗ 5:00 МИНУТ",
+                "visible": true,
+                "disabled": false
+              },
+              {
+                "id": "",
+                "type": "button",
+                "text": "НАБРАТЬ БОЛЬШЕ!",
+                "visible": true,
+                "disabled": false
+              }
+            ]
+          }
+        ],
+        "looseControls": [
+          {
+            "id": "",
+            "text": "Хорошо"
+          }
+        ]
+      }
+    },
+    {
+      "site": "CaptainSMM",
+      "url": "https://captainsmm.com/ru/nakrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "orders_sent": 0,
+      "final": "https://captainsmm.com/ru/nakrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "structure": {
+        "title": "Бесплатная накрутка подписчиков в группу ВК без заданий",
+        "mainText": "CaptainSMM Услуги Попробовать Контакты FAQ Отзывы Войти Регистрация Накрутка подписчиков в группу ВК бесплатно без заданий Оставьте ссылку в окне и бесплатно накрутите подписчиков. А купить подписчиков группы ВК можно по этой ссылке! Пример ссылки: https://vk.com/***** АКТИВНО ЧЕРЕЗ 5:00 минут НАБРАТЬ ЕЩЁ БОЛЬШЕ! Только 10 подписчиков Обратите внимание! Если Вы покинете или свернёте страницу, таймер будет приостановлен. Нужно быстрее? Живые и реальные услуги можно заказать по ссылке без ожидания! Пока ожидаете запуск услуги, предлагаем сыграть в одну из игр: Шарики Lines98 15 puzzle Бесплатная накрутка подписчиков в группу ВК без заданий Вы обдумываете накрутку подписчиков в группу ВК бесплатно без заданий? Тогда оставайтесь с нами, и мы познакомим Вас с некоторыми нюансами и наиболее продуктивными приёмами. Раскрутка соц. сетей через СS — это прекрасная возможность повысить Ваш рейтинг. У нас Вы сможете совершенно бесплатно и без особых усилий прибавить нужные показатели. Как это организовать, расскажем ниже: найдите вкладку «Бесплатно» и тапните по ней. Она доступна всем гостям нашего сайта; для запуска заказа Вам понадобится только ссылка на Вашу группу. Убедитесь, что она введена верно и ведёт на настоящее сообщество; у нас Вы найдёт широкий ассортимент услуг, которые можно п",
+        "forms": [
+          {
+            "id": "get_free_form",
+            "classes": "",
+            "method": "get",
+            "actionPath": "https://captainsmm.com/ru/nakrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+            "visible": true,
+            "text": "Оставьте ссылку в окне и бесплатно накрутите подписчиков. А купить подписчиков группы ВК можно по этой ссылке! Пример ссылки: https://vk.com/***** АКТИВНО ЧЕРЕЗ 5:00 минут НАБРАТЬ ЕЩЁ БОЛЬШЕ! Только 10 подписчиков",
+            "fields": [
+              {
+                "id": "get_free_hidden",
+                "name": "",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "get_free_id",
+                "name": "get_free_id",
+                "type": "select-one",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": [
+                  {
+                    "text": "service"
+                  }
+                ]
+              },
+              {
+                "id": "link",
+                "name": "link",
+                "type": "text",
+                "visible": true,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "Ссылка (URL) для продвижения",
+                "hasValue": false,
+                "options": null
+              },
+              {
+                "id": "get_free_key",
+                "name": "",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              }
+            ],
+            "buttons": [
+              {
+                "id": "get_free_start",
+                "type": "submit",
+                "text": "АКТИВНО ЧЕРЕЗ 5:00 минут",
+                "visible": true,
+                "disabled": false
+              },
+              {
+                "id": "",
+                "type": "button",
+                "text": "НАБРАТЬ ЕЩЁ БОЛЬШЕ!",
+                "visible": true,
+                "disabled": false
+              }
+            ]
+          }
+        ],
+        "looseControls": [
+          {
+            "id": "",
+            "text": "Хорошо"
+          }
+        ]
+      }
+    },
+    {
+      "site": "SprinterSMM",
+      "url": "https://sprintersmm.com/raskrutka/",
+      "orders_sent": 0,
+      "final": "https://sprintersmm.com/raskrutka/",
+      "structure": {
+        "title": "Бесплатная раскрутка в социальных сетях без регистрации",
+        "mainText": "support@sprintersmm.com Добрый день! Сегодня Пятница 20 ноября 2026 г. SprinterSmm ГЛАВНАЯ УСЛУГИ БЕСПЛАТНО О НАС КОНТАКТЫ 1 Корзина × 100 Подписчиков 1 11руб. × Товаров: 1 Итого: 11 руб. В КОРЗИНУ Раскрутка в соц. сетях бесплатно и без регистрации Бесплатные услуги смм раскрутки: Накрутка подписчиков ВК бесплатно Накрутка подписчиков в группу ВК бесплатно Накрутка друзей ВК бесплатно Накрутка лайков ВК на пост бесплатно Накрутка лайков на фото ВК бесплатно Накрутка просмотров ВК на пост бесплатно Накрутка просмотров видео ВК бесплатно Накрутка просмотров клипов ВК бесплатно Накрутка комментариев ВК бесплатно Накрутка подписчиков Телеграм бесплатно Накрутка просмотров Телеграм бесплатно Накрутка реакций Телеграм бесплатно Накрутка подписчиков Инстаграм бесплатно Накрутка лайков Инстаграм бесплатно Накрутка комментариев Инстаграм бесплатно Накрутка подписчиков в Макс бесплатно Накрутка просмотров Макс бесплатно Накрутка реакций Макс бесплатно Накрутка просмотров Ютуб бесплатно Накрутка лайков Ютуб бесплатно Накрутка подписчиков Тик Ток бесплатно Накрутка просмотров Тик Ток бесплатно Накрутка лайков Тик Ток бесплатно Накрутка подписчиков Твиттер бесплатно Накрутка лайков Фейсбук бесплатно Накрутка лайков Яндекс Дзен бесплатно Накрутка подписчиков Ютуб бесплатно Накрутка лайков на к",
+        "forms": [
+          {
+            "id": "js-modal-cart-form",
+            "classes": "ajax",
+            "method": "post",
+            "actionPath": "https://sprintersmm.com/raskrutka/[object%20HTMLInputElement]",
+            "visible": true,
+            "text": "100 Подписчиков 1 11руб. × Товаров: 1 Итого: 11 руб. В КОРЗИНУ",
+            "fields": [
+              {
+                "id": "",
+                "name": "module",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "",
+                "name": "action",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "",
+                "name": "form_tag",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "del12_a0_",
+                "name": "del12_a0_",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "",
+                "name": "ajax",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              }
+            ],
+            "buttons": []
+          }
+        ],
+        "looseControls": [
+          {
+            "id": "",
+            "text": "Хорошо"
+          }
+        ]
+      }
+    }
+  ],
+  "counter": {
+    "count": 1,
+    "route": "direct",
+    "source": "виджет VK"
+  },
+  "blocked_requests": [
+    {
+      "method": "POST",
+      "host": "boost-like.ru",
+      "path": "/api/v1/pulse"
+    },
+    {
+      "method": "POST",
+      "host": "analytics.google.com",
+      "path": "/g/collect"
+    },
+    {
+      "method": "POST",
+      "host": "stats.g.doubleclick.net",
+      "path": "/g/collect"
+    },
+    {
+      "method": "POST",
+      "host": "www.google.com",
+      "path": "/g/collect"
+    },
+    {
+      "method": "POST",
+      "host": "lowcostsmm.com",
+      "path": "/testknop/ajax-getfree.php"
+    },
+    {
+      "method": "POST",
+      "host": "www.google-analytics.com",
+      "path": "/g/collect"
+    },
+    {
+      "method": "POST",
+      "host": "martinismm.com",
+      "path": "/testknop/ajax-getfree1.php"
+    },
+    {
+      "method": "POST",
+      "host": "capitansmm.com",
+      "path": "/testknop/ajax-getfree1.php"
+    },
+    {
+      "method": "POST",
+      "host": "captainsmm.com",
+      "path": "/testknop/ajax-getfree1.php"
+    },
+    {
+      "method": "POST",
+      "host": "sprintersmm.com",
+      "path": "/raskrutka/"
+    }
+  ],
+  "source_url": "https://github.com/luxuryprince666/Vkkk/actions/runs/44773523571"
+}

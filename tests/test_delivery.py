@@ -128,6 +128,8 @@ class DeliveryTests(unittest.TestCase):
 
     def test_crash_after_baseline_is_uncertain_not_retried(self):
         self.start(1, 100)
+        with db.tx() as conn:
+            conn.execute('UPDATE tasks SET owner_pid=? WHERE id=1', (99999999,))
         db.recover()
         self.assertEqual(self.status(1), 'delivery_uncertain')
         with self.assertRaises(ValueError):
@@ -260,13 +262,15 @@ class DeliveryTests(unittest.TestCase):
             self.assertTrue(delivery.check_one(1))
 
     def test_vk_api_count_and_response_identity(self):
-        class Resp:
-            def __enter__(self): return self
-            def __exit__(self, *args): pass
-            def read(self, *args):
-                return json.dumps({'response': {'groups':[{'id':243157309,'members_count':42}]}}).encode()
-        with patch.dict(os.environ, {'VKFREE_VK_TOKEN':'test-token'}), patch('urllib.request.urlopen', return_value=Resp()):
-            self.assertEqual(delivery.read_vk_count({'platform':'vk','url':'https://vk.ru/club243157309'}, 'followers'), 42)
+        response = {'ok': True, 'text': json.dumps({'response': {'groups':[{'id':243157309,'members_count':42}]}})}
+        with patch.dict(os.environ, {'VKFREE_VK_TOKEN':'test-token'}), \
+             patch.object(delivery.network, 'http_request', return_value=response) as request:
+            source = []
+            self.assertEqual(delivery.read_vk_count({'platform':'vk','url':'https://vk.ru/club243157309'},
+                                                    'followers', source_out=source), 42)
+            self.assertEqual(source, ['VK API'])
+            self.assertEqual(request.call_args.kwargs['headers']['Content-Type'],
+                             'application/x-www-form-urlencoded')
 
     def test_cancel_cannot_remove_active_order(self):
         self.start(1, 100)

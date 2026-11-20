@@ -9,11 +9,15 @@
 """
 from __future__ import annotations
 
+import json
 import os
 import sys
 import tempfile
+import threading
+import time
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -123,6 +127,16 @@ class TestHeuristics(unittest.TestCase):
         self.assertEqual(drivers.read_verdict("Войдите в аккаунт", False, False)[0], "need_human")
         self.assertEqual(drivers.read_verdict("непонятно что", False, False)[0], "need_human")
 
+    def test_old_answer_cannot_confirm_or_reject_a_new_order(self):
+        for stale in ("Заказ принят", "Неверная ссылка", "Лимит исчерпан"):
+            with self.subTest(stale=stale):
+                self.assertEqual(drivers.read_verdict_delta(stale, stale, False, False)[0], 'need_human')
+                self.assertEqual(drivers.read_verdict_delta(stale, stale + '\nПроверяем', False, False)[0],
+                                 'need_human')
+        self.assertEqual(drivers.read_verdict_delta('Форма', 'Форма\nЗаказ принят', False, False)[0], 'ok')
+        self.assertEqual(drivers.read_verdict_delta('Форма', 'Форма\nНеверная ссылка', False, False)[0], 'bad_link')
+        self.assertEqual(drivers.read_verdict_delta('Форма', 'Форма', True, False)[0], 'captcha')
+
     def test_timer_parsing(self):
         self.assertEqual(drivers.parse_timer("Заказ через 5 минут"), 300)
         self.assertEqual(drivers.parse_timer("подождите 30 секунд"), 30)
@@ -131,6 +145,223 @@ class TestHeuristics(unittest.TestCase):
 
     def test_timer_capped(self):
         self.assertLessEqual(drivers.parse_timer("через 999 минут"), 900)
+
+
+class TestSMMnakrutkaSafety(unittest.TestCase):
+    TARGET = 'https://vk.ru/club123'
+    URL = 'https://smmnakrutka.ru/free-vk-followers'
+    SVC = {'site_id': 'smmnakrutka', 'platform': 'vk', 'stype': 'followers',
+           'url': URL, 'amount': 10}
+    READY = {'state': 'ready', 'link': '#form input[name="link"]',
+             'button': '#form button[type="submit"]', 'email': '',
+             'value': TARGET, 'successUrl': URL + '/?12'}
+
+    class Page:
+        def __init__(self):
+            self.events = []
+        def js(self, script):
+            return TestSMMnakrutkaSafety.URL if script == 'window.location.href' else None
+        def click_human(self, selector):
+            self.events.append('click')
+            return False  # даже если движок не уверен, повторять нельзя
+        def wait(self, ms):
+            pass
+
+    def test_wrong_or_insecure_redirect_is_not_trusted(self):
+        url = self.URL
+        self.assertTrue(drivers._same_service_location(url, url + '/?12'))
+        for other in ('http://smmnakrutka.ru/free-vk-followers',
+                      'https://smmnakrutka.ru.evil/free-vk-followers',
+                      'https://smmnakrutka.ru@evil.test/free-vk-followers',
+                      'https://smmnakrutka.ru/other'):
+            with self.subTest(url=other):
+                self.assertFalse(drivers._same_service_location(url, other))
+
+    def test_missing_timer_tokens_times_out_without_submission(self):
+        page = self.Page()
+        clock = [0.0]
+        page.wait = lambda ms: clock.__setitem__(0, clock[0] + ms / 1000)
+        with patch.object(drivers.time, 'monotonic', side_effect=lambda: clock[0]), \
+             patch.object(drivers, '_smmnakrutka_state', return_value={'state': 'waiting_tokens'}), \
+             patch.object(drivers, 'discover', return_value={'captcha': []}), \
+             patch.object(captcha, 'visible_widgets', return_value=[]):
+            res = drivers._run_smmnakrutka(page, self.SVC, self.TARGET, [], dry_run=False, budget=3,
+                                           on_submit=lambda: page.events.append('risk'))
+        self.assertEqual(res.verdict, 'need_human')
+        self.assertIn('проверки таймера', res.detail)
+        self.assertEqual(page.events, [])
+        self.assertFalse(res.submitted)
+
+    def test_ambiguous_click_never_retries(self):
+        page = self.Page()
+        with patch.object(drivers, '_smmnakrutka_state', return_value=self.READY.copy()), \
+             patch.object(drivers, '_smmnakrutka_response', return_value={'url': self.URL}), \
+             patch.object(drivers, 'set_field', return_value=True), \
+             patch.object(drivers, 'discover', return_value={'captcha': []}), \
+             patch.object(captcha, 'visible_widgets', return_value=[]):
+            res = drivers._run_smmnakrutka(page, self.SVC, self.TARGET, [], dry_run=False, budget=3,
+                                           on_submit=lambda: page.events.append('risk'))
+        self.assertEqual(page.events, ['risk', 'click'])
+        self.assertTrue(res.submitted)
+        self.assertEqual(res.verdict, 'need_human')
+        self.assertIn('повтор запрещён', res.detail)
+
+    def test_unchanged_url_or_trailing_slash_is_not_a_success_redirect(self):
+        page = self.Page()
+        clock = [0.0]
+        page.wait = lambda ms: clock.__setitem__(0, clock[0] + ms / 1000)
+        page.click_human = lambda selector: (page.events.append('click') or True)
+        ready = {**self.READY, 'successUrl': self.URL + '/'}
+        with patch.object(drivers.time, 'monotonic', side_effect=lambda: clock[0]), \
+             patch.object(drivers, '_smmnakrutka_state', return_value=ready), \
+             patch.object(drivers, '_smmnakrutka_response', return_value={'url': self.URL}), \
+             patch.object(drivers, 'set_field', return_value=True), \
+             patch.object(drivers, 'discover', return_value={'captcha': []}), \
+             patch.object(captcha, 'visible_widgets', return_value=[]):
+            res = drivers._run_smmnakrutka(page, self.SVC, self.TARGET, [], dry_run=False, budget=3,
+                                           on_submit=lambda: page.events.append('risk'))
+        self.assertEqual(page.events, ['risk', 'click'])
+        self.assertEqual(res.verdict, 'need_human')
+        self.assertTrue(res.submitted)
+
+    def test_visible_error_has_priority_over_success_text(self):
+        page = self.Page()
+        page.click_human = lambda selector: (page.events.append('click') or True)
+        responses = [{'url': self.URL}, {'url': self.URL},
+                     {'url': self.URL, 'success': 'Спасибо за доверие!', 'errors': 'Неверная ссылка'}]
+        with patch.object(drivers, '_smmnakrutka_state', return_value=self.READY.copy()), \
+             patch.object(drivers, '_smmnakrutka_response', side_effect=responses), \
+             patch.object(drivers, 'set_field', return_value=True), \
+             patch.object(drivers, 'discover', return_value={'captcha': []}), \
+             patch.object(captcha, 'visible_widgets', return_value=[]):
+            res = drivers._run_smmnakrutka(page, self.SVC, self.TARGET, [], dry_run=False, budget=3,
+                                           on_submit=lambda: page.events.append('risk'))
+        self.assertEqual(res.verdict, 'bad_link')
+        self.assertTrue(res.submitted)
+        self.assertEqual(page.events, ['risk', 'click'])
+
+    def test_counter_failure_from_callback_prevents_click(self):
+        page = self.Page()
+        def fail():
+            page.events.append('counter failed')
+            raise ValueError('counter unavailable')
+        with patch.object(drivers, '_smmnakrutka_state', return_value=self.READY.copy()), \
+             patch.object(drivers, '_smmnakrutka_response', return_value={'url': self.URL}), \
+             patch.object(drivers, 'set_field', return_value=True), \
+             patch.object(drivers, 'discover', return_value={'captcha': []}), \
+             patch.object(captcha, 'visible_widgets', return_value=[]):
+            with self.assertRaisesRegex(ValueError, 'counter unavailable'):
+                drivers._run_smmnakrutka(page, self.SVC, self.TARGET, [], dry_run=False, budget=3,
+                                         on_submit=fail)
+        self.assertEqual(page.events, ['counter failed'])
+
+    def test_form_rechecked_after_callback_before_click(self):
+        page = self.Page()
+        states = [self.READY.copy(), self.READY.copy(), {'state': 'service_mismatch'}]
+        with patch.object(drivers, '_smmnakrutka_state', side_effect=states), \
+             patch.object(drivers, '_smmnakrutka_response', return_value={'url': self.URL}), \
+             patch.object(drivers, 'set_field', return_value=True), \
+             patch.object(drivers, 'discover', return_value={'captcha': []}), \
+             patch.object(captcha, 'visible_widgets', return_value=[]):
+            res = drivers._run_smmnakrutka(page, self.SVC, self.TARGET, [], dry_run=False, budget=3,
+                                           on_submit=lambda: page.events.append('risk'))
+        self.assertEqual(page.events, ['risk'])
+        self.assertEqual(res.verdict, 'need_human')
+        self.assertTrue(res.submitted)  # риск уже записан, освобождать барьер нельзя
+
+    def test_wait_is_interruptible_before_click(self):
+        page, event = self.Page(), threading.Event()
+        page.wait = lambda ms: event.set()
+        with patch.object(drivers, '_smmnakrutka_state', return_value={'state': 'waiting'}), \
+             patch.object(drivers, 'discover', return_value={'captcha': []}), \
+             patch.object(captcha, 'visible_widgets', return_value=[]):
+            with self.assertRaises(drivers.OperationCancelled):
+                drivers._run_smmnakrutka(drivers._InterruptiblePage(page, event), self.SVC, self.TARGET, [],
+                                         dry_run=False, budget=10,
+                                         on_submit=lambda: page.events.append('risk'))
+        self.assertEqual(page.events, [])
+
+
+class TestLikeBoomSafety(unittest.TestCase):
+    """Модель страницы: нет сети и настоящих заказов."""
+
+    class Page:
+        def __init__(self, free=False, hidden_polls=0):
+            self.free = free
+            self.hidden_polls = hidden_polls
+            self.polls = 0
+            self.events = []
+
+        def js(self, script):
+            if script == drivers.LIKEBOOM_FREE_PAYMENT_JS:
+                return self.free
+            if 'Получить бесплатно' in script:
+                self.polls += 1
+                return '' if self.polls <= self.hidden_polls else 'Получить бесплатно'
+            if script == drivers.LIKEBOOM_SELECT_CATEGORY_JS:
+                return 'ok'
+            if script == drivers.LIKEBOOM_SERVICE_OPTIONS_JS:
+                return json.dumps([{'v': '55', 't': 'Подписчики в группу'}], ensure_ascii=False)
+            if script.startswith(drivers.LIKEBOOM_SELECT_SERVICE_JS):
+                return 'ok'
+            if script == drivers.LIKEBOOM_TOTAL_PRICE_JS:
+                return json.dumps(['10,00 ₽'], ensure_ascii=False)
+            return None
+
+        def click_human(self, selector):
+            self.events.append(selector)
+            return True
+
+        def type_human(self, selector, text):
+            return True
+
+        def wait(self, ms):
+            self.events.append(('wait', ms))
+
+        def text(self):
+            return 'Заказ № 123'
+
+    def run_page(self, page, callback):
+        with patch.object(drivers, '_contact_email', return_value='tester@example.com'):
+            return drivers._run_likeboom(page, 'https://vk.ru/club123', [], dry_run=False,
+                                         wait_button_sec=10, on_submit=callback)
+
+    def test_autostarted_timer_is_waited_without_assuming_payment_is_free(self):
+        page = self.Page(hidden_polls=2)
+        result = self.run_page(page, lambda: self.fail('оплата не подтверждена'))
+        self.assertEqual(result[0], 'need_human')
+        self.assertIn('бесплатный способ оплаты', result[1])
+        self.assertEqual(page.polls, 3)
+        self.assertEqual(page.events.count(('wait', 4000)), 2)
+        clicks = [e for e in page.events if isinstance(e, str)]
+        self.assertEqual(clicks, ["button:has-text('Получить бесплатно')"])
+
+    def test_payment_is_rechecked_after_counter_callback(self):
+        page = self.Page(free=True)
+        def callback():
+            page.events.append('risk')
+            page.free = False  # состояние формы изменилось во время замера
+        result = self.run_page(page, callback)
+        self.assertEqual(result[0], 'need_human')
+        self.assertIn('изменился', result[1])
+        self.assertEqual(page.events.count('risk'), 1)
+        self.assertNotIn("button:has-text('Оформить заказ')", page.events)
+
+    def test_failed_counter_callback_never_clicks_order(self):
+        page = self.Page(free=True)
+        def callback():
+            raise ValueError('счётчик недоступен')
+        with self.assertRaisesRegex(ValueError, 'счётчик недоступен'):
+            self.run_page(page, callback)
+        self.assertNotIn("button:has-text('Оформить заказ')", page.events)
+
+    def test_confirmed_free_payment_allows_at_most_one_order_click(self):
+        page = self.Page(free=True)
+        result = self.run_page(page, lambda: page.events.append('risk'))
+        self.assertEqual(result[0], 'ok', result)
+        self.assertEqual(page.events.count('risk'), 1)
+        self.assertEqual(page.events.count("button:has-text('Оформить заказ')"), 1)
+        self.assertLess(page.events.index('risk'), page.events.index("button:has-text('Оформить заказ')"))
 
 
 # ------------------------------------------------------------------ 2. браузерные прогоны
@@ -145,6 +376,7 @@ class TestDriverAgainstFakePanels(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.srv.shutdown()
+        cls.srv.server_close()
 
     def svc(self, path: str, amount: int = 10) -> dict:
         return {"id": "fake-vk-followers", "site_id": "fake", "site_name": "Стенд",
@@ -204,6 +436,78 @@ class TestDriverAgainstFakePanels(unittest.TestCase):
         res = drivers.run(self.svc("/timer"), self.LINK, headless=True)
         self.assertEqual(res.verdict, "ok", res.detail)
 
+    def test_likeboom_payment_requires_selected_and_submitted_method_to_agree(self):
+        # Локальный HTML повторяет форму с отдельными radio и скрытым полем;
+        # вызовов сети, счётчика и кнопки заказа в этом тесте нет.
+        html = '''<form><input id="link"><input id="fn_payment_method"
+            name="OrderForm[paymentMethod]" type="hidden" value="yookassa">
+            <input name="payment_method_radio" type="radio" value="free" checked>
+            <button type="submit">Оформить заказ</button></form>'''
+        with stealth.open_page(headless=True) as (_, page):
+            page.goto('data:text/html,<html><body></body></html>', wait=10)
+            page.js('document.body.innerHTML = ' + json.dumps(html))
+            self.assertFalse(drivers._likeboom_free_payment(page))
+            page.js("document.querySelector('#fn_payment_method').value = 'FREE'")
+            self.assertTrue(drivers._likeboom_free_payment(page))
+            page.js("document.querySelector('#fn_payment_method').disabled = true")
+            self.assertFalse(drivers._likeboom_free_payment(page))
+            page.js("document.querySelector('#fn_payment_method').disabled = false")
+            page.js("document.querySelector('[name=payment_method_radio]').value = 'yookassa'")
+            self.assertFalse(drivers._likeboom_free_payment(page))
+            page.js("document.querySelector('[name=payment_method_radio]').value = 'free'")
+            page.js("document.querySelector('#fn_payment_method').after(document.querySelector('#fn_payment_method').cloneNode())")
+            self.assertFalse(drivers._likeboom_free_payment(page))
+
+    def smm_svc(self, query='', platform='vk'):
+        path = '/free-vk-followers' if platform == 'vk' else '/free-telegram-followers'
+        svc = self.svc(path + query)
+        svc.update(site_id='smmnakrutka', stype='followers', platform=platform, hold_seconds=1)
+        return svc
+
+    def test_smmnakrutka_waits_for_real_modal_and_never_clicks_decoy(self):
+        self.srv.smm_events.clear()
+        def before_click():
+            self.srv.smm_events.append(('risk', {}, time.time()))
+        res = drivers.run(self.smm_svc(), 'https://vk.ru/club123',
+                          headless=True, deadline_sec=20, on_submit=before_click)
+        self.assertEqual(res.verdict, 'ok', res.detail + str(res.steps))
+        self.assertTrue(res.submitted)
+        events = self.srv.smm_events
+        self.assertEqual([e[0] for e in events], ['page', 'risk', 'order'])
+        self.assertGreaterEqual(events[1][2] - events[0][2], 4.4)
+        self.assertEqual(events[-1][1]['link'], 'https://vk.ru/club123')
+        self.assertEqual(events[-1][1]['service'], '179')
+        self.assertNotIn('Email', events[-1][1])  # необязательную почту не выдумываем
+
+    def test_smmnakrutka_dry_run_does_not_send_or_dismiss_order_modal(self):
+        self.srv.smm_events.clear()
+        res = drivers.run(self.smm_svc('?fast=1'), 'https://vk.ru/club123',
+                          dry_run=True, headless=True, deadline_sec=20,
+                          on_submit=lambda: self.fail('dry-run не должен отправлять'))
+        self.assertEqual(res.verdict, 'ok', res.detail + str(res.steps))
+        self.assertFalse(res.submitted)
+        self.assertEqual([e[0] for e in self.srv.smm_events], ['page'])
+
+    def test_smmnakrutka_rejects_wrong_service_and_paid_form_without_click(self):
+        for case in ('wrong-service', 'paid'):
+            with self.subTest(case=case):
+                self.srv.smm_events.clear()
+                res = drivers.run(self.smm_svc('?fast=1&case=' + case), 'https://vk.ru/club123',
+                                  headless=True, deadline_sec=20,
+                                  on_submit=lambda: self.fail('потенциально неверный заказ запрещён'))
+                self.assertEqual(res.verdict, 'need_human', res.detail + str(res.steps))
+                self.assertFalse(res.submitted)
+                self.assertEqual([e[0] for e in self.srv.smm_events], ['page'])
+
+    def test_smmnakrutka_rejects_unconfirmed_telegram_service_code(self):
+        self.srv.smm_events.clear()
+        res = drivers.run(self.smm_svc('?fast=1', platform='telegram'), 'https://t.me/testchannel',
+                          headless=True, deadline_sec=20,
+                          on_submit=lambda: self.fail('код другой услуги запрещён'))
+        self.assertEqual(res.verdict, 'need_human', res.detail + str(res.steps))
+        self.assertIn('код услуги', res.detail)
+        self.assertEqual([e[0] for e in self.srv.smm_events], ['page'])
+
     def test_each_backend_can_run(self):
         """Проверяем, что драйвер не привязан к одному движку."""
         ok_backends = []
@@ -228,6 +532,7 @@ class TestNoJsDriver(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.srv.shutdown()
+        cls.srv.server_close()
 
     def svc(self) -> dict:
         return {"id": "fake-plain", "site_id": "fake", "url": self.base + "/plain",
@@ -300,8 +605,10 @@ class TestBackendStatus(unittest.TestCase):
             self.assertIn("Отправить заказ", res["text"])
         finally:
             srv.shutdown()
+            srv.server_close()
 
 
+@unittest.skipUnless(browser_ready(), "нет установленного браузерного движка")
 class CaptchaAfterSubmitTest(unittest.TestCase):
     """Капча, которая приезжает ПОСЛЕ нажатия кнопки (Cloudflare Turnstile у doctorsmm).
 
@@ -318,6 +625,7 @@ class CaptchaAfterSubmitTest(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.srv.shutdown()
+        cls.srv.server_close()
 
     def svc(self, path: str) -> dict:
         return {"id": "fake-vk-followers", "site_id": "fake", "site_name": "Стенд",
@@ -381,6 +689,7 @@ class CaptchaSolveTest(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.srv.shutdown()
+        cls.srv.server_close()
 
     def setUp(self):
         db.set_setting("captcha_autosolve", "1")
@@ -391,6 +700,7 @@ class CaptchaSolveTest(unittest.TestCase):
                 "label": "Подписчики ВК", "url": self.base + path, "amount": 10,
                 "platform": "vk", "stype": "followers", "hold_seconds": 10}
 
+    @unittest.skipUnless(browser_ready(), "нет установленного браузерного движка")
     def test_turnstile_checkbox_solved(self):
         """Turnstile: чекбокс внутри iframe. Робот жмёт его мышью и проходит заказ."""
         res = drivers.run(self.svc("/turnstile"), "https://vk.com/club243159999",
@@ -398,6 +708,7 @@ class CaptchaSolveTest(unittest.TestCase):
         self.assertEqual(res.verdict, "ok", f"{res.verdict}: {res.detail} / {res.steps}")
         self.assertTrue(any("капча решена" in st for st in res.steps), res.steps)
 
+    @unittest.skipUnless(browser_ready(), "нет установленного браузерного движка")
     @unittest.skipUnless(captcha._have("ddddocr"), "ddddocr is optional")
     def test_image_captcha_solved(self):
         """Текстовая капча с картинки: ddddocr распознаёт код, робот его вписывает."""
@@ -406,6 +717,7 @@ class CaptchaSolveTest(unittest.TestCase):
         self.assertEqual(res.verdict, "ok", f"{res.verdict}: {res.detail} / {res.steps}")
         self.assertTrue(any("распознал" in st for st in res.steps), res.steps)
 
+    @unittest.skipUnless(browser_ready(), "нет установленного браузерного движка")
     def test_autosolve_off_keeps_old_behaviour(self):
         """Выключили авторешение — робот честно зовёт человека, а не ломается."""
         db.set_setting("captcha_autosolve", "0")
@@ -423,6 +735,7 @@ class CaptchaSolveTest(unittest.TestCase):
         ocr = next(r for r in rows if r["id"] == "ocr")
         self.assertEqual(ocr["ready"], captcha._have("ddddocr"))
 
+    @unittest.skipUnless(browser_ready(), "нет установленного браузерного движка")
     def test_cloudflare_wall_passed(self):
         """Заглушка Cloudflare проходит сама — робот ждёт и продолжает заход."""
         res = drivers.run(self.svc("/cloudflare"), "https://vk.com/club243159999",

@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import threading
+import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs
 
@@ -162,6 +163,64 @@ def page_broken() -> str:
             "<body><h3>Раздел временно недоступен</h3><p>Обновите страницу позже.</p></body></html>")
 
 
+def page_smmnakrutka(query: dict, platform: str = 'vk') -> str:
+    """Локальная модель двух Tilda-форм; таймер ускорен, внешних запросов нет."""
+    case = (query.get('case') or ['normal'])[0]
+    fast = (query.get('fast') or ['0'])[0] == '1'
+    label = 'ВК' if platform == 'vk' else 'Телеграм'
+    service = ('1' if platform == 'telegram' else '179') if case != 'wrong-service' else '999'
+    url_page = 'free-vk-followers' if platform == 'vk' else 'free-telegram-followers'
+    email_req = 'required' if case == 'required-email' else ''
+    verify = '' if case == 'missing-token' else 'test-verified'
+    footer = 'Платный заказ' if case == 'paid' else 'Абсолютно бесплатно'
+    delay = 200 if fast else 4500
+    return f'''<!doctype html><html lang="ru"><head><meta charset="utf-8"></head><body>
+    <h1>Бесплатная накрутка подписчиков {label}</h1>
+    <form id="decoy" method="post" data-formactiontype="0">
+      <input type="url" name="Url" placeholder="Ссылка" style="width:400px">
+      <button type="submit">ДОСТУПНО ЧЕРЕЗ:</button>
+    </form><div id="timer">05 : 00</div>
+    <div class="t-popup" role="dialog" style="display:none;position:fixed;inset:0;background:#ddd">
+      <div class="t-popup__container" style="margin:50px;padding:20px;background:white">
+        <button type="button" id="close" onclick="this.closest('.t-popup').style.display='none'">Закрыть</button>
+        <div class="t702__title">Бесплатная накрутка подписчиков {label}</div>
+        <form id="actual" method="POST" data-formactiontype="2" data-success-url="/{url_page}/?accepted">
+          <input type="hidden" name="formservices[]" value="fake-service-token">
+          <div class="js-successbox" style="display:none"></div>
+          <select name="quantity-text"><option>Подписчики {label}</option></select>
+          <input type="email" name="Email" placeholder="Email (необязательно)" {email_req}>
+          <input type="url" name="link" placeholder="Ссылка" required style="width:400px">
+          <input type="hidden" name="quantity" value="10">
+          <input type="hidden" name="rand" value="fake-rand">
+          <input type="hidden" name="endtime" value="123">
+          <input type="hidden" name="verify" value="">
+          <input type="hidden" name="url_page" value="{url_page}">
+          <input type="hidden" name="sessionToken" value="fake-session">
+          <input type="hidden" name="permissionKey" value="fake-permission">
+          <input type="hidden" name="service" value="{service}">
+          <div class="js-errorbox-all" style="display:none"></div>
+          <button type="submit">Заказать</button>
+        </form><div class="t702__form-bottom-text">{footer}</div>
+      </div>
+    </div>
+    <script>
+      setTimeout(() => {{ const p = document.querySelector('.t-popup');
+        p.classList.add('t-popup_show'); p.style.display='block';
+        setTimeout(() => document.querySelector('[name=verify]').value={json.dumps(verify)}, 600);
+      }}, {delay});
+      document.querySelector('#decoy').addEventListener('submit', e => {{
+        e.preventDefault(); fetch('/smm-test/decoy', {{method:'POST'}});
+      }});
+      document.querySelector('#actual').addEventListener('submit', e => {{
+        e.preventDefault(); const form = e.currentTarget;
+        fetch('/smm-test/submit', {{method:'POST',body:new URLSearchParams(new FormData(form))}}).then(() => {{
+          const box = document.querySelector('.js-successbox');
+          box.textContent = 'Спасибо за доверие!'; box.style.display = 'block';
+        }});
+      }});
+    </script></body></html>'''
+
+
 def page_plain() -> str:
     """Форма без JS: её умеет отправлять драйвер без браузера."""
     return """<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>Панель</title></head>
@@ -284,6 +343,11 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         path = self.path.split("?")[0]
+        if path in ('/free-vk-followers', '/free-telegram-followers'):
+            query = parse_qs(self.path.split('?', 1)[1]) if '?' in self.path else {}
+            self.server.smm_events.append(('page', {}, time.time()))
+            platform = 'vk' if path == '/free-vk-followers' else 'telegram'
+            return self._send(page_smmnakrutka(query, platform))
         if path == "/cdn-cgi/challenges.cloudflare.com/turnstile":
             return self._send(TURNSTILE_FRAME)
         if path == "/captcha-img":
@@ -329,6 +393,10 @@ class Handler(BaseHTTPRequestHandler):
         length = int(self.headers.get("Content-Length") or 0)
         raw = self.rfile.read(length).decode("utf-8", "replace") if length else ""
         form = {k: v[0] for k, v in parse_qs(raw).items()}
+        if self.path.split('?')[0] in ('/smm-test/decoy', '/smm-test/submit'):
+            kind = 'decoy' if self.path.split('?')[0].endswith('/decoy') else 'order'
+            self.server.smm_events.append((kind, form, time.time()))
+            return self._send('ok')
         if self.path.split("?")[0] == "/plain-submit":
             if form.get("link"):
                 return self._send(page_answer("Заказ создан, ожидайте"))
@@ -339,6 +407,7 @@ class Handler(BaseHTTPRequestHandler):
 def start(port: int = 0) -> tuple[ThreadingHTTPServer, str]:
     srv = ThreadingHTTPServer(("127.0.0.1", port), Handler)
     srv.daemon_threads = True
+    srv.smm_events = []  # только локальные тестовые запросы к двум фиктивным формам
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     return srv, f"http://127.0.0.1:{srv.server_address[1]}"
 
@@ -351,3 +420,4 @@ if __name__ == "__main__":
         threading.Event().wait()
     except KeyboardInterrupt:
         server.shutdown()
+        server.server_close()

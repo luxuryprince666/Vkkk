@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Генератор data/catalog.json — база лимитов бесплатной накрутки.
+"""Исторический генератор черновика каталога (данные на 09.11.2026).
+
+По умолчанию пишет только data/catalog-draft.json, не заменяя рабочий каталог:
+его правила и список площадок устарели. Чтобы указать другой путь, используйте
+--output; перед ручной заменой рабочего каталога необходимо проверить все данные.
 
 Поля услуги:
   amount         сколько единиц даёт один заход
@@ -10,6 +14,7 @@
   confirmed      True  — цифры видел лично на сайте 09.11.2026
                  False — из свежих обзоров (проверять вручную)
 """
+import argparse
 import json
 import pathlib
 
@@ -143,9 +148,9 @@ site(id="doctorsmm", name="DoctorSMM", home="https://doctorsmm.com",
      reg_required=False, verified="site-2026-11-09", mode="assisted", enabled=True,
      notes="Кнопка «Попробовать бесплатно»: тестовый заказ до 50 единиц, ежедневно, без регистрации, ~10 минут.",
      services=[
-         svc(id="doctorsmm-vk-followers", platform="vk", type="followers", amount=50, cooldown_min=1440, max_claims_day=1,
-             hold_seconds=600, url="https://doctorsmm.com/nakrutka-podpischikov-vk-platno/",
-             label="Подписчики ВК (тест до 50)"),
+         svc(id="doctorsmm-vk-followers", platform="vk", type="followers", subject="community", amount=10, cooldown_min=1440, max_claims_day=1,
+             hold_seconds=600, url="https://doctorsmm.com/nakrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+             label="Подписчики сообщества ВК (тест до 10)"),
          svc(id="doctorsmm-vk-likes", platform="vk", type="likes", amount=50, cooldown_min=1440, max_claims_day=1,
              hold_seconds=600, url="https://doctorsmm.com/nakrutka-lajkov-vk-platno-i-deshevo/", label="Лайки ВК (тест)"),
          svc(id="doctorsmm-tg-followers", platform="telegram", type="followers", amount=50, cooldown_min=1440,
@@ -212,7 +217,7 @@ site(id="smmcode", name="SMMCode", home="https://smmcode.shop", free_page="https
      reg_required=False, verified="site-2026-11-09", mode="assisted", enabled=True,
      notes="Бонусная накрутка по таймеру очереди. Промокоды на бесплатную накрутку раздают в Telegram-канале ежедневно.",
      services=[
-         svc(id="smmcode-vk-followers", platform="vk", type="followers", amount=10, cooldown_min=45, max_claims_day=8,
+         svc(id="smmcode-vk-followers", platform="vk", type="followers", subject="person", amount=10, cooldown_min=45, max_claims_day=8,
              hold_seconds=60, url="https://smmcode.shop/nakrutka/vkontakte/podpischikov-na-akkaunt", label="Подписчики ВК"),
          svc(id="smmcode-vk-likes", platform="vk", type="likes", amount=10, cooldown_min=45, max_claims_day=8,
              hold_seconds=60, url="https://smmcode.shop/nakrutka/vkontakte/laikov", label="Лайки ВК"),
@@ -226,7 +231,8 @@ site(id="mrpopular", name="MRPOPULAR", home="https://ru.mrpopular.net", free_pag
      notes="Раздел «Бесплатное продвижение»: выдача ~15 минут, повтор через 5 минут с ростом ожидания.",
      services=[
          svc(id="mrpopular-vk-followers", platform="vk", type="followers", amount=10, cooldown_min=15, max_claims_day=6,
-             hold_seconds=60, url="https://ru.mrpopular.net/", label="Подписчики ВК", confirmed=False),
+             hold_seconds=60, url="https://ru.mrpopular.net/?category=socialnetworks&type=vk&service=subscribers",
+             label="Подписчики ВК", confirmed=False),
          svc(id="mrpopular-vk-likes", platform="vk", type="likes", amount=10, cooldown_min=15, max_claims_day=6,
              hold_seconds=60, url="https://ru.mrpopular.net/", label="Лайки ВК", confirmed=False),
          svc(id="mrpopular-vk-views", platform="vk", type="views", amount=100, cooldown_min=15, max_claims_day=6,
@@ -387,7 +393,14 @@ catalog = {
     "sites": S,
 }
 
-out = pathlib.Path(__file__).parent / "data" / "catalog.json"
-out.write_text(json.dumps(catalog, ensure_ascii=False, indent=1), encoding="utf-8")
-total = sum(len(s["services"]) for s in S)
-print("сайтов: %d, услуг: %d -> %s (%d байт)" % (len(S), total, out, out.stat().st_size))
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Создать исторический черновик каталога")
+    parser.add_argument("--output", type=pathlib.Path,
+                        default=pathlib.Path(__file__).parent / "data" / "catalog-draft.json",
+                        help="куда записать черновик (по умолчанию data/catalog-draft.json)")
+    out = parser.parse_args().output
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(catalog, ensure_ascii=False, indent=1), encoding="utf-8")
+    total = sum(len(s["services"]) for s in S)
+    print("Исторический черновик: сайтов: %d, услуг: %d -> %s (%d байт)" %
+          (len(S), total, out, out.stat().st_size))

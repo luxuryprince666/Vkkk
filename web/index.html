@@ -72,12 +72,13 @@ button.ok{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok);
 button.danger{background:var(--err-soft);border-color:var(--err-line);color:var(--err)}
 button.small{padding:4px 10px;font-size:12.5px;border-radius:8px}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:none;box-shadow:var(--ring)}
-input,select{
+input,select,textarea{
   background:var(--bg2); border:1px solid var(--line); color:var(--txt); border-radius:var(--r-sm);
   padding:8px 11px; font:inherit; width:100%; transition:border-color .15s,box-shadow .15s;
 }
 input::placeholder{color:#9aa7ba}
-input:focus,select:focus{outline:none;border-color:var(--acc);box-shadow:var(--ring)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acc);box-shadow:var(--ring)}
+textarea{resize:vertical;min-height:88px}
 select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--dim) 50%),linear-gradient(135deg,var(--dim) 50%,transparent 50%);
   background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:30px}
 
@@ -193,6 +194,30 @@ nav button[data-tab="log"],nav button[data-tab="settings"]{font-size:13px;opacit
 .navsep{align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);opacity:.6;padding:0 6px 0 10px;border-left:1px solid var(--line2);margin-left:6px}
 .navbadge{display:inline-block;min-width:16px;padding:0 5px;border-radius:8px;background:var(--acc);color:#fff;font-size:11px;font-weight:700;line-height:16px;text-align:center}
 .navbadge:empty{display:none}
+/* --- подтверждённый запуск --- */
+.verify-panel{padding:24px;border-color:#cddcfb;background:linear-gradient(140deg,var(--bg2),var(--acc-soft))}
+.verify-eyebrow{font-size:11px;font-weight:750;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:7px}
+.verify-panel h2{font-size:22px;margin-bottom:4px;letter-spacing:-.025em}
+.verify-intro{max-width:790px;font-size:13px;color:var(--dim);margin-bottom:17px}
+.verify-form{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.verify-form .field{flex:1;min-width:min(100%,300px)}
+.verify-form button{min-height:39px;padding-left:18px;padding-right:18px}
+.verify-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0 14px}
+.verify-metric{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg2)}
+.verify-metric small{display:block;color:var(--dim);font-size:11px}
+.verify-metric strong{font-size:20px;line-height:1.45;font-variant-numeric:tabular-nums}
+.verify-status{display:flex;gap:9px;align-items:center;margin:15px 0 6px;font-size:13px;font-weight:650}
+.verify-dot{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 4px var(--acc-soft)}
+.verify-report td{vertical-align:top}
+.verify-report details{margin-top:5px;color:var(--dim);font-size:11.5px}
+.verify-report summary{cursor:pointer;color:var(--acc)}
+.verify-report .reason{color:var(--dim);font-size:11.5px;max-width:330px;white-space:normal;margin-top:4px}
+.verify-report .status-working{color:var(--ok);font-weight:700}
+.verify-report .status-not_working{color:var(--err);font-weight:700}
+.verify-report .status-unverified,.verify-report .status-skipped{color:var(--warn);font-weight:650}
+.verify-footnote{margin-top:12px;font-size:11.5px;color:var(--dim)}
+@media(max-width:600px){.verify-panel{padding:18px}.verify-panel h2{font-size:19px}.verify-form button.primary{width:100%}}
+
 /* --- мастер накрутки --- */
 .wz-step{display:flex;gap:14px;padding:18px 0;border-bottom:1px solid var(--line)}
 .wz-step:last-child{border-bottom:none;padding-bottom:4px}
@@ -346,6 +371,14 @@ body[data-theme="dark"] .switch .tr{background:#2c3546}
 .switch input:checked + .tr:after{left:19px}
 .toolbar{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:12px}
 .manualmark{display:inline-flex;color:var(--warn);vertical-align:-2px}
+@media(max-width:640px){
+  .hd{display:grid;grid-template-columns:1fr auto;gap:8px;padding:10px 14px}
+  .hd .modesw{grid-column:1 / -1;grid-row:2;justify-content:space-between}
+  .hd .badges{display:none}
+  .hd .btn-fullauto{grid-column:2;grid-row:1;padding:7px 10px;font-size:12px;white-space:nowrap}
+  nav{padding:0 10px 8px}
+  .wrap{padding:14px 14px 60px}
+}
 
 </style>
 </head>
@@ -360,7 +393,7 @@ body[data-theme="dark"] .switch .tr{background:#2c3546}
       <button data-mode="captcha" onclick="setMode('captcha')">С капчей</button>
     </div>
     <div class="badges" id="badges"></div>
-    <button class="btn-fullauto" onclick="openFullAuto()" title="Полная автоматизация: ссылка → количество → софт крутит сам">FULL AUTO MODE</button>
+    <button class="btn-fullauto" onclick="openFullAuto()" title="Последовательный запуск с проверкой прироста">Проверяемый запуск</button>
   </div>
   <nav id="nav">
     <button data-tab="wizard" class="active hot">Накрутить</button>
@@ -381,6 +414,7 @@ body[data-theme="dark"] .switch .tr{background:#2c3546}
 
   <!-- ================= ДАШБОРД ================= -->
   <section id="tab-dash" style="display:none">
+    <div class="banner">Сводка и лимиты ниже относятся к каталогу и отметкам заходов, а не к измеренному приросту. Для фактических замеров откройте «Накрутить».</div>
     <div id="dash-mode"></div>
     <div class="cards" id="dash-cards"></div>
 
@@ -413,7 +447,7 @@ body[data-theme="dark"] .switch .tr{background:#2c3546}
       <div class="panel">
         <h2>Что можно взять сегодня <span class="sub">остаток с учётом уже сделанного</span></h2>
         <div class="tbl-wrap" style="max-height:320px">
-          <table><thead><tr><th>Площадка</th><th>Тип</th><th class="right">Сделано</th><th class="right">Остаток</th><th class="right">Сайтов</th></tr></thead>
+          <table><thead><tr><th>Площадка</th><th>Тип</th><th class="right">Заявлено</th><th class="right">Остаток</th><th class="right">Сайтов</th></tr></thead>
           <tbody id="dash-types"></tbody></table>
         </div>
         <div class="note" style="margin-top:8px">Остаток — теоретический максимум по опубликованным лимитам. Реально успеть всё можно только вручную по таймерам.</div>
@@ -434,8 +468,28 @@ body[data-theme="dark"] .switch .tr{background:#2c3546}
 
   <!-- ================= НАКРУТИТЬ (мастер для новичка) ================= -->
   <section id="tab-wizard">
+    <div class="panel verify-panel" id="verified-run">
+      <div class="verify-eyebrow">Проверка по реальному счётчику</div>
+      <h2>Последовательный запуск подписчиков</h2>
+      <div class="verify-intro">Вставьте ссылку на сообщество ВК или публичный канал Telegram. Сначала снимем исходный счётчик, затем проверим площадки по одной: наблюдаем минимум 5 минут после действий робота, при росте — до стабилизации. Ответ сайта сам по себе не считается результатом.</div>
+      <div class="verify-form">
+        <div class="field"><label for="verify-url">Ссылка на канал или сообщество</label>
+          <input id="verify-url" type="url" placeholder="https://vk.ru/club… или https://t.me/…" autocomplete="url"></div>
+        <button class="primary" id="verify-start" onclick="verifyStart()">Накрутить</button>
+        <button class="danger" id="verify-stop" onclick="verifyStop()" style="display:none">Остановить</button>
+      </div>
+      <div class="hint">Заказ может потребовать открытого браузера, ручной капчи или доверенного прокси. Выполнение и прирост не гарантированы.</div>
+      <div id="verify-risk" aria-live="polite"></div>
+      <div id="verify-result" aria-live="polite"></div>
+      <div class="verify-footnote">Рост счётчика может включать органические подписки, отписки и запоздавшие прежние заказы; он не доказывает источник подписчиков.</div>
+      <div class="row" style="margin-top:13px;align-items:center">
+        <label for="verify-history" class="note">Предыдущий отчёт</label>
+        <select id="verify-history" style="max-width:310px" onchange="verifySelectHistory(this.value)"><option value="">Последний запуск</option></select>
+      </div>
+    </div>
     <div id="wz-onboard"></div>
     <div class="panel">
+      <div class="note">Ручные заходы ниже и их объёмы — оценки площадок; фактический прирост показывает только проверяемый запуск выше.</div>
       <div class="wz-step" id="wz-step-1">
         <div class="wz-num">1</div>
         <div class="wz-body">
@@ -522,7 +576,7 @@ body[data-theme="dark"] .switch .tr{background:#2c3546}
           <thead><tr>
             <th>Сайт</th><th>Площадка</th><th>Тип</th><th>Объект</th><th>Услуга</th>
             <th class="right">За заход</th><th class="right">Кулдаун</th><th>Капча</th>
-            <th class="right">Сделано сегодня</th><th class="right">Осталось</th>
+            <th class="right">Заявлено сегодня</th><th class="right">Осталось</th>
             <th>Следующее окно</th><th>Статус</th><th></th>
           </tr></thead>
           <tbody id="cat-body"></tbody>
@@ -619,7 +673,7 @@ body[data-theme="dark"] .switch .tr{background:#2c3546}
   <section id="tab-platforms" style="display:none">
     <div class="panel">
       <h2 style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        Площадки: что реально работает
+        Площадки: доступность форм
         <span class="sub" id="pf-summary"></span>
         <span style="flex:1"></span>
         <button class="small" onclick="pfCheckAll()" id="pf-check-all">Проверить все</button>
@@ -720,6 +774,29 @@ body[data-theme="dark"] .switch .tr{background:#2c3546}
         <div class="row" style="margin-bottom:10px">
           <label class="switch"><input type="checkbox" id="st-nojs_enabled" onchange="quickSetting('nojs_enabled', this.checked)"><span class="tr"></span> Пробовать быстрый путь без браузера (простые формы)</label>
         </div>
+        <h2 style="margin-top:20px">Сеть и проверка прироста</h2>
+        <div class="row" style="margin-bottom:10px">
+          <label class="switch"><input type="checkbox" id="st-proxy_rotation"><span class="tr"></span> Разрешить настроенные прокси и VLESS при сетевых сбоях</label>
+        </div>
+        <div class="row" style="margin-bottom:10px">
+          <label class="switch"><input type="checkbox" id="st-proxy_autodetect_local"><span class="tr"></span> Обнаруживать локальные прокси Amnezia / Xray</label>
+        </div>
+        <div class="row" style="margin-bottom:12px">
+          <label class="switch"><input type="checkbox" id="st-proxy_use_tor"><span class="tr"></span> Использовать локальный Tor (если он запущен)</label>
+        </div>
+        <div class="field" style="margin-bottom:10px"><label for="st-proxy_list">HTTP / SOCKS5 / VLESS — по одному адресу в строке</label>
+          <textarea id="st-proxy_list" placeholder="socks5://host:port&#10;vless://…"></textarea></div>
+        <div class="field" style="margin-bottom:10px"><label for="st-proxy_subscription_url">HTTPS-ссылка на доверенную подписку (необязательно)</label>
+          <input id="st-proxy_subscription_url" type="url" placeholder="https://…"></div>
+        <div class="hint" style="margin-bottom:12px">Используйте только конфигурации, которым доверяете и которые разрешено применять. Данные прокси и подписки хранятся в локальной базе без шифрования. Системный VPN/Amnezia работает как маршрут операционной системы.</div>
+        <div class="row" style="margin-bottom:12px">
+          <div class="field" style="width:160px"><label>Ждать роста, сек</label><input id="st-verify_timeout_sec" type="number" min="300" max="3600"></div>
+          <div class="field" style="width:160px"><label>Опрос, сек</label><input id="st-verify_poll_sec" type="number" min="5" max="120"></div>
+          <div class="field" style="width:160px"><label>Стабильность, сек</label><input id="st-verify_settle_sec" type="number" min="30" max="1800"></div>
+        </div>
+        <div class="row" style="margin-bottom:10px"><button onclick="networkStatus()">Диагностика маршрутов</button><button onclick="networkTest()">Проверить счётчик по ссылке</button></div>
+        <div class="hint">Перед диагностикой сохраните изменения настроек. Проверка счётчика не отправляет заказ.</div>
+        <div id="network-info" class="note" aria-live="polite"></div>
         <h2 style="margin-top:20px">Капчи</h2>
         <div class="row" style="margin-bottom:10px">
           <label class="switch"><input type="checkbox" id="st-captcha_autosolve" onchange="quickSetting('captcha_autosolve', this.checked)"><span class="tr"></span> Решать капчи автоматически</label>
@@ -933,6 +1010,165 @@ async function api(path, method = 'GET', body = null) {
   return data;
 }
 
+// ------------------------------------------------------------------ проверяемая последовательная кампания
+let VERIFY_ID = null, VERIFY_CAMPAIGN = null, VERIFY_INFLIGHT = false, VERIFY_LATEST = true, VERIFY_ACTIVE = null;
+const verifyTime = (t) => t == null ? '—' : new Date(t * 1000).toLocaleString('ru-RU');
+const verifyNum = (n) => n == null ? '—' : Number(n).toLocaleString('ru-RU');
+function verifySiteLink(value) {
+  try { const u = new URL(value); return ['http:', 'https:'].includes(u.protocol) ? u.href : ''; }
+  catch (e) { return ''; }
+}
+
+async function verifyStart(acknowledge = false) {
+  const url = $('verify-url').value.trim();
+  if (!url) { toast('Вставьте ссылку на сообщество или канал', 'err'); return; }
+  const btn = $('verify-start'); btn.disabled = true;
+  try {
+    const data = await api('/api/verify/start', 'POST', {url, acknowledge_risk: acknowledge});
+    VERIFY_ID = data.campaign_id; VERIFY_LATEST = false;
+    VERIFY_ACTIVE = {id: data.campaign_id, status: 'running'};
+    await verifyRefresh(); await verifyHistory();
+    toast('Проверка запущена: сначала считываем исходное значение', 'ok');
+  } catch (e) {
+    if (!acknowledge && e.message.includes('риск повторного запуска') &&
+        confirm(e.message + '\n\nВы проверили старый заказ и принимаете риск перекрытия?')) {
+      btn.disabled = false;
+      return verifyStart(true);
+    }
+    toast(e.message, 'err');
+  } finally {
+    if (!VERIFY_ACTIVE) btn.disabled = false;
+  }
+}
+
+async function verifyStop() {
+  if (!VERIFY_ACTIVE || !confirm('Остановить активную проверку #' + VERIFY_ACTIVE.id + '? Уже отправленные заказы могут продолжаться.')) return;
+  try { await api('/api/verify/stop', 'POST', {campaign_id: VERIFY_ACTIVE.id}); await verifyRefresh(); }
+  catch (e) { toast(e.message, 'err'); }
+}
+
+async function verifyAcknowledge() {
+  if (!confirm('Вы проверили все непроверенные заявки на площадках? Они могут ещё выполняться; новые запуски могут перекрыться. Подтвердить риск?')) return;
+  try { await api('/api/verify/acknowledge', 'POST', {confirm:true}); await verifyRefresh(); }
+  catch (e) { toast(e.message, 'err'); }
+}
+
+async function verifyRefresh() {
+  if (VERIFY_INFLIGHT) return;
+  VERIFY_INFLIGHT = true;
+  const selected = (!VERIFY_LATEST && VERIFY_ID) ? String(VERIFY_ID) : '';
+  try {
+    const data = await api('/api/verify/status' + (selected ? '?id=' + selected : ''));
+    // Старый ответ не должен перезаписать новый запуск или выбор в истории.
+    const current = (!VERIFY_LATEST && VERIFY_ID) ? String(VERIFY_ID) : '';
+    if (selected !== current) return;
+    const before = VERIFY_ACTIVE && VERIFY_ACTIVE.id;
+    VERIFY_ACTIVE = data.active || null;
+    const unresolved = Number(data.unresolved_count || 0);
+    $('verify-risk').innerHTML = unresolved ? '<div class="warnbox" style="margin-top:12px">Есть непроверенные заявки: ' +
+      esc(unresolved) + '. Они могут ещё выполняться. Проверьте их на площадках, прежде чем продолжать. ' +
+      '<button class="small" onclick="verifyAcknowledge()">Я проверил, принимаю риск</button></div>' : '';
+    if (before !== (VERIFY_ACTIVE && VERIFY_ACTIVE.id)) verifyHistory();
+    const campaign = data.campaign;
+    if (!campaign) { $('verify-start').disabled = !!VERIFY_ACTIVE; return; }
+    VERIFY_ID = campaign.id; VERIFY_CAMPAIGN = campaign;
+    if (!$('verify-url').value.trim()) $('verify-url').value = campaign.channel_url;
+    renderVerification(campaign);
+  } catch (e) {
+    $('verify-result').innerHTML = '<div class="warnbox" style="margin-top:14px">Не удалось получить отчёт: ' + esc(e.message) + '</div>';
+  } finally { VERIFY_INFLIGHT = false; }
+}
+
+function renderVerification(c) {
+  const active = !!VERIFY_ACTIVE;
+  $('verify-start').disabled = active;
+  $('verify-stop').style.display = active ? '' : 'none';
+  $('verify-stop').disabled = active && VERIFY_ACTIVE.status === 'stopping';
+  $('verify-stop').textContent = active && VERIFY_ACTIVE.id !== c.id ? 'Остановить активную #' + VERIFY_ACTIVE.id : 'Остановить';
+  const expanded = new Set([...$('verify-result').querySelectorAll('details[open][data-result-id]')]
+    .map(el => el.dataset.resultId));
+  const phase = {running: 'Выполняется', stopping: 'Останавливаемся', completed: 'Проверка завершена',
+    failed: 'Проверка остановлена с ошибкой', stopped: 'Остановлено', interrupted: 'Прервано'}[c.status] || c.status;
+  const labels = {working:'рост обнаружен', not_working:'рост не обнаружен в окне',
+                  unverified:'не проверено', skipped:'не проверено', rejected:'отклонено площадкой',
+                  pending:'ожидает', running:'проверяется'};
+  const rows = (c.results || []).map(r => {
+    const samples = (r.samples || []).map(s => '<div>' + esc(verifyTime(s.observed_at)) + ' · <b>' +
+      esc(verifyNum(s.count)) + '</b> · ' + esc(s.source) + ' · ' + esc(s.route) + '</div>').join('');
+    const attempts = (r.attempts || []).map(a => '<div>' + esc(a.method) + ' / ' + esc(a.route) +
+      ': ' + esc(a.verdict) + ' — ' + esc(a.detail || '') +
+      (a.observation_window_sec == null ? '' : ' · окно ' + esc(verifyNum(a.observation_window_sec)) + ' с') + '</div>').join('');
+    const evidence = (samples || attempts) ? '<details data-result-id="' + esc(r.id) + '"' +
+      (expanded.has(String(r.id)) ? ' open' : '') + '><summary>Измерения: ' + (r.samples || []).length +
+      ' · попытки: ' + (r.attempts || []).length + '</summary><div style="max-height:160px;overflow:auto;padding-top:5px">' +
+      samples + attempts + '</div></details>' : '';
+    const added = r.added_count == null ? '—' : (r.added_count > 0 ? '+' : '') + verifyNum(r.added_count);
+    const siteUrl = verifySiteLink(r.service_url);
+    const siteName = siteUrl ? '<a href="' + esc(siteUrl) + '" target="_blank" rel="noopener noreferrer">' + esc(r.site_name) + ' ↗</a>' : esc(r.site_name);
+    return '<tr><td><b>' + siteName + '</b><div class="reason">' + esc(r.service_label || 'Подходящей услуги нет') + '</div>' + evidence + '</td>' +
+      '<td class="right mono">' + esc(verifyNum(r.baseline_count)) + '</td><td class="right mono">' + esc(verifyNum(r.final_count)) + '</td>' +
+      '<td class="right mono"><b>' + esc(added) + '</b></td><td class="right mono">' +
+      (r.time_to_growth_sec == null ? '—' : esc(verifyNum(r.time_to_growth_sec)) + ' с') + '</td>' +
+      '<td><span class="status-' + esc(r.status) + '">' + esc(labels[r.status] || r.status) + '</span>' +
+      (r.failure_reason ? '<div class="reason">' + esc(r.failure_reason) + '</div>' : '') + '</td></tr>';
+  }).join('');
+  const measured = (c.results || []).some(r => ['working','not_working'].includes(r.status) && r.added_count != null);
+  $('verify-result').innerHTML = '<div class="verify-status"><span class="verify-dot"></span>' + esc(phase) +
+    (c.current_service ? ' · ' + esc(c.current_service) : '') + (c.current_phase ? ' — ' + esc(c.current_phase) : '') + '</div>' +
+    (c.error_reason ? '<div class="warnbox" style="margin-top:10px">' + esc(c.error_reason) + '</div>' : '') +
+    '<div class="verify-metrics"><div class="verify-metric"><small>Исходный счётчик</small><strong>' + esc(verifyNum(c.initial_count)) + '</strong></div>' +
+    '<div class="verify-metric"><small>Последний счётчик</small><strong>' + esc(verifyNum(c.current_count)) + '</strong></div>' +
+    '<div class="verify-metric"><small>Сумма положительных изменений</small><strong>' + (measured ? '+' + esc(verifyNum(c.total_added)) : '—') + '</strong></div></div>' +
+    '<div class="note" style="margin:0 0 9px">' + esc(c.channel_url) + ' · старт ' + esc(verifyTime(c.started_at)) +
+    ' · ожидание ' + esc(verifyNum(c.growth_timeout_sec)) + ' с · стабильность ' + esc(verifyNum(c.settle_sec)) + ' с</div>' +
+    '<div class="tbl-wrap"><table class="verify-report"><thead><tr><th>Площадка / доказательства</th><th class="right">Было</th><th class="right">Стало</th><th class="right">Прирост</th><th class="right">До роста</th><th>Статус / причина</th></tr></thead><tbody>' +
+    (rows || '<tr><td colspan="6" class="empty">Нет площадок в каталоге</td></tr>') + '</tbody></table></div>' +
+    '<div class="row" style="margin-top:10px"><button class="small" onclick="downloadVerification()">Скачать отчёт JSON</button>' +
+    '<span class="note">Время до роста — от первого возможного действия отправки до первого обнаружения, с точностью до интервала опроса. Ожидание до этого действия не входит.</span></div>' +
+    '<div class="note" style="margin-top:8px">' + esc(c.attribution_note || 'Чистое изменение счётчика само по себе не доказывает источник подписок: возможны органический рост, отписки и запоздалые предыдущие заявки.') + '</div>';
+}
+
+async function verifyHistory() {
+  try {
+    const r = await api('/api/verify/history');
+    const select = $('verify-history');
+    select.innerHTML = '<option value="">Последний запуск</option>' + (r.campaigns || []).map(c =>
+      '<option value="' + c.id + '">#' + c.id + ' · ' + esc(verifyTime(c.started_at)) + ' · ' + esc(c.status) + '</option>').join('');
+    if (!VERIFY_LATEST && VERIFY_ID) select.value = String(VERIFY_ID);
+  } catch (e) { /* основной отчёт остаётся доступным */ }
+}
+function verifySelectHistory(value) {
+  VERIFY_LATEST = !value; VERIFY_ID = value ? Number(value) : null; verifyRefresh();
+}
+function downloadVerification() {
+  if (!VERIFY_CAMPAIGN) return;
+  const blob = new Blob([JSON.stringify(VERIFY_CAMPAIGN, null, 2)], {type:'application/json'});
+  const href = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = href; a.download = 'verification-' + VERIFY_CAMPAIGN.id + '.json'; a.click();
+  setTimeout(() => URL.revokeObjectURL(href), 1000);
+}
+async function networkStatus() {
+  try {
+    const r = await api('/api/network/status');
+    const routes = [...(r.configured_endpoints || []), ...(r.local_detected || [])];
+    $('network-info').textContent = (r.enabled ? 'Ротация включена. ' : 'Ротация выключена. ') +
+      'VLESS: ' + (r.vless_runtime || 'клиент не найден') + '; сетевые интерфейсы: ' +
+      ((r.amnezia_or_vpn_interfaces || []).join(', ') || 'не обнаружены') + '; маршруты: ' +
+      (routes.map(x => x.label + (x.ready ? '' : ' — ' + x.note)).join('; ') || 'не настроены') +
+      '. Наличие порта ещё не подтверждает доступность сайта.';
+  } catch (e) { $('network-info').textContent = e.message; }
+}
+async function networkTest() {
+  const url = $('verify-url').value.trim();
+  if (!url) { toast('Сначала укажите ссылку на вкладке «Накрутить»', 'err'); return; }
+  $('network-info').textContent = 'Проверяю счётчик…';
+  try {
+    const r = await api('/api/network/test', 'POST', {url});
+    $('network-info').textContent = r.results.map(x => x.route + ': ' +
+      (x.ok ? 'счётчик ' + verifyNum(x.count) + ' (' + (x.source || 'источник не указан') + ')' : x.error)).join(' · ');
+  } catch (e) { $('network-info').textContent = e.message; }
+}
+
 // ------------------------------------------------------------------ загрузка
 async function load() {
   try {
@@ -1033,13 +1269,13 @@ function renderOnboard() {
   try { seen = localStorage.getItem('vkf_onboarded') === '1'; } catch (e) {}
   if (seen) { box.innerHTML = ''; return; }
   box.innerHTML = '<div class="onboard">' +
-      '<div style="flex:1"><b>Три шага, и пошло.</b>' +
+      '<div style="flex:1"><b>Ручной режим ниже: три шага.</b>' +
         '<div class="ob-steps" style="margin-top:6px">' +
           '<span><b>1.</b> Выберите ссылку на сообщество или страницу</span>' +
           '<span><b>2.</b> Выберите, что накрутить (например, «+10 подписчиков»)</span>' +
           '<span><b>3.</b> Нажмите «Накрутить» и повторите за программой</span>' +
         '</div>' +
-        '<div class="note" style="margin-top:6px">Всё бесплатно: программа знает лимиты сайтов и открывает только те окна, где сейчас можно взять.</div>' +
+        '<div class="note" style="margin-top:6px">Объёмы и лимиты взяты из каталога и могут устареть; ручное подтверждение не доказывает прирост.</div>' +
       '</div>' +
       '<button class="small" onclick="wzOnboardDone()">Понятно</button>' +
     '</div>';
@@ -1711,6 +1947,7 @@ function renderQueue() {
     let stCls = 'dim', stTxt = t.status;
     if (t.status === 'waiting_delivery') { stCls = 'warn'; stTxt = 'жду прирост'; }
     if (t.status === 'delivery_uncertain') { stCls = 'err'; stTxt = 'ответ заказа неясен'; }
+    if (t.status === 'submitted_unverified') { stCls = 'warn'; stTxt = 'заказ без проверки прироста'; }
     if (t.status === 'ready') { stCls = 'ok'; stTxt = 'готово'; }
     if (t.status === 'wait_confirm') { stCls = 'warn'; stTxt = 'жду подтверждения'; }
     if (t.status === 'captcha') { stCls = 'err'; stTxt = 'нужна капча'; }
@@ -1725,7 +1962,7 @@ function renderQueue() {
     if (t.status === 'ready') timer = '<span class="tag ok">сейчас</span>';
     if (t.status === 'captcha') timer = '<span class="tag err">решите в окне браузера</span>';
     if (t.status === 'running') timer = '<span class="tag warn">идёт заход</span>';
-    return '<tr data-task="' + t.id + '"><td class="muted mono">' + t.id + '</td>' +
+    return '<tr data-task="' + t.id + '" data-status="' + esc(t.status) + '"><td class="muted mono">' + t.id + '</td>' +
       '<td><b>' + esc(t.site_name) + '</b></td>' +
       '<td>' + esc(t.label) + '</td>' +
       '<td class="note" style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' +
@@ -1745,14 +1982,14 @@ function renderQueue() {
           ? '<button class="small" onclick="deliveryCheck(' + t.id + ')">Проверить</button> ' +
             (t.status === 'delivery_uncertain' ? '<button class="small" onclick="deliveryConfirm(' + t.id + ')">Заказ принят</button> ' : '') +
             '<button class="small danger" onclick="deliveryAbandon(' + t.id + ')">Разблокировать</button>'
-          : '<button class="small danger" onclick="cancelTask(' + t.id + ')">Снять</button>') +
+          : (t.status === 'submitted_unverified' ? '' : '<button class="small danger" onclick="cancelTask(' + t.id + ')">Снять</button>')) +
       '</td></tr>';
   }).join('') || '<tr><td colspan="8" class="empty">Очередь пуста. Спланируйте задачи на дашборде.</td></tr>';
   // у задач, которые ждут человека, появится кнопка «Робот» — пусть попробует сам
   document.querySelectorAll('#queue-body tr[data-task]').forEach(tr => {
     const id = tr.dataset.task;
     const cell = tr.querySelector('td.act');
-    if (cell && !cell.querySelector('.robot-btn')) {
+    if (cell && ['ready','queued','failed','wait_confirm'].includes(tr.dataset.status) && !cell.querySelector('.robot-btn')) {
       const b = document.createElement('button');
       b.className = 'small robot-btn';
       b.textContent = '🤖';
@@ -1809,8 +2046,8 @@ function renderSettings() {
   $('st-full_auto').checked = s.full_auto === '1';
   api('/api/counter').then(r => {
     const x = $('counter-status');
-    if (x) x.textContent = (r.vk_token_configured ? 'Источник: VK API. ' : 'Источник: публичный виджет ВК. ') +
-      'Проверка поддерживает только подписчиков сообществ ВК с числовой ссылкой; автопилот должен быть включён. Срок и прохождение капч не гарантированы.';
+    if (x) x.textContent = (r.vk_token_configured ? 'Настроен VK API; при сбое проверяются виджет и мобильная страница. ' : 'Для ВК проверяются виджет и мобильная страница. ') +
+      'Принимается только точный счётчик с подтверждённым ID; фактический источник каждого замера указан в отчёте. Проверяемая кампания поддерживает сообщества ВК и публичные Telegram-каналы; для Telegram может потребоваться Bot API, если публичный счётчик округлён. Капча и прирост не гарантированы.';
   }).catch(() => {});
   if ($('st-strict_subject')) $('st-strict_subject').checked = (s.strict_subject || '1') === '1';
   $('st-auto_open').checked = s.auto_open !== '0';
@@ -1827,6 +2064,14 @@ function renderSettings() {
   if ($('st-nojs_enabled')) $('st-nojs_enabled').checked = (s.nojs_enabled || '1') === '1';
   if ($('st-captcha_autosolve')) $('st-captcha_autosolve').checked = (s.captcha_autosolve || '1') === '1';
   if ($('st-captcha_ocr')) $('st-captcha_ocr').checked = (s.captcha_ocr || '1') === '1';
+  $('st-proxy_rotation').checked = s.proxy_rotation === '1';
+  $('st-proxy_autodetect_local').checked = s.proxy_autodetect_local === '1';
+  $('st-proxy_use_tor').checked = s.proxy_use_tor === '1';
+  $('st-proxy_list').value = s.proxy_list || '';
+  $('st-proxy_subscription_url').value = s.proxy_subscription_url || '';
+  $('st-verify_timeout_sec').value = s.verify_timeout_sec || '300';
+  $('st-verify_poll_sec').value = s.verify_poll_sec || '15';
+  $('st-verify_settle_sec').value = s.verify_settle_sec || '90';
   $('health-line').innerHTML = 'Готовых задач: <b>' + ST.health.ready_tasks + '</b> · с ошибками: <b>' +
     ST.health.failed_tasks + '</b> · база: <span class="kbd">' + esc(ST.health.db) + '</span>';
 }
@@ -1990,80 +2235,21 @@ async function quickStart(serviceId) {
 }
 
 async function openFullAuto() {
-  // загружаем существующие цели для выпадающего списка (если они есть в ST)
-  const sel = $('fa-link');
-  sel.value = '';
-  $('fa-hint').textContent = '';
-  $('modal-fullauto').classList.add('on');
+  switchTab('wizard');
+  $('verify-url').focus();
+  $('verified-run').scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 
 async function closeFullAuto() {
   $('modal-fullauto').classList.remove('on');
-  $('fa-progress').style.display = 'none';
 }
 
 async function startFullAuto() {
-  const link = $('fa-link').value.trim();
-  const count = Math.max(1, parseInt($('fa-count').value || '0', 10));
-  const kind = $('fa-kind').value;
-
-  if (!link) { toast('Укажите ссылку на сообщество', 'err'); return; }
-  if (!count || count < 1) { toast('Укажите количество подписчиков', 'err'); return; }
-
-  try {
-    // 1. создаём цель (ссылку)
-    let targetId = null;
-    const existing = ST.targets.find(t => t.url === link);
-    if (existing) {
-      targetId = existing.id;
-    } else {
-      const tr = await api('/api/targets', 'POST', { name: link, platform: 'vk', url: link, kind: kind === 'auto' ? '' : kind });
-      targetId = tr.id;
-      toast('Ссылка добавлена: ' + esc(link), 'ok');
-    }
-
-    // 2. получаем подходящие услуги для этой цели
-    const wz = await api('/api/targets/' + targetId + '/services', 'GET');
-    const groups = wz.groups || [];
-    // ищем группу подписчиков
-    const followersGroup = groups.find(g => g.key.startsWith('followers:'));
-    if (!followersGroup || !followersGroup.items.length) {
-      toast('Нет подходящих услуг подписчиков для этой ссылки', 'err');
-      return;
-    }
-
-    const readyItems = followersGroup.items.filter(i => !i.blocked && i.ready);
-    if (!readyItems.length) {
-      toast('Все услуги подписчиков сейчас заблокированы или в кд', 'err');
-      return;
-    }
-
-    // 3. считаем сколько заходов нужно: цель / сумма amount по всем готовым услугам
-    const perRound = readyItems.reduce((s, i) => s + i.amount, 0);
-    const rounds = Math.ceil(count / perRound);
-    const items = readyItems.map(i => ({ service_id: i.id, claims: rounds }));
-
-    // 4. создаём план с автозапуском
-    const r = await api('/api/plan', 'POST', { target_id: targetId, items, autostart: true });
-    if (!r.created || !r.created.length) {
-      toast((r.warnings || ['Не удалось создать задачи']).join('; '), 'err');
-      return;
-    }
-
-    // 5. показываем прогресс
-    $('fa-hint').textContent = 'Создано задач: ' + r.created.length + '. Софт начнёт крутить сам по таймерам.';
-    $('fa-created').textContent = r.created.length;
-    $('fa-table').innerHTML = r.created.map(c =>
-      '<tr><td>' + esc(c.site) + '</td><td>' + esc(c.label) + '</td><td class="right">' + c.amount + '</td><td>' + (c.status || 'queued') + '</td></tr>'
-    ).join('');
-    $('fa-progress').style.display = 'block';
-    $('fa-status').textContent = 'Задачи в очереди. Автопилот запустит их по мере подхода кулдаунов.';
-    closeFullAuto();
-    await load();
-    switchTab('queue');
-    toast('FULL AUTO запущен: ' + r.created.length + ' задач на ' + count + ' подписчиков', 'ok');
-
-  } catch (e) { toast(e.message, 'err'); }
+  // Старый мастер больше не создаёт неподтверждённые параллельные задачи.
+  $('verify-url').value = $('fa-link').value.trim();
+  closeFullAuto();
+  switchTab('wizard');
+  await verifyStart();
 }
 async function planSelected() {
   const tid = parseInt($('plan-target').value, 10);
@@ -2092,7 +2278,7 @@ async function startTask(id) {
   try {
     const r = await api('/api/tasks/' + id + '/start', 'POST', {});
     if (r.mode === 'auto') {
-      if (r.ok) toast('Авто-заход выполнен: +' + (r.units || 0), 'ok');
+      if (r.ok) toast('Заход отмечен; фактический прирост без проверки счётчика не подтверждён', 'ok');
       else toast('Авто-заход не удался: ' + r.error, 'err');
       await load();
       return;
@@ -2256,6 +2442,14 @@ async function saveSettings() {
     nojs_enabled: $('st-nojs_enabled').checked ? '1' : '0',
     captcha_autosolve: $('st-captcha_autosolve').checked ? '1' : '0',
     captcha_ocr: $('st-captcha_ocr').checked ? '1' : '0',
+    proxy_rotation: $('st-proxy_rotation').checked ? '1' : '0',
+    proxy_autodetect_local: $('st-proxy_autodetect_local').checked ? '1' : '0',
+    proxy_use_tor: $('st-proxy_use_tor').checked ? '1' : '0',
+    proxy_list: $('st-proxy_list').value.trim(),
+    proxy_subscription_url: $('st-proxy_subscription_url').value.trim(),
+    verify_timeout_sec: $('st-verify_timeout_sec').value || '300',
+    verify_poll_sec: $('st-verify_poll_sec').value || '15',
+    verify_settle_sec: $('st-verify_settle_sec').value || '90',
   };
   try { await api('/api/settings', 'POST', body); SETTINGS_DIRTY = false; SETTINGS_SNAP = ''; toast('Сохранено', 'ok'); await load(); }
   catch (e) { toast(e.message, 'err'); }
@@ -2657,15 +2851,16 @@ function pfClassTag(a) {
 function pfStatusTag(st) {
   const cls = st === 'работает' ? 'ok' : (st === 'капча' ? 'warn' :
               (st === 'форма изменилась' || st === 'не работает') ? 'err' : 'dim');
-  return '<span class="tag ' + cls + '">' + esc(st) + '</span>';
+  const label = st === 'работает' ? 'форма доступна' : (st === 'не работает' ? 'форма недоступна' : st);
+  return '<span class="tag ' + cls + '">' + esc(label) + '</span>';
 }
 
 function renderPlatforms() {
   const box = $('pf-list');
   if (!box || !PF) return;
   const sm = PF.summary || {};
-  $('pf-summary').textContent = '· ' + (sm.working || 0) + ' работают, ' + (sm.captcha || 0) +
-    ' с капчей, ' + (sm.broken || 0) + ' сломаны, ' + (sm.off || 0) + ' выключены';
+  $('pf-summary').textContent = '· ' + (sm.working || 0) + ' форм доступны, ' + (sm.captcha || 0) +
+    ' с капчей, ' + (sm.broken || 0) + ' недоступны, ' + (sm.off || 0) + ' выключены. Это не проверка прироста.';
   const rows = PF.sites.map(s => {
     const hold = s.hold_seconds ? mmss(s.hold_seconds) : '—';
     const checked = s.checked_at ? new Date(s.checked_at * 1000).toLocaleString('ru-RU',
@@ -2741,6 +2936,9 @@ switchTab(TAB);            // на старте видна только стар
 
 // обновление раз в 2.5 с
 setInterval(load, 2500);
+setInterval(() => { if (TAB === 'wizard') verifyRefresh(); }, 3000);
+verifyRefresh();
+verifyHistory();
 // локальный тик таймеров (не ждём сети)
 setInterval(() => {
   tickModal();

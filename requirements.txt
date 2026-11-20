@@ -14,8 +14,8 @@
 #   * curl_cffi — HTTP с отпечатком Chrome TLS/JA3 (обход детекта скрипта)
 #   * cloudscraper — обход Cloudflare IUAM («Just a moment…») без браузера
 #   * pypasser — обход reCAPTCHA v3 через аудио-челлендж
-#   * proxybroker2 — поиск и проверка публичных прокси
-#   * stem / torpy — Tor-клиент с ротацией цепей (новый IP на каждый заход)
+#   * PySocks — поддержка SOCKS5 (только доверенные, настроенные пользователем прокси)
+#   * stem / torpy — необязательные Tor-клиенты; их наличие не гарантирует доступность сайтов
 #   * (опционально) humancursor — человекоподобное движение мыши (нужен дисплей)
 
 patchright>=1.49
@@ -24,7 +24,7 @@ ddddocr>=1.5
 curl_cffi>=0.17
 cloudscraper>=1.2
 pypasser>=1.1
-proxybroker2>=2.0
+PySocks>=1.7
 stem>=1.8
 torpy>=1.1
 xvfbwrapper>=0.2

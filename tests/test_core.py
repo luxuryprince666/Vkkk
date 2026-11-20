@@ -100,6 +100,7 @@ class TestState(Base):
         self.assertGreater(followers[0]["left_units"], 300)
 
     def test_claimed_units_counted(self):
+        catalog_amount = self.svc("doctorsmm-vk-followers")["amount"]
         engine.plan(self.tid, [{"service_id": "doctorsmm-vk-followers", "claims": 1}])
         with db.tx() as c:
             tid_task = c.execute("SELECT id FROM tasks LIMIT 1").fetchone()["id"]
@@ -107,7 +108,7 @@ class TestState(Base):
         st = engine.state()
         svc = [s for s in st["services"] if s["id"] == "doctorsmm-vk-followers"][0]
         self.assertEqual(svc["claims_today"], 1)
-        self.assertEqual(svc["units_today"], 50)
+        self.assertEqual(svc["units_today"], catalog_amount)
 
 
 class TestBreaker(Base):
@@ -259,11 +260,12 @@ class TestManualSettings(Base):
         self.assertEqual(view["cooldown_catalog"], 1440)
 
     def test_reset_overrides_back_to_catalog(self):
+        catalog = self.svc("doctorsmm-vk-followers")
         db.set_service_override("doctorsmm-vk-followers", cooldown_min=7, amount=99)
         db.set_service_override("doctorsmm-vk-followers", cooldown_min=None, amount=None)
         svc = engine.services_map()["doctorsmm-vk-followers"]
-        self.assertEqual(svc["cooldown_min"], 1440)
-        self.assertEqual(svc["amount"], 50)
+        self.assertEqual(svc["cooldown_min"], catalog["cooldown_min"])
+        self.assertEqual(svc["amount"], catalog["amount"])
         self.assertFalse(svc["cooldown_min_manual"])
 
     def test_site_wide_cooldown(self):

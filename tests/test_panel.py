@@ -108,6 +108,7 @@ class TestApi(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.srv.shutdown()
+        cls.srv.server_close()
 
     def test_get_state(self):
         data = panel.api(self.base, "/api/state")

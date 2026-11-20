@@ -1,0 +1,842 @@
+{
+  "phase": "failed",
+  "preflight": {
+    "url": "https://vk.ru/club243396555",
+    "readings": [
+      1,
+      1
+    ],
+    "sources": [
+      "виджет VK",
+      "виджет VK"
+    ],
+    "orders_sent": 0,
+    "observation_window_sec": 900,
+    "smm8_observation_window_sec": 3600,
+    "captcha_autosolve": false
+  },
+  "campaign": {
+    "id": 1,
+    "target_id": 1,
+    "channel_url": "https://vk.ru/club243396555",
+    "platform": "vk",
+    "metric": "followers",
+    "initial_count": 1,
+    "current_count": 1,
+    "total_added": null,
+    "services_total": 13,
+    "services_working": 0,
+    "services_failed": 0,
+    "status": "failed",
+    "current_service": null,
+    "current_phase": null,
+    "growth_timeout_sec": 900,
+    "poll_interval_sec": 15,
+    "settle_sec": 90,
+    "started_at": 1795189026,
+    "finished_at": 1795190395,
+    "owner_pid": 2893,
+    "error_reason": "После возможной отправки заказ не подтверждён: не видно нового подтверждения или отказа — проверьте скриншот",
+    "owner_birth": "feeb8342-d851-42a1-8f17-9e9729276c88:6710",
+    "baseline_samples": [
+      {
+        "result_id": null,
+        "observed_at": 1795189028.013192,
+        "count": 1,
+        "source": "виджет VK",
+        "route": "direct"
+      }
+    ],
+    "results": [
+      {
+        "id": 1,
+        "campaign_id": 1,
+        "seq_no": 1,
+        "site_id": "prskill",
+        "site_name": "PRSkill",
+        "service_id": "prskill-vk-followers",
+        "service_label": "Подписчики ВК (вступившие)",
+        "service_url": "https://prskill.ru/services/vk-vstupivshie#giveaway-form",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": 1,
+        "final_count": null,
+        "added_count": null,
+        "status": "skipped",
+        "time_to_growth_sec": null,
+        "method_used": "browser / direct",
+        "failure_reason": "Не удалось проверить заказ: PRSkill: бесплатная форма требует подтверждения Turnstile; без человека заказ не отправлен",
+        "started_at": 1795189028.025651,
+        "submitted_at": null,
+        "finished_at": 1795189047.2634401,
+        "acknowledged_at": null,
+        "attempts": [
+          {
+            "method": "browser",
+            "route": "direct",
+            "target_url": "https://vk.com/club243396555",
+            "started_at": 1795189029.2450047,
+            "baseline_count": 1,
+            "finished_at": 1795189047.2606053,
+            "submitted_at": null,
+            "verdict": "captcha",
+            "detail": "PRSkill: бесплатная форма требует подтверждения Turnstile; без человека заказ не отправлен",
+            "backend": "playwright"
+          }
+        ],
+        "samples": [
+          {
+            "result_id": 1,
+            "observed_at": 1795189029.2384148,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "campaign_id": 1,
+        "seq_no": 2,
+        "site_id": "smmnakrutka",
+        "site_name": "SMMnakrutka",
+        "service_id": "smmnakrutka-vk-followers",
+        "service_label": "Подписчики ВК",
+        "service_url": "https://smmnakrutka.ru/free-vk-followers",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": 1,
+        "final_count": null,
+        "added_count": null,
+        "status": "skipped",
+        "time_to_growth_sec": null,
+        "method_used": "browser / direct",
+        "failure_reason": "Не удалось проверить заказ: SMMnakrutka: форма или бесплатная услуга не совпадает с ожидаемой; заказ не отправлен",
+        "started_at": 1795189047.2711253,
+        "submitted_at": null,
+        "finished_at": 1795189054.3531318,
+        "acknowledged_at": null,
+        "attempts": [
+          {
+            "method": "browser",
+            "route": "direct",
+            "target_url": "https://vk.ru/club243396555",
+            "started_at": 1795189048.5716815,
+            "baseline_count": 1,
+            "finished_at": 1795189054.3509023,
+            "submitted_at": null,
+            "verdict": "need_human",
+            "detail": "SMMnakrutka: форма или бесплатная услуга не совпадает с ожидаемой; заказ не отправлен",
+            "backend": "playwright"
+          }
+        ],
+        "samples": [
+          {
+            "result_id": 2,
+            "observed_at": 1795189048.5501862,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "campaign_id": 1,
+        "seq_no": 3,
+        "site_id": "doctorsmm",
+        "site_name": "DoctorSMM",
+        "service_id": "doctorsmm-vk-followers",
+        "service_label": "Подписчики сообщества ВК (тест до 10)",
+        "service_url": "https://doctorsmm.com/nakrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": 1,
+        "final_count": 1,
+        "added_count": null,
+        "status": "unverified",
+        "time_to_growth_sec": null,
+        "method_used": "browser / direct",
+        "failure_reason": "После возможной отправки заказ не подтверждён: не видно нового подтверждения или отказа — проверьте скриншот",
+        "started_at": 1795189054.3601239,
+        "submitted_at": 1795189485.3557966,
+        "finished_at": 1795190395.502332,
+        "acknowledged_at": null,
+        "attempts": [
+          {
+            "method": "browser",
+            "route": "direct",
+            "target_url": "https://vk.com/club243396555",
+            "started_at": 1795189055.7613332,
+            "baseline_count": 1,
+            "observation_window_sec": 900,
+            "finished_at": 1795190395.4999614,
+            "submitted_at": 1795189485.3557966,
+            "verdict": "need_human",
+            "detail": "не видно нового подтверждения или отказа — проверьте скриншот",
+            "backend": "playwright"
+          }
+        ],
+        "samples": [
+          {
+            "result_id": 3,
+            "observed_at": 1795189055.7515264,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189485.3557966,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189486.9611917,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189503.3024178,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189519.7190228,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189535.889148,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189552.526536,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189568.670302,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189584.9677894,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189601.1548455,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189617.534309,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189633.8188355,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189650.0225375,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189666.2328312,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189682.6280746,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189698.769281,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189715.1453688,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189731.4407876,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189747.7537591,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189764.046278,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189780.199765,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189796.4248593,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189812.6621375,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189828.933369,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189845.125703,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189861.3687038,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189877.7480903,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189894.0382054,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189910.3620834,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189927.2114217,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189943.5341747,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189959.8004425,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189975.982613,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795189992.1837745,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190008.372154,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190024.5984535,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190040.813732,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190057.0051107,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190073.288935,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190089.420609,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190105.7651274,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190122.033566,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190138.2167532,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190154.3735142,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190170.6443412,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190186.90025,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190203.1488707,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190219.624237,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190235.7830138,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190252.0868309,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190268.3401692,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190284.7174747,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190301.1197143,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190317.2632182,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190333.5177295,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190349.7540224,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190365.9974897,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190382.2437854,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 3,
+            "observed_at": 1795190395.4971147,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "campaign_id": 1,
+        "seq_no": 4,
+        "site_id": "likeboom",
+        "site_name": "LikeBoom",
+        "service_id": "likeboom-vk-followers",
+        "service_label": "Любая услуга до 15 ₽ (≈50 подписчиков ВК)",
+        "service_url": "https://likeboom.ru/free-trial",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": null,
+        "final_count": null,
+        "added_count": null,
+        "status": "skipped",
+        "time_to_growth_sec": null,
+        "method_used": null,
+        "failure_reason": "кампания завершилась до запуска площадки",
+        "started_at": null,
+        "submitted_at": null,
+        "finished_at": 1795190395.5059128,
+        "acknowledged_at": null,
+        "attempts": [],
+        "samples": []
+      },
+      {
+        "id": 5,
+        "campaign_id": 1,
+        "seq_no": 5,
+        "site_id": "avi1",
+        "site_name": "Avi1",
+        "service_id": "avi1-vk-followers",
+        "service_label": "Подписчики в группу ВК",
+        "service_url": "https://avi1.ru/piar/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": null,
+        "final_count": null,
+        "added_count": null,
+        "status": "skipped",
+        "time_to_growth_sec": null,
+        "method_used": null,
+        "failure_reason": "кампания завершилась до запуска площадки",
+        "started_at": null,
+        "submitted_at": null,
+        "finished_at": 1795190395.5059128,
+        "acknowledged_at": null,
+        "attempts": [],
+        "samples": []
+      },
+      {
+        "id": 6,
+        "campaign_id": 1,
+        "seq_no": 6,
+        "site_id": "nakruti",
+        "site_name": "Nakruti.net",
+        "service_id": "nakruti-vk-followers",
+        "service_label": "Подписчики ВК",
+        "service_url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-podpischiki-vk",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": null,
+        "final_count": null,
+        "added_count": null,
+        "status": "skipped",
+        "time_to_growth_sec": null,
+        "method_used": null,
+        "failure_reason": "кампания завершилась до запуска площадки",
+        "started_at": null,
+        "submitted_at": null,
+        "finished_at": 1795190395.5059128,
+        "acknowledged_at": null,
+        "attempts": [],
+        "samples": []
+      },
+      {
+        "id": 7,
+        "campaign_id": 1,
+        "seq_no": 7,
+        "site_id": "mrpopular",
+        "site_name": "MRPOPULAR",
+        "service_id": "mrpopular-vk-followers",
+        "service_label": "Подписчики ВК",
+        "service_url": "https://ru.mrpopular.net/?category=socialnetworks&type=vk&service=subscribers",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": null,
+        "final_count": null,
+        "added_count": null,
+        "status": "skipped",
+        "time_to_growth_sec": null,
+        "method_used": null,
+        "failure_reason": "кампания завершилась до запуска площадки",
+        "started_at": null,
+        "submitted_at": null,
+        "finished_at": 1795190395.5059128,
+        "acknowledged_at": null,
+        "attempts": [],
+        "samples": []
+      },
+      {
+        "id": 8,
+        "campaign_id": 1,
+        "seq_no": 8,
+        "site_id": "smmyt",
+        "site_name": "SMMYT",
+        "service_id": "smmyt-vk-followers",
+        "service_label": "Подписчики ВК (бесплатный тариф)",
+        "service_url": "https://smmyt.ru/",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": null,
+        "final_count": null,
+        "added_count": null,
+        "status": "skipped",
+        "time_to_growth_sec": null,
+        "method_used": null,
+        "failure_reason": "требуется вход; автоматическая авторизованная сессия не настроена",
+        "started_at": null,
+        "submitted_at": null,
+        "finished_at": null,
+        "acknowledged_at": null,
+        "attempts": [],
+        "samples": []
+      },
+      {
+        "id": 9,
+        "campaign_id": 1,
+        "seq_no": 9,
+        "site_id": "prtut",
+        "site_name": "Prtut",
+        "service_id": "prtut-vk-followers",
+        "service_label": "Подписчики ВК в группу (тест до 50)",
+        "service_url": "https://prtut.ru/free-smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": null,
+        "final_count": null,
+        "added_count": null,
+        "status": "skipped",
+        "time_to_growth_sec": null,
+        "method_used": null,
+        "failure_reason": "кампания завершилась до запуска площадки",
+        "started_at": null,
+        "submitted_at": null,
+        "finished_at": 1795190395.5059128,
+        "acknowledged_at": null,
+        "attempts": [],
+        "samples": []
+      },
+      {
+        "id": 10,
+        "campaign_id": 1,
+        "seq_no": 10,
+        "site_id": "pricesmm",
+        "site_name": "PriceSMM",
+        "service_id": "pricesmm-vk-followers",
+        "service_label": "Подписчики ВК в группу (тест до 50)",
+        "service_url": "https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": null,
+        "final_count": null,
+        "added_count": null,
+        "status": "skipped",
+        "time_to_growth_sec": null,
+        "method_used": null,
+        "failure_reason": "кампания завершилась до запуска площадки",
+        "started_at": null,
+        "submitted_at": null,
+        "finished_at": 1795190395.5059128,
+        "acknowledged_at": null,
+        "attempts": [],
+        "samples": []
+      },
+      {
+        "id": 11,
+        "campaign_id": 1,
+        "seq_no": 11,
+        "site_id": "smmcode",
+        "site_name": "SMMCode",
+        "service_id": "",
+        "service_label": "",
+        "service_url": "https://smmcode.shop/nakrutka/vkontakte/podpischikov-na-akkaunt#free_boost",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": null,
+        "final_count": null,
+        "added_count": null,
+        "status": "skipped",
+        "time_to_growth_sec": null,
+        "method_used": null,
+        "failure_reason": "нет подходящей услуги подписчиков для этой ссылки",
+        "started_at": null,
+        "submitted_at": null,
+        "finished_at": null,
+        "acknowledged_at": null,
+        "attempts": [],
+        "samples": []
+      },
+      {
+        "id": 12,
+        "campaign_id": 1,
+        "seq_no": 12,
+        "site_id": "smm8",
+        "site_name": "SMM8",
+        "service_id": "smm8-vk-followers",
+        "service_label": "Бесплатные подписчики ВК без логина (10 шт., раз в 30 мин, до 3/сутки)",
+        "service_url": "https://smm8.com/free-vk-followers",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": null,
+        "final_count": null,
+        "added_count": null,
+        "status": "skipped",
+        "time_to_growth_sec": null,
+        "method_used": null,
+        "failure_reason": "кампания завершилась до запуска площадки",
+        "started_at": null,
+        "submitted_at": null,
+        "finished_at": 1795190395.5059128,
+        "acknowledged_at": null,
+        "attempts": [],
+        "samples": []
+      },
+      {
+        "id": 13,
+        "campaign_id": 1,
+        "seq_no": 13,
+        "site_id": "smmprime",
+        "site_name": "SMMPrime",
+        "service_id": "",
+        "service_label": "",
+        "service_url": "https://smmprime.com/free",
+        "channel_url": "https://vk.ru/club243396555",
+        "baseline_count": null,
+        "final_count": null,
+        "added_count": null,
+        "status": "skipped",
+        "time_to_growth_sec": null,
+        "method_used": null,
+        "failure_reason": "нет подходящей услуги подписчиков для этой ссылки",
+        "started_at": null,
+        "submitted_at": null,
+        "finished_at": null,
+        "acknowledged_at": null,
+        "attempts": [],
+        "samples": []
+      }
+    ],
+    "attribution_note": "Показан чистый рост публичного счётчика за время наблюдения. Сам по себе счётчик не доказывает источник подписок: на него могут влиять органический рост, отписки и запоздавшие предыдущие заказы."
+  },
+  "updated_at": 1795190398.04095,
+  "actions_run_id": 44764939761,
+  "check_id": 136387388143,
+  "check_status": "completed",
+  "check_conclusion": "failure",
+  "actions_run_url": "https://github.com/luxuryprince666/Vkkk/actions/runs/44764939761"
+}

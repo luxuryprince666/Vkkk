@@ -181,7 +181,11 @@ def main() -> int:
 
     print("\nПлощадки (M1)")
     code, h = call("/api/sites/health")
-    check("GET /api/sites/health отдаёт площадки", code == 200 and len(h.get("sites", [])) >= 20,
+    # Каталог меняется; проверяем полноту ответа относительно текущего состояния,
+    # а не устаревшее число площадок из прежней версии.
+    expected_ids = {site['id'] for site in st.get('sites', [])}
+    actual_ids = {site.get('site_id') or site.get('id') for site in h.get('sites', [])}
+    check("GET /api/sites/health отдаёт площадки", code == 200 and bool(expected_ids) and actual_ids == expected_ids,
           str(h)[:140])
     check("у площадок есть статус и класс",
           all(r.get("status") and r.get("automation") is not None for r in h.get("sites", [])))

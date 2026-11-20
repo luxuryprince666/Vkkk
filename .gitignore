@@ -9,6 +9,7 @@ data/*.db-*
 data/backups/
 data/logs/
 data/catalog-draft.json
+data/clipboard.txt
 exports/
 logs/
 
