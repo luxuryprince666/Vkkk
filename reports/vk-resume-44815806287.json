@@ -1,0 +1,1418 @@
+{
+  "phase": "последовательная проверка",
+  "actions_run_id": "44815806287",
+  "target": "https://vk.ru/club243396555",
+  "prior": {
+    "run_id": 44764939761,
+    "check_id": 136387388143,
+    "sha": "e191cfac05ae0fe5a50af1263985aba82e0a3b40",
+    "campaign_status": "failed",
+    "initial_count": 1,
+    "last_count": 1,
+    "doctor": {
+      "site_id": "doctorsmm",
+      "submitted_at": 1795189485.3557966,
+      "baseline_count": 1,
+      "final_count": 1,
+      "status": "unverified",
+      "last_sample_at": 1795190395.4971147,
+      "reason": "После возможной отправки заказ не подтверждён: не видно нового подтверждения или отказа — проверьте скриншот"
+    },
+    "other_results": [
+      {
+        "site_id": "prskill",
+        "site_name": "PRSkill",
+        "status": "skipped",
+        "reason": "Не удалось проверить заказ: PRSkill: бесплатная форма требует подтверждения Turnstile; без человека заказ не отправлен"
+      },
+      {
+        "site_id": "smmyt",
+        "site_name": "SMMYT",
+        "status": "skipped",
+        "reason": "требуется вход; автоматическая авторизованная сессия не настроена"
+      },
+      {
+        "site_id": "smmcode",
+        "site_name": "SMMCode",
+        "status": "skipped",
+        "reason": "нет подходящей услуги подписчиков для этой ссылки"
+      },
+      {
+        "site_id": "smmprime",
+        "site_name": "SMMPrime",
+        "status": "skipped",
+        "reason": "нет подходящей услуги подписчиков для этой ссылки"
+      }
+    ]
+  },
+  "prior_continuation": {
+    "run_url": "https://github.com/luxuryprince666/Vkkk/actions/runs/44771191791",
+    "ended_at": 1795195351.0,
+    "last_snapshot_at": 1795195343.86074,
+    "results": [
+      {
+        "site_id": "smmnakrutka",
+        "site_name": "SMMnakrutka",
+        "service_url": "https://smmnakrutka.ru/free-vk-followers",
+        "service_label": "Подписчики ВК",
+        "verifier_status": "skipped",
+        "campaign_status": "completed",
+        "baseline_count": 1,
+        "final_count": null,
+        "observed_counter_change": null,
+        "first_observed_increase_sec": null,
+        "attributed_delivery_count": null,
+        "delivery_source": "не установлена",
+        "submitted_at": null,
+        "finished_at": 1795193590.5232627,
+        "failure_reason": "Не удалось проверить заказ: SMMnakrutka: поля проверки таймера не появились; заказ не отправлен",
+        "attempts": [
+          {
+            "method": "browser",
+            "route": "direct",
+            "target_url": "https://vk.ru/club243396555",
+            "started_at": 1795193103.6770298,
+            "baseline_count": 1,
+            "finished_at": 1795193590.4965522,
+            "submitted_at": null,
+            "verdict": "need_human",
+            "detail": "SMMnakrutka: поля проверки таймера не появились; заказ не отправлен",
+            "backend": "playwright"
+          }
+        ],
+        "samples": [
+          {
+            "result_id": 2,
+            "observed_at": 1795193103.6724687,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          }
+        ],
+        "attribution_warning": "Возможна запоздалая доставка DoctorSMM или предыдущих площадок; публичный счётчик не позволяет достоверно установить источник прироста."
+      },
+      {
+        "site_id": "likeboom",
+        "site_name": "LikeBoom",
+        "service_url": "https://likeboom.ru/free-trial",
+        "service_label": "Любая услуга до 15 ₽ (≈50 подписчиков ВК)",
+        "verifier_status": "skipped",
+        "campaign_status": "completed",
+        "baseline_count": 1,
+        "final_count": null,
+        "observed_counter_change": null,
+        "first_observed_increase_sec": null,
+        "attributed_delivery_count": null,
+        "delivery_source": "не установлена",
+        "submitted_at": null,
+        "finished_at": 1795193607.626033,
+        "failure_reason": "Не удалось проверить заказ: для LikeBoom нужен e-mail: укажите его в Настройках («E-mail для заказов»)",
+        "attempts": [
+          {
+            "method": "browser",
+            "route": "direct",
+            "target_url": "https://vk.ru/club243396555",
+            "started_at": 1795193596.409255,
+            "baseline_count": 1,
+            "finished_at": 1795193607.624279,
+            "submitted_at": null,
+            "verdict": "need_human",
+            "detail": "для LikeBoom нужен e-mail: укажите его в Настройках («E-mail для заказов»)",
+            "backend": "playwright"
+          }
+        ],
+        "samples": [
+          {
+            "result_id": 17,
+            "observed_at": 1795193596.358488,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          }
+        ],
+        "attribution_warning": "Возможна запоздалая доставка DoctorSMM или предыдущих площадок; публичный счётчик не позволяет достоверно установить источник прироста."
+      },
+      {
+        "site_id": "avi1",
+        "site_name": "Avi1",
+        "service_url": "https://avi1.ru/piar/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+        "service_label": "Подписчики в группу ВК",
+        "verifier_status": "skipped",
+        "campaign_status": "completed",
+        "baseline_count": 1,
+        "final_count": null,
+        "observed_counter_change": null,
+        "first_observed_increase_sec": null,
+        "attributed_delivery_count": null,
+        "delivery_source": "не установлена",
+        "submitted_at": 1795194044.290629,
+        "finished_at": 1795194061.0898645,
+        "failure_reason": "Не удалось проверить заказ: лимит площадки: «подождите»",
+        "attempts": [
+          {
+            "method": "browser",
+            "route": "direct",
+            "target_url": "https://vk.com/club243396555",
+            "started_at": 1795193612.969339,
+            "baseline_count": 1,
+            "observation_window_sec": 900,
+            "finished_at": 1795194061.0881672,
+            "submitted_at": 1795194044.290629,
+            "verdict": "quota",
+            "detail": "лимит площадки: «подождите»",
+            "backend": "playwright"
+          }
+        ],
+        "samples": [
+          {
+            "result_id": 31,
+            "observed_at": 1795193612.9571648,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 31,
+            "observed_at": 1795194044.290629,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 31,
+            "observed_at": 1795194046.0113726,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          }
+        ],
+        "attribution_warning": "Возможна запоздалая доставка DoctorSMM или предыдущих площадок; публичный счётчик не позволяет достоверно установить источник прироста."
+      },
+      {
+        "site_id": "nakruti",
+        "site_name": "Nakruti.net",
+        "service_url": "https://nakruti.net/besplatnaya-nakrutka/besplatnye-podpischiki-vk",
+        "service_label": "Подписчики ВК",
+        "verifier_status": "unverified",
+        "campaign_status": "failed",
+        "baseline_count": 1,
+        "final_count": 1,
+        "observed_counter_change": 0,
+        "first_observed_increase_sec": null,
+        "attributed_delivery_count": null,
+        "delivery_source": "не установлена",
+        "submitted_at": 1795194076.9333496,
+        "finished_at": 1795194981.244801,
+        "failure_reason": "После возможной отправки заказ не подтверждён: после первого клика открылась дополнительная форма; повторная отправка без проверки запрещена",
+        "attempts": [
+          {
+            "method": "browser",
+            "route": "direct",
+            "target_url": "https://vk.com/club243396555",
+            "started_at": 1795194065.8040483,
+            "baseline_count": 1,
+            "observation_window_sec": 900,
+            "finished_at": 1795194981.2434974,
+            "submitted_at": 1795194076.9333496,
+            "verdict": "need_human",
+            "detail": "после первого клика открылась дополнительная форма; повторная отправка без проверки запрещена",
+            "backend": "playwright"
+          }
+        ],
+        "samples": [
+          {
+            "result_id": 45,
+            "observed_at": 1795194065.7292948,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194076.9333496,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194078.5362527,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194095.1630733,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194111.549618,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194128.0888422,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194144.5280404,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194161.025829,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194177.4733398,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194194.1305335,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194210.7039204,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194227.0789483,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194243.8103628,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194260.198,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194276.93912,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194293.4898868,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194310.0609436,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194326.5854044,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194343.2931945,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194359.7319028,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194376.2156136,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194392.602845,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194409.110321,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194425.5819697,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194441.9490976,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194458.5915878,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194474.9721825,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194491.3774757,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194507.9652064,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194524.5533247,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194541.0562406,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194557.4556692,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194574.0534642,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194590.7389312,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194607.1863852,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194623.62872,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194640.176644,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194656.7843206,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194673.1701128,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194689.6225107,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194707.0249944,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194723.4084613,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194739.9287143,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194756.411017,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194773.0422742,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194790.036008,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194806.5830975,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194823.1789744,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194839.572302,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194856.123369,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194872.8380399,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194889.2124288,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194905.680673,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194922.1252975,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194938.651694,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194955.1707454,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194971.586922,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          },
+          {
+            "result_id": 45,
+            "observed_at": 1795194981.239641,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          }
+        ],
+        "attribution_warning": "Возможна запоздалая доставка DoctorSMM или предыдущих площадок; публичный счётчик не позволяет достоверно установить источник прироста."
+      },
+      {
+        "site_id": "mrpopular",
+        "site_name": "MRPOPULAR",
+        "service_url": "https://ru.mrpopular.net/?category=socialnetworks&type=vk&service=subscribers",
+        "service_label": "Подписчики ВК",
+        "verifier_status": "skipped",
+        "campaign_status": "completed",
+        "baseline_count": 1,
+        "final_count": null,
+        "observed_counter_change": null,
+        "first_observed_increase_sec": null,
+        "attributed_delivery_count": null,
+        "delivery_source": "не установлена",
+        "submitted_at": null,
+        "finished_at": 1795194996.4753747,
+        "failure_reason": "Не удалось проверить заказ: бесплатность или состояние именно этой формы не подтверждено; заказ не отправлен",
+        "attempts": [
+          {
+            "method": "browser",
+            "route": "direct",
+            "target_url": "https://vk.ru/club243396555",
+            "started_at": 1795194986.0227885,
+            "baseline_count": 1,
+            "finished_at": 1795194996.4737113,
+            "submitted_at": null,
+            "verdict": "need_human",
+            "detail": "бесплатность или состояние именно этой формы не подтверждено; заказ не отправлен",
+            "backend": "playwright"
+          }
+        ],
+        "samples": [
+          {
+            "result_id": 59,
+            "observed_at": 1795194986.0183978,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          }
+        ],
+        "attribution_warning": "Возможна запоздалая доставка DoctorSMM или предыдущих площадок; публичный счётчик не позволяет достоверно установить источник прироста."
+      }
+    ],
+    "interrupted_current": {
+      "site_id": "prtut",
+      "phase": "Попытка: browser, Прямое соединение",
+      "campaign_id": 6,
+      "row": {
+        "site_id": "prtut",
+        "site_name": "Prtut",
+        "service_url": "https://prtut.ru/free-smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+        "service_label": "Подписчики ВК в группу (тест до 50)",
+        "verifier_status": "running",
+        "campaign_status": "running",
+        "baseline_count": 1,
+        "final_count": null,
+        "observed_counter_change": null,
+        "first_observed_increase_sec": null,
+        "attributed_delivery_count": null,
+        "delivery_source": "не установлена",
+        "submitted_at": null,
+        "finished_at": null,
+        "failure_reason": null,
+        "attempts": [],
+        "samples": [
+          {
+            "result_id": 74,
+            "observed_at": 1795195002.8190417,
+            "count": 1,
+            "source": "виджет VK",
+            "route": "direct"
+          }
+        ],
+        "attribution_warning": "Возможна запоздалая доставка DoctorSMM или предыдущих площадок; публичный счётчик не позволяет достоверно установить источник прироста."
+      }
+    }
+  },
+  "queue": [
+    "pricesmm",
+    "sprintersmm",
+    "lowcostsmm",
+    "martinismm",
+    "capitansmm",
+    "captainsmm",
+    "smm8"
+  ],
+  "quarantine_samples": [
+    {
+      "observed_at": 1795208277.0193899,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct"
+    },
+    {
+      "observed_at": 1795208308.8564396,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct"
+    },
+    {
+      "observed_at": 1795208340.4862928,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct"
+    },
+    {
+      "observed_at": 1795208372.135821,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct"
+    },
+    {
+      "observed_at": 1795208403.811932,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct"
+    }
+  ],
+  "results": [
+    {
+      "site_id": "pricesmm",
+      "site_name": "PriceSMM",
+      "service_url": "https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "service_label": "Подписчики сообщества ВК (заявлено 5–7, доставка не проверена)",
+      "verifier_status": "unverified",
+      "campaign_status": "failed",
+      "baseline_count": 1,
+      "final_count": 1,
+      "observed_counter_change": 0,
+      "first_observed_increase_sec": null,
+      "attributed_delivery_count": null,
+      "delivery_source": "не установлена",
+      "submitted_at": 1795208714.2781692,
+      "finished_at": 1795209636.9131334,
+      "failure_reason": "После возможной отправки заказ не подтверждён: Ответ после возможной отправки не распознан",
+      "attempts": [
+        {
+          "method": "browser",
+          "route": "direct",
+          "target_url": "https://vk.com/club243396555",
+          "started_at": 1795208407.232476,
+          "baseline_count": 1,
+          "observation_window_sec": 900,
+          "finished_at": 1795209636.9117312,
+          "submitted_at": 1795208714.2781692,
+          "verdict": "need_human",
+          "detail": "Ответ после возможной отправки не распознан",
+          "backend": "playwright",
+          "late_recorded": false
+        }
+      ],
+      "samples": [
+        {
+          "result_id": 10,
+          "observed_at": 1795208407.227704,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208714.2781692,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208715.9283547,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208732.813442,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208749.1194336,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208765.822324,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208782.330261,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208798.599278,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208815.1773078,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208831.765459,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208849.4104779,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208865.7708573,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208882.027465,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208898.3672783,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208914.659736,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208930.99308,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208947.291981,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208963.6043715,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208979.9068296,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795208996.1862183,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209012.3928568,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209028.682094,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209044.9505255,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209061.2075784,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209077.4673038,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209093.7038841,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209110.0570612,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209126.3108404,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209142.498624,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209158.7718344,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209175.197831,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209191.9072566,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209208.1338773,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209224.5130932,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209240.934751,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209257.2522054,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209273.4895444,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209289.7520716,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209305.9590573,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209322.3749442,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209338.806834,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209355.1148121,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209371.495524,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209387.8791118,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209404.2267356,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209420.5758543,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209436.9301794,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209453.2997344,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209469.617552,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209485.916124,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209502.2663538,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209518.4855835,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209534.9076636,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209551.2101278,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209567.4187968,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209583.696269,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209599.9707308,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209616.2159808,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209632.4983852,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 10,
+          "observed_at": 1795209636.909856,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        }
+      ],
+      "attribution_warning": "Возможна запоздалая доставка DoctorSMM или предыдущих площадок; публичный счётчик не позволяет достоверно установить источник прироста."
+    }
+  ],
+  "current": {
+    "site_id": "sprintersmm",
+    "phase": "Ожидание фактического прироста; окно 900 с после драйвера",
+    "campaign_id": 2,
+    "row": {
+      "site_id": "sprintersmm",
+      "site_name": "SprinterSMM",
+      "service_url": "https://sprintersmm.com/raskrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "service_label": "Подписчики сообщества ВК (заявлено 5–7, не проверено)",
+      "verifier_status": "running",
+      "campaign_status": "running",
+      "baseline_count": 1,
+      "final_count": 1,
+      "observed_counter_change": 0,
+      "first_observed_increase_sec": null,
+      "attributed_delivery_count": null,
+      "delivery_source": "не установлена",
+      "submitted_at": 1795210067.8754413,
+      "finished_at": null,
+      "failure_reason": null,
+      "attempts": [],
+      "samples": [
+        {
+          "result_id": 36,
+          "observed_at": 1795209641.4220557,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210067.8754413,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210069.3262908,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210085.5701458,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210102.1112678,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210118.4073658,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210134.6723795,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210151.02533,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210167.3740711,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210183.6161225,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210199.9476533,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210216.1629124,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210232.5633516,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210248.8768911,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210265.1795437,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210281.410829,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210297.6563165,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210313.870909,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210330.1854882,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210346.5053728,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210362.82342,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210379.0254455,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210395.273603,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210411.5080712,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210427.7118902,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        }
+      ],
+      "attribution_warning": "Возможна запоздалая доставка DoctorSMM или предыдущих площадок; публичный счётчик не позволяет достоверно установить источник прироста."
+    }
+  },
+  "quarantine_label": "Наблюдение после остановки Prtut и предыдущих возможных заявок",
+  "attribution_warning": "Возможна запоздалая доставка DoctorSMM, Avi1, Nakruti.net или прерванного Prtut; публичный счётчик не позволяет достоверно установить источник роста.",
+  "error": null,
+  "quarantine_deadline": 1795198951.0,
+  "counter_error": null,
+  "updated_at": 1795210435.2264273,
+  "check_id": 136564526676,
+  "check_status": "in_progress",
+  "check_conclusion": null,
+  "actions_run_url": "https://github.com/luxuryprince666/Vkkk/actions/runs/44815806287"
+}

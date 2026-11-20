@@ -131,19 +131,23 @@ def render(state: dict) -> str:
                   and s['count'] > baseline), None)
     first_after = round(first['observed_at'] - possible, 1) if first else None
     show = lambda x: 'нет данных' if x is None else str(x)
+    yesno = lambda x: 'да' if x is True else ('нет' if x is False else 'нет данных')
+    claimed = state.get('provider_claimed_order')
+    claim_label = 'распознано' if claimed is True else ('не распознано' if claimed is False else 'нет данных')
     lines = [f'Ссылка: {TARGET}', f"Состояние: {state.get('phase', 'подготовка')}",
              f'Предыдущий запуск: https://github.com/{REPO}/actions/runs/{PRIOR_RUN}', WARNING,
              f'Карантин: {len(q)} замеров; первый {show(q[0]["count"] if q else None)}, '
              f'последний {show(q[-1]["count"] if q else None)}.',
              '', 'Boost-Like — бесплатная карточка подписчиков ВК (не платная корзина)',
              f'  Возможное действие до ввода: {show(start.get("possible_at"))}; '
-             f'запрос запуска пропущен барьером: {show(start.get("request_released"))}; '
+             f'запрос запуска разрешён барьером: {yesno(start.get("request_released"))}; '
              f'HTTP-статус запуска: {show(start.get("http_status"))}.',
              f'  Возможное завершение: {show(complete.get("possible_at"))}; '
-             f'запрос завершения пропущен барьером: {show(complete.get("request_released"))}; '
-             f'HTTP-статус завершения: {show(complete.get("http_status"))}.',
+             f'запрос завершения разрешён барьером: {yesno(complete.get("request_released"))}; '
+             f'HTTP-статус завершения: {show(complete.get("http_status"))}; '
+             f'счётчик перед завершением: {show(complete.get("baseline_count"))}.',
              f'  Ответ страницы: {show(state.get("site_response"))}.',
-             f'  Площадка показала подтверждение заказа: {show(state.get("provider_claimed_order"))}.',
+             f'  Подтверждение заказа на странице: {claim_label}.',
              f'  Счётчик до ввода: {show(baseline)}; последний замер: {show(last)}; '
              f'чистое изменение: {show(delta)}.',
              f'  Первое обнаружение роста после возможного действия: {show(first_after)}' +

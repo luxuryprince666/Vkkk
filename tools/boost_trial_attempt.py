@@ -21,10 +21,11 @@ MODULE = '/_nuxt/CCrX1cDL.js'
 
 
 def safe_message(value: object) -> str:
-    text = ' '.join(str(value or '').split())[:250]
+    text = ' '.join(str(value or '').split())
     text = re.sub(r'https?://\S+', '[адрес скрыт]', text, flags=re.I)
     text = re.sub(r'[\w.+-]+@[\w.-]+', '[email скрыт]', text)
-    text = re.sub(r'[A-Za-z0-9_-]{32,}', '[данные скрыты]', text)
+    text = re.sub(r'(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)', '[номер скрыт]', text)
+    text = re.sub(r'[A-Za-z0-9_-]{24,}', '[данные скрыты]', text)
     return text[:200]
 
 

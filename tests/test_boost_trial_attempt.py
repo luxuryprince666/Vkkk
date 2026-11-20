@@ -28,7 +28,8 @@ document.querySelector('.free-form__submit').onclick=async()=>{
   const v=await r.json(); localStorage.setItem('free_session_token',v.token);
   card.innerHTML='<span class="free-session__timer-value">00:01</span><button class="free-session__complete-btn" disabled>Ожидание</button>';
   const b=card.querySelector('.free-session__complete-btn');
-  setTimeout(()=>{b.disabled=false;b.innerText='Получить'},1000);
+  setTimeout(()=>{card.querySelector('.free-session__timer-value').innerText='00:00';
+    b.disabled=false;b.classList.add('is-ready');b.innerText='Получить'},1000);
   b.onclick=async()=>{
     await fetch('/api/v1/free/complete',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({token:localStorage.getItem('free_session_token')})});
@@ -49,6 +50,15 @@ class ConfirmationTests(unittest.TestCase):
         self.assertFalse(attempt.provider_confirms('Заказ будет создан позже'))
         self.assertFalse(attempt.provider_confirms('Заказ оформлен, но затем отклонён'))
         self.assertFalse(attempt.provider_confirms('Не удалось создать заказ'))
+
+    def test_public_message_redacts_urls_email_numbers_and_long_identifiers(self):
+        sample = ('Ссылка https://example.org/secret почта person@example.org '
+                  'телефон +7 (900) 123-45-67 идентификатор ' + 'a' * 50)
+        safe = attempt.safe_message(sample)
+        self.assertNotIn('example.org', safe)
+        self.assertNotIn('900', safe)
+        self.assertNotIn('a' * 24, safe)
+        self.assertIn('[адрес скрыт]', safe)
 
 
 def browser_ready():
@@ -139,6 +149,30 @@ class OfflineAttemptTests(unittest.TestCase):
         self.assertIsNone(self.state['start']['possible_at'])
         self.assertIn('изменился', self.state['reason'])
         self.assertFalse(any(method == 'POST' for method, _ in OfflineFence.instance.released_paths))
+
+    def test_enabled_button_without_zero_timer_never_completes(self):
+        # Simulate a stale/non-zero timer even if the site's button becomes enabled.
+        OfflineFence.fixture = HTML.replace(".innerText='00:00'", ".innerText='00:01'")
+        self.run_page()
+        self.assertTrue(self.state['start']['request_released'])
+        self.assertFalse(self.state['complete']['request_released'])
+        self.assertIn('Таймер не завершился', self.state['reason'])
+        self.assertFalse(any(path == '/api/v1/free/complete'
+                             for _, path in OfflineFence.instance.released_paths))
+
+    def test_malformed_timer_or_missing_ready_class_never_completes(self):
+        for replacement in (".innerText='00:60'", ".innerText='неизвестно'"):
+            with self.subTest(timer=replacement):
+                self.state = {'samples': [], 'provider_claimed_order': False}
+                OfflineFence.fixture = HTML.replace(".innerText='00:00'", replacement)
+                self.run_page()
+                self.assertTrue(self.state['start']['request_released'])
+                self.assertFalse(self.state['complete']['request_released'])
+        self.state = {'samples': [], 'provider_claimed_order': False}
+        OfflineFence.fixture = HTML.replace("b.classList.add('is-ready');", '')
+        self.run_page()
+        self.assertTrue(self.state['start']['request_released'])
+        self.assertFalse(self.state['complete']['request_released'])
 
     def test_no_fresh_counter_blocks_completion_even_after_session_started(self):
         calls = [0]
