@@ -15,6 +15,7 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from core import delivery, drivers, network, stealth, verifier  # noqa: E402
+from tools.ci_progress import GitHubProgress, ProgressError  # noqa: E402
 from tools.run_live_ci import notice  # noqa: E402
 
 
@@ -36,6 +37,14 @@ def main() -> int:
                             'orders_sent': 0})
     catalog = json.loads((ROOT / 'data' / 'catalog.json').read_text(encoding='utf-8'))
     try:
+        publisher = GitHubProgress(name='VK read-only readiness snapshot')
+        check_id = publisher.create({'phase': 'подготовка', 'count': count, 'orders_sent': 0})
+        notice('PREP_CHECK', {'check_id': check_id})
+    except ProgressError as exc:
+        notice('PREP_BLOCKED', {'reason': 'Не удалось открыть канал отчёта; заявок нет', 'detail': str(exc)})
+        return 2
+    observations = []
+    try:
         with stealth.open_page(headless=True, prefer='playwright') as (backend, page):
             if backend != 'playwright' or page.js('1+1') != 2:
                 raise RuntimeError('Chromium не прошёл проверку')
@@ -47,7 +56,7 @@ def main() -> int:
                             and s.get('type') == 'followers' and s.get('subject', 'any') in ('any', 'community')]
                 if site.get('reg_required') or not services or site['id'] == 'likeboom':
                     # LikeBoom starts a free-trial countdown on load; don't consume a trial during setup.
-                    notice('PREP_SITE', {'site': site['name'], 'visited': False, 'orders_sent': 0})
+                    observations.append({'site': site['name'], 'visited': False, 'orders_sent': 0})
                     continue
                 service = services[0]
                 out = {'site': site['name'], 'visited': True, 'orders_sent': 0}
@@ -68,13 +77,39 @@ def main() -> int:
                         'buttons': [{k: b.get(k) for k in ('sel', 'text', 'nearForm', 'disabled')}
                                     for b in (state.get('buttons') or [])[:10]],
                     })
+                    # Describe the target form and the explicitly identified free
+                    # section without collecting field values, cookies or tokens.
+                    out['form_scope'] = page._p.evaluate('''(sel) => {
+                      const field = sel ? document.querySelector(sel) : null;
+                      const form = field && (field.form || field.closest('form'));
+                      const free = document.querySelector('#giveaway-form');
+                      const describe = root => root ? {
+                        tag: root.tagName, id: root.id || '',
+                        fields: [...root.querySelectorAll('input, textarea')].filter(e => e.type !== 'hidden')
+                          .map(e => ({id:e.id, name:e.name, ph:e.placeholder, type:e.type})).slice(0,12),
+                        buttons: [...root.querySelectorAll('button, input[type=submit], a')]
+                          .map(e => ({tag:e.tagName, id:e.id, text:(e.innerText||e.value||'').trim().slice(0,75)}))
+                          .filter(e => e.text).slice(0,15)
+                      } : null;
+                      return {form:describe(form), free_section:describe(free)};
+                    }''', field.get('sel') if field else '')
                 except Exception as exc:
                     out['error'] = verifier._safe_detail(str(exc))
-                notice('PREP_SITE', out)
+                observations.append(out)
+                publisher.update({'phase': 'осмотр без ввода ссылки', 'count': count,
+                                  'sites': observations, 'orders_sent': 0}, title='Read-only проверка браузера')
     except Exception as exc:
-        notice('PREP_BLOCKED', {'reason': 'Браузер недоступен; заявок нет',
+        notice('PREP_BLOCKED', {'reason': 'Браузер/канал отчёта недоступен; заявок нет',
                                 'detail': verifier._safe_detail(str(exc))})
+        try:
+            publisher.update({'phase': 'ошибка', 'count': count, 'sites': observations, 'orders_sent': 0},
+                             title='Read-only проверка прервана', conclusion='failure')
+        except ProgressError:
+            pass
         return 2
+    publisher.update({'phase': 'завершено', 'count': count, 'sites': observations, 'orders_sent': 0},
+                     title='Read-only проверка завершена', conclusion='success')
+    notice('PREP_SITES', {'sites': observations})
     notice('PREP_FINISHED', {'orders_sent': 0, 'note': 'read-only; доставка не проверена'})
     return 0
 

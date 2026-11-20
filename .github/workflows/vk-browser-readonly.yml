@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  checks: write
 
 jobs:
   readiness:
@@ -18,6 +19,7 @@ jobs:
     timeout-minutes: 15
     env:
       VKFREE_DATA: /tmp/vkkk-readonly-probe
+      VKKK_PROGRESS_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -36,5 +38,6 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_verifier.py' -q
           python -m unittest discover -s tests -p 'test_live_ci.py' -q
+          python -m unittest discover -s tests -p 'test_ci_progress.py' -q
       - name: Read VK and inspect public forms without ordering
         run: python tools/ci_browser_probe.py
