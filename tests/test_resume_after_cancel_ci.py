@@ -5,8 +5,10 @@ import json
 import os
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
+from contextlib import contextmanager
 
+from tools import ci_resume_after_cancel_preflight as preflight
 from tools import run_resume_after_cancel_ci as resume
 from tools.ci_progress import encode_snapshot
 from tools.run_unsent_followup_ci import MARKER
@@ -45,7 +47,7 @@ class ResumeEvidenceTests(unittest.TestCase):
         self.assertEqual(result['ended_at'], 1795195351)  # 17:22:31 UTC
         self.assertGreater(result['ended_at'], result['last_snapshot_at'])
         self.assertEqual(result['inspected_count'], 1)
-        self.assertTrue({'pricesmm', 'smm8', 'lowcostsmm', 'martinismm', 'capitansmm', 'captainsmm'}
+        self.assertTrue({'pricesmm', 'smm8', 'sprintersmm', 'lowcostsmm', 'martinismm', 'capitansmm', 'captainsmm'}
                         <= set(resume.QUEUE))
         self.assertFalse({'doctorsmm', 'avi1', 'nakruti', 'prtut'} & set(resume.QUEUE))
 
@@ -128,6 +130,29 @@ class ResumeEvidenceTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 resume.run(Path('/nonexistent'))
         load.assert_not_called()
+
+    def test_readonly_preflight_keeps_evidence_when_examining_forms(self):
+        page = MagicMock()
+        page.js.return_value = 2
+        page._p.evaluate.return_value = {'title': 'synthetic form'}
+        @contextmanager
+        def browser(**kwargs):
+            yield 'playwright', page
+        env = {'GITHUB_ACTIONS': 'true', 'GITHUB_REPOSITORY': resume.REPO,
+               'GITHUB_REF': 'refs/heads/' + resume.BRANCH, 'VKKK_PROGRESS_TOKEN': 'fake'}
+        with patch.dict(os.environ, env, clear=True), \
+             patch.object(preflight, 'GitHubProgress') as progress, \
+             patch.object(resume, 'evidence', return_value={'ended_at': 1795195351}), \
+             patch.object(preflight.db, 'init_db'), patch.object(preflight.stealth, 'open_page', browser), \
+             patch.object(preflight.drivers, 'discover', return_value={'fields': []}), \
+             patch.object(preflight.verifier, '_counter', return_value=(1, 'direct', 'synthetic')), \
+             patch.object(preflight.time, 'sleep'):
+            self.assertEqual(preflight.main(), 0)
+        state = progress.return_value.update.call_args.args[0]
+        self.assertEqual(state['prior_runner_ended_at'], 1795195351)
+        self.assertEqual(state['orders_sent'], 0)
+        self.assertEqual(len(state['inspected_forms_without_input']), 2)
+        self.assertEqual(progress.return_value.update.call_args.kwargs['conclusion'], 'success')
 
 
 if __name__ == '__main__':

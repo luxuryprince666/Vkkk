@@ -816,21 +816,21 @@
       "verified": "site-2026-11-11",
       "mode": "assisted",
       "enabled": true,
-      "notes": "Движок /testknop (ajax-getfree1.php): таймер «СТАРТ ЧЕРЕЗ ~5 мин», затем одно нажатие. 2026-11-11: «Ваш пробный заказ в работе! Ожидайте выполнения!» — заявка принята.",
+      "notes": "Движок /testknop: страница группы заявляет 5–7 подписчиков, таймер около 5 минут. Результат для текущей ссылки и доставка не подтверждены; старая заметка 11.11 сообщала о принятии другой пробной заявки.",
       "services": [
         {
           "id": "pricesmm-vk-followers",
           "platform": "vk",
           "type": "followers",
-          "subject": "any",
-          "amount": 50,
+          "subject": "community",
+          "amount": 5,
           "cooldown_min": 1440,
           "max_claims_day": 1,
           "hold_seconds": 600,
           "url": "https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
-          "label": "Подписчики ВК в группу (тест до 50)",
-          "confirmed": true,
-          "subject_note": "сервис не уточняет объект — подойдёт и сообществу, и странице"
+          "label": "Подписчики сообщества ВК (заявлено 5–7, доставка не проверена)",
+          "confirmed": false,
+          "subject_note": "страница предназначена для группы или сообщества ВК"
         },
         {
           "id": "pricesmm-vk-page-followers",
@@ -1081,6 +1081,36 @@
           "hold_seconds": 600,
           "url": "https://captainsmm.com/ru/nakrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
           "label": "Подписчики сообщества ВК (заявлено до 10, не проверено)",
+          "confirmed": false,
+          "subject_note": "страница отдельно указывает группу ВК"
+        }
+      ]
+    },
+    {
+      "id": "sprintersmm",
+      "name": "SprinterSMM",
+      "home": "https://sprintersmm.com",
+      "free_page": "https://sprintersmm.com/raskrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "platforms": [
+        "vk"
+      ],
+      "reg_required": false,
+      "verified": "read-only-2026-11-20",
+      "mode": "assisted",
+      "enabled": false,
+      "notes": "Без ввода ссылки осмотрена отдельная бесплатная форма группы с публичным кодом 8559 и таймером 5 минут. Сайт заявляет одну бесплатную попытку в сутки. Отправка и доставка не подтверждены; площадка отключена по умолчанию.",
+      "services": [
+        {
+          "id": "sprintersmm-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "community",
+          "amount": 5,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://sprintersmm.com/raskrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+          "label": "Подписчики сообщества ВК (заявлено 5–7, не проверено)",
           "confirmed": false,
           "subject_note": "страница отдельно указывает группу ВК"
         }

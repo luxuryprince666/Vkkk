@@ -44,6 +44,8 @@ SMM8_HTML = '''<!doctype html><html><body><div id="free" data-code="vkfollowers"
     <input id="btnOptinLoggedIn" type="submit" value="Get It Now">
   </form></div></body></html>'''
 EXTRA_URLS = {
+    'pricesmm.com': 'https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+    'sprintersmm.com': 'https://sprintersmm.com/raskrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
     'lowcostsmm.com': 'https://lowcostsmm.com/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
     'martinismm.com': 'https://martinismm.com/social-media/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
     'capitansmm.com': 'https://capitansmm.com/ru/smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
@@ -147,6 +149,9 @@ class FreeFormBrowserTests(unittest.TestCase):
                 self.page._p.locator('#get_free_start').evaluate("e => e.innerText = 'Бесплатно'")
                 self.assertFalse(guard())  # надпись не заменяет проверку кода
                 self.page._p.locator('#get_free_id').select_option('8559')
+                self.page._p.locator('#get_free_form').evaluate("e => e.setAttribute('action','/shop/order/buy')")
+                self.assertFalse(guard())  # даже платная форма на том же домене запрещена
+                self.page._p.locator('#get_free_form').evaluate("e => e.removeAttribute('action')")
                 self.page._p.locator('#get_free_form').evaluate(
                     "e => e.insertAdjacentHTML('beforeend','<input name=payment value=yookassa>')")
                 self.assertFalse(guard())
@@ -245,6 +250,24 @@ class FreeFormBrowserTests(unittest.TestCase):
         self.page._p.locator('#optinFormLoggedIn').evaluate(
             "e => e.insertAdjacentHTML('beforeend','<input name=payment value=yookassa>')")
         self.assertFalse(guard())
+
+    def test_smm8_records_before_input_and_blocks_automatic_post(self):
+        self.page._p.goto(SMM8_URL)
+        self.page._p.locator('#inputOptinLinkLoggedIn').fill('')
+        self.page._p.evaluate('''() => {
+          document.querySelector('#btnOptinLoggedIn').onclick=()=>window.clickCount=(window.clickCount||0)+1;
+          document.querySelector('#inputOptinLinkLoggedIn').addEventListener('input', e=>{
+            fetch('/unexpected-order', {method:'POST',body:e.target.value}).catch(()=>{});
+          });
+        }''')
+        events = []
+        status, detail = drivers._prepare_smm8_input(
+            self.page, 'https://vk.com/club123', [], dry_run=False,
+            on_submit=lambda: events.append(drivers.field_value(self.page, '#inputOptinLinkLoggedIn')))
+        self.assertEqual(events, [''])
+        self.assertEqual(status, 'need_human')
+        self.assertIn('заблокирован', detail)
+        self.assertEqual(self.page.js('window.clickCount || 0'), 0)
 
     def test_prskill_requires_site_provided_token_before_any_click(self):
         self.page._p.goto(PRSKILL_URL)

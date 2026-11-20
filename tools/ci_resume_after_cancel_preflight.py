@@ -49,17 +49,17 @@ def main() -> int:
             page._p.context.route('**/*', readonly)
             for name, url in (
                 ('PriceSMM', resume.EXPECTED_URLS['pricesmm']),
-                ('SprinterSMM', 'https://sprintersmm.com/raskrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/'),
+                ('SprinterSMM', resume.EXPECTED_URLS['sprintersmm']),
             ):
                 entry = {'site': name, 'orders_sent': 0}
                 try:
                     page.goto(url, wait=2500)
-                    info = page._p.evaluate(STRUCTURE)
+                    structure = page._p.evaluate(STRUCTURE)
                     discovered = drivers.discover(page)
                     field = drivers.pick_link_field(discovered.get('fields') or [])
                     scoped = drivers.same_form_state(page, discovered, field['sel']) if field else None
                     button = drivers.pick_submit_button(scoped.get('buttons') or []) if scoped else None
-                    entry.update({'structure': info, 'field_selector': field.get('sel') if field else None,
+                    entry.update({'structure': structure, 'field_selector': field.get('sel') if field else None,
                                   'button_selector': button.get('sel') if button else None,
                                   'free_guard_on_empty_field': bool(field and button and drivers.free_form_guard(
                                       page, field['sel'], button['sel'], '', url)),

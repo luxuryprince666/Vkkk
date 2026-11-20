@@ -41,11 +41,12 @@ EXTRA_SHA = '115b02ebb6cc72bf27bd369e63a024248fe887aa'
 CHECK_NAME = 'VK resumed sequential measurement snapshot'
 WORKFLOW = 'vk-resume-after-cancel.yml'
 BRANCH = 'arena/e372c48b-vkkk'
-QUEUE = ('pricesmm', 'lowcostsmm', 'martinismm', 'capitansmm', 'captainsmm', 'smm8')
+QUEUE = ('pricesmm', 'sprintersmm', 'lowcostsmm', 'martinismm', 'capitansmm', 'captainsmm', 'smm8')
 EXTRA_SITES = {'LowcostSMM': 'lowcostsmm.com', 'MartiniSMM': 'martinismm.com',
                'CapitanSMM': 'capitansmm.com', 'CaptainSMM': 'captainsmm.com'}
 EXPECTED_URLS = {
     'pricesmm': 'https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+    'sprintersmm': 'https://sprintersmm.com/raskrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
     'lowcostsmm': 'https://lowcostsmm.com/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
     'martinismm': 'https://martinismm.com/social-media/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
     'capitansmm': 'https://capitansmm.com/ru/smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
@@ -151,7 +152,7 @@ def validate_catalog(catalog: dict) -> None:
         rows = [x for x in sites if x.get('id') == site_id]
         if len(rows) != 1 or rows[0].get('reg_required'):
             raise ValueError('Площадка отсутствует, дублируется или требует вход: ' + site_id)
-        if site_id in {'lowcostsmm', 'martinismm', 'capitansmm', 'captainsmm'} and rows[0].get('enabled'):
+        if site_id in {'lowcostsmm', 'martinismm', 'capitansmm', 'captainsmm', 'sprintersmm'} and rows[0].get('enabled'):
             raise ValueError('Новая непроверенная площадка должна быть отключена по умолчанию')
         services = [s for s in rows[0].get('services') or [] if s.get('platform') == 'vk'
                     and s.get('type') == 'followers' and s.get('subject') in ('community', 'any')]

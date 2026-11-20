@@ -1,7 +1,8 @@
 name: VK safe resume preflight (read only)
 
-# Validates the cancelled run, recovered report, reviewed forms, browser and
-# public counter. Never opens SMM forms or submits an order.
+# Validates the cancelled run, recovered report, browser and public counter.
+# Reads PriceSMM and SprinterSMM form structure with empty inputs and no clicks;
+# all mutating browser requests are blocked and no order is submitted.
 on:
   push:
     branches:

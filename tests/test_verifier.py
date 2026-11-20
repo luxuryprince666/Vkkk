@@ -212,6 +212,15 @@ class CounterTests(unittest.TestCase):
 
 
 class Smm8SafetyTests(unittest.TestCase):
+    def setUp(self):
+        class FakeFence:
+            potential = False
+            def arm(self): pass
+            def close(self): pass
+        fence = patch.object(drivers, '_PreClickFence', return_value=FakeFence())
+        fence.start()
+        self.addCleanup(fence.stop)
+
     def test_smm8_uses_documented_vk_com_link(self):
         self.assertEqual(drivers.normalize_link('smm8', 'https://vk.ru/club243396555'),
                          'https://vk.com/club243396555')
@@ -219,7 +228,9 @@ class Smm8SafetyTests(unittest.TestCase):
     def test_smm8_never_clicks_if_free_widget_changes_during_baseline(self):
         events = []
         class Page:
-            def type_human(self, selector, value): return True
+            def type_human(self, selector, value):
+                events.append('type')
+                return True
             def wait(self, ms): pass
             def js(self, script):
                 if "btnOptinLoggedIn" in script and '.click()' in script:
@@ -229,13 +240,15 @@ class Smm8SafetyTests(unittest.TestCase):
             result = drivers._run_smm8(Page(), 'https://vk.com/club123', [], dry_run=False,
                                        on_submit=lambda: events.append('record'))
         self.assertEqual(result[0], 'need_human')
-        self.assertEqual(events, ['record'])
+        self.assertEqual(events, ['record', 'type'])
 
     @patch.object(drivers, '_smm8_free_guard', return_value=True)
     def test_possible_submission_is_recorded_before_first_click_and_not_repeated(self, _guard):
         events = []
         class Page:
-            def type_human(self, selector, value): return True
+            def type_human(self, selector, value):
+                events.append('type')
+                return True
             def wait(self, ms): pass
             def js(self, script):
                 if script == drivers.SMM8_STATE_JS:
@@ -246,7 +259,7 @@ class Smm8SafetyTests(unittest.TestCase):
         result = drivers._run_smm8(Page(), 'https://vk.ru/club123', [], dry_run=False,
                                    on_submit=lambda: events.append('record'))
         self.assertEqual(result[0], 'captcha')
-        self.assertEqual(events, ['record', 'click'])
+        self.assertEqual(events, ['record', 'type', 'click'])
 
     @patch.object(drivers, '_smm8_free_guard', return_value=True)
     def test_headless_fallback_does_not_wait_for_an_invisible_human(self, _guard):

@@ -583,16 +583,29 @@ FREE_FORM_GUARD_JS = r"""((fieldSel, buttonSel, expectedValue, expectedUrl) => {
   // Для дополнительно осмотренных бесплатных страниц требуем точный адрес,
   // форму и публичный код выбранной услуги. Любая подмена означает пропуск.
   const extraFreePaths = {
+    'pricesmm.com': '/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno',
+    'sprintersmm.com': '/raskrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno',
     'lowcostsmm.com': '/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno',
     'martinismm.com': '/social-media/nakrutka-podpischikov-v-gruppu-vk-besplatno',
     'capitansmm.com': '/ru/smm/nakrutka-podpischikov-v-gruppu-vk-besplatno',
     'captainsmm.com': '/ru/nakrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno'
   };
   const service = form.querySelector('select#get_free_id');
-  const knownExtraFree = extraFreePaths[host] === location.pathname.replace(/\/$/, '') &&
+  const path = location.pathname.replace(/\/$/, '');
+  const knownExtraFree = extraFreePaths[host] === path &&
     form.id === 'get_free_form' && button.id === 'get_free_start' &&
     service && !service.disabled && service.value === '8559';
-  if (Object.prototype.hasOwnProperty.call(extraFreePaths, host) && !knownExtraFree) return 'free-not-proven';
+  // PriceSMM также имеет отдельную услугу для личной страницы; эти правила
+  // относятся только к осмотренной странице группы, а не подменяют её.
+  const extraPage = Object.prototype.hasOwnProperty.call(extraFreePaths, host) &&
+    (host !== 'pricesmm.com' || path === extraFreePaths[host]);
+  if (extraPage && !knownExtraFree) return 'free-not-proven';
+  if (knownExtraFree) {
+    const action = new URL(button.getAttribute('formaction') || form.getAttribute('action') || location.href,
+                           location.href);
+    if (action.origin !== location.origin || action.pathname.replace(/\/$/, '') !== path ||
+        action.search !== location.search) return 'unexpected-action';
+  }
   const params = new URLSearchParams(location.search);
   const knownMrFree = location.hostname.toLowerCase() === 'ru.mrpopular.net' &&
     params.get('category') === 'socialnetworks' && params.get('type') === 'vk' &&
@@ -930,7 +943,7 @@ def parse_timer(text: str) -> int:
 # Сайты на движке /testknop и SMM8 указывают формат vk.com/…;
 # адрес vk.ru/… может упираться в «Проверьте правильность ссылки».
 VKCOM_SITES = {"prskill", "doctorsmm", "avi1", "nakruti", "lowcostsmm", "martinismm",
-               "capitansmm", "captainsmm", "prtut", "pricesmm", "smm8"}
+               "capitansmm", "captainsmm", "sprintersmm", "prtut", "pricesmm", "smm8"}
 
 
 def normalize_link(site_id: str, url: str) -> str:
@@ -1394,6 +1407,45 @@ FREE_BTN_JS = r"""(() => {
 })()"""
 
 
+def _prepare_smm8_input(page, target_url: str, steps: list[str], *, dry_run: bool,
+                        on_submit) -> tuple[str, str]:
+    """Проверить бесплатный виджет и зафиксировать риск до ввода ссылки."""
+    fence = None
+    if on_submit:
+        if not _smm8_free_guard(page, ''):
+            return 'need_human', 'SMM8: бесплатный виджет или пустое поле не подтверждены; заказ не отправлен'
+        try:
+            fence = _PreClickFence(page, target_url)
+            fence.arm()
+        except Exception:
+            return 'need_human', 'SMM8: защита ввода недоступна; заказ не отправлен'
+    try:
+        if on_submit and not dry_run:
+            on_submit()
+        if not page.type_human('#inputOptinLinkLoggedIn', target_url):
+            ok = page.js("(() => {const e=document.getElementById('inputOptinLinkLoggedIn'); if(!e) return 'no';"
+                         " const st=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;"
+                         " st.call(e,%s); e.dispatchEvent(new Event('input',{bubbles:true}));"
+                         " e.dispatchEvent(new Event('change',{bubbles:true})); return 'ok'})()" % json.dumps(target_url))
+            if ok != 'ok':
+                return 'need_human', 'SMM8: ссылка не сохранилась; повтор не выполняется'
+            steps.append('ссылка вставлена через события')
+        else:
+            steps.append('ссылка напечатана')
+        if fence is not None:
+            page.wait(600)
+            if fence.potential:
+                return 'need_human', 'SMM8: при вводе заблокирован сетевой запрос; клик не выполнялся'
+            if not _smm8_free_guard(page, target_url):
+                return 'need_human', 'SMM8: форма изменилась после ввода; клик не выполнялся'
+        if dry_run:
+            return 'ok', 'dry-run: ссылка заполнена, заказ не отправлялся'
+        return 'ready', ''
+    finally:
+        if fence is not None:
+            fence.close()
+
+
 def _run_smm8(page, target_url: str, steps: list[str], *, dry_run: bool,
               allow_captcha_wait: bool = False, task_id: int = 0,
               headless: bool = True, hold_budget: int = 2200, on_submit=None) -> tuple[str, str, int, int]:
@@ -1422,28 +1474,11 @@ def _run_smm8(page, target_url: str, steps: list[str], *, dry_run: bool,
     else:
         return "site_broken", "SMM8: бесплатный виджет ссылки не загрузился; заказ не отправлен", 0, int(time.time() - started)
 
-    # 1) ссылка
-    if not page.type_human("#inputOptinLinkLoggedIn", target_url):
-        ok = page.js("(() => {const e=document.getElementById('inputOptinLinkLoggedIn'); if(!e) return 'no';"
-                     " const st=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;"
-                     " st.call(e,%s); e.dispatchEvent(new Event('input',{bubbles:true}));"
-                     " e.dispatchEvent(new Event('change',{bubbles:true})); return 'ok'})()" % json.dumps(target_url))
-        if ok != "ok":
-            return "site_broken", "SMM8: не нашёл поле ссылки free-vk-followers", 0, int(time.time() - started)
-        steps.append("ссылка вставлена через события")
-    else:
-        steps.append("ссылка напечатана")
-    if dry_run:
-        return "ok", "dry-run: ссылка заполнена, заказ не отправлялся", 0, int(time.time() - started)
-
-    # Первый клик может сразу создать заявку или запустить автоматическую
-    # отправку после таймера. Зафиксировать риск до действия, не после thanks.
-    if on_submit:
-        if not _smm8_free_guard(page, target_url):
-            return "need_human", "SMM8: бесплатная форма подписчиков изменилась; заказ не отправлен", 0, int(time.time() - started)
-        on_submit()
-        if not _smm8_free_guard(page, target_url):
-            return "need_human", "SMM8: форма изменилась перед кликом; результат неизвестен", 0, int(time.time() - started)
+    # Первый сетевой эффект может возникнуть уже при вводе ссылки, а первый
+    # клик способен сразу создать заявку или запустить отправку после таймера.
+    prepared, detail = _prepare_smm8_input(page, target_url, steps, dry_run=dry_run, on_submit=on_submit)
+    if prepared != 'ready':
+        return prepared, detail, 0, int(time.time() - started)
     # Не нажимаем второй раз при неопределённом ответе: это может быть дубликат.
     began = time.time()
     st: dict = {}
@@ -1764,6 +1799,7 @@ def _run_prskill(page, svc: dict, target_url: str, steps: list[str], *, dry_run:
 # до ввода, а автоматические сетевые действия в этот момент блокируются.
 TESTKNOP_GROUP_URLS = {
     'pricesmm': 'https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+    'sprintersmm': 'https://sprintersmm.com/raskrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
     'lowcostsmm': 'https://lowcostsmm.com/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
     'martinismm': 'https://martinismm.com/social-media/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
     'capitansmm': 'https://capitansmm.com/ru/smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
@@ -2409,6 +2445,8 @@ def run(svc: dict, target_url: str, *, task_id: int = 0, dry_run: bool = False,
         cancel_event=None, normalize_target: bool = True) -> DriverResult:
     """Заход браузером. on_submit вызывается перед возможной отправкой заказа."""
     site_id = svc["site_id"]
+    guarded_testknop = (site_id in TESTKNOP_GROUP_URLS and svc.get('id') == site_id + '-vk-followers'
+                        and svc.get('platform') == 'vk' and svc.get('stype') == 'followers')
     target_url = normalize_link(site_id, target_url) if normalize_target else target_url
     prof = profiles.get_profile(site_id) or {}
     mem = _memory(site_id)
@@ -2422,7 +2460,7 @@ def run(svc: dict, target_url: str, *, task_id: int = 0, dry_run: bool = False,
             if cancel_event is not None:
                 page = _InterruptiblePage(page, cancel_event)
             steps.append(f"браузер: {backend}")
-            if on_submit and site_id in TESTKNOP_GROUP_URLS:
+            if on_submit and (guarded_testknop or site_id == 'smm8'):
                 # Перед вводом ссылки требуется перехватываемый браузер.
                 # WebSocket и sendBeacon не должны обходить предкликовый барьер.
                 try:
@@ -2461,7 +2499,7 @@ def run(svc: dict, target_url: str, *, task_id: int = 0, dry_run: bool = False,
 
             dismiss_dialog(page, steps)          # всплывающее «Важно знать…», cookie-плашки
 
-            if site_id in TESTKNOP_GROUP_URLS and on_submit and not dry_run:
+            if guarded_testknop and on_submit and not dry_run:
                 res = _run_guarded_testknop(page, svc, target_url, steps,
                                             budget=max(240, deadline_sec), on_submit=on_submit)
                 res.backend = backend
