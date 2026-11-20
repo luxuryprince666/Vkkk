@@ -83,6 +83,17 @@ def main() -> int:
             raw.context.route('**/*', readonly)
             page.goto(URL, wait=3000)
             state['before'] = raw.evaluate(STRUCTURE)
+            # Nuxt dynamically imports the free-trial implementation. Record
+            # only same-origin static JS pathnames, never queries or contents;
+            # this lets us inspect the publicly served code separately.
+            state['loaded_js_paths'] = raw.evaluate(r'''() => {
+              const paths = performance.getEntriesByType('resource').map(e => {
+                try { const u = new URL(e.name); return u.origin === location.origin &&
+                  /^\/_nuxt\/[A-Za-z0-9_.-]+\.js$/.test(u.pathname) ? u.pathname : null;
+                } catch (_) { return null; }
+              }).filter(Boolean);
+              return [...new Set(paths)].slice(0, 100);
+            }''')
             state['candidate'] = raw.evaluate(CANDIDATE)
             c = state['candidate']
             if not (c.get('unique') and c.get('context') and not c.get('insideForm')

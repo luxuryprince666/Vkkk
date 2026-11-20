@@ -2,8 +2,9 @@ name: Boost-Like trial UI inspection (no order)
 
 # Load the publicly advertised free page without entering a target. Block all
 # non-GET traffic initially, then all browser traffic before opening the single
-# scoped free-trial UI control. Record only empty field attributes, never
-# field values. Never click a paid form or submit a link.
+# scoped free-trial UI control. Record only empty field attributes and
+# same-origin static JS paths, never field values or request query strings.
+# Never click a paid form or submit a link.
 on:
   push:
     branches:
