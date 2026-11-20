@@ -626,6 +626,9 @@ def _open_playwright_like(name: str, headless: bool, profile_dir: str | None, pr
             "timezone_id": "Europe/Moscow",
             "user_agent": UA_CHROME,
             "device_scale_factor": 1,
+            # Перехват запросов перед возможной отправкой не должен обходиться
+            # сервис-воркером, сохранившимся в контексте страницы.
+            "service_workers": "block",
         }
         if name == "playwright":
             ctx = browser.new_context(**ctx_args)

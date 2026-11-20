@@ -152,6 +152,58 @@ class FreeFormBrowserTests(unittest.TestCase):
                 self.assertFalse(guard())
                 self.assertFalse(drivers.free_form_guard(self.page, '#link', '#paid', TARGET, url))
 
+    def test_testknop_records_risk_before_input_then_clicks_once(self):
+        url = EXTRA_URLS['lowcostsmm.com']
+        self.page._p.goto(url)
+        self.page._p.locator('#link').fill('')
+        self.page._p.evaluate('''() => {
+          document.body.insertAdjacentHTML('beforeend','<div id="test-status"></div>');
+          document.querySelector('#get_free_start').onclick=()=>{
+            window.clickCount=(window.clickCount||0)+1;
+            document.querySelector('#test-status').textContent='Заказ принят';};
+        }''')
+        events = []
+        result = drivers._run_guarded_testknop(
+            self.page, {'site_id': 'lowcostsmm', 'url': url, 'amount': 5}, TARGET, [], budget=30,
+            on_submit=lambda: events.append(drivers.field_value(self.page, '#link')))
+        self.assertEqual(events, [''])
+        self.assertEqual(self.page.js('window.clickCount || 0'), 1)
+        self.assertEqual(result.verdict, 'ok')
+        self.assertTrue(result.submitted)
+
+    def test_testknop_blocks_auto_post_during_input_and_never_clicks(self):
+        url = EXTRA_URLS['lowcostsmm.com']
+        self.page._p.goto(url)
+        self.page._p.locator('#link').fill('')
+        self.page._p.evaluate('''() => {
+          document.querySelector('#get_free_start').onclick=()=>window.clickCount=(window.clickCount||0)+1;
+          document.querySelector('#link').addEventListener('input', e=>{
+            fetch('/auto-order', {method:'POST',body:e.target.value}).catch(()=>{});
+          });
+        }''')
+        events = []
+        result = drivers._run_guarded_testknop(
+            self.page, {'site_id': 'lowcostsmm', 'url': url, 'amount': 5}, TARGET, [], budget=30,
+            on_submit=lambda: events.append(drivers.field_value(self.page, '#link')))
+        self.assertEqual(events, [''])
+        self.assertEqual(self.page.js('window.clickCount || 0'), 0)
+        self.assertEqual(result.verdict, 'need_human')
+        self.assertIn('заблокирован', result.detail)
+        self.assertTrue(result.submitted)
+
+    def test_testknop_refuses_paid_field_before_recording_or_input(self):
+        url = EXTRA_URLS['lowcostsmm.com']
+        self.page._p.goto(url)
+        self.page._p.locator('#link').fill('')
+        self.page._p.locator('#get_free_form').evaluate(
+            "e => e.insertAdjacentHTML('beforeend','<input name=payment value=yookassa>')")
+        result = drivers._run_guarded_testknop(
+            self.page, {'site_id': 'lowcostsmm', 'url': url, 'amount': 5}, TARGET, [], budget=30,
+            on_submit=lambda: self.fail('нельзя отмечать или вводить при платной форме'))
+        self.assertEqual(result.verdict, 'need_human')
+        self.assertFalse(result.submitted)
+        self.assertEqual(drivers.field_value(self.page, '#link'), '')
+
     def test_countdown_accepts_colon_after_word_on_martinismm(self):
         self.page._p.goto(EXTRA_URLS['martinismm.com'])
         self.page._p.locator('#get_free_start').evaluate("e => e.innerText = 'ЗАПУСТИМ ЧЕРЕЗ: 6:58'")

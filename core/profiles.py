@@ -73,9 +73,7 @@ def seed_profiles(path: Path | None = None) -> dict:
     а не про каталог.
     """
     src = Path(path) if path else PROFILES_PATH
-    if not src.exists():
-        return {"profiles": 0}
-    entries = json.loads(src.read_text(encoding="utf-8"))
+    entries = json.loads(src.read_text(encoding="utf-8")) if src.exists() else []
     n = 0
     with db.tx() as conn:
         for e in entries:
@@ -103,6 +101,10 @@ def seed_profiles(path: Path | None = None) -> dict:
                  e.get("pool_daily"), json.dumps(order_page, ensure_ascii=False),
                  int(e.get("checked_at_ts") or 0)))
             n += 1
+        # Для новых площадок без отдельного исследования создаём консервативный
+        # профиль: требуется человек, а не выдуманный успешный автопилот.
+        conn.execute("INSERT OR IGNORE INTO site_profiles(site_id, automation, degraded_note) "
+                     "SELECT id, 'C', 'Профиль ещё не исследован' FROM sites")
     reset_cache()
     return {"profiles": n}
 

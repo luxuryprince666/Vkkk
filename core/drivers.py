@@ -1759,6 +1759,131 @@ def _run_prskill(page, svc: dict, target_url: str, steps: list[str], *, dry_run:
                         waited=int(time.monotonic() - started), steps=steps, submitted=True)
 
 
+# Эти страницы показывают конкретную бесплатную форму группы /testknop. До
+# окончания таймера ссылка не вводится. Запись риска и внешний снимок делаются
+# до ввода, а автоматические сетевые действия в этот момент блокируются.
+TESTKNOP_GROUP_URLS = {
+    'pricesmm': 'https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+    'lowcostsmm': 'https://lowcostsmm.com/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+    'martinismm': 'https://martinismm.com/social-media/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+    'capitansmm': 'https://capitansmm.com/ru/smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+    'captainsmm': 'https://captainsmm.com/ru/nakrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+}
+
+
+class _PreClickFence:
+    """Не отправлять из браузера запросы, пока вводится проверяемая ссылка.
+
+    Любой POST и GET с фрагментом ссылки считаем потенциальным автозаказом и
+    отменяем последующий клик. Обработчик не сохраняет URL или тело запроса.
+    """
+    def __init__(self, page, target_url: str):
+        from urllib.parse import urlsplit
+        self.raw = page._p  # только Playwright-совместимый браузер
+        self.context = self.raw.context
+        self.marker = urlsplit(target_url).path.strip('/').lower()
+        self.potential = False
+        self.armed = False
+        self.handler = self._route  # сохранить идентичность для unroute
+
+    def _route(self, route):
+        from urllib.parse import unquote_plus
+        request = route.request
+        address = request.url
+        for _ in range(2):
+            address = unquote_plus(address)
+        if request.method not in ('GET', 'HEAD') or (self.marker and self.marker in address.lower()):
+            self.potential = True
+        route.abort()
+
+    def arm(self):
+        self.context.route('**/*', self.handler)
+        try:
+            # Page routes имеют приоритет над context routes.
+            self.raw.route('**/*', self.handler)
+        except Exception:
+            self.context.unroute('**/*', self.handler)
+            raise
+        self.armed = True
+
+    def close(self):
+        if self.armed:
+            self.raw.unroute('**/*', self.handler)
+            self.context.unroute('**/*', self.handler)
+            self.armed = False
+
+
+def _run_guarded_testknop(page, svc: dict, target_url: str, steps: list[str], *,
+                          budget: int, on_submit) -> DriverResult:
+    """Только подтверждённая бесплатная форма группы; не более одного клика."""
+    started = time.monotonic()
+    site = svc.get('site_id') or ''
+    expected = TESTKNOP_GROUP_URLS.get(site)
+    if not expected or svc.get('url') != expected or not _same_service_location(
+            expected, page.js('window.location.href') or '', compare_query=True):
+        return DriverResult('need_human', 'Адрес бесплатной страницы изменился; заказ не отправлен')
+    state = discover(page)
+    field = pick_link_field(state.get('fields') or [])
+    scoped = same_form_state(page, state, field['sel']) if field else None
+    button = pick_submit_button(scoped.get('buttons') or []) if scoped else None
+    if (not field or not button or field_value(page, field['sel']).strip()
+            or state.get('captcha') or captcha.visible_widgets(page)
+            or not free_form_guard(page, field['sel'], button['sel'], '', expected)):
+        return DriverResult('need_human', 'Бесплатная форма или пустое поле не подтверждены; заказ не отправлен')
+    left = max(0, budget - int(time.monotonic() - started))
+    waited = _wait_countdown(page, button['sel'], left)
+    if _button_countdown(page, button['sel']) > 0:
+        return DriverResult('quota', 'Таймер бесплатной формы не закончился; заказ не отправлен', waited=waited)
+    ready_wait, ready = _wait_for_ready(page, button['sel'], max_sec=max(1, budget - waited))
+    waited += ready_wait
+    if not ready:
+        return DriverResult('quota', 'Кнопка бесплатной формы недоступна; заказ не отправлен', waited=waited)
+    if (discover(page).get('captcha') or captcha.visible_widgets(page)
+            or field_value(page, field['sel']).strip()
+            or not free_form_guard(page, field['sel'], button['sel'], '', expected)
+            or _button_countdown(page, button['sel']) > 0):
+        return DriverResult('need_human', 'Форма изменилась после таймера; заказ не отправлен', waited=waited)
+    try:
+        fence = _PreClickFence(page, target_url)
+        fence.arm()
+    except Exception:
+        return DriverResult('need_human', 'Не удалось защитить ввод ссылки; заказ не отправлен', waited=waited)
+    try:
+        on_submit()  # baseline и внешний снимок ДО ввода, который сам может отправить заявку
+        if not set_field(page, field['sel'], target_url):
+            return DriverResult('need_human', 'Ссылка не сохранилась после возможного действия',
+                                waited=waited, submitted=True)
+        page.wait(600)  # дать отработать возможным обработчикам input/change
+        if fence.potential:
+            return DriverResult('need_human', 'При вводе был заблокирован сетевой запрос; клик не выполнялся',
+                                waited=waited, submitted=True)
+        if (discover(page).get('captcha') or captcha.visible_widgets(page)
+                or not free_form_guard(page, field['sel'], button['sel'], target_url, expected)
+                or _button_countdown(page, button['sel']) > 0):
+            return DriverResult('need_human', 'Форма изменилась после ввода; клик не выполнялся',
+                                waited=waited, submitted=True)
+        before = page.text() or ''
+        fence.close()
+        if not page.click_human(button['sel']):
+            return DriverResult('need_human', 'Результат клика неизвестен; повтор запрещён',
+                                waited=waited, submitted=True)
+        steps.append('нажата только проверенная бесплатная кнопка, повтор запрещён')
+        end = time.monotonic() + 15
+        while time.monotonic() < end:
+            page.wait(1500)
+            if discover(page).get('captcha') or captcha.visible_widgets(page):
+                return DriverResult('captcha', 'После возможного действия появилась капча',
+                                    waited=waited, steps=steps, submitted=True)
+            verdict, why = read_verdict_delta(before, page.text() or '', False, False)
+            if verdict in ('ok', 'bad_link', 'quota'):
+                return DriverResult(verdict, why, units=int(svc.get('amount') or 0),
+                                    waited=waited, steps=steps, submitted=True)
+        return DriverResult('need_human', 'Ответ после возможной отправки не распознан',
+                            waited=waited, steps=steps, submitted=True)
+    finally:
+        fence.close()
+
+
 # У этой площадки основная видимая форма НЕ отправляет заказ. После 300 секунд
 # сама страница открывает другую форму в .t-popup_show и асинхронно заполняет
 # служебные поля. Селекторы и соответствие service/количества основаны на
@@ -2297,6 +2422,18 @@ def run(svc: dict, target_url: str, *, task_id: int = 0, dry_run: bool = False,
             if cancel_event is not None:
                 page = _InterruptiblePage(page, cancel_event)
             steps.append(f"браузер: {backend}")
+            if on_submit and site_id in TESTKNOP_GROUP_URLS:
+                # Перед вводом ссылки требуется перехватываемый браузер.
+                # WebSocket и sendBeacon не должны обходить предкликовый барьер.
+                try:
+                    page._p.add_init_script("""(() => {
+                      const blocked = function(){throw new Error('WebSocket disabled for guarded form')};
+                      Object.defineProperty(window, 'WebSocket', {value:blocked, configurable:false});
+                      try { navigator.sendBeacon = () => false; } catch (_) {}
+                    })()""")
+                except Exception:
+                    return DriverResult('need_human', 'Браузер не поддерживает защиту ввода; заказ не отправлен',
+                                        backend=backend, steps=steps)
             page.goto(svc["url"], wait=random.randint(1200, 2200))
             page.mouse_wiggle(2)
             page.scroll()
@@ -2323,6 +2460,13 @@ def run(svc: dict, target_url: str, *, task_id: int = 0, dry_run: bool = False,
                 return res
 
             dismiss_dialog(page, steps)          # всплывающее «Важно знать…», cookie-плашки
+
+            if site_id in TESTKNOP_GROUP_URLS and on_submit and not dry_run:
+                res = _run_guarded_testknop(page, svc, target_url, steps,
+                                            budget=max(240, deadline_sec), on_submit=on_submit)
+                res.backend = backend
+                res.shot = _shot(page, shot_path)
+                return res
 
             # отдельный сценарий: SMMCode — бонусная услуга 0 ₽ (форма появляется/исчезает на стороне сайта)
             if site_id == "smmcode":

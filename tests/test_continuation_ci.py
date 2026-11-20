@@ -254,6 +254,10 @@ class LocalDuplicateTests(unittest.TestCase):
             if svc['site_id'] == 'smmnakrutka':
                 return drivers.DriverResult('need_human', 'форма не готова')
             kwargs['on_submit']()
+            # К моменту, когда драйверу разрешён клик, снимок уже записан.
+            snap = json.loads((Path(folder) / 'vk-continuation.json').read_text())
+            if snap['current']['row']['submitted_at'] is not None:
+                events.append('durable')
             events.append('submit:' + svc['site_id'])
             return drivers.DriverResult('ok', 'форма принята')
         def fake_observe(read, baseline, started, **kwargs):
@@ -271,7 +275,9 @@ class LocalDuplicateTests(unittest.TestCase):
             self.assertTrue(continuation.can_continue(first, row1)[0])
             second, row2 = continuation.run_site('avi1', state, MagicMock(), Path(folder), [False],
                                                   continuation.time.monotonic() + 60)
-        self.assertEqual(events, ['start:smmnakrutka', 'start:avi1', 'submit:avi1', 'observe'])
+        self.assertEqual([event for event in events if event != 'observe'],
+                         ['start:smmnakrutka', 'start:avi1', 'durable', 'submit:avi1'])
+        self.assertIn('observe', events)  # наблюдение может начаться параллельно с записью снимка
         self.assertEqual(first['status'], 'completed')
         self.assertEqual(second['status'], 'completed')
         result = continuation.measured_row(row2, second['status'])

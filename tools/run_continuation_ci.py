@@ -189,7 +189,7 @@ def render_report(state: dict) -> str:
              f"Исходный счётчик первого запуска: {_number(prior.get('initial_count'))}",
              'DoctorSMM: возможная отправка; повтор не выполняется.',
              f"  До: {_number(doctor.get('baseline_count'))}; после первого окна: {_number(doctor.get('final_count'))}; "
-             'доставка неизвестна.', UNCERTAINTY]
+             'доставка неизвестна.', state.get('attribution_warning') or UNCERTAINTY]
     if state.get('workflow_conclusion') == 'cancelled':
         lines.append('Отмена во время работы драйвера: отсутствие отправки текущей площадкой не доказано. '
                      'Последний снимок может отставать от остановки; повтор запрещён.')
@@ -200,6 +200,17 @@ def render_report(state: dict) -> str:
                      f"{doctor['last_sample_at']:.0f} (через {doctor['last_sample_at'] - doctor['submitted_at']:.0f} с).")
     for other in prior.get('other_results') or []:
         lines.append(f"{other.get('site_name') or other.get('site_id')}: {other.get('reason') or other.get('status')}")
+    earlier = state.get('prior_continuation') or {}
+    if earlier:
+        lines += ['', f"Отменённое продолжение: {earlier.get('run_url') or 'нет данных'}",
+                  f"Последнее возможное время действия из прерванного запуска Unix: {_number(earlier.get('ended_at'))}."]
+        for r in earlier.get('results') or []:
+            sample = (r.get('samples') or [])[-1:]
+            last = sample[0].get('count') if sample else None
+            lines.append(f"  {r.get('site_name') or r.get('site_id')}: {r.get('verifier_status')}; "
+                         f"до {_number(r.get('baseline_count'))}, последний замер {_number(last)}; "
+                         f"возможное действие {_number(r.get('submitted_at'))}.")
+        lines.append('  Prtut был прерван: действие после последнего снимка не исключено; повтор не выполняется.')
     qs = state.get('quarantine_samples') or []
     if qs:
         lines += ['', f"{state.get('quarantine_label') or 'Наблюдение после DoctorSMM'}: {len(qs)} замеров; "

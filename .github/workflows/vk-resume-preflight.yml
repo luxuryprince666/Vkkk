@@ -1,0 +1,39 @@
+name: VK safe resume preflight (read only)
+
+# Validates the cancelled run, recovered report, reviewed forms, browser and
+# public counter. Never opens SMM forms or submits an order.
+on:
+  push:
+    branches:
+      - arena/e372c48b-vkkk
+    paths:
+      - .github/workflows/vk-resume-preflight.yml
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      VKFREE_DATA: /tmp/vkkk-resume-preflight-db
+      VKKK_PROGRESS_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install isolated browser runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/vkci-env"
+          "$RUNNER_TEMP/vkci-env/bin/python" -m pip install --disable-pip-version-check playwright==1.65.2 curl_cffi==0.17.0
+          echo "$RUNNER_TEMP/vkci-env/bin" >> "$GITHUB_PATH"
+          if ! command -v google-chrome && ! command -v google-chrome-stable && ! command -v chromium && ! command -v chromium-browser; then
+            "$RUNNER_TEMP/vkci-env/bin/python" -m playwright install chromium
+          fi
+      - name: Validate old run and read exact counter without orders
+        run: python tools/ci_resume_after_cancel_preflight.py
