@@ -23,6 +23,12 @@ class Clock:
 
 
 class GrowthTests(unittest.TestCase):
+    def test_configured_smm8_window_is_site_specific(self):
+        cfg = {'timeout': 900, 'smm8_timeout': 3600}
+        self.assertEqual(verifier._observation_window(cfg, {'site_id': 'smm8'}), 3600)
+        self.assertEqual(verifier._observation_window(cfg, {'site_id': 'nakruti'}), 900)
+        self.assertEqual(verifier._observation_window({'timeout': 300}, {'site_id': 'smm8'}), 300)
+
     def observe(self, reader, **kwargs):
         clock = Clock()
         samples = []
@@ -206,7 +212,27 @@ class CounterTests(unittest.TestCase):
 
 
 class Smm8SafetyTests(unittest.TestCase):
-    def test_possible_submission_is_recorded_before_first_click_and_not_repeated(self):
+    def test_smm8_uses_documented_vk_com_link(self):
+        self.assertEqual(drivers.normalize_link('smm8', 'https://vk.ru/club243396555'),
+                         'https://vk.com/club243396555')
+
+    def test_smm8_never_clicks_if_free_widget_changes_during_baseline(self):
+        events = []
+        class Page:
+            def type_human(self, selector, value): return True
+            def wait(self, ms): pass
+            def js(self, script):
+                if "btnOptinLoggedIn" in script and '.click()' in script:
+                    events.append('click')
+                return '1'
+        with patch.object(drivers, '_smm8_free_guard', side_effect=[True, False]):
+            result = drivers._run_smm8(Page(), 'https://vk.com/club123', [], dry_run=False,
+                                       on_submit=lambda: events.append('record'))
+        self.assertEqual(result[0], 'need_human')
+        self.assertEqual(events, ['record'])
+
+    @patch.object(drivers, '_smm8_free_guard', return_value=True)
+    def test_possible_submission_is_recorded_before_first_click_and_not_repeated(self, _guard):
         events = []
         class Page:
             def type_human(self, selector, value): return True
@@ -222,7 +248,8 @@ class Smm8SafetyTests(unittest.TestCase):
         self.assertEqual(result[0], 'captcha')
         self.assertEqual(events, ['record', 'click'])
 
-    def test_headless_fallback_does_not_wait_for_an_invisible_human(self):
+    @patch.object(drivers, '_smm8_free_guard', return_value=True)
+    def test_headless_fallback_does_not_wait_for_an_invisible_human(self, _guard):
         class Page:
             def type_human(self, selector, value): return True
             def wait(self, ms): pass
@@ -235,7 +262,8 @@ class Smm8SafetyTests(unittest.TestCase):
         self.assertEqual(result[0], 'captcha')
         setting.assert_not_called()
 
-    def test_smm8_respects_disabled_automatic_captcha(self):
+    @patch.object(drivers, '_smm8_free_guard', return_value=True)
+    def test_smm8_respects_disabled_automatic_captcha(self, _guard):
         import itertools
         class Page:
             def type_human(self, selector, value): return True
@@ -274,7 +302,8 @@ class Smm8SafetyTests(unittest.TestCase):
         self.assertEqual(result.verdict, 'captcha')
         solve.assert_not_called()
 
-    def test_explicit_smm8_limit_is_not_misreported_as_captcha(self):
+    @patch.object(drivers, '_smm8_free_guard', return_value=True)
+    def test_explicit_smm8_limit_is_not_misreported_as_captcha(self, _guard):
         class Page:
             def type_human(self, selector, value): return True
             def wait(self, ms): pass
@@ -636,10 +665,12 @@ class DatabaseCase(unittest.TestCase):
                 verifier.stop(cid)
             for _ in range(100):
                 c = verifier.status(cid)
-                if c['status'] not in ('running', 'stopping'):
+                # Финальный статус записывается перед освобождением блокировки.
+                if c['status'] not in ('running', 'stopping') and not executor.AUTO_LOCK.locked():
                     break
                 time.sleep(.02)
             self.assertEqual(c['status'], 'stopped')
+            self.assertFalse(executor.AUTO_LOCK.locked())
             result = next(r for r in c['results'] if r['site_id'] == 'prskill')
             self.assertEqual(result['status'], 'unverified')
             self.assertIsNotNone(result['submitted_at'])

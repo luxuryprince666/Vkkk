@@ -50,7 +50,8 @@ def compact_result(row: dict) -> dict:
         'before': row.get('baseline_count'), 'after': row.get('final_count'),
         'change': row.get('added_count'), 'seconds_to_growth': row.get('time_to_growth_sec'),
         'possible_submit_at': row.get('submitted_at'), 'reason': row.get('failure_reason'),
-        'attempts': [{k: a.get(k) for k in ('method', 'route', 'verdict', 'detail', 'submitted_at')}
+        'attempts': [{k: a.get(k) for k in ('method', 'route', 'verdict', 'detail', 'submitted_at',
+                                                   'observation_window_sec')}
                      for a in row.get('attempts', [])],
     }
 
@@ -97,6 +98,8 @@ def run(target: str, output_dir: Path, *, max_seconds: int = 18000, poll_seconds
     # no-growth result would be misleading, so observe each completed driver
     # for 15 minutes (longer if growth has not yet settled).
     db.set_setting('verify_timeout_sec', '900')
+    # SMM8 advertises delivery starting within 3 minutes to 1 hour.
+    db.set_setting('verify_smm8_timeout_sec', '3600')
     available = stealth.backend_status()
     if not any(b.get('id') == 'playwright' and b.get('ready') for b in available['backends']):
         notice('BLOCKED', {'reason': 'Playwright/Chromium недоступен; заявок нет'})
@@ -126,7 +129,8 @@ def run(target: str, output_dir: Path, *, max_seconds: int = 18000, poll_seconds
         return 2
     preflight = {'url': normalized, 'readings': [first, second],
                  'sources': [first_source, second_source], 'orders_sent': 0,
-                 'observation_window_sec': 900, 'captcha_autosolve': False}
+                 'observation_window_sec': 900, 'smm8_observation_window_sec': 3600,
+                 'captcha_autosolve': False}
     notice('PREFLIGHT', preflight)
 
     # A separate check run keeps complete snapshots visible via GitHub's API

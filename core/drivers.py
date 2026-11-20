@@ -913,9 +913,9 @@ def parse_timer(text: str) -> int:
 
 # ------------------------------------------------------------------ память драйвера
 
-# Сайты на движке /testknop (DoctorSMM, Avi1, Nakruti-клоны) принимают только ссылки
-# вида vk.com/…: адрес vk.ru/… упирается в «Проверьте правильность ссылки».
-VKCOM_SITES = {"prskill", "doctorsmm", "avi1", "nakruti", "lowcostsmm", "prtut", "pricesmm"}
+# Сайты на движке /testknop и SMM8 указывают формат vk.com/…;
+# адрес vk.ru/… может упираться в «Проверьте правильность ссылки».
+VKCOM_SITES = {"prskill", "doctorsmm", "avi1", "nakruti", "lowcostsmm", "prtut", "pricesmm", "smm8"}
 
 
 def normalize_link(site_id: str, url: str) -> str:
@@ -1254,6 +1254,36 @@ def _run_smmcode(page, target_url: str, steps: list[str], *, dry_run: bool, on_s
 
 # ------------------------------------------------------------------ SMM8: бесплатные подписчики ВК без логина
 
+# The widget's public script loads its configuration asynchronously and creates
+# this form inside #free. Never confuse it with the page's link-checker or a paid
+# order form; Turnstile itself is initiated by the site's first form click.
+SMM8_FREE_GUARD_JS = r"""((target) => {
+  const roots = document.querySelectorAll('#free[data-code="vkfollowers"]');
+  const forms = document.querySelectorAll('#optinFormLoggedIn');
+  const fields = document.querySelectorAll('#inputOptinLinkLoggedIn');
+  const buttons = document.querySelectorAll('#btnOptinLoggedIn');
+  if (location.origin !== 'https://smm8.com' || location.pathname.replace(/\/$/, '') !== '/free-vk-followers' ||
+      location.search || roots.length !== 1 || forms.length !== 1 || fields.length !== 1 || buttons.length !== 1)
+    return false;
+  const root=roots[0], form=forms[0], field=fields[0], button=buttons[0];
+  if (!root.contains(form) || !form.contains(field) || !form.contains(button) ||
+      field.disabled || field.readOnly || (field.value || '').trim() !== target.trim() ||
+      button.disabled || button.closest('a[href]')) return false;
+  if ([...form.querySelectorAll('input, select')].some(e => !e.disabled &&
+      /payment|paymethod|price|cost|summa|оплат/i.test((e.name || '') + ' ' + (e.id || '')))) return false;
+  return true;
+})"""
+
+
+def _smm8_free_guard(page, target_url: str) -> bool:
+    try:
+        return page.js('(' + SMM8_FREE_GUARD_JS + ')(' + json.dumps(target_url) + ')') is True
+    except OperationCancelled:
+        raise
+    except Exception:
+        return False
+
+
 SMM8_STATE_JS = r"""(() => {
   const tokEl = document.querySelector('[name="cf-turnstile-response"]');
   const tp = document.querySelector('.fsc-page.timer-page');
@@ -1368,6 +1398,15 @@ def _run_smm8(page, target_url: str, steps: list[str], *, dry_run: bool,
         except Exception:
             return {}
 
+    # Конфигурация и сама форма приходят отдельным асинхронным запросом.
+    # Не заполняем похожий, но не связанный с заказом проверщик ссылки.
+    for _ in range(16):
+        if page.js("!!document.querySelector('#inputOptinLinkLoggedIn')"):
+            break
+        page.wait(1000)
+    else:
+        return "site_broken", "SMM8: бесплатный виджет ссылки не загрузился; заказ не отправлен", 0, int(time.time() - started)
+
     # 1) ссылка
     if not page.type_human("#inputOptinLinkLoggedIn", target_url):
         ok = page.js("(() => {const e=document.getElementById('inputOptinLinkLoggedIn'); if(!e) return 'no';"
@@ -1385,7 +1424,11 @@ def _run_smm8(page, target_url: str, steps: list[str], *, dry_run: bool,
     # Первый клик может сразу создать заявку или запустить автоматическую
     # отправку после таймера. Зафиксировать риск до действия, не после thanks.
     if on_submit:
+        if not _smm8_free_guard(page, target_url):
+            return "need_human", "SMM8: бесплатная форма подписчиков изменилась; заказ не отправлен", 0, int(time.time() - started)
         on_submit()
+        if not _smm8_free_guard(page, target_url):
+            return "need_human", "SMM8: форма изменилась перед кликом; результат неизвестен", 0, int(time.time() - started)
     # Не нажимаем второй раз при неопределённом ответе: это может быть дубликат.
     began = time.time()
     st: dict = {}

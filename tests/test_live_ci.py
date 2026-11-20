@@ -115,6 +115,7 @@ class LiveCIFlowTests(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertEqual(saved, campaign)
         setting.assert_any_call('verify_timeout_sec', '900')
+        setting.assert_any_call('verify_smm8_timeout_sec', '3600')
         setting.assert_any_call('captcha_autosolve', '0')
         setting.assert_any_call('nojs_enabled', '0')
         self.assertEqual(pub.update.call_args.kwargs['conclusion'], 'success')

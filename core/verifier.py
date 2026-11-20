@@ -161,6 +161,7 @@ def _settings() -> dict:
             return default
     return {
         'timeout': bounded('verify_timeout_sec', 300, 300, 3600),
+        'smm8_timeout': bounded('verify_smm8_timeout_sec', 0, 0, 3600),
         'poll': bounded('verify_poll_sec', 15, 1, 300),
         'settle': bounded('verify_settle_sec', 90, 1, 1800),
         'proxy_enabled': s.get('proxy_rotation', '0') == '1',
@@ -176,6 +177,12 @@ def _settings() -> dict:
         'gap': bounded('global_min_gap_sec', 20, 0, 3600),
         'daily_limit': bounded('daily_total_limit', 0, 0, 100000),
     }
+
+
+def _observation_window(cfg: dict, svc: dict) -> int:
+    """SMM8 может обещать более медленный старт; фиксируем окно в попытке."""
+    base = int(cfg['timeout'])
+    return max(base, int(cfg.get('smm8_timeout', 0))) if svc.get('site_id') == 'smm8' else base
 
 
 def _routes(cfg: dict) -> list[network.Endpoint]:
@@ -438,7 +445,9 @@ def _run_attempt(campaign_id: int, result_id: int, svc: dict, target: dict, base
             done.wait(0.25)
         observation: Observation | None = None
         if signalled.is_set() and not stop_event.is_set():
-            _update_campaign(campaign_id, current_phase='Ожидание фактического прироста')
+            window = _observation_window(cfg, svc)
+            attempt['observation_window_sec'] = window
+            _update_campaign(campaign_id, current_phase=f'Ожидание фактического прироста; окно {window} с после драйвера')
             last_measurement = ['direct', 'источник не указан']
             def read():
                 count, label, source = _counter(target, routes)
@@ -464,7 +473,7 @@ def _run_attempt(campaign_id: int, result_id: int, svc: dict, target: dict, base
             # (SMM8). Наблюдаем непрерывно и ещё пять минут после его окончания,
             # чтобы не считать отсутствие роста во время ожидания отказом.
             delayed = lambda: state['done_at'] if done.is_set() else None
-            observation = observe_growth(read, state['baseline'], state['started'], timeout_sec=cfg['timeout'],
+            observation = observe_growth(read, state['baseline'], state['started'], timeout_sec=window,
                                          poll_sec=cfg['poll'], settle_sec=cfg['settle'],
                                          wait=waiting, on_sample=record, rejected=explicit_rejection,
                                          delayed_until=delayed)
@@ -838,7 +847,7 @@ def format_report(campaign: dict) -> str:
              f"Начало проверки (UTC): {timestamp}",
              f"Исходный счётчик: {num(campaign.get('initial_count'))}",
              f"Последний счётчик: {num(campaign.get('current_count'))}",
-             f"Окно наблюдения после завершения драйвера: {num(campaign.get('growth_timeout_sec'))} с",
+             f"Базовое окно наблюдения после завершения драйвера: {num(campaign.get('growth_timeout_sec'))} с",
              f"Интервал опроса счётчика: {num(campaign.get('poll_interval_sec'))} с",
              f"Состояние проверки: {campaign.get('status', '')}"]
     if campaign.get('error_reason'):
@@ -855,6 +864,8 @@ def format_report(campaign: dict) -> str:
             lines.append('  Причина: ' + str(r['failure_reason']))
         for a in r.get('attempts', []):
             lines.append(f"  Попытка: {a.get('method')} / {a.get('route')}: {a.get('verdict')} — {a.get('detail', '')}")
+            if a.get('observation_window_sec') is not None:
+                lines.append(f"  Окно наблюдения после драйвера: {a['observation_window_sec']} с")
         if r.get('samples'):
             lines.append('  Измерения (Unix-время: значение): ' + ', '.join(
                 f"{int(s['observed_at'])}: {s['count']}" for s in r['samples']))

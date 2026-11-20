@@ -38,6 +38,11 @@ MRPOPULAR_HTML = '''<!doctype html><html><body><form id="freePromoForm">
   <input type="hidden" name="cf-turnstile-response" value="">
   <button id="freePromoRun" type="button">Накрутить</button>
 </form></body></html>'''
+SMM8_URL = 'https://smm8.com/free-vk-followers'
+SMM8_HTML = '''<!doctype html><html><body><div id="free" data-code="vkfollowers">
+  <form id="optinFormLoggedIn"><input id="inputOptinLinkLoggedIn" value="https://vk.com/club123">
+    <input id="btnOptinLoggedIn" type="submit" value="Get It Now">
+  </form></div></body></html>'''
 
 
 def browser_ready():
@@ -63,6 +68,8 @@ class FreeFormBrowserTests(unittest.TestCase):
             status=200, content_type='text/html; charset=utf-8', body=cls.prskill_html))
         cls.page._p.route('https://ru.mrpopular.net/**', lambda route: route.fulfill(
             status=200, content_type='text/html; charset=utf-8', body=MRPOPULAR_HTML))
+        cls.page._p.route('https://smm8.com/**', lambda route: route.fulfill(
+            status=200, content_type='text/html; charset=utf-8', body=SMM8_HTML))
 
     @classmethod
     def tearDownClass(cls):
@@ -114,6 +121,17 @@ class FreeFormBrowserTests(unittest.TestCase):
             "e => e.value = 'synthetic-token-for-offline-test'")
         self.assertTrue(guard())
         self.assertFalse(guard('https://ru.mrpopular.net/?category=socialnetworks&type=vk&service=likes'))
+
+    def test_smm8_guard_requires_the_specific_free_vk_widget(self):
+        self.page._p.goto(SMM8_URL)
+        guard = lambda: drivers._smm8_free_guard(self.page, 'https://vk.com/club123')
+        self.assertTrue(guard())
+        self.page._p.locator('#free').evaluate("e => e.dataset.code = 'instagram'")
+        self.assertFalse(guard())
+        self.page._p.locator('#free').evaluate("e => e.dataset.code = 'vkfollowers'")
+        self.page._p.locator('#optinFormLoggedIn').evaluate(
+            "e => e.insertAdjacentHTML('beforeend','<input name=payment value=yookassa>')")
+        self.assertFalse(guard())
 
     def test_prskill_requires_site_provided_token_before_any_click(self):
         self.page._p.goto(PRSKILL_URL)
