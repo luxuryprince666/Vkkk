@@ -16,6 +16,7 @@ import json
 import os
 import signal
 import sys
+import threading
 import time
 from pathlib import Path
 
@@ -110,7 +111,9 @@ def measured_row(row: dict, campaign_status: str) -> dict:
     after = [s for s in samples if submitted is not None and s.get('observed_at', 0) >= submitted]
     latest = after[-1] if after else None
     last_count = row.get('final_count')
-    if campaign_status in ('running', 'stopping') and latest is not None:
+    if latest is not None and (campaign_status in ('running', 'stopping') or last_count is None):
+        # Даже после прерванного окна можно показать последнее фактическое
+        # измерение; оно не подтверждает доставку или полноту наблюдения.
         last_count = latest.get('count')
     numeric = lambda x: isinstance(x, int) and not isinstance(x, bool) and x >= 0
     observed = (last_count - baseline if latest is not None and numeric(last_count) and numeric(baseline)
@@ -132,27 +135,40 @@ def measured_row(row: dict, campaign_status: str) -> dict:
 
 
 def can_continue(campaign: dict, row: dict, now: float | None = None) -> tuple[bool, str]:
-    """No later site if the counter or the previous driver remains unsafe."""
+    """Require a full fresh observation after *any* possible action.
+
+    A completed/skipped result alone is not evidence that no order was sent:
+    older drivers could mark an ambiguous text such as «подождите» as quota.
+    """
     now = time.time() if now is None else now
-    if campaign.get('status') == 'stopped':
-        return False, 'Предыдущая кампания остановлена'
-    if campaign.get('status') == 'completed':
-        if row.get('status') in ('working', 'not_working', 'skipped', 'rejected'):
-            return True, ''
-        return False, 'Некорректный итог предыдущей площадки'
-    if campaign.get('status') != 'failed' or row.get('status') != 'unverified':
-        return False, 'Кампания завершилась без безопасного результата'
+    campaign_status = campaign.get('status')
+    status = row.get('status')
     submitted = row.get('submitted_at')
     attempts = row.get('attempts') or []
+    possible = [a for a in attempts if a.get('submitted_at') is not None]
+    if campaign_status == 'stopped':
+        return False, 'Предыдущая кампания остановлена'
+    if submitted is None and not possible:
+        if campaign_status == 'completed' and status in ('skipped', 'rejected'):
+            return True, ''  # доказано, что действия отправки не было
+        return False, 'Не подтверждён итог без отправки'
+    if (submitted is None or len(possible) != 1 or possible[0].get('submitted_at') != submitted):
+        return False, 'Запись возможной отправки неполная или неоднозначная'
+    if possible[0].get('late_recorded'):
+        return False, 'Возможная отправка зафиксирована только после действия'
+    if not ((campaign_status == 'completed' and status in ('working', 'not_working'))
+            or (campaign_status == 'failed' and status == 'unverified')):
+        return False, 'После возможной отправки нет достоверного полного итога'
     samples = row.get('samples') or []
-    if submitted is None or not samples:
-        return False, 'Нет точного счётчика или записи возможной отправки'
-    windows = [a.get('observation_window_sec') or 0 for a in attempts if a.get('submitted_at') is not None]
-    if not windows or max(windows) < 900:
+    if not samples:
+        return False, 'Нет точного счётчика после возможной отправки'
+    window = possible[0].get('observation_window_sec') or 0
+    required = 3600 if row.get('site_id') == 'smm8' else 900
+    if window < required:
         return False, 'Наблюдение после возможной отправки недостаточно долгое'
     last = samples[-1]
     observed_at = last.get('observed_at', 0)
-    if (observed_at < submitted + max(windows) - 5 or observed_at > now + 60
+    if (observed_at < submitted + window - 5 or observed_at > now + 60
             or now - observed_at > 120 or last.get('count') != row.get('final_count')):
         return False, 'Нет свежего достоверного измерения в конце окна наблюдения'
     return True, ''
@@ -165,12 +181,20 @@ def _number(x) -> str:
 def render_report(state: dict) -> str:
     prior = state.get('prior') or {}
     doctor = prior.get('doctor') or {}
-    lines = [f"Ссылка: {TARGET}", f"Состояние продолжения: {state.get('phase', 'подготовка')}",
+    state_label = state.get('phase', 'подготовка')
+    if state.get('workflow_conclusion') == 'cancelled':
+        state_label = 'запуск отменён; последнее состояние может отставать от остановки'
+    lines = [f"Ссылка: {TARGET}", f"Состояние продолжения: {state_label}",
              f"Предыдущий запуск: https://github.com/{REPO}/actions/runs/{PRIOR_RUN}",
              f"Исходный счётчик первого запуска: {_number(prior.get('initial_count'))}",
              'DoctorSMM: возможная отправка; повтор не выполняется.',
              f"  До: {_number(doctor.get('baseline_count'))}; после первого окна: {_number(doctor.get('final_count'))}; "
              'доставка неизвестна.', UNCERTAINTY]
+    if state.get('workflow_conclusion') == 'cancelled':
+        lines.append('Отмена во время работы драйвера: отсутствие отправки текущей площадкой не доказано. '
+                     'Последний снимок может отставать от остановки; повтор запрещён.')
+    if state.get('updated_at') is not None:
+        lines.append(f"Время последнего снимка Unix: {state['updated_at']:.0f}.")
     if doctor.get('submitted_at') is not None and doctor.get('last_sample_at') is not None:
         lines.append(f"  Возможное действие Unix: {doctor['submitted_at']:.0f}; последний замер первого окна: "
                      f"{doctor['last_sample_at']:.0f} (через {doctor['last_sample_at'] - doctor['submitted_at']:.0f} с).")
@@ -178,7 +202,7 @@ def render_report(state: dict) -> str:
         lines.append(f"{other.get('site_name') or other.get('site_id')}: {other.get('reason') or other.get('status')}")
     qs = state.get('quarantine_samples') or []
     if qs:
-        lines += ['', f"Наблюдение после DoctorSMM: {len(qs)} замеров; "
+        lines += ['', f"{state.get('quarantine_label') or 'Наблюдение после DoctorSMM'}: {len(qs)} замеров; "
                       f"первый {_number(qs[0].get('count'))}; последний {_number(qs[-1].get('count'))}.",
                   f"  Первый замер Unix: {qs[0].get('observed_at')}; последний: {qs[-1].get('observed_at')}."]
     if state.get('quarantine_deadline'):
@@ -197,10 +221,23 @@ def render_report(state: dict) -> str:
               'pending': 'ожидает'}
     for row in rows:
         change = row.get('observed_counter_change')
+        final_count = row.get('final_count')
+        submitted = row.get('submitted_at')
+        after = [s for s in (row.get('samples') or [])
+                 if submitted is not None and s.get('observed_at', 0) >= submitted]
+        # Старые снимки могли содержать фактические замеры, но не итог из-за
+        # преждевременного «quota». Показываем их, не приписывая доставку.
+        if after and final_count is None:
+            final_count = after[-1].get('count')
+            baseline = row.get('baseline_count')
+            if type(final_count) is int and type(baseline) is int:
+                change = final_count - baseline
         label = labels.get(row.get('verifier_status'), row.get('verifier_status') or 'подготовка')
+        if (state.get('workflow_conclusion') == 'cancelled' and current.get('row') is row):
+            label = 'прервано; возможное действие после последнего снимка неизвестно'
         lines += ['', f"{row.get('site_name') or row.get('site_id')} — {label}",
                   f"  Страница: {row.get('service_url') or 'нет данных'}",
-                  f"  Было: {_number(row.get('baseline_count'))}; стало: {_number(row.get('final_count'))}; "
+                  f"  Было: {_number(row.get('baseline_count'))}; последний замер: {_number(final_count)}; "
                   f"изменение публичного счётчика: {_number(change)}.",
                   f"  Первое обнаруженное увеличение счётчика: {_number(row.get('first_observed_increase_sec'))}" +
                   (' с после возможного действия.' if row.get('first_observed_increase_sec') is not None else '.'),
@@ -211,7 +248,12 @@ def render_report(state: dict) -> str:
             lines.append(f"  Попытка: {attempt.get('method')} / {attempt.get('route')}: "
                          f"{attempt.get('verdict')} — {attempt.get('detail') or ''}")
             if attempt.get('observation_window_sec') is not None:
-                lines.append(f"  Окно наблюдения после драйвера: {attempt['observation_window_sec']} с.")
+                lines.append(f"  Запланированное окно после драйвера: {attempt['observation_window_sec']} с.")
+                if after and submitted is not None:
+                    observed_sec = max(0, after[-1]['observed_at'] - submitted)
+                    lines.append(f"  От возможного действия до последнего замера: {observed_sec:.1f} с." +
+                                 (' Плановое окно не достигнуто.'
+                                  if observed_sec < attempt['observation_window_sec'] - 5 else ''))
         samples = row.get('samples') or []
         if samples:
             lines.append('  Измерения (Unix-время: значение): ' + ', '.join(
@@ -261,11 +303,12 @@ def configure() -> None:
 
 
 def wait_for_prior(state: dict, publisher: GitHubProgress, out: Path, cancelled: list[bool], *,
-                   read_count, clock=time.time, sleep=time.sleep) -> None:
-    submitted = state['prior']['doctor']['submitted_at']
+                   read_count, clock=time.time, sleep=time.sleep,
+                   after_timestamp: float | None = None, observation_phase: str | None = None) -> None:
+    submitted = state['prior']['doctor']['submitted_at'] if after_timestamp is None else after_timestamp
     deadline = submitted + PRIOR_WAIT_SECONDS
     state['quarantine_deadline'] = deadline
-    state['phase'] = 'наблюдение после возможной отправки DoctorSMM'
+    state['phase'] = observation_phase or 'наблюдение после возможной отправки DoctorSMM'
     stable_since = None
     last_count = None
     error_since = None
@@ -302,8 +345,8 @@ def wait_for_prior(state: dict, publisher: GitHubProgress, out: Path, cancelled:
         sleep(POLL_SECONDS)
 
 
-def ensure_not_repeated(site: str, done_sites: list[str]) -> None:
-    if site in done_sites or site not in SITES:
+def ensure_not_repeated(site: str, done_sites: list[str], allowed_sites: tuple[str, ...] = SITES) -> None:
+    if site in done_sites or site not in allowed_sites:
         raise RuntimeError('Повторная или незапланированная площадка запрещена')
     with db.rd() as conn:
         rows = conn.execute('SELECT site_id, submitted_at, attempts_json FROM campaign_results').fetchall()
@@ -317,8 +360,9 @@ def ensure_not_repeated(site: str, done_sites: list[str]) -> None:
 
 
 def run_site(site: str, state: dict, publisher: GitHubProgress, out: Path,
-             cancelled: list[bool], deadline: float) -> tuple[dict, dict]:
-    ensure_not_repeated(site, [r['site_id'] for r in state['results']])
+             cancelled: list[bool], deadline: float,
+             allowed_sites: tuple[str, ...] = SITES) -> tuple[dict, dict]:
+    ensure_not_repeated(site, [r['site_id'] for r in state['results']], allowed_sites)
     if cancelled[0] or time.monotonic() >= deadline:
         raise RuntimeError('Получена остановка; новая площадка не запускается')
     with db.tx() as conn:
@@ -329,27 +373,48 @@ def run_site(site: str, state: dict, publisher: GitHubProgress, out: Path,
     publish(publisher, state, out)  # never open the next site without a recoverable state
     if cancelled[0] or time.monotonic() >= deadline:
         raise RuntimeError('Получена остановка; новая площадка не запускается')
+    # Запись в удалённый check синхронно ДО разрешения клика. Иначе при
+    # отключении runner-а потерялся бы факт возможного действия между опросами.
+    snapshot_lock = threading.Lock()
+    durable_error: list[bool] = []
+
+    def current_snapshot(campaign_id: int) -> tuple[dict, dict]:
+        campaign = verifier.status(campaign_id)
+        if not campaign:
+            raise RuntimeError('Кампания исчезла из временной базы')
+        matching = [r for r in campaign.get('results', []) if r.get('site_id') == site]
+        if len(matching) != 1:
+            raise RuntimeError('Не удалось однозначно определить текущую площадку')
+        row = matching[0]
+        state['phase'] = 'последовательная проверка'
+        state['current'] = {'site_id': site, 'phase': campaign.get('current_phase'),
+                            'campaign_id': campaign_id, 'row': measured_row(row, campaign['status'])}
+        return campaign, row
+
+    def persist_before_submit(campaign_id: int, result_id: int) -> None:
+        try:
+            with snapshot_lock:
+                _campaign, row = current_snapshot(campaign_id)
+                if row.get('id') != result_id or row.get('submitted_at') is None:
+                    raise RuntimeError('Не удалось подтвердить запись риска до клика')
+                publish(publisher, state, out)
+        except Exception:
+            durable_error.append(True)
+            raise  # callback не возвращается: настоящий клик запрещён
+
     # This acknowledgement only affects this isolated temporary CI database.
     # Earlier possible orders remain visible as uncertainties in every report.
-    started = verifier.start(TARGET, acknowledge_risk=True)
+    started = verifier.start(TARGET, acknowledge_risk=True, before_submit=persist_before_submit)
     cid = started['campaign_id']
     stop_sent = False
     last_published = 0.0
     try:
         while True:
-            campaign = verifier.status(cid)
-            if not campaign:
-                raise RuntimeError('Кампания исчезла из временной базы')
-            matching = [r for r in campaign.get('results', []) if r.get('site_id') == site]
-            if len(matching) != 1:
-                raise RuntimeError('Не удалось однозначно определить текущую площадку')
-            row = matching[0]
-            state['phase'] = 'последовательная проверка'
-            state['current'] = {'site_id': site, 'phase': campaign.get('current_phase'),
-                                'campaign_id': cid, 'row': measured_row(row, campaign['status'])}
-            if time.monotonic() - last_published >= 20 or campaign['status'] not in ('running', 'stopping'):
-                publish(publisher, state, out)
-                last_published = time.monotonic()
+            with snapshot_lock:
+                campaign, row = current_snapshot(cid)
+                if time.monotonic() - last_published >= 20 or campaign['status'] not in ('running', 'stopping'):
+                    publish(publisher, state, out)
+                    last_published = time.monotonic()
             if campaign['status'] not in ('running', 'stopping'):
                 # _worker records terminal status immediately before releasing AUTO_LOCK.
                 until = time.monotonic() + 30
@@ -357,6 +422,8 @@ def run_site(site: str, state: dict, publisher: GitHubProgress, out: Path,
                     time.sleep(.2)
                 if executor.AUTO_LOCK.locked():
                     raise RuntimeError('Драйвер предыдущей площадки ещё не завершён')
+                if durable_error:
+                    raise RuntimeError('Не удалось надёжно сохранить состояние до возможного действия')
                 return campaign, row
             if (cancelled[0] or time.monotonic() >= deadline) and not stop_sent:
                 stop_sent = True

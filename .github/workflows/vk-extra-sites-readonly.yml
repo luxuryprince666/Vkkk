@@ -2,7 +2,8 @@ name: Additional VK free-site inspection (read only)
 
 # Does not enter a community link or submit anything. Browser POST/PUT/DELETE
 # requests are blocked; only form structure, public service IDs, request key
-# names and the VK counter are read. Never record input values or request bodies.
+# names, safe handler structure and the VK counter are read. Never record input
+# values or request bodies; no target is entered and no buttons are clicked.
 on:
   push:
     branches:

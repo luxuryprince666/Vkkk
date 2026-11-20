@@ -43,7 +43,7 @@ SUCCESS_HINTS = (
 )
 QUOTA_HINTS = (
     "лимит", "попробуйте позже", "попробуйте через", "исчерпан", "слишком часто",
-    "не раньше", "подождите", "too many", "limit reached", "try again later", "rate limit",
+    "не раньше", "too many", "limit reached", "try again later", "rate limit",
     # «на сегодня всё» — тоже лимит, просто до завтра
     "использован", "использована", "доступен завтра", "доступна завтра", "возвращайтесь завтра",
     "завтра будет", "до завтра", "already used", "used today", "come back tomorrow",
@@ -577,13 +577,27 @@ FREE_FORM_GUARD_JS = r"""((fieldSel, buttonSel, expectedValue, expectedUrl) => {
   } catch (_) { return 'redirect'; }
   const buttonText = (button.innerText || button.value || '').toLowerCase();
   const text = (buttonText + ' ' + (form.innerText || '')).toLowerCase();
+  const host = location.hostname.toLowerCase();
   const knownFreeTest = ['avi1.ru', 'prtut.ru', 'pricesmm.com', 'doctorsmm.com']
-    .includes(location.hostname.toLowerCase()) && form.id === 'get_free_form' && button.id === 'get_free_start';
+    .includes(host) && form.id === 'get_free_form' && button.id === 'get_free_start';
+  // Для дополнительно осмотренных бесплатных страниц требуем точный адрес,
+  // форму и публичный код выбранной услуги. Любая подмена означает пропуск.
+  const extraFreePaths = {
+    'lowcostsmm.com': '/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno',
+    'martinismm.com': '/social-media/nakrutka-podpischikov-v-gruppu-vk-besplatno',
+    'capitansmm.com': '/ru/smm/nakrutka-podpischikov-v-gruppu-vk-besplatno',
+    'captainsmm.com': '/ru/nakrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno'
+  };
+  const service = form.querySelector('select#get_free_id');
+  const knownExtraFree = extraFreePaths[host] === location.pathname.replace(/\/$/, '') &&
+    form.id === 'get_free_form' && button.id === 'get_free_start' &&
+    service && !service.disabled && service.value === '8559';
+  if (Object.prototype.hasOwnProperty.call(extraFreePaths, host) && !knownExtraFree) return 'free-not-proven';
   const params = new URLSearchParams(location.search);
   const knownMrFree = location.hostname.toLowerCase() === 'ru.mrpopular.net' &&
     params.get('category') === 'socialnetworks' && params.get('type') === 'vk' &&
     params.get('service') === 'subscribers' && form.id === 'freePromoForm' && button.id === 'freePromoRun';
-  if (!knownFreeTest && !knownMrFree && !/(бесплатн|\bfree\b|без оплаты)/i.test(buttonText)) return 'free-not-proven';
+  if (!knownFreeTest && !knownExtraFree && !knownMrFree && !/(бесплатн|\bfree\b|без оплаты)/i.test(buttonText)) return 'free-not-proven';
   const captchaTokens = [...form.querySelectorAll('input[name="cf-turnstile-response"], '
     + 'input[name="g-recaptcha-response"], input[name="h-captcha-response"]')];
   if (captchaTokens.length && !captchaTokens.some(el => (el.value || '').length >= 10)) return 'captcha-unconfirmed';
@@ -915,7 +929,8 @@ def parse_timer(text: str) -> int:
 
 # Сайты на движке /testknop и SMM8 указывают формат vk.com/…;
 # адрес vk.ru/… может упираться в «Проверьте правильность ссылки».
-VKCOM_SITES = {"prskill", "doctorsmm", "avi1", "nakruti", "lowcostsmm", "prtut", "pricesmm", "smm8"}
+VKCOM_SITES = {"prskill", "doctorsmm", "avi1", "nakruti", "lowcostsmm", "martinismm",
+               "capitansmm", "captainsmm", "prtut", "pricesmm", "smm8"}
 
 
 def normalize_link(site_id: str, url: str) -> str:

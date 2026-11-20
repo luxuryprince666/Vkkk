@@ -16,7 +16,7 @@ from urllib.parse import parse_qsl, urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from core import network, stealth, verifier  # noqa: E402
+from core import drivers, network, stealth, verifier  # noqa: E402
 from tools.ci_progress import GitHubProgress, ProgressError  # noqa: E402
 from tools.run_live_ci import notice  # noqa: E402
 
@@ -52,7 +52,14 @@ STRUCTURE = r'''() => {
     selectedPublicService:(()=>{const e=document.querySelector('select#get_free_id');
       return e && /^\d+$/.test(e.value||'') ? {id:e.value, text:(e.selectedOptions[0]?.textContent||'').trim()} : null})(),
     scripts:[...document.querySelectorAll('script[src]')].slice(0,30).map(e=>{
-      try{const u=new URL(e.src);return u.origin+u.pathname}catch{return ''}})
+      try{const u=new URL(e.src);return u.origin+u.pathname}catch{return ''}}),
+    freeHandler:(()=>{const el=document.querySelector('#get_free_start'), form=document.querySelector('#get_free_form');
+      let events={};try{events=window.jQuery && jQuery._data(el,'events') || {}}catch{}
+      const callbacks=[...Object.values(events).flat().map(x=>x.handler),el?.onclick,form?.onsubmit]
+        .filter(x=>typeof x==='function').map(x=>String(x));
+      const paths=[...new Set(callbacks.flatMap(s=>[...s.matchAll(/\/[\w./-]+\.php/g)].map(m=>m[0])))].slice(0,10);
+      return {eventTypes:Object.keys(events).slice(0,10),hasInlineClick:!!el?.getAttribute('onclick'),
+        handlerCount:callbacks.length,mentionsAjax:callbacks.some(s=>/ajax|fetch|\.post\(/i.test(s)),paths};})()
   };
 }'''
 
@@ -104,6 +111,17 @@ def main() -> int:
                     final = urlsplit(page.url)
                     info['final'] = final.scheme + '://' + (final.hostname or '') + final.path
                     info['structure'] = page.evaluate(STRUCTURE)
+                    if name in ('LowcostSMM', 'MartiniSMM', 'CapitanSMM', 'CaptainSMM'):
+                        class Adapter:
+                            def js(self, expression):
+                                return page.evaluate(expression)
+                        adapter = Adapter()
+                        # Existing empty input only: no community link is entered.
+                        info['candidate_check'] = {
+                            'free_guard_on_empty_field': drivers.free_form_guard(
+                                adapter, '#link', '#get_free_start', '', url),
+                            'visible_countdown_sec': drivers._button_countdown(adapter, '#get_free_start'),
+                        }
                 except Exception as exc:
                     info['error'] = verifier._safe_detail(str(exc) or type(exc).__name__)
                 state['sites'].append(info)

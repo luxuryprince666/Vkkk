@@ -965,6 +965,126 @@
         "automation_class": "B",
         "hold": "таймер ~30 c на посетителя"
       }
+    },
+    {
+      "id": "lowcostsmm",
+      "name": "LowcostSMM",
+      "home": "https://lowcostsmm.com",
+      "free_page": "https://lowcostsmm.com/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "platforms": [
+        "vk"
+      ],
+      "reg_required": false,
+      "verified": "read-only-2026-11-20",
+      "mode": "assisted",
+      "enabled": false,
+      "notes": "Осмотрена только бесплатная форма группы: таймер около 5–7 минут, выбран публичный код услуги 8559; отправка и доставка не подтверждены. Отключена по умолчанию. Суточный лимит приложения — консервативное ограничение, а не проверенное условие сайта.",
+      "services": [
+        {
+          "id": "lowcostsmm-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "community",
+          "amount": 5,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://lowcostsmm.com/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+          "label": "Подписчики сообщества ВК (заявлено 5–7, не проверено)",
+          "confirmed": false,
+          "subject_note": "страница отдельно указывает группу ВК"
+        }
+      ]
+    },
+    {
+      "id": "martinismm",
+      "name": "MartiniSMM",
+      "home": "https://martinismm.com",
+      "free_page": "https://martinismm.com/social-media/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "platforms": [
+        "vk"
+      ],
+      "reg_required": false,
+      "verified": "read-only-2026-11-20",
+      "mode": "assisted",
+      "enabled": false,
+      "notes": "Осмотрена только бесплатная форма группы: таймер около 5–7 минут, выбран публичный код услуги 8559; отправка и доставка не подтверждены. Отключена по умолчанию. Суточный лимит приложения — консервативное ограничение, а не проверенное условие сайта.",
+      "services": [
+        {
+          "id": "martinismm-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "community",
+          "amount": 10,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://martinismm.com/social-media/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+          "label": "Подписчики сообщества ВК (заявлено до 10, не проверено)",
+          "confirmed": false,
+          "subject_note": "страница отдельно указывает группу ВК"
+        }
+      ]
+    },
+    {
+      "id": "capitansmm",
+      "name": "CapitanSMM",
+      "home": "https://capitansmm.com",
+      "free_page": "https://capitansmm.com/ru/smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "platforms": [
+        "vk"
+      ],
+      "reg_required": false,
+      "verified": "read-only-2026-11-20",
+      "mode": "assisted",
+      "enabled": false,
+      "notes": "Осмотрена только бесплатная форма группы: таймер около 5–7 минут, выбран публичный код услуги 8559; отправка и доставка не подтверждены. Отключена по умолчанию. Суточный лимит приложения — консервативное ограничение, а не проверенное условие сайта.",
+      "services": [
+        {
+          "id": "capitansmm-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "community",
+          "amount": 10,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://capitansmm.com/ru/smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+          "label": "Подписчики сообщества ВК (заявлено до 10, не проверено)",
+          "confirmed": false,
+          "subject_note": "страница отдельно указывает группу ВК"
+        }
+      ]
+    },
+    {
+      "id": "captainsmm",
+      "name": "CaptainSMM",
+      "home": "https://captainsmm.com",
+      "free_page": "https://captainsmm.com/ru/nakrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+      "platforms": [
+        "vk"
+      ],
+      "reg_required": false,
+      "verified": "read-only-2026-11-20",
+      "mode": "assisted",
+      "enabled": false,
+      "notes": "Осмотрена только бесплатная форма группы: таймер около 5–7 минут, выбран публичный код услуги 8559; отправка и доставка не подтверждены. Отключена по умолчанию. Суточный лимит приложения — консервативное ограничение, а не проверенное условие сайта.",
+      "services": [
+        {
+          "id": "captainsmm-vk-followers",
+          "platform": "vk",
+          "type": "followers",
+          "subject": "community",
+          "amount": 10,
+          "cooldown_min": 1440,
+          "max_claims_day": 1,
+          "hold_seconds": 600,
+          "url": "https://captainsmm.com/ru/nakrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+          "label": "Подписчики сообщества ВК (заявлено до 10, не проверено)",
+          "confirmed": false,
+          "subject_note": "страница отдельно указывает группу ВК"
+        }
+      ]
     }
   ],
   "subjects": {

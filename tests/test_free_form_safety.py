@@ -43,6 +43,18 @@ SMM8_HTML = '''<!doctype html><html><body><div id="free" data-code="vkfollowers"
   <form id="optinFormLoggedIn"><input id="inputOptinLinkLoggedIn" value="https://vk.com/club123">
     <input id="btnOptinLoggedIn" type="submit" value="Get It Now">
   </form></div></body></html>'''
+EXTRA_URLS = {
+    'lowcostsmm.com': 'https://lowcostsmm.com/ru/free/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+    'martinismm.com': 'https://martinismm.com/social-media/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+    'capitansmm.com': 'https://capitansmm.com/ru/smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+    'captainsmm.com': 'https://captainsmm.com/ru/nakrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+}
+EXTRA_HTML = '''<!doctype html><html><body><form id="get_free_form">
+  <select id="get_free_id"><option value="8559">service</option><option value="123">other</option></select>
+  <input id="link" name="link" value="https://vk.ru/club123">
+  <button id="get_free_start" type="button">СТАРТ</button>
+  <a href="/buy"><button id="paid">ПОЛУЧИТЬ БОЛЬШЕ</button></a>
+</form></body></html>'''
 SMM_AD_URL = 'https://smmnakrutka.ru/free-vk-followers'
 SMM_AD_HTML = '''<!doctype html><html><body><div class="t945__popup t-popup t-popup_show">
 Подписчики ВК без ожидания
@@ -80,6 +92,9 @@ class FreeFormBrowserTests(unittest.TestCase):
             status=200, content_type='text/html; charset=utf-8', body=SMM8_HTML))
         cls.page._p.route('https://smmnakrutka.ru/**', lambda route: route.fulfill(
             status=200, content_type='text/html; charset=utf-8', body=SMM_AD_HTML))
+        for host in EXTRA_URLS:
+            cls.page._p.route(f'https://{host}/**', lambda route: route.fulfill(
+                status=200, content_type='text/html; charset=utf-8', body=EXTRA_HTML))
 
     @classmethod
     def tearDownClass(cls):
@@ -121,6 +136,21 @@ class FreeFormBrowserTests(unittest.TestCase):
         self.page._p.locator('#free-order').evaluate("e => e.innerText = 'Заказать бесплатно'")
         self.page._p.locator('#free').evaluate("e => e.insertAdjacentHTML('beforeend','К оплате: 12 руб.')")
         self.assertFalse(guard())
+
+    def test_new_candidate_requires_exact_free_page_and_public_service_code(self):
+        for host, url in EXTRA_URLS.items():
+            with self.subTest(host=host):
+                self.page._p.goto(url)
+                guard = lambda: drivers.free_form_guard(self.page, '#link', '#get_free_start', TARGET, url)
+                self.assertTrue(guard())
+                self.page._p.locator('#get_free_id').select_option('123')
+                self.page._p.locator('#get_free_start').evaluate("e => e.innerText = 'Бесплатно'")
+                self.assertFalse(guard())  # надпись не заменяет проверку кода
+                self.page._p.locator('#get_free_id').select_option('8559')
+                self.page._p.locator('#get_free_form').evaluate(
+                    "e => e.insertAdjacentHTML('beforeend','<input name=payment value=yookassa>')")
+                self.assertFalse(guard())
+                self.assertFalse(drivers.free_form_guard(self.page, '#link', '#paid', TARGET, url))
 
     def test_mrpopular_free_form_requires_site_provided_captcha_token(self):
         self.page._p.goto(MRPOPULAR_URL)

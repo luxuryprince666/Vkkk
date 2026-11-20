@@ -512,6 +512,45 @@ class DatabaseCase(unittest.TestCase):
         self.assertIsNotNone(result['submitted_at'])
         self.assertEqual(verifier.unresolved_count(), 1)
 
+    def test_before_submit_hook_runs_after_record_and_before_click(self):
+        with db.tx() as conn:
+            conn.execute("UPDATE sites SET enabled=0 WHERE id='smmnakrutka'")
+        events = []
+        def driver(svc, link, **kw):
+            kw['on_submit']()
+            events.append('click')
+            return drivers.DriverResult('ok', 'принято')
+        def durable(campaign_id, result_id):
+            campaign = verifier.status(campaign_id)
+            row = next(r for r in campaign['results'] if r['id'] == result_id)
+            self.assertEqual(row['baseline_count'], 100)
+            self.assertIsNotNone(row['submitted_at'])
+            events.append('durable')
+        with patch.object(delivery, 'read_target_count', return_value=100), \
+             patch.object(drivers, 'run', side_effect=driver), \
+             patch.object(verifier, 'observe_growth', return_value=verifier.Observation('not_working', 100, 0)):
+            verifier.start('https://vk.ru/club243396555', background=False, before_submit=durable)
+        self.assertEqual(events, ['durable', 'click'])
+
+    def test_failed_before_submit_hook_prevents_click_and_blocks_next(self):
+        clicks = []
+        def driver(svc, link, **kw):
+            kw['on_submit']()
+            clicks.append(svc['site_id'])
+            return drivers.DriverResult('ok', 'принято')
+        def fail(_campaign_id, _result_id):
+            raise RuntimeError('publication unavailable')
+        with patch.object(delivery, 'read_target_count', return_value=100), \
+             patch.object(drivers, 'run', side_effect=driver), \
+             patch.object(verifier, 'observe_growth', return_value=verifier.Observation('not_working', 100, 0)):
+            cid = verifier.start('https://vk.ru/club243396555', background=False, before_submit=fail)['campaign_id']
+        campaign = verifier.status(cid)
+        row = next(r for r in campaign['results'] if r['site_id'] == 'prskill')
+        self.assertEqual(clicks, [])
+        self.assertEqual(campaign['status'], 'failed')
+        self.assertEqual(row['status'], 'unverified')
+        self.assertIsNotNone(row['submitted_at'])
+
     def test_campaign_saves_actual_mobile_fallback_source(self):
         with db.tx() as conn:
             conn.execute('UPDATE sites SET enabled=0')  # никаких настоящих драйверов
@@ -567,13 +606,14 @@ class DatabaseCase(unittest.TestCase):
         with patch.object(verifier, '_routes', return_value=routes), \
              patch.object(delivery, 'read_target_count', return_value=100), \
              patch.object(drivers, 'run', side_effect=driver), \
-             patch.object(verifier, 'observe_growth', return_value=verifier.Observation('rejected', 100, None)):
+             patch.object(verifier, 'observe_growth', return_value=verifier.Observation('not_working', 100, 0)) as observe:
             cid = verifier.start('https://vk.ru/club243396555', background=False)['campaign_id']
         result = next(r for r in verifier.status(cid)['results'] if r['site_id'] == 'prskill')
         self.assertEqual(calls, [None])
-        self.assertEqual(result['status'], 'skipped')
+        self.assertEqual(result['status'], 'unverified')
         self.assertIsNone(result['added_count'])
         self.assertIn('Лимит', result['failure_reason'])
+        self.assertNotIn('rejected', observe.call_args.kwargs)  # не прерываем полное окно
 
     def test_ambiguous_submission_stops_without_retry_or_route_rotation(self):
         routes = [network.Endpoint('direct', 'direct', 'прямой'),
@@ -596,24 +636,38 @@ class DatabaseCase(unittest.TestCase):
         self.assertIsNone(result['added_count'])
         self.assertEqual(verifier.unresolved_count(), 1)
 
-    def test_bad_link_gets_vk_domain_alternative_but_no_duplicate_after_ambiguous_click(self):
+    def test_bad_link_after_possible_click_is_observed_and_never_retried(self):
         with db.tx() as conn:
             conn.execute("UPDATE sites SET enabled=0 WHERE id='smmnakrutka'")
         links = []
         def driver(svc, link, **kw):
             links.append(link)
             kw['on_submit']()
-            return drivers.DriverResult('bad_link' if len(links) == 1 else 'ok',
-                                        'неверная ссылка' if len(links) == 1 else 'принято')
-        def observe(read, baseline, started, **kw):
-            if len(links) == 1:
-                return verifier.Observation('rejected', baseline, None, reason='неверная ссылка')
-            return verifier.Observation('working', baseline + 3, 3, 20)
+            return drivers.DriverResult('bad_link', 'неверная ссылка')
         with patch.object(delivery, 'read_target_count', return_value=100), patch.object(drivers, 'run', side_effect=driver), \
-             patch.object(verifier, 'observe_growth', side_effect=observe):
+             patch.object(verifier, 'observe_growth', return_value=verifier.Observation('not_working', 100, 0)) as observe:
             cid = verifier.start('https://vk.ru/club243396555', background=False)['campaign_id']
         r = next(r for r in verifier.status(cid)['results'] if r['site_id'] == 'prskill')
-        # PRSkill явно просит vk.com; после конкретного отказа пробуем vk.ru.
+        self.assertEqual(links, ['https://vk.com/club243396555'])
+        self.assertEqual(r['status'], 'unverified')
+        self.assertIsNone(r['added_count'])
+        self.assertEqual(len(r['attempts']), 1)
+        self.assertNotIn('rejected', observe.call_args.kwargs)
+
+    def test_bad_link_before_any_submit_can_try_vk_domain_alternative(self):
+        with db.tx() as conn:
+            conn.execute("UPDATE sites SET enabled=0 WHERE id='smmnakrutka'")
+        links = []
+        def driver(svc, link, **kw):
+            links.append(link)
+            if len(links) == 1:
+                return drivers.DriverResult('bad_link', 'ссылка не подошла до отправки')
+            kw['on_submit']()
+            return drivers.DriverResult('ok', 'принято')
+        with patch.object(delivery, 'read_target_count', return_value=100), patch.object(drivers, 'run', side_effect=driver), \
+             patch.object(verifier, 'observe_growth', return_value=verifier.Observation('working', 103, 3, 20)):
+            cid = verifier.start('https://vk.ru/club243396555', background=False)['campaign_id']
+        r = next(r for r in verifier.status(cid)['results'] if r['site_id'] == 'prskill')
         self.assertEqual(links, ['https://vk.com/club243396555', 'https://vk.ru/club243396555'])
         self.assertEqual(r['added_count'], 3)
         self.assertEqual(len(r['attempts']), 2)

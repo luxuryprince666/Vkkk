@@ -132,6 +132,15 @@ class MeasurementTests(unittest.TestCase):
         self.assertIn('Доставка именно этой площадкой: неизвестна', text)
         self.assertIn('Нулевое изменение счётчика относится только к указанному интервалу', text)
 
+    def test_short_interrupted_window_reports_measurement_without_claiming_delivery(self):
+        row = {'site_id': 'avi1', 'status': 'skipped', 'baseline_count': 1, 'final_count': None,
+               'submitted_at': 10, 'samples': [{'observed_at': 10, 'count': 1},
+                                                {'observed_at': 11.7, 'count': 1}]}
+        result = continuation.measured_row(row, 'completed')
+        self.assertEqual(result['final_count'], 1)
+        self.assertEqual(result['observed_counter_change'], 0)
+        self.assertIsNone(result['attributed_delivery_count'])
+
     def test_growth_time_uses_first_post_submit_sample_but_never_claims_source(self):
         row = {'site_id': 'x', 'status': 'working', 'baseline_count': 1, 'final_count': 3,
                'submitted_at': 10, 'samples': [{'observed_at': 9, 'count': 4},
@@ -161,6 +170,23 @@ class MeasurementTests(unittest.TestCase):
         short['final_count'] = None
         self.assertFalse(continuation.can_continue({'status': 'failed'}, short, now=1910)[0])
         self.assertFalse(continuation.can_continue({'status': 'failed'}, {'status': 'skipped'}, now=1910)[0])
+
+    def test_completed_skipped_after_possible_click_or_short_watch_blocks_next(self):
+        row = {'site_id': 'avi1', 'status': 'skipped', 'submitted_at': 1000, 'final_count': None,
+               'attempts': [{'submitted_at': 1000, 'observation_window_sec': 900}],
+               'samples': [{'observed_at': 1002, 'count': 1}]}
+        self.assertFalse(continuation.can_continue({'status': 'completed'}, row, now=1003)[0])
+        row['status'], row['final_count'] = 'not_working', 1
+        self.assertFalse(continuation.can_continue({'status': 'completed'}, row, now=1003)[0])
+        row['samples'][-1]['observed_at'] = 1901
+        self.assertTrue(continuation.can_continue({'status': 'completed'}, row, now=1910)[0])
+        row['site_id'] = 'smm8'  # здесь даже 15 минут не покрывают заявленный час
+        self.assertFalse(continuation.can_continue({'status': 'completed'}, row, now=1910)[0])
+        row['attempts'][0]['observation_window_sec'] = 3600
+        row['samples'][-1]['observed_at'] = 4601
+        self.assertTrue(continuation.can_continue({'status': 'completed'}, row, now=4610)[0])
+        row['attempts'][0]['late_recorded'] = True
+        self.assertFalse(continuation.can_continue({'status': 'completed'}, row, now=4610)[0])
 
     def test_initial_counter_stable_after_one_hour_not_before(self):
         now = [1000.0]

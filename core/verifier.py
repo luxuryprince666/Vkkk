@@ -358,7 +358,8 @@ def _stop_requested(campaign_id: int, event: threading.Event) -> bool:
 
 def _run_attempt(campaign_id: int, result_id: int, svc: dict, target: dict, baseline: int,
                  route: network.Endpoint, method: str, link: str, routes: list[network.Endpoint],
-                 cfg: dict, stop_event: threading.Event) -> tuple[drivers.DriverResult, Observation | None, dict]:
+                 cfg: dict, stop_event: threading.Event,
+                 before_submit: Callable[[int, int], None] | None = None) -> tuple[drivers.DriverResult, Observation | None, dict]:
     """Драйвер выполняется в отдельном потоке, счётчик опрашивается уже во время отправки."""
     signalled = threading.Event()
     done = threading.Event()
@@ -409,6 +410,12 @@ def _run_attempt(campaign_id: int, result_id: int, svc: dict, target: dict, base
             state['started'] = time.monotonic()
             state['submitted_at'] = wall
             signalled.set()
+            # В CI необязательный синхронный hook должен записать снимок до
+            # клика. Его ошибка распространяется наружу и запрещает действие.
+            if before_submit is not None:
+                before_submit(campaign_id, result_id)
+            if check_stop and _stop_requested(campaign_id, stop_event):
+                raise drivers.OperationCancelled('Остановлено до отправки')
 
     def on_submit():
         record_submission(check_stop=True)
@@ -456,11 +463,9 @@ def _run_attempt(campaign_id: int, result_id: int, svc: dict, target: dict, base
             def record(count, at):
                 del at
                 _sample(campaign_id, result_id, count, last_measurement[1], last_measurement[0])
-            def explicit_rejection():
-                res = state.get('result') if done.is_set() else None
-                if res is not None and res.verdict in ('bad_link', 'quota'):
-                    return _safe_detail(res.detail)
-                return None
+            # Текст страницы вроде «подождите» или «неверная ссылка» не
+            # доказывает, что заказ не попал в очередь. После возможного клика
+            # не прекращаем наблюдение досрочно по эвристическому ответу.
             def waiting(seconds):
                 # Также реагируем на остановку, запрошенную другим процессом.
                 end = time.monotonic() + seconds
@@ -475,8 +480,7 @@ def _run_attempt(campaign_id: int, result_id: int, svc: dict, target: dict, base
             delayed = lambda: state['done_at'] if done.is_set() else None
             observation = observe_growth(read, state['baseline'], state['started'], timeout_sec=window,
                                          poll_sec=cfg['poll'], settle_sec=cfg['settle'],
-                                         wait=waiting, on_sample=record, rejected=explicit_rejection,
-                                         delayed_until=delayed)
+                                         wait=waiting, on_sample=record, delayed_until=delayed)
         if _stop_requested(campaign_id, stop_event):
             stop_event.set()
         if observation and observation.status == 'unverified' and not done.is_set():
@@ -500,18 +504,20 @@ def _run_attempt(campaign_id: int, result_id: int, svc: dict, target: dict, base
     if state['baseline_error'] and not stop_event.is_set():
         observation = Observation('unverified', observation.final_count if observation else None, None,
                                   reason=state['baseline_error'])
-    # Отказ пришёл после последнего измерения; он имеет приоритет над случайным ростом.
-    elif observation and res.verdict in ('bad_link', 'quota'):
-        observation = Observation('rejected', observation.final_count, None, reason=_safe_detail(res.detail))
+    # После возможного клика эвристика текста не является доказательством
+    # отказа. Сохраняем измерение, но не утверждаем доставку и не повторяем.
     elif observation and observation.status != 'stopped' and res.verdict != 'ok':
-        observation = Observation('unverified', observation.final_count, None,
-                                  reason='После возможной отправки заказ не подтверждён: ' + _safe_detail(res.detail))
+        reason = 'После возможной отправки заказ не подтверждён: ' + _safe_detail(res.detail)
+        if observation.status == 'unverified' and observation.reason:
+            reason += '; ' + _safe_detail(observation.reason)
+        observation = Observation('unverified', observation.final_count, None, reason=reason)
     elif observation and state['late'] and observation.status == 'working':
         observation.time_to_growth_sec = None
         observation.reason = 'Рост обнаружен, но точный момент отправки драйвер не зафиксировал'
     attempt.update({'finished_at': time.time(), 'submitted_at': state['submitted_at'],
                     'baseline_count': state['baseline'], 'verdict': res.verdict,
-                    'detail': _safe_detail(res.detail), 'backend': res.backend or method})
+                    'detail': _safe_detail(res.detail), 'backend': res.backend or method,
+                    'late_recorded': bool(state['late'])})
     return res, observation, attempt
 
 
@@ -523,7 +529,8 @@ def _refresh_baseline(campaign_id: int, result_id: int, target: dict, routes: li
 
 
 def _service(campaign_id: int, result_id: int, svc: dict, target: dict, baseline: int,
-             routes: list[network.Endpoint], cfg: dict, stop_event: threading.Event) -> tuple[Observation, list[dict], str]:
+             routes: list[network.Endpoint], cfg: dict, stop_event: threading.Event,
+             before_submit: Callable[[int, int], None] | None = None) -> tuple[Observation, list[dict], str]:
     attempts: list[dict] = []
     primary = drivers.normalize_link(svc['site_id'], target['url'])
     alternative = _alternative_vk(primary) if target['platform'] == 'vk' else None
@@ -548,7 +555,7 @@ def _service(campaign_id: int, result_id: int, svc: dict, target: dict, baseline
                 link = variants[variant_idx]
                 _update_campaign(campaign_id, current_phase=f'Попытка: {method}, {route.label}')
                 res, obs, attempt = _run_attempt(campaign_id, result_id, svc, target, baseline,
-                                                 route, method, link, routes, cfg, stop_event)
+                                                 route, method, link, routes, cfg, stop_event, before_submit)
                 attempts.append(attempt)
                 method_used = f'{method} / {network.mask_proxy_url(route.proxy_url)}'
                 _update_result(result_id, attempts_json=json.dumps(attempts, ensure_ascii=False), method_used=method_used)
@@ -556,8 +563,13 @@ def _service(campaign_id: int, result_id: int, svc: dict, target: dict, baseline
                 if stop_event.is_set():
                     return Observation('stopped', obs.final_count if obs else None, None,
                                        reason='Остановлено пользователем; заказ может продолжаться'), attempts, method_used
-                if obs and obs.status != 'rejected':
+                # Любое действие, которое могло отправить заявку, исключает
+                # автоматический повтор — даже если текст похож на отказ.
+                if obs:
                     return obs, attempts, method_used
+                if attempt['submitted_at'] is not None:
+                    return Observation('unverified', None, None,
+                                       reason='Ответ после возможной отправки неясен; повтор запрещён'), attempts, method_used
                 if res.verdict == 'quota':
                     # Лимит площадки не обходим сменой IP.
                     terminal = True
@@ -574,10 +586,6 @@ def _service(campaign_id: int, result_id: int, svc: dict, target: dict, baseline
                         continue
                     terminal = True
                     break
-                # После возможного клика/POST без явного отказа повтор может создать дубликат.
-                if attempt['submitted_at'] is not None:
-                    return Observation('unverified', None, None,
-                                       reason='Ответ после возможной отправки неясен; повтор запрещён'), attempts, method_used
                 if any(w in last_reason.lower() for w in ('e-mail', 'email', 'регистрац', 'авторизац',
                                                           'бесплатный способ оплаты')):
                     terminal = True
@@ -589,8 +597,13 @@ def _service(campaign_id: int, result_id: int, svc: dict, target: dict, baseline
     return Observation('skipped', None, None, reason='Не удалось проверить заказ: ' + last_reason), attempts, method_used
 
 
-def start(channel_url: str, *, acknowledge_risk: bool = False, background: bool = True) -> dict:
-    """Создаёт и запускает один прогон. Никаких запросов к площадкам до исходного счётчика."""
+def start(channel_url: str, *, acknowledge_risk: bool = False, background: bool = True,
+          before_submit: Callable[[int, int], None] | None = None) -> dict:
+    """Запустить прогон; необязательный hook выполняется синхронно до клика.
+
+    Никаких запросов к площадкам до исходного счётчика. Ошибка hook-а не должна
+    позволять драйверу кликнуть, а уже сохранённая отметка остаётся неизвестной.
+    """
     platform, kind, url = delivery.normalize_channel_input(channel_url)
     if kind != 'community':
         raise ValueError('Проверяем только подписчиков сообщества ВК или публичного Telegram-канала')
@@ -645,10 +658,10 @@ def start(channel_url: str, *, acknowledge_risk: bool = False, background: bool 
             _RUNS[campaign_id] = event
         target = {'url': url, 'platform': platform, 'kind': kind}
         if background:
-            threading.Thread(target=_worker, args=(campaign_id, target, cfg, event),
+            threading.Thread(target=_worker, args=(campaign_id, target, cfg, event, before_submit),
                              daemon=True, name=f'verify-{campaign_id}').start()
         else:
-            _worker(campaign_id, target, cfg, event)
+            _worker(campaign_id, target, cfg, event, before_submit)
         return {'ok': True, 'campaign_id': campaign_id}
     except Exception:
         if campaign_id is not None:
@@ -663,7 +676,8 @@ def start(channel_url: str, *, acknowledge_risk: bool = False, background: bool 
         raise
 
 
-def _worker(campaign_id: int, target: dict, cfg: dict, stop_event: threading.Event) -> None:
+def _worker(campaign_id: int, target: dict, cfg: dict, stop_event: threading.Event,
+            before_submit: Callable[[int, int], None] | None = None) -> None:
     final_status = 'completed'
     error = None
     try:
@@ -713,7 +727,8 @@ def _worker(campaign_id: int, target: dict, cfg: dict, stop_event: threading.Eve
                                finished_at=time.time())
                 final_status, error = 'failed', 'Проверка остановлена: нет точного счётчика'
                 break
-            obs, attempts, method = _service(campaign_id, row['id'], svc, target, baseline, routes, cfg, stop_event)
+            obs, attempts, method = _service(campaign_id, row['id'], svc, target, baseline, routes, cfg,
+                                             stop_event, before_submit)
             status = 'unverified' if obs.status == 'stopped' else obs.status
             _update_result(row['id'], status=status, final_count=obs.final_count, added_count=obs.added_count,
                            time_to_growth_sec=obs.time_to_growth_sec, failure_reason=obs.reason or None,

@@ -661,7 +661,11 @@ class TestHardening(Base):
         cat = _json.loads(Path(db.CATALOG_PATH).read_text(encoding="utf-8"))
         ids = {x["id"] for x in cat["sites"]}
         self.assertNotIn("smmchik", ids)
-        self.assertEqual(len(ids), 13)
+        self.assertEqual(len(ids), len(cat["sites"]))  # площадки не дублируются
+        self.assertGreaterEqual(len(ids), 13)
+        self.assertTrue({'lowcostsmm', 'martinismm', 'capitansmm', 'captainsmm'} <= ids)
+        self.assertTrue(all(not x['enabled'] for x in cat['sites'] if x['id'] in
+                            {'lowcostsmm', 'martinismm', 'capitansmm', 'captainsmm'}))
         self.assertGreaterEqual(sum(len(x["services"]) for x in cat["sites"]), 12)
 
 

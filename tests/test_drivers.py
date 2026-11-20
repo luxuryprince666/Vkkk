@@ -108,6 +108,11 @@ class TestHeuristics(unittest.TestCase):
         self.assertEqual(drivers.read_verdict("Лимит на сегодня исчерпан", False, False)[0], "quota")
         self.assertEqual(drivers.read_verdict("Попробуйте позже", False, False)[0], "quota")
 
+    def test_generic_please_wait_is_not_a_proven_rejection(self):
+        self.assertEqual(drivers.read_verdict("Пожалуйста, подождите", False, False)[0], 'need_human')
+        self.assertEqual(drivers.read_verdict_delta('Форма', 'Форма\nПодождите', False, False)[0], 'need_human')
+        self.assertEqual(drivers.read_verdict('Заказ принят, пожалуйста подождите', False, False)[0], 'ok')
+
     def test_verdict_bad_link(self):
         self.assertEqual(drivers.read_verdict("Неверная ссылка", False, False)[0], "bad_link")
         self.assertEqual(drivers.read_verdict("Ссылка не найдена", False, False)[0], "bad_link")
