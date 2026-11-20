@@ -219,8 +219,8 @@ SESSION_STATE = r'''() => {
     const errors=[...card.querySelectorAll('.free-form__error')].filter(vis);
     return {stage:'other', error:errors.length===1 ? (errors[0].innerText||'').trim().slice(0,200) : ''};
   }
-  const b=buttons[0], text=(b.innerText||'').trim();
-  return {stage:'session', timer:(timers[0].innerText||'').trim().slice(0,30),
+  const b=buttons[0], text=(b.innerText||'').trim(), timer=(timers[0].innerText||'').trim();
+  return {stage:'session', timer:/^\d{1,3}:\d{2}$/.test(timer) ? timer : null,
     ready:!b.disabled && b.getAttribute('aria-disabled')!=='true' && !b.closest('form') &&
       !b.closest('a[href]') && text.toLowerCase()==='получить', button_text:text.slice(0,40)};
 }'''

@@ -1,0 +1,65 @@
+name: VK Boost-Like trial after sequential remainder
+
+# A real free-trial order is possible. Creating this workflow does nothing:
+# the unique marker path and matching commit subject are both required. This
+# shares the previous live run's concurrency group and checks its finished
+# evidence; on any mismatch it stops before entering the community link.
+on:
+  push:
+    branches:
+      - arena/e372c48b-vkkk
+    paths:
+      - .github/vk-boost-after-resume-club243396555.once
+
+permissions:
+  contents: read
+  checks: write
+  actions: read
+
+concurrency:
+  group: vk-live-club243396555
+  cancel-in-progress: false
+
+jobs:
+  free-trial-after-remainder:
+    if: >-
+      github.event_name == 'push' &&
+      github.repository == 'luxuryprince666/Vkkk' &&
+      github.run_attempt == 1 &&
+      startsWith(github.event.head_commit.message, 'Run guarded Boost trial after remainder')
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      VKFREE_DATA: /tmp/vkkk-boost-trial-db
+      VKKK_PROGRESS_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install isolated browser runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/vkci-env"
+          "$RUNNER_TEMP/vkci-env/bin/python" -m pip install --disable-pip-version-check playwright==1.65.2 curl_cffi==0.17.0
+          echo "$RUNNER_TEMP/vkci-env/bin" >> "$GITHUB_PATH"
+          if ! command -v google-chrome && ! command -v google-chrome-stable && ! command -v chromium && ! command -v chromium-browser; then
+            "$RUNNER_TEMP/vkci-env/bin/python" -m playwright install chromium
+          fi
+      - name: Test evidence, free-trial guard and observation offline
+        run: |
+          python -m unittest discover -s tests -p 'test_boost_*.py' -q
+          python -m unittest discover -s tests -p 'test_continuation_ci.py' -q
+          python -m unittest discover -s tests -p 'test_verifier.py' -q
+      - name: Quarantine, attempt one free session, and observe VK
+        env:
+          VKKK_LIVE_RUN: boost-free-once-after-resume
+        run: python tools/run_boost_after_resume_ci.py --output-dir /tmp/vkkk-boost-trial-report
+      - name: Save report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vk-boost-after-resume-report
+          path: /tmp/vkkk-boost-trial-report/boost-trial.*
+          if-no-files-found: ignore
+          retention-days: 7

@@ -1,0 +1,480 @@
+{
+  "phase": "завершено: открытие без ссылки и сети",
+  "orders_sent": 0,
+  "target_entered": false,
+  "network_blocked_before_activation": true,
+  "blocked_after_activation": [
+    {
+      "method": "GET",
+      "host": "mc.yandex.com",
+      "path": "/watch/60749869"
+    },
+    {
+      "method": "GET",
+      "host": "mc.yandex.com",
+      "path": "/watch/60749869"
+    },
+    {
+      "method": "GET",
+      "host": "mc.yandex.com",
+      "path": "/watch/60749869"
+    }
+  ],
+  "before": {
+    "title": "Бесплатная накрутка подписчиков ВК",
+    "mainText": "Главная Услуги Блог Отзывы Контакты RU EN Отследить заказы Войти Регистрация TikTok Instagram Telegram VK MAX YouTube Likee Rutube Twitch Одноклассники Spotify Трафик Wibes Яндекс Музыка Главная VK Бесплатные подписчики ВК VK Бесплатно Бесплатная накрутка подписчиков VK Демо-версия сервиса накрутки +10 БЕСПЛАТНО Осталось 2 попытки Пробная услуга накрутки подписчиков ВК в количестве 10 штук. Есть ограничения Получить После активации не покидайте страницу до завершения таймера. По истечении времени нажмите кнопку «Получить». Последние заказы 72 онлайн Пользователь получил +20 лайков TIKTOK 4 минуты назад Пользователь получил +20 лайков TIKTOK 54 минуты назад Пользователь получил +10 подписчиков VK 1 час назад Пользователь получил +50 подписчиков TELEGRAM 1 час назад Пользователь получил +10 подписчиков TIKTOK 1 час назад Бесплатная накрутка подписчиков ВКонтакте Хотите быстро увеличить аудиторию группы или паблика ВК? Бесплатная накрутка подписчиков ВКонтакте — простой способ набрать первых участников без вложений и сложных настроек. Подписчики влияют на восприятие сообщества: чем их больше, тем выше доверие новых посетителей и охват публикаций. На этой странице вы можете получить бесплатных подписчиков — достаточно вставить ссылку на группу формата https://vk.com/yourgroup в форму",
+    "forms": [
+      {
+        "id": "",
+        "classes": "space-y-5",
+        "method": "get",
+        "actionPath": "https://boost-like.ru/vk/besplatnaya-nakrutka-podpischikov-v-vk",
+        "visible": true,
+        "text": "СОЦ. СЕТЬ Выберите TikTok Instagram Telegram VK MAX YouTube Likee Rutube Twitch Kick Одноклассники Facebook Spotify Яндекс Трафик Wibes Яндекс Музыка КАТЕГОРИЯ Выберите ВЫБЕРИТЕ УСЛУГУ Выберите услугу ССЫЛКА КОЛИЧЕСТВО Стоимость заказа 0,00 ₽ Добавить в корзину Есть аккаунт? Войти для больших скидок",
+        "fields": [
+          {
+            "id": "",
+            "name": "",
+            "type": "select-one",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "",
+            "hasValue": false,
+            "options": [
+              {
+                "text": "Выберите"
+              },
+              {
+                "text": "TikTok"
+              },
+              {
+                "text": "Instagram"
+              },
+              {
+                "text": "Telegram"
+              },
+              {
+                "text": "VK"
+              },
+              {
+                "text": "MAX"
+              },
+              {
+                "text": "YouTube"
+              },
+              {
+                "text": "Likee"
+              },
+              {
+                "text": "Rutube"
+              },
+              {
+                "text": "Twitch"
+              },
+              {
+                "text": "Kick"
+              },
+              {
+                "text": "Одноклассники"
+              },
+              {
+                "text": "Facebook"
+              },
+              {
+                "text": "Spotify"
+              },
+              {
+                "text": "Яндекс"
+              },
+              {
+                "text": "Трафик"
+              },
+              {
+                "text": "Wibes"
+              },
+              {
+                "text": "Яндекс Музыка"
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "type": "select-one",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "",
+            "hasValue": false,
+            "options": [
+              {
+                "text": "Выберите"
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "type": "select-one",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "",
+            "hasValue": false,
+            "options": [
+              {
+                "text": "Выберите услугу"
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "type": "text",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "https://...",
+            "hasValue": false,
+            "options": null
+          },
+          {
+            "id": "quick-order-quantity",
+            "name": "",
+            "type": "number",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "0",
+            "hasValue": false,
+            "options": null
+          }
+        ],
+        "buttons": [
+          {
+            "id": "",
+            "type": "submit",
+            "text": "Добавить в корзину",
+            "visible": true,
+            "disabled": true
+          }
+        ]
+      }
+    ],
+    "looseControls": [
+      {
+        "id": "",
+        "text": "Получить"
+      },
+      {
+        "id": "",
+        "text": "Сколько подписчиков можно получить бесплатно?"
+      },
+      {
+        "id": "",
+        "text": "Нужно ли давать доступ к группе?"
+      },
+      {
+        "id": "",
+        "text": "Подписчики отпишутся?"
+      },
+      {
+        "id": "",
+        "text": "Заблокирует ли ВК группу за накрутку?"
+      },
+      {
+        "id": "",
+        "text": "Что делать, если подписчики не пришли?"
+      },
+      {
+        "id": "",
+        "text": ""
+      }
+    ],
+    "selectedPublicService": null,
+    "scripts": [
+      "https://mc.yandex.ru/metrika/tag.js",
+      "https://boost-like.ru/_nuxt/D4TEjF7Z.js"
+    ],
+    "freeHandler": {
+      "eventTypes": [],
+      "hasInlineClick": false,
+      "handlerCount": 0,
+      "mentionsAjax": false,
+      "paths": []
+    }
+  },
+  "loaded_js_paths": [
+    "/_nuxt/D4TEjF7Z.js",
+    "/_nuxt/2soBIWIU.js",
+    "/_nuxt/Qtm4N0-H.js",
+    "/_nuxt/x_rD_Ya3.js",
+    "/_nuxt/BLVh6dSq.js",
+    "/_nuxt/DlAUqK2U.js",
+    "/_nuxt/B1RyIx3_.js",
+    "/_nuxt/CCrX1cDL.js",
+    "/_nuxt/CN2_UZbd.js",
+    "/_nuxt/D1pVCrF0.js",
+    "/_nuxt/CT7Kider.js",
+    "/_nuxt/DMWLlLVz.js",
+    "/_nuxt/i6yPm9UC.js",
+    "/_nuxt/LJN2v9it.js",
+    "/_nuxt/Bg2NC794.js",
+    "/_nuxt/CZA_MmKP.js",
+    "/_nuxt/CTz4OQxk.js",
+    "/_nuxt/DZ_Xl47n.js",
+    "/_nuxt/BGoni7Js.js",
+    "/_nuxt/CuQrqAOa.js",
+    "/_nuxt/DtonVCGG.js",
+    "/_nuxt/CX8pNBQh.js",
+    "/_nuxt/VqDXt3kK.js",
+    "/_nuxt/BNqKijd2.js",
+    "/_nuxt/De1HVPVo.js",
+    "/_nuxt/uRsjFhS9.js",
+    "/_nuxt/BmeHWyLf.js",
+    "/_nuxt/Bad4Ma05.js",
+    "/_nuxt/qLdse7VR.js",
+    "/_nuxt/CCSorI5H.js",
+    "/_nuxt/BbPDgnBp.js",
+    "/_nuxt/CFOoiaf1.js",
+    "/_nuxt/BICeLlLE.js",
+    "/_nuxt/V7cfYtEt.js",
+    "/_nuxt/BGY4QBfj.js",
+    "/_nuxt/DffUsFC4.js",
+    "/_nuxt/BM5UkznY.js",
+    "/_nuxt/BG3hMitJ.js",
+    "/_nuxt/C4QsDmK8.js",
+    "/_nuxt/C3-UmsT2.js",
+    "/_nuxt/CM9GPvS-.js",
+    "/_nuxt/5toXseVN.js",
+    "/_nuxt/COznoz1m.js",
+    "/_nuxt/Bz1ww8cN.js",
+    "/_nuxt/DgXj0uSb.js",
+    "/_nuxt/C20NXYBI.js",
+    "/_nuxt/CgteZURS.js"
+  ],
+  "candidate": {
+    "unique": true,
+    "context": "VK Бесплатно Бесплатная накрутка подписчиков VK Демо-версия сервиса накрутки +10 БЕСПЛАТНО Осталось 2 попытки Пробная услуга накрутки подписчиков ВК в количестве 10 штук. Есть ограничения Получить После активации не покидайте страницу до завершения таймера. По истечении времени нажмите кнопку «Получить».",
+    "insideForm": false,
+    "insideLink": false,
+    "enabled": true,
+    "fields": [
+      {
+        "id": "",
+        "name": "",
+        "type": "url",
+        "placeholder": "Вставьте ссылку",
+        "ariaLabel": "",
+        "required": false,
+        "insideForm": false,
+        "hasValue": false
+      }
+    ]
+  },
+  "after": {
+    "title": "Бесплатная накрутка подписчиков ВК",
+    "mainText": "Главная Услуги Блог Отзывы Контакты RU EN Отследить заказы Войти Регистрация TikTok Instagram Telegram VK MAX YouTube Likee Rutube Twitch Одноклассники Spotify Трафик Wibes Яндекс Музыка Главная VK Бесплатные подписчики ВК VK Бесплатно Бесплатная накрутка подписчиков VK Демо-версия сервиса накрутки +10 БЕСПЛАТНО Осталось 2 попытки Введите ссылку Пробная услуга накрутки подписчиков ВК в количестве 10 штук. Есть ограничения Получить После активации не покидайте страницу до завершения таймера. По истечении времени нажмите кнопку «Получить». Последние заказы 72 онлайн Пользователь получил +20 лайков TIKTOK 4 минуты назад Пользователь получил +20 лайков TIKTOK 54 минуты назад Пользователь получил +10 подписчиков VK 1 час назад Пользователь получил +50 подписчиков TELEGRAM 1 час назад Пользователь получил +10 подписчиков TIKTOK 1 час назад Бесплатная накрутка подписчиков ВКонтакте Хотите быстро увеличить аудиторию группы или паблика ВК? Бесплатная накрутка подписчиков ВКонтакте — простой способ набрать первых участников без вложений и сложных настроек. Подписчики влияют на восприятие сообщества: чем их больше, тем выше доверие новых посетителей и охват публикаций. На этой странице вы можете получить бесплатных подписчиков — достаточно вставить ссылку на группу формата https://vk.com/yo",
+    "forms": [
+      {
+        "id": "",
+        "classes": "space-y-5",
+        "method": "get",
+        "actionPath": "https://boost-like.ru/vk/besplatnaya-nakrutka-podpischikov-v-vk",
+        "visible": true,
+        "text": "СОЦ. СЕТЬ Выберите TikTok Instagram Telegram VK MAX YouTube Likee Rutube Twitch Kick Одноклассники Facebook Spotify Яндекс Трафик Wibes Яндекс Музыка КАТЕГОРИЯ Выберите ВЫБЕРИТЕ УСЛУГУ Выберите услугу ССЫЛКА КОЛИЧЕСТВО Стоимость заказа 0,00 ₽ Добавить в корзину Есть аккаунт? Войти для больших скидок",
+        "fields": [
+          {
+            "id": "",
+            "name": "",
+            "type": "select-one",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "",
+            "hasValue": false,
+            "options": [
+              {
+                "text": "Выберите"
+              },
+              {
+                "text": "TikTok"
+              },
+              {
+                "text": "Instagram"
+              },
+              {
+                "text": "Telegram"
+              },
+              {
+                "text": "VK"
+              },
+              {
+                "text": "MAX"
+              },
+              {
+                "text": "YouTube"
+              },
+              {
+                "text": "Likee"
+              },
+              {
+                "text": "Rutube"
+              },
+              {
+                "text": "Twitch"
+              },
+              {
+                "text": "Kick"
+              },
+              {
+                "text": "Одноклассники"
+              },
+              {
+                "text": "Facebook"
+              },
+              {
+                "text": "Spotify"
+              },
+              {
+                "text": "Яндекс"
+              },
+              {
+                "text": "Трафик"
+              },
+              {
+                "text": "Wibes"
+              },
+              {
+                "text": "Яндекс Музыка"
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "type": "select-one",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "",
+            "hasValue": false,
+            "options": [
+              {
+                "text": "Выберите"
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "type": "select-one",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "",
+            "hasValue": false,
+            "options": [
+              {
+                "text": "Выберите услугу"
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "type": "text",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "https://...",
+            "hasValue": false,
+            "options": null
+          },
+          {
+            "id": "quick-order-quantity",
+            "name": "",
+            "type": "number",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "0",
+            "hasValue": false,
+            "options": null
+          }
+        ],
+        "buttons": [
+          {
+            "id": "",
+            "type": "submit",
+            "text": "Добавить в корзину",
+            "visible": true,
+            "disabled": true
+          }
+        ]
+      }
+    ],
+    "looseControls": [
+      {
+        "id": "",
+        "text": "Получить"
+      },
+      {
+        "id": "",
+        "text": "Сколько подписчиков можно получить бесплатно?"
+      },
+      {
+        "id": "",
+        "text": "Нужно ли давать доступ к группе?"
+      },
+      {
+        "id": "",
+        "text": "Подписчики отпишутся?"
+      },
+      {
+        "id": "",
+        "text": "Заблокирует ли ВК группу за накрутку?"
+      },
+      {
+        "id": "",
+        "text": "Что делать, если подписчики не пришли?"
+      },
+      {
+        "id": "",
+        "text": ""
+      }
+    ],
+    "selectedPublicService": null,
+    "scripts": [
+      "https://mc.yandex.ru/metrika/tag.js",
+      "https://boost-like.ru/_nuxt/D4TEjF7Z.js"
+    ],
+    "freeHandler": {
+      "eventTypes": [],
+      "hasInlineClick": false,
+      "handlerCount": 0,
+      "mentionsAjax": false,
+      "paths": []
+    }
+  },
+  "candidate_after": {
+    "unique": true,
+    "context": "VK Бесплатно Бесплатная накрутка подписчиков VK Демо-версия сервиса накрутки +10 БЕСПЛАТНО Осталось 2 попытки Введите ссылку Пробная услуга накрутки подписчиков ВК в количестве 10 штук. Есть ограничения Получить После активации не покидайте страницу до завершения таймера. По истечении времени нажмите кнопку «Получить».",
+    "insideForm": false,
+    "insideLink": false,
+    "enabled": true,
+    "fields": [
+      {
+        "id": "",
+        "name": "",
+        "type": "url",
+        "placeholder": "Вставьте ссылку",
+        "ariaLabel": "",
+        "required": false,
+        "insideForm": false,
+        "hasValue": false
+      }
+    ]
+  }
+}

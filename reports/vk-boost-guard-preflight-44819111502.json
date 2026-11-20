@@ -1,0 +1,59 @@
+{
+  "phase": "завершено",
+  "orders_sent": 0,
+  "target_entered": false,
+  "changing_requests_allowed": false,
+  "clicked": false,
+  "module_path": "/_nuxt/CCrX1cDL.js",
+  "module_sha256": "382c5f7e774754fa7aeda23a14115efa283d7548525ce5d77c688b2a092531f0",
+  "initial_card": {
+    "valid": true,
+    "attempts_left": 2,
+    "field_count": 1,
+    "button_count": 1,
+    "field_matches": true,
+    "button_ready": true,
+    "captcha": false
+  },
+  "allowed_requests": 82,
+  "blocked_requests": 7,
+  "blocked_paths": [
+    {
+      "method": "GET",
+      "path": "/api/v1/embed"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/embed"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/pulse"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/payments/methods"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/chat/conversation"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/payments/methods"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/chat/conversation"
+    }
+  ],
+  "diagnostic": {
+    "path": "/vk/besplatnaya-nakrutka-podpischikov-v-vk",
+    "title": "Бесплатная накрутка подписчиков ВК",
+    "freePages": 1,
+    "freeCards": 1,
+    "headings": [
+      "Бесплатная накрутка подписчиков VK"
+    ]
+  }
+}
