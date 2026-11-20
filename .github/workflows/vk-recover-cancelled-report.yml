@@ -1,0 +1,28 @@
+name: Recover cancelled VK report (read only)
+
+# Fetches one existing artifact and publishes its report only. No browser,
+# third-party site visits, target input or order requests are involved.
+on:
+  push:
+    branches:
+      - arena/e372c48b-vkkk
+    paths:
+      - .github/workflows/vk-recover-cancelled-report.yml
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  recover-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      VKKK_PROGRESS_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Recover report from completed run without new requests
+        run: python3 tools/ci_recover_cancelled_report.py
