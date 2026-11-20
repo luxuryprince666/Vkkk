@@ -584,7 +584,8 @@ class DatabaseCase(unittest.TestCase):
              patch.object(verifier, 'observe_growth', side_effect=observe):
             cid = verifier.start('https://vk.ru/club243396555', background=False)['campaign_id']
         r = next(r for r in verifier.status(cid)['results'] if r['site_id'] == 'prskill')
-        self.assertEqual(links, ['https://vk.ru/club243396555', 'https://vk.com/club243396555'])
+        # PRSkill явно просит vk.com; после конкретного отказа пробуем vk.ru.
+        self.assertEqual(links, ['https://vk.com/club243396555', 'https://vk.ru/club243396555'])
         self.assertEqual(r['added_count'], 3)
         self.assertEqual(len(r['attempts']), 2)
 

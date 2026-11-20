@@ -77,6 +77,18 @@ def main() -> int:
                         'buttons': [{k: b.get(k) for k in ('sel', 'text', 'nearForm', 'disabled')}
                                     for b in (state.get('buttons') or [])[:10]],
                     })
+                    # Check form scoping with the existing empty field only; no target is entered.
+                    scoped = drivers.same_form_state(page, state, field['sel']) if field else None
+                    selected = drivers.pick_submit_button(scoped.get('buttons') or []) if scoped else None
+                    out['verified_scope'] = {
+                        'candidate': {k: selected.get(k) for k in ('sel', 'text', 'disabled')} if selected else None,
+                        'free_guard_for_existing_value': bool(selected and drivers.free_form_guard(
+                            page, field['sel'], selected['sel'], drivers.field_value(page, field['sel']), service['url'])),
+                        'countdown_sec': drivers._button_countdown(page, selected['sel']) if selected else None,
+                    }
+                    if site['id'] == 'prskill':
+                        special = drivers._prskill_giveaway_state(page)
+                        out['prskill_state'] = special.get('state')
                     # Describe the target form and the explicitly identified free
                     # section without collecting field values, cookies or tokens.
                     out['form_scope'] = page._p.evaluate('''(sel) => {

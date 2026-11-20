@@ -543,16 +543,99 @@ def discover(page: stealth.Page) -> dict:
         return {"ok": False, "fields": [], "buttons": [], "captcha": [], "texts": []}
 
 
+# На живых страницах рядом с бесплатной формой встречаются платная форма и
+# форма отзывов. Отбор только по тексту кнопки может отправить не тот заказ.
+SAME_FORM_JS = r"""((fieldSel, candidates) => {
+  const one = sel => { try { const v = document.querySelectorAll(sel); return v.length === 1 ? v[0] : null; }
+                       catch (_) { return null; } };
+  const field = one(fieldSel), form = field && (field.form || field.closest('form'));
+  if (!form) return JSON.stringify({ok:false});
+  const owned = sel => {
+    const el = one(sel);
+    return !!el && (el.form || el.closest('form')) === form && !el.closest('a[href]');
+  };
+  return JSON.stringify({ok:true, fields:candidates.fields.filter(owned),
+                         buttons:candidates.buttons.filter(owned)});
+})"""
+
+FREE_FORM_GUARD_JS = r"""((fieldSel, buttonSel, expectedValue, expectedUrl) => {
+  const one = sel => { try { const v = document.querySelectorAll(sel); return v.length === 1 ? v[0] : null; }
+                       catch (_) { return null; } };
+  const field = one(fieldSel), button = one(buttonSel);
+  const form = field && (field.form || field.closest('form'));
+  if (!field || !button || !form || (button.form || button.closest('form')) !== form ||
+      button.closest('a[href]') || !['BUTTON','INPUT'].includes(button.tagName)) return 'different-form';
+  if (field.disabled || field.readOnly || (field.value || '').trim() !== expectedValue.trim()) return 'link-changed';
+  if (button.disabled || button.getAttribute('aria-disabled') === 'true') return 'button-disabled';
+  try {
+    const wanted = new URL(expectedUrl), current = new URL(location.href);
+    if (wanted.origin !== current.origin || wanted.pathname.replace(/\/$/,'') !== current.pathname.replace(/\/$/,''))
+      return 'redirect';
+    const action = new URL(button.getAttribute('formaction') || form.getAttribute('action') || location.href,
+                           location.href);
+    if (action.origin !== current.origin || !['http:', 'https:'].includes(action.protocol)) return 'external-action';
+  } catch (_) { return 'redirect'; }
+  const buttonText = (button.innerText || button.value || '').toLowerCase();
+  const text = (buttonText + ' ' + (form.innerText || '')).toLowerCase();
+  const knownFreeTest = ['avi1.ru', 'prtut.ru', 'pricesmm.com', 'doctorsmm.com']
+    .includes(location.hostname.toLowerCase()) && form.id === 'get_free_form' && button.id === 'get_free_start';
+  if (!knownFreeTest && !/(бесплатн|\bfree\b|без оплаты)/i.test(buttonText)) return 'free-not-proven';
+  const paidText = text.match(/(?:к оплате|стоимость заказа|итого к оплате|total price)\s*[:\-]?\s*([0-9]+(?:[.,][0-9]+)?)/i);
+  if (paidText && parseFloat(paidText[1].replace(',', '.')) > 0) return 'paid';
+  for (const el of form.querySelectorAll('input, select, textarea')) {
+    const key = ((el.name || '') + ' ' + (el.id || '')).toLowerCase();
+    if (!/(payment|paymethod|price|cost|summa|оплат|стоимост)/i.test(key) || el.disabled ||
+        (['radio','checkbox'].includes((el.type || '').toLowerCase()) && !el.checked)) continue;
+    if (!/^(?:0(?:[.,]0+)?|free|бесплатно)$/i.test((el.value || '').trim())) return 'payment-field';
+  }
+  return 'ok';
+})"""
+
+
+def same_form_state(page, state: dict, field_sel: str) -> dict | None:
+    """Ограничить эвристику элементами одной формы; неоднозначность означает пропуск."""
+    candidates = {key: [x.get('sel') for x in (state.get(key) or []) if x.get('sel')]
+                  for key in ('fields', 'buttons')}
+    try:
+        raw = page.js('(' + SAME_FORM_JS + ')(' + json.dumps(field_sel) + ',' +
+                      json.dumps(candidates, ensure_ascii=False) + ')')
+        scoped = json.loads(raw) if isinstance(raw, str) else raw
+        if not scoped or not scoped.get('ok') or field_sel not in scoped.get('fields', []):
+            return None
+        result = dict(state)
+        for key in ('fields', 'buttons'):
+            allowed = set(scoped.get(key) or [])
+            result[key] = [x for x in (state.get(key) or []) if x.get('sel') in allowed]
+        return result
+    except OperationCancelled:
+        raise
+    except Exception:
+        return None
+
+
+def free_form_guard(page, field_sel: str, button_sel: str, target_url: str, service_url: str) -> bool:
+    """До и после измерения baseline подтвердить, что отправляется та же бесплатная форма."""
+    args = ','.join(json.dumps(v, ensure_ascii=False) for v in
+                    (field_sel, button_sel, target_url, service_url))
+    try:
+        return page.js('(' + FREE_FORM_GUARD_JS + ')(' + args + ')') == 'ok'
+    except OperationCancelled:
+        raise
+    except Exception:
+        return False
+
+
 LINK_WORDS = ("link", "url", "ссылка", "ссылк", "href", "target", "profile", "vk.com", "адрес")
 COUNT_WORDS = ("count", "amount", "quantity", "кол-во", "количество", "число")
 EMAIL_WORDS = ("email", "mail", "почта", "e-mail")
 SUBMIT_WORDS = ("отправить", "заказать", "заказ", "получить", "накрутить", "оформить",
-                "начать", "продолжить", "бесплатно",
+                "начать", "продолжить", "бесплатно", "пуск",
                 "submit", "send", "order", "start", "get ", "receive", "continue", "claim", "free")
 # Нельзя случайно нажимать платные действия, авторизацию или выход из формы.
 NON_SUBMIT_WORDS = ("отмена", "отменить", "закрыть", "назад", "войти", "регистрац", "купить",
-                    "оплат", "пополн", "тариф", "корзин", "cancel", "close", "back", "sign in",
-                    "log in", "register", "payment", "checkout", "purchase", "buy")
+                    "оплат", "пополн", "тариф", "корзин", "отзыв", "ещё больше", "еще больше",
+                    "cancel", "close", "back", "sign in", "log in", "register", "payment",
+                    "checkout", "purchase", "buy", "review")
 
 
 def pick_link_field(fields: list[dict]) -> dict | None:
@@ -622,7 +705,7 @@ def pick_submit_button(buttons: list[dict]) -> dict | None:
                 matched = True
                 break
         if any(w in attrs for w in ("submit", "send", "order", "claim", "optin", "btn-get",
-                                    "do-order")):
+                                    "do-order", "get_free_start")):
             sc += 6
             matched = True
         if any(w in attrs for w in ("theme", "nav", "header", "footer", "cookie", "legal",
@@ -825,7 +908,7 @@ def parse_timer(text: str) -> int:
 
 # Сайты на движке /testknop (DoctorSMM, Avi1, Nakruti-клоны) принимают только ссылки
 # вида vk.com/…: адрес vk.ru/… упирается в «Проверьте правильность ссылки».
-VKCOM_SITES = {"doctorsmm", "avi1", "nakruti", "lowcostsmm", "prtut", "pricesmm"}
+VKCOM_SITES = {"prskill", "doctorsmm", "avi1", "nakruti", "lowcostsmm", "prtut", "pricesmm"}
 
 
 def normalize_link(site_id: str, url: str) -> str:
@@ -1507,6 +1590,110 @@ def _run_smmprime(page, target_url: str, steps: list[str], *, dry_run: bool,
 
 # ------------------------------------------------------------------ SMMnakrutka: форма после таймера
 
+# PRSkill renders its paid order and the free giveaway next to each other.
+# Select only the uniquely identified giveaway card, and never manufacture or
+# solve its Turnstile token. An empty token means the free order is unavailable
+# to this non-interactive runner, not that delivery failed.
+PRSKILL_GIVEAWAY_JS = r"""(() => {
+  const inputs = [...document.querySelectorAll('input[placeholder="https://vk.com/***"]')];
+  const marker = document.querySelector('#giveaway-form');
+  if (inputs.length !== 1 || !marker) return JSON.stringify({state:'unexpected'});
+  const input = inputs[0], card = input.closest('div.form');
+  if (!card || !(marker.compareDocumentPosition(card) & Node.DOCUMENT_POSITION_FOLLOWING))
+    return JSON.stringify({state:'unexpected'});
+  const text = (card.innerText || '').toLowerCase().replace(/\s+/g, ' ');
+  if (!text.includes('накрутка бесплатно') || !text.includes('подписчиков вк') || !/\b10\b/.test(text))
+    return JSON.stringify({state:'unexpected'});
+  const buttons = [...card.querySelectorAll('button')].filter(b => (b.innerText || '').trim().toLowerCase() === 'заказать');
+  if (buttons.length !== 1 || buttons[0].disabled || input.disabled || input.readOnly)
+    return JSON.stringify({state:'unexpected'});
+  const extra = [...card.querySelectorAll('input, select')].filter(e =>
+    /(?:payment|paymethod|price|cost|summa|оплат|стоимост|email|password)/i.test(
+      (e.name || '') + ' ' + (e.id || '') + ' ' + (e.type || '')) && !e.disabled);
+  if (extra.length) return JSON.stringify({state:'unexpected'});
+  const token = [...card.querySelectorAll('input[name="cf-turnstile-response"]')];
+  if (token.length !== 1 || (token[0].value || '').length < 10) return JSON.stringify({state:'captcha'});
+  const selector = el => {
+    let node = el, parts = [];
+    while (node && node.nodeType === 1 && node.tagName !== 'HTML') {
+      const parent = node.parentElement;
+      if (!parent) break;
+      const siblings = [...parent.children].filter(x => x.tagName === node.tagName);
+      parts.unshift(node.tagName.toLowerCase() + (siblings.length > 1 ? ':nth-of-type(' + (siblings.indexOf(node)+1) + ')' : ''));
+      const s = parts.join(' > ');
+      if (document.querySelectorAll(s).length === 1 && document.querySelector(s) === el) return s;
+      node = parent;
+    }
+    return '';
+  };
+  const button = selector(buttons[0]);
+  if (!button) return JSON.stringify({state:'unexpected'});
+  return JSON.stringify({state:'ready', link:'input[placeholder="https://vk.com/***"]',
+                         button, value:input.value || ''});
+})()"""
+
+
+def _prskill_giveaway_state(page) -> dict:
+    try:
+        raw = page.js(PRSKILL_GIVEAWAY_JS)
+        return json.loads(raw) if isinstance(raw, str) else (raw or {})
+    except OperationCancelled:
+        raise
+    except Exception:
+        return {}
+
+
+def _run_prskill(page, svc: dict, target_url: str, steps: list[str], *, dry_run: bool, on_submit=None) -> DriverResult:
+    """Only the free VK giveaway; paid order fields and unsolved challenges are untouched."""
+    started = time.monotonic()
+    expected_url = svc.get('url') or ''
+    state: dict = {}
+    for _ in range(6):
+        if not _same_service_location(expected_url, page.js('window.location.href') or ''):
+            return DriverResult('site_broken', 'PRSkill: страница перенаправлена; заказ не отправлен', steps=steps)
+        state = _prskill_giveaway_state(page)
+        if state.get('state') != 'captcha':
+            break
+        page.wait(2000)  # only wait for the site's own passive challenge
+    if state.get('state') == 'captcha':
+        return DriverResult('captcha', 'PRSkill: бесплатная форма требует подтверждения Turnstile; '
+                            'без человека заказ не отправлен', steps=steps)
+    if state.get('state') != 'ready':
+        return DriverResult('need_human', 'PRSkill: бесплатная форма изменилась или не найдена; '
+                            'заказ не отправлен', steps=steps)
+    if not set_field(page, state['link'], target_url):
+        return DriverResult('site_broken', 'PRSkill: ссылка не сохранилась в бесплатной форме', steps=steps)
+    ready = _prskill_giveaway_state(page)
+    if (ready.get('state') != 'ready' or ready.get('link') != state['link']
+            or ready.get('button') != state['button'] or ready.get('value', '').strip() != target_url.strip()
+            or not _same_service_location(expected_url, page.js('window.location.href') or '')):
+        return DriverResult('need_human', 'PRSkill: бесплатная форма изменилась; заказ не отправлен', steps=steps)
+    if dry_run:
+        return DriverResult('ok', 'dry-run: бесплатная форма найдена, заказ не отправлен', steps=steps)
+    before = page.text() or ''
+    if on_submit:
+        on_submit()
+    again = _prskill_giveaway_state(page)
+    if (again.get('state') != 'ready' or again.get('link') != ready['link']
+            or again.get('button') != ready['button'] or again.get('value', '').strip() != target_url.strip()
+            or not _same_service_location(expected_url, page.js('window.location.href') or '')):
+        return DriverResult('need_human', 'PRSkill: форма изменилась перед кликом; проверьте возможную отправку',
+                            steps=steps, submitted=bool(on_submit))
+    if not page.click_human(ready['button']):
+        return DriverResult('need_human', 'PRSkill: результат клика неизвестен; повтор запрещён',
+                            steps=steps, submitted=True)
+    steps.append('нажата кнопка бесплатной формы PRSkill; повтор не выполняется')
+    deadline = time.monotonic() + 15
+    while time.monotonic() < deadline:
+        page.wait(1000)
+        verdict, detail = read_verdict_delta(before, page.text() or '', False, False)
+        if verdict in ('ok', 'bad_link', 'quota'):
+            return DriverResult(verdict, 'PRSkill: ' + detail, units=int(svc.get('amount') or 0),
+                                waited=int(time.monotonic() - started), steps=steps, submitted=True)
+    return DriverResult('need_human', 'PRSkill: ответ после отправки не распознан; повтор запрещён',
+                        waited=int(time.monotonic() - started), steps=steps, submitted=True)
+
+
 # У этой площадки основная видимая форма НЕ отправляет заказ. После 300 секунд
 # сама страница открывает другую форму в .t-popup_show и асинхронно заполняет
 # служебные поля. Селекторы и соответствие service/количества основаны на
@@ -2008,6 +2195,15 @@ def run(svc: dict, target_url: str, *, task_id: int = 0, dry_run: bool = False,
             page.scroll()
             page.wait(random.randint(300, 900))
 
+            # PRSkill показывает рядом платную и бесплатную формы. Обрабатывать
+            # можно только отдельно проверенную бесплатную карточку.
+            if (site_id == 'prskill' and svc.get('stype') == 'followers'
+                    and svc.get('platform') == 'vk'):
+                res = _run_prskill(page, svc, target_url, steps, dry_run=dry_run, on_submit=on_submit)
+                res.backend = backend
+                res.shot = _shot(page, shot_path)
+                return res
+
             # В SMMnakrutka модальное окно и есть настоящая форма; его нельзя
             # закрывать общим обработчиком диалогов или отправлять ложную форму под ним.
             if (site_id == 'smmnakrutka' and svc.get('stype') == 'followers'
@@ -2123,15 +2319,14 @@ def run(svc: dict, target_url: str, *, task_id: int = 0, dry_run: bool = False,
                     steps.append("поле ссылки: из памяти")
             if field is None:
                 field = pick_link_field(state.get("fields") or [])
-            if field is None:
-                # у площадок вроде LikeBoom форма появляется только после таймера
+            if field is None and not on_submit:
+                # Эвристические клики по таймеру не подходят для проверяемой
+                # кампании: заранее неизвестно, не создаёт ли клик заказ.
                 state, tried = start_timer(page, state, steps,
                                            max_wait=min(int(svc.get("hold_seconds") or 150), 200))
                 if tried:
                     field = pick_link_field(state.get("fields") or [])
-            if field is None:
-                # у площадок вроде DoctorSMM бесплатная форма прячется за кнопкой
-                # «Попробовать бесплатно» — кликаем и ищем поле ещё раз
+            if field is None and not on_submit:
                 try:
                     if page.js(FREE_BTN_JS) == "clicked":
                         steps.append("кликнула «Попробовать бесплатно» — форма раскрылась")
@@ -2147,6 +2342,12 @@ def run(svc: dict, target_url: str, *, task_id: int = 0, dry_run: bool = False,
             learned["link_sel"] = field["sel"]
             focus_sel = field["sel"]           # до клика снимаем окно с формой
             steps.append(f"поле ссылки: {field['sel'][:60]}")
+            if on_submit:
+                scoped = same_form_state(page, state, field['sel'])
+                if not scoped:
+                    return DriverResult('need_human', 'бесплатная форма и поле ссылки не связаны однозначно; '
+                                        'заказ не отправлен', backend=backend, steps=steps)
+                state = scoped
 
             typed = page.type_human(field["sel"], target_url)
             if not typed:
@@ -2170,6 +2371,11 @@ def run(svc: dict, target_url: str, *, task_id: int = 0, dry_run: bool = False,
 
             # 2b) React-панели часто рисуют кнопку только после ввода ссылки — смотрим ещё раз
             refreshed = discover(page)
+            if on_submit:
+                refreshed = same_form_state(page, refreshed, field['sel'])
+                if not refreshed:
+                    return DriverResult('need_human', 'форма изменилась после ввода ссылки; заказ не отправлен',
+                                        backend=backend, steps=steps)
             if refreshed.get("buttons"):
                 state = {**state, "buttons": refreshed["buttons"], "fields": refreshed.get("fields") or state.get("fields")}
 
@@ -2194,14 +2400,15 @@ def run(svc: dict, target_url: str, *, task_id: int = 0, dry_run: bool = False,
                 steps.append("e-mail из настроек подставлен")
 
             # 4b) форма заказа с выбором площадки: переключаем на нужную (иначе закажем «не туда»)
-            if choose_platform(page, svc.get("platform") or "vk", steps):
+            if not on_submit and choose_platform(page, svc.get("platform") or "vk", steps):
                 state = discover(page)
 
             # 5) таймер/очередь и «кнопка пока выключена» — ждём, но не дольше разумного
             waited = 0
             budget = max(20, deadline_sec - int(time.time() - started))
             button = None
-            if mem.get("submit_sel"):
+            if mem.get("submit_sel") and (not on_submit or any(
+                    b.get('sel') == mem['submit_sel'] for b in state.get('buttons') or [])):
                 # из памяти берём, только если это по-прежнему похоже на кнопку заказа:
                 # иначе застрявший селектор уводит робота на «Telegram» в выпадашке
                 same = page.js("""(() => {
@@ -2233,6 +2440,9 @@ def run(svc: dict, target_url: str, *, task_id: int = 0, dry_run: bool = False,
                 if cd:
                     waited += cd
                     steps.append(f"ждал таймер на кнопке: {cd} с")
+                if on_submit and _button_countdown(page, button['sel']) > 0:
+                    return DriverResult('quota', 'таймер бесплатной формы ещё не закончился; '
+                                        'заказ не отправлен', waited=waited, backend=backend, steps=steps)
                 spent, ready = _wait_for_ready(page, button["sel"], max_sec=max(20, budget - waited))
                 waited += spent
                 if spent:
@@ -2262,7 +2472,18 @@ def run(svc: dict, target_url: str, *, task_id: int = 0, dry_run: bool = False,
             learned["submit_sel"] = button["sel"]
             page.mouse_wiggle(2)
             if on_submit:
+                if (discover(page).get('captcha') or captcha.visible_widgets(page)
+                        or not free_form_guard(page, field['sel'], button['sel'], target_url, svc['url'])):
+                    return DriverResult('need_human', 'бесплатность или состояние именно этой формы '
+                                        'не подтверждено; заказ не отправлен', waited=waited,
+                                        backend=backend, learned=learned, steps=steps)
                 on_submit()
+                if (discover(page).get('captcha') or captcha.visible_widgets(page)
+                        or not free_form_guard(page, field['sel'], button['sel'], target_url, svc['url'])
+                        or _button_countdown(page, button['sel']) > 0):
+                    return DriverResult('need_human', 'форма изменилась перед кликом; '
+                                        'проверьте возможную отправку', waited=waited,
+                                        backend=backend, learned=learned, steps=steps, submitted=True)
             if not page.click_human(button["sel"]):
                 if on_submit:
                     return DriverResult('need_human', 'результат клика неясен; повтор не выполняем',

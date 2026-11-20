@@ -671,7 +671,7 @@
           "cooldown_min": 15,
           "max_claims_day": 6,
           "hold_seconds": 60,
-          "url": "https://ru.mrpopular.net/",
+          "url": "https://ru.mrpopular.net/?category=socialnetworks&type=vk&service=subscribers",
           "label": "Подписчики ВК",
           "confirmed": false,
           "subject_note": "сервис не уточняет объект — подойдёт и сообществу, и странице"

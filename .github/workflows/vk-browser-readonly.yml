@@ -40,5 +40,6 @@ jobs:
           python -m unittest discover -s tests -p 'test_verifier.py' -q
           python -m unittest discover -s tests -p 'test_live_ci.py' -q
           python -m unittest discover -s tests -p 'test_ci_progress.py' -q
+          python -m unittest discover -s tests -p 'test_free_form_safety.py' -q
       - name: Read VK and inspect public forms without ordering
         run: python tools/ci_browser_probe.py

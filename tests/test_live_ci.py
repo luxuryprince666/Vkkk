@@ -9,9 +9,10 @@ import tempfile
 import unittest
 import zlib
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 from tools import run_live_ci
+from tools.ci_progress import ProgressError
 
 
 class LiveCIReportTests(unittest.TestCase):
@@ -19,6 +20,16 @@ class LiveCIReportTests(unittest.TestCase):
         with patch.dict(os.environ, {'GITHUB_ACTIONS': '', 'VKKK_LIVE_RUN': ''}):
             with self.assertRaisesRegex(RuntimeError, 'одноразового'):
                 run_live_ci.run('https://vk.ru/club1', Path('/unused'))
+
+    def test_ci_rerun_attempt_cannot_repeat_the_campaign(self):
+        env = {'GITHUB_ACTIONS': 'true', 'VKKK_LIVE_RUN': 'authorized-once',
+               'GITHUB_RUN_ATTEMPT': '2', 'GITHUB_EVENT_NAME': 'push',
+               'GITHUB_REPOSITORY': 'luxuryprince666/Vkkk',
+               'GITHUB_REF': 'refs/heads/arena/e372c48b-vkkk'}
+        with patch.dict(os.environ, env), patch.object(run_live_ci.db, 'init_db') as init:
+            with self.assertRaisesRegex(RuntimeError, 'одноразового'):
+                run_live_ci.run('https://vk.ru/club243396555', Path('/unused'))
+        init.assert_not_called()
 
     def test_compact_result_keeps_unknown_distinct_from_zero(self):
         row = {'site_name': 'Site', 'baseline_count': 1, 'final_count': None,
@@ -71,6 +82,101 @@ class LiveCIReportTests(unittest.TestCase):
         self.assertEqual(restored, campaign)
         self.assertEqual(saved, campaign)
         self.assertIn('Тест — не проверено', text)
+
+
+class LiveCIFlowTests(unittest.TestCase):
+    def test_one_shot_records_full_terminal_snapshot_and_uses_long_window(self):
+        from contextlib import contextmanager
+        @contextmanager
+        def browser(**_kwargs):
+            yield 'playwright', type('Page', (), {'js': lambda self, _: 2})()
+        pub = MagicMock()
+        pub.create.return_value = 42
+        campaign = {'id': 1, 'status': 'completed', 'channel_url': 'https://vk.ru/club123',
+                    'initial_count': 1, 'current_count': 1, 'growth_timeout_sec': 900,
+                    'results': [], 'baseline_samples': []}
+        env = {'GITHUB_ACTIONS': 'true', 'VKKK_LIVE_RUN': 'authorized-once',
+               'GITHUB_RUN_ATTEMPT': '1', 'GITHUB_EVENT_NAME': 'push',
+               'GITHUB_REPOSITORY': 'luxuryprince666/Vkkk',
+               'GITHUB_REF': 'refs/heads/arena/e372c48b-vkkk'}
+        with tempfile.TemporaryDirectory() as folder, patch.dict(os.environ, env), \
+             patch.object(run_live_ci.db, 'init_db'), patch.object(run_live_ci.db, 'set_setting') as setting, \
+             patch.object(run_live_ci.stealth, 'backend_status',
+                          return_value={'backends': [{'id': 'playwright', 'ready': True}]}), \
+             patch.object(run_live_ci.stealth, 'open_page', browser), \
+             patch.object(run_live_ci.verifier, '_counter', return_value=(1, 'direct', 'виджет VK')), \
+             patch.object(run_live_ci.verifier, 'start', return_value={'campaign_id': 1}), \
+             patch.object(run_live_ci.verifier, 'status', return_value=campaign), \
+             patch.object(run_live_ci, 'GitHubProgress', return_value=pub), \
+             patch.object(run_live_ci.time, 'sleep'), patch.object(run_live_ci.signal, 'signal'), \
+             contextlib.redirect_stdout(io.StringIO()):
+            code = run_live_ci.run('https://vk.ru/club243396555', Path(folder))
+            saved = json.loads((Path(folder) / 'vk-live-report.json').read_text(encoding='utf-8'))
+        self.assertEqual(code, 0)
+        self.assertEqual(saved, campaign)
+        setting.assert_any_call('verify_timeout_sec', '900')
+        setting.assert_any_call('captcha_autosolve', '0')
+        setting.assert_any_call('nojs_enabled', '0')
+        self.assertEqual(pub.update.call_args.kwargs['conclusion'], 'success')
+        self.assertEqual(pub.update.call_args.args[0]['campaign'], campaign)
+
+    def test_no_progress_channel_means_no_order_is_started(self):
+        from contextlib import contextmanager
+        @contextmanager
+        def browser(**_kwargs):
+            yield 'playwright', type('Page', (), {'js': lambda self, _: 2})()
+        env = {'GITHUB_ACTIONS': 'true', 'VKKK_LIVE_RUN': 'authorized-once',
+               'GITHUB_RUN_ATTEMPT': '1', 'GITHUB_EVENT_NAME': 'push',
+               'GITHUB_REPOSITORY': 'luxuryprince666/Vkkk',
+               'GITHUB_REF': 'refs/heads/arena/e372c48b-vkkk'}
+        with tempfile.TemporaryDirectory() as folder, patch.dict(os.environ, env), \
+             patch.object(run_live_ci.db, 'init_db'), patch.object(run_live_ci.db, 'set_setting'), \
+             patch.object(run_live_ci.stealth, 'backend_status',
+                          return_value={'backends': [{'id': 'playwright', 'ready': True}]}), \
+             patch.object(run_live_ci.stealth, 'open_page', browser), \
+             patch.object(run_live_ci.verifier, '_counter', return_value=(1, 'direct', 'виджет VK')), \
+             patch.object(run_live_ci.verifier, 'start') as start, \
+             patch.object(run_live_ci, 'GitHubProgress', side_effect=ProgressError('offline')), \
+             patch.object(run_live_ci.time, 'sleep'), contextlib.redirect_stdout(io.StringIO()):
+            code = run_live_ci.run('https://vk.ru/club243396555', Path(folder))
+        self.assertEqual(code, 2)
+        start.assert_not_called()
+
+    def test_lost_progress_channel_stops_campaign_and_keeps_unknowns(self):
+        from contextlib import contextmanager
+        @contextmanager
+        def browser(**_kwargs):
+            yield 'playwright', type('Page', (), {'js': lambda self, _: 2})()
+        pub = MagicMock()
+        pub.create.return_value = 42
+        pub.update.side_effect = [ProgressError('offline'), None]
+        running = {'id': 1, 'status': 'running', 'channel_url': 'https://vk.ru/club123',
+                   'initial_count': 1, 'current_count': 1,
+                   'results': [{'id': 2, 'site_name': 'Test', 'status': 'running',
+                                'baseline_count': 1, 'added_count': None, 'samples': [], 'attempts': []}]}
+        stopped = {**running, 'status': 'stopped', 'results': [{**running['results'][0], 'status': 'unverified'}]}
+        env = {'GITHUB_ACTIONS': 'true', 'VKKK_LIVE_RUN': 'authorized-once',
+               'GITHUB_RUN_ATTEMPT': '1', 'GITHUB_EVENT_NAME': 'push',
+               'GITHUB_REPOSITORY': 'luxuryprince666/Vkkk',
+               'GITHUB_REF': 'refs/heads/arena/e372c48b-vkkk'}
+        with tempfile.TemporaryDirectory() as folder, patch.dict(os.environ, env), \
+             patch.object(run_live_ci.db, 'init_db'), patch.object(run_live_ci.db, 'set_setting'), \
+             patch.object(run_live_ci.stealth, 'backend_status',
+                          return_value={'backends': [{'id': 'playwright', 'ready': True}]}), \
+             patch.object(run_live_ci.stealth, 'open_page', browser), \
+             patch.object(run_live_ci.verifier, '_counter', return_value=(1, 'direct', 'виджет VK')), \
+             patch.object(run_live_ci.verifier, 'start', return_value={'campaign_id': 1}), \
+             patch.object(run_live_ci.verifier, 'status', side_effect=[running, stopped]), \
+             patch.object(run_live_ci.verifier, 'stop') as stop, \
+             patch.object(run_live_ci, 'GitHubProgress', return_value=pub), \
+             patch.object(run_live_ci.time, 'sleep'), patch.object(run_live_ci.signal, 'signal'), \
+             contextlib.redirect_stdout(io.StringIO()):
+            code = run_live_ci.run('https://vk.ru/club243396555', Path(folder))
+            saved = json.loads((Path(folder) / 'vk-live-report.json').read_text(encoding='utf-8'))
+        self.assertEqual(code, 2)
+        stop.assert_called_once_with(1)
+        self.assertIsNone(saved['results'][0]['added_count'])
+        self.assertEqual(pub.update.call_args.kwargs['conclusion'], 'failure')
 
 
 if __name__ == '__main__':

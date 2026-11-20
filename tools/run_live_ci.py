@@ -21,6 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from core import db, delivery, network, stealth, verifier  # noqa: E402
+from tools.ci_progress import GitHubProgress, ProgressError  # noqa: E402
 
 
 TERMINAL = {'working', 'not_working', 'unverified', 'skipped', 'rejected'}
@@ -65,7 +66,10 @@ def emit_report(campaign: dict, output_dir: Path) -> None:
     (output_dir / 'vk-live-report.json').write_bytes(data + b'\n')
     (output_dir / 'vk-live-report.txt').write_text(verifier.format_report(campaign) + '\n', encoding='utf-8')
     encoded = base64.b64encode(zlib.compress(data, level=9)).decode('ascii')
-    chunks = [encoded[i:i + 3500] for i in range(0, len(encoded), 3500)] or ['']
+    # Reserve annotations: Actions accepts at most 10 notices per step.
+    chunks = [encoded[i:i + 48000] for i in range(0, len(encoded), 48000)] or ['']
+    if len(chunks) > 9:
+        raise ValueError('Отчёт не помещается в безопасное число аннотаций')
     for i, chunk in enumerate(chunks, 1):
         notice('REPORT_CHUNK', {'part': i, 'total': len(chunks), 'zlib_base64': chunk})
     notice('FINISHED', {'status': campaign.get('status'), 'initial': campaign.get('initial_count'),
@@ -74,7 +78,11 @@ def emit_report(campaign: dict, output_dir: Path) -> None:
 
 
 def run(target: str, output_dir: Path, *, max_seconds: int = 18000, poll_seconds: float = 5) -> int:
-    if os.environ.get('GITHUB_ACTIONS') != 'true' or os.environ.get('VKKK_LIVE_RUN') != 'authorized-once':
+    permitted = {'GITHUB_ACTIONS': 'true', 'VKKK_LIVE_RUN': 'authorized-once',
+                 'GITHUB_RUN_ATTEMPT': '1', 'GITHUB_EVENT_NAME': 'push',
+                 'GITHUB_REPOSITORY': 'luxuryprince666/Vkkk',
+                 'GITHUB_REF': 'refs/heads/arena/e372c48b-vkkk'}
+    if any(os.environ.get(k) != v for k, v in permitted.items()) or target != 'https://vk.ru/club243396555':
         raise RuntimeError('Запуск реальных заявок разрешён только из одноразового CI-задания')
     db.init_db()
     # CI has no interactive screen; do not wait for an invisible human or invent an email.
@@ -85,6 +93,10 @@ def run(target: str, output_dir: Path, *, max_seconds: int = 18000, poll_seconds
     db.set_setting('captcha_ocr', '0')
     db.set_setting('nojs_enabled', '0')
     db.set_setting('order_email', '')
+    # Some services advertise delivery within 10–15 minutes. A five-minute
+    # no-growth result would be misleading, so observe each completed driver
+    # for 15 minutes (longer if growth has not yet settled).
+    db.set_setting('verify_timeout_sec', '900')
     available = stealth.backend_status()
     if not any(b.get('id') == 'playwright' and b.get('ready') for b in available['backends']):
         notice('BLOCKED', {'reason': 'Playwright/Chromium недоступен; заявок нет'})
@@ -112,10 +124,30 @@ def run(target: str, output_dir: Path, *, max_seconds: int = 18000, poll_seconds
         notice('BLOCKED', {'reason': 'Точный счётчик недоступен; заявок нет',
                            'detail': verifier._safe_detail(str(exc))})
         return 2
-    notice('PREFLIGHT', {'url': normalized, 'readings': [first, second],
-                          'sources': [first_source, second_source], 'orders_sent': 0})
+    preflight = {'url': normalized, 'readings': [first, second],
+                 'sources': [first_source, second_source], 'orders_sent': 0,
+                 'observation_window_sec': 900, 'captcha_autosolve': False}
+    notice('PREFLIGHT', preflight)
 
-    started = verifier.start(normalized)
+    # A separate check run keeps complete snapshots visible via GitHub's API
+    # even while the job is running. Never start orders without this channel:
+    # workflow-command notices are capped at ten per step.
+    try:
+        publisher = GitHubProgress(name='VK sequential live verification snapshot')
+        check_id = publisher.create({'phase': 'preflight', 'preflight': preflight, 'campaign': None})
+    except ProgressError as exc:
+        notice('BLOCKED', {'reason': 'Канал сохранения прогресса недоступен; заявок нет', 'detail': str(exc)})
+        return 2
+    notice('PROGRESS_CHECK', {'check_id': check_id})
+    try:
+        started = verifier.start(normalized)
+    except Exception:
+        try:
+            publisher.update({'phase': 'start_failed', 'preflight': preflight, 'campaign': None},
+                             title='Проверка не запущена', conclusion='failure')
+        except ProgressError:
+            pass
+        raise
     cid = started['campaign_id']
     begin = time.monotonic()
     requested_stop = [False]
@@ -131,11 +163,41 @@ def run(target: str, output_dir: Path, *, max_seconds: int = 18000, poll_seconds
     first_growth_reported: set[int] = set()
     last_phase = None
     stop_sent = False
+    last_signature = None
+    last_published = 0.0
+    reporting_error = ''
     while True:
         c = verifier.status(cid)
         if not c:
             notice('BLOCKED', {'reason': 'Кампания исчезла из базы; результат неизвестен'})
+            try:
+                publisher.update({'phase': 'missing', 'preflight': preflight, 'campaign': None},
+                                 title='Состояние кампании неизвестно', conclusion='failure')
+            except ProgressError:
+                pass
             return 2
+        snapshot = {'phase': c['status'], 'preflight': preflight, 'campaign': c,
+                    'updated_at': time.time(), 'actions_run_id': os.environ.get('GITHUB_RUN_ID')}
+        signature = (c['status'], c.get('current_service'), c.get('current_phase'), c.get('current_count'),
+                     tuple((r['id'], r.get('status'), r.get('baseline_count'), r.get('submitted_at'),
+                            r.get('final_count'), len(r.get('samples') or []), len(r.get('attempts') or []))
+                           for r in c.get('results', [])))
+        # A publication failure stops future sites rather than silently losing
+        # the measurement trail. The current driver is allowed to close safely.
+        if (not reporting_error and c['status'] in ('running', 'stopping')
+                and (signature != last_signature or time.monotonic() - last_published >= 30)):
+            try:
+                publisher.update(snapshot, title='Последовательная проверка выполняется')
+                last_signature, last_published = signature, time.monotonic()
+            except ProgressError as exc:
+                reporting_error = str(exc)
+                notice('REPORTING_ERROR', {'detail': reporting_error, 'action': 'останавливаем новые заявки'})
+                if not stop_sent:
+                    stop_sent = True
+                    try:
+                        verifier.stop(cid)
+                    except ValueError:
+                        pass
         if c.get('initial_count') is not None and not initial_reported:
             initial_reported = True
             notice('BASELINE', {'count': c['initial_count'], 'samples': c.get('baseline_samples')})
@@ -166,12 +228,21 @@ def run(target: str, output_dir: Path, *, max_seconds: int = 18000, poll_seconds
                 if row['id'] not in result_reported:
                     notice('SITE_RESULT', compact_result(row))
             emit_report(c, output_dir)
-            return 0 if c['status'] == 'completed' else 2
+            try:
+                publisher.update(snapshot, title='Последовательная проверка завершена',
+                                 conclusion='success' if c['status'] == 'completed' and not reporting_error else 'failure')
+            except ProgressError as exc:
+                reporting_error = str(exc)
+                notice('REPORTING_ERROR', {'detail': reporting_error, 'action': 'отчёт сохранён отдельно'})
+            return 0 if c['status'] == 'completed' and not reporting_error else 2
         if (requested_stop[0] or time.monotonic() - begin >= max_seconds) and not stop_sent:
             stop_sent = True
             notice('STOP_REQUESTED', {'reason': 'остановка по сигналу или временному бюджету; '
                                               'предыдущая заявка может продолжаться'})
-            verifier.stop(cid)
+            try:
+                verifier.stop(cid)
+            except ValueError:
+                pass
         time.sleep(max(.1, poll_seconds))
 
 

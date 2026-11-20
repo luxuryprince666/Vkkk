@@ -129,17 +129,17 @@ def observe_growth(
             return Observation('unverified', last_count, None,
                                reason='Счётчик недоступен во время стабилизации: ' + last_error)
         if at >= deadline and not confirmed:
-            # Если первый положительный отсчёт сделан у границы 5 минут, ждём
+            # Если первый положительный отсчёт сделан у границы окна, ждём
             # ещё одно измерение: один скачок нельзя считать подтверждением.
             awaiting_confirmation = (candidate_at is not None and candidate_at <= deadline
                                      and hits == 1 and at <= deadline + poll_sec)
             if not awaiting_confirmation:
                 if last_success is None or last_success < deadline:
                     return Observation('unverified', last_count if last_success is not None else None, None,
-                                       reason='Нет надёжного измерения счётчика к концу 5 минут: ' + last_error)
+                                       reason='Нет надёжного измерения счётчика к концу окна наблюдения: ' + last_error)
                 if last_count > baseline and candidate_at and candidate_at > deadline:
                     return Observation('unverified', last_count, None,
-                                       reason='Первое измерение роста получено после 5 минут; время начала неизвестно')
+                                       reason='Первое измерение роста получено после окна наблюдения; время начала неизвестно')
                 return Observation('not_working', last_count, last_count - baseline,
                                    reason='За период ожидания подтверждённого чистого прироста не обнаружено')
         now = clock()
@@ -827,8 +827,9 @@ def history(limit: int = 20) -> list[dict]:
 
 def format_report(campaign: dict) -> str:
     """Текстовый отчёт: пропуск/недоступный счётчик обозначаются «нет данных», а не нулём."""
-    labels = {'working': 'работает', 'not_working': 'не работает', 'unverified': 'не проверено',
-              'skipped': 'не проверено', 'pending': 'ожидает', 'running': 'проверяется'}
+    labels = {'working': 'рост обнаружен', 'not_working': 'рост не обнаружен в окне наблюдения',
+              'unverified': 'не проверено', 'skipped': 'не проверено', 'rejected': 'отклонено площадкой',
+              'pending': 'ожидает', 'running': 'проверяется'}
     def num(value):
         return 'нет данных' if value is None else str(value)
     started = campaign.get('started_at')
@@ -837,6 +838,8 @@ def format_report(campaign: dict) -> str:
              f"Начало проверки (UTC): {timestamp}",
              f"Исходный счётчик: {num(campaign.get('initial_count'))}",
              f"Последний счётчик: {num(campaign.get('current_count'))}",
+             f"Окно наблюдения после завершения драйвера: {num(campaign.get('growth_timeout_sec'))} с",
+             f"Интервал опроса счётчика: {num(campaign.get('poll_interval_sec'))} с",
              f"Состояние проверки: {campaign.get('status', '')}"]
     if campaign.get('error_reason'):
         lines.append('Причина остановки: ' + str(campaign['error_reason']))
