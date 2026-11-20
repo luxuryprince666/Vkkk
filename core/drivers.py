@@ -569,8 +569,8 @@ FREE_FORM_GUARD_JS = r"""((fieldSel, buttonSel, expectedValue, expectedUrl) => {
   if (button.disabled || button.getAttribute('aria-disabled') === 'true') return 'button-disabled';
   try {
     const wanted = new URL(expectedUrl), current = new URL(location.href);
-    if (wanted.origin !== current.origin || wanted.pathname.replace(/\/$/,'') !== current.pathname.replace(/\/$/,''))
-      return 'redirect';
+    if (wanted.origin !== current.origin || wanted.pathname.replace(/\/$/,'') !== current.pathname.replace(/\/$/,'') ||
+        wanted.search !== current.search) return 'redirect';
     const action = new URL(button.getAttribute('formaction') || form.getAttribute('action') || location.href,
                            location.href);
     if (action.origin !== current.origin || !['http:', 'https:'].includes(action.protocol)) return 'external-action';
@@ -579,7 +579,14 @@ FREE_FORM_GUARD_JS = r"""((fieldSel, buttonSel, expectedValue, expectedUrl) => {
   const text = (buttonText + ' ' + (form.innerText || '')).toLowerCase();
   const knownFreeTest = ['avi1.ru', 'prtut.ru', 'pricesmm.com', 'doctorsmm.com']
     .includes(location.hostname.toLowerCase()) && form.id === 'get_free_form' && button.id === 'get_free_start';
-  if (!knownFreeTest && !/(бесплатн|\bfree\b|без оплаты)/i.test(buttonText)) return 'free-not-proven';
+  const params = new URLSearchParams(location.search);
+  const knownMrFree = location.hostname.toLowerCase() === 'ru.mrpopular.net' &&
+    params.get('category') === 'socialnetworks' && params.get('type') === 'vk' &&
+    params.get('service') === 'subscribers' && form.id === 'freePromoForm' && button.id === 'freePromoRun';
+  if (!knownFreeTest && !knownMrFree && !/(бесплатн|\bfree\b|без оплаты)/i.test(buttonText)) return 'free-not-proven';
+  const captchaTokens = [...form.querySelectorAll('input[name="cf-turnstile-response"], '
+    + 'input[name="g-recaptcha-response"], input[name="h-captcha-response"]')];
+  if (captchaTokens.length && !captchaTokens.some(el => (el.value || '').length >= 10)) return 'captcha-unconfirmed';
   const paidText = text.match(/(?:к оплате|стоимость заказа|итого к оплате|total price)\s*[:\-]?\s*([0-9]+(?:[.,][0-9]+)?)/i);
   if (paidText && parseFloat(paidText[1].replace(',', '.')) > 0) return 'paid';
   for (const el of form.querySelectorAll('input, select, textarea')) {

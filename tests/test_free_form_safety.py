@@ -32,6 +32,12 @@ PRSKILL_HTML = '''<!doctype html><html><body>
 </div>
 <div><h2>Платный заказ</h2><button>Создать заказ</button></div>
 </body></html>'''
+MRPOPULAR_URL = 'https://ru.mrpopular.net/?category=socialnetworks&type=vk&service=subscribers'
+MRPOPULAR_HTML = '''<!doctype html><html><body><form id="freePromoForm">
+  <input id="link" name="link" value="https://vk.ru/club123">
+  <input type="hidden" name="cf-turnstile-response" value="">
+  <button id="freePromoRun" type="button">Накрутить</button>
+</form></body></html>'''
 
 
 def browser_ready():
@@ -55,6 +61,8 @@ class FreeFormBrowserTests(unittest.TestCase):
             status=200, content_type='text/html; charset=utf-8', body=cls.html))
         cls.page._p.route('https://prskill.ru/**', lambda route: route.fulfill(
             status=200, content_type='text/html; charset=utf-8', body=cls.prskill_html))
+        cls.page._p.route('https://ru.mrpopular.net/**', lambda route: route.fulfill(
+            status=200, content_type='text/html; charset=utf-8', body=MRPOPULAR_HTML))
 
     @classmethod
     def tearDownClass(cls):
@@ -96,6 +104,16 @@ class FreeFormBrowserTests(unittest.TestCase):
         self.page._p.locator('#free-order').evaluate("e => e.innerText = 'Заказать бесплатно'")
         self.page._p.locator('#free').evaluate("e => e.insertAdjacentHTML('beforeend','К оплате: 12 руб.')")
         self.assertFalse(guard())
+
+    def test_mrpopular_free_form_requires_site_provided_captcha_token(self):
+        self.page._p.goto(MRPOPULAR_URL)
+        guard = lambda url=MRPOPULAR_URL: drivers.free_form_guard(
+            self.page, '#link', '#freePromoRun', TARGET, url)
+        self.assertFalse(guard())
+        self.page._p.locator('input[name="cf-turnstile-response"]').evaluate(
+            "e => e.value = 'synthetic-token-for-offline-test'")
+        self.assertTrue(guard())
+        self.assertFalse(guard('https://ru.mrpopular.net/?category=socialnetworks&type=vk&service=likes'))
 
     def test_prskill_requires_site_provided_token_before_any_click(self):
         self.page._p.goto(PRSKILL_URL)

@@ -89,6 +89,30 @@ def main() -> int:
                     if site['id'] == 'prskill':
                         special = drivers._prskill_giveaway_state(page)
                         out['prskill_state'] = special.get('state')
+                    if site['id'] in ('doctorsmm', 'smm8'):
+                        # Only public structure: never collect input values, cookies or tokens.
+                        out['extra_structure'] = page._p.evaluate('''() => {
+                          const visible = e => !!(e.getBoundingClientRect().width &&
+                              e.getBoundingClientRect().height && getComputedStyle(e).visibility !== 'hidden');
+                          const fields = [...document.querySelectorAll('input, select, textarea')]
+                            .filter(e => /free|optin|link|captcha|turnstile/i.test(e.id + ' ' + e.name + ' ' + e.placeholder))
+                            .map(e => ({tag:e.tagName,id:e.id,name:e.name,type:e.type,ph:e.placeholder,
+                              visible:visible(e)})).slice(0,30);
+                          const buttons = [...document.querySelectorAll('button, a, input[type=submit]')]
+                            .filter(e => /free|optin|get it now|попробовать|бесплатно/i.test(
+                              e.id + ' ' + e.className + ' ' + (e.innerText || e.value || '')))
+                            .map(e => ({tag:e.tagName,id:e.id,classes:String(e.className).slice(0,90),
+                              text:(e.innerText || e.value || '').trim().slice(0,100),visible:visible(e),
+                              href:e.tagName === 'A' ? (e.getAttribute('href') || '').split('?')[0] : ''})).slice(0,25);
+                          const forms = [...document.querySelectorAll('form')].map(e => ({id:e.id,
+                            method:e.getAttribute('method') || '', action:(e.getAttribute('action') || '').split('?')[0],
+                            visible:visible(e)})).slice(0,20);
+                          const frames = [...document.querySelectorAll('iframe')].map(e => ({id:e.id,
+                            src:(e.getAttribute('src') || '').split('?')[0],visible:visible(e)})).slice(0,20);
+                          const scripts = [...document.querySelectorAll('script[src]')].map(e =>
+                            (e.getAttribute('src') || '').split('?')[0]).slice(0,30);
+                          return {fields, buttons, forms, frames, scripts};
+                        }''')
                     # Describe the target form and the explicitly identified free
                     # section without collecting field values, cookies or tokens.
                     out['form_scope'] = page._p.evaluate('''(sel) => {
