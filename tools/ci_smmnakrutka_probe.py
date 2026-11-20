@@ -11,6 +11,7 @@ import json
 import sys
 import time
 from pathlib import Path
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -27,7 +28,8 @@ PUBLIC_STRUCTURE = r'''() => {
     forms:[...p.querySelectorAll('form')].map(f=>({id:f.id, visible:vis(f),
       actionType:f.getAttribute('data-formactiontype')||'',
       fields:[...f.querySelectorAll('input,select')].map(e=>({name:e.name,type:e.type,
-        visible:vis(e), present:!!String(e.value||'').trim(),
+        visible:vis(e), present:!!String(e.value||'').trim(), required:!!e.required,
+        ariaRequired:e.getAttribute('aria-required')||'',tildaRequired:e.getAttribute('data-tilda-req')||'',
         publicValue:['service','url_page','quantity','quantity-text'].includes(e.name) ? e.value : undefined})).slice(0,25),
       buttons:[...f.querySelectorAll('button')].map(b=>({text:(b.innerText||'').trim().slice(0,100),
         type:b.type,visible:vis(b)})).slice(0,5)})).slice(0,3)})).slice(0,4);
@@ -42,8 +44,17 @@ def main() -> int:
         with stealth.open_page(headless=True, prefer='playwright') as (backend, page):
             if backend != 'playwright':
                 raise RuntimeError('Playwright недоступен')
-            page._p.route('**/*', lambda route: route.continue_()
-                          if route.request.method in ('GET', 'HEAD') else route.abort())
+            blocked = []
+            def readonly_route(route):
+                request = route.request
+                if request.method in ('GET', 'HEAD'):
+                    return route.continue_()
+                parsed = urlsplit(request.url)
+                item = {'method': request.method, 'host': parsed.hostname or '', 'path': parsed.path}
+                if item not in blocked and len(blocked) < 30:
+                    blocked.append(item)  # no body, query parameters or token values
+                return route.abort()
+            page._p.route('**/*', readonly_route)
             page.goto(URL, wait=1800)
             page.mouse_wiggle(2)
             page.scroll()
@@ -61,11 +72,12 @@ def main() -> int:
                           'popups': page._p.evaluate(PUBLIC_STRUCTURE)}
                 samples.append(sample)
                 publisher.update({'phase': 'наблюдение без ввода ссылки', 'orders_sent': 0,
-                                  'ad_close': close, 'samples': samples}, title='Осмотр бесплатной формы')
+                                  'ad_close': close, 'samples': samples, 'blocked_requests': blocked},
+                                 title='Осмотр бесплатной формы')
                 if state == 'ready':
                     break
-        publisher.update({'phase': 'завершено', 'orders_sent': 0, 'ad_close': close, 'samples': samples},
-                         title='Осмотр без заявок завершён', conclusion='success')
+        publisher.update({'phase': 'завершено', 'orders_sent': 0, 'ad_close': close, 'samples': samples,
+                          'blocked_requests': blocked}, title='Осмотр без заявок завершён', conclusion='success')
         notice('POPUP_READ_ONLY', {'orders_sent': 0, 'ad_close': close, 'last': samples[-1] if samples else None})
         return 0
     except Exception as exc:

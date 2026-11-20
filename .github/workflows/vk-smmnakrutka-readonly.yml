@@ -1,5 +1,6 @@
 name: SMMnakrutka free popup diagnostic (no orders)
 
+# Record only blocked request hosts/paths and requirement flags, never tokens.
 on:
   push:
     branches:
