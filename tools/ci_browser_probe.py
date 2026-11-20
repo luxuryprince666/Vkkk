@@ -89,6 +89,23 @@ def main() -> int:
                     if site['id'] == 'prskill':
                         special = drivers._prskill_giveaway_state(page)
                         out['prskill_state'] = special.get('state')
+                    if site['id'] == 'smmnakrutka':
+                        out['smmnakrutka_state'] = drivers._smmnakrutka_state(page, 'vk', 10).get('state')
+                        # A visible popup may be an advert or a countdown, not the free form.
+                        # Capture only structure, never input/token values.
+                        out['smmnakrutka_popups'] = page._p.evaluate('''() => {
+                          const vis = e => { const r=e.getBoundingClientRect(),s=getComputedStyle(e);
+                            return r.width>4 && r.height>4 && s.display!=='none' && s.visibility!=='hidden'; };
+                          return [...document.querySelectorAll('.t-popup.t-popup_show')].filter(vis).map(p => ({
+                            id:p.id, classes:String(p.className).slice(0,100),
+                            text:(p.innerText || '').trim().replace(/\\s+/g,' ').slice(0,400),
+                            forms:[...p.querySelectorAll('form')].map(f=>({id:f.id,visible:vis(f),
+                              method:f.getAttribute('method')||'',actionType:f.getAttribute('data-formactiontype')||'',
+                              fields:[...f.querySelectorAll('input,select')].map(e=>({name:e.name,id:e.id,
+                                type:e.type,visible:vis(e)})).slice(0,25),
+                              buttons:[...f.querySelectorAll('button')].map(e=>({text:(e.innerText||'').trim(),
+                                type:e.type,visible:vis(e)})).slice(0,5)})).slice(0,5)})).slice(0,5);
+                        }''')
                     if site['id'] in ('doctorsmm', 'smm8'):
                         # Only public structure: never collect input values, cookies or tokens.
                         out['extra_structure'] = page._p.evaluate('''() => {
