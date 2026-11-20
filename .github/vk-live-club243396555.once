@@ -1,3 +1,4 @@
 One-off authorized sequential free-service verification
 Target: https://vk.ru/club243396555
 Do not edit this marker or re-run the workflow after an ambiguous submission.
+The first workflow was skipped before a runner or any order started; this marker activates the corrected guard.
