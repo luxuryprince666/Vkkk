@@ -43,6 +43,14 @@ SMM8_HTML = '''<!doctype html><html><body><div id="free" data-code="vkfollowers"
   <form id="optinFormLoggedIn"><input id="inputOptinLinkLoggedIn" value="https://vk.com/club123">
     <input id="btnOptinLoggedIn" type="submit" value="Get It Now">
   </form></div></body></html>'''
+SMM_AD_URL = 'https://smmnakrutka.ru/free-vk-followers'
+SMM_AD_HTML = '''<!doctype html><html><body><div class="t945__popup t-popup t-popup_show">
+Подписчики ВК без ожидания
+<button type="button" class="t-popup__close-wrapper" aria-label="Закрыть диалоговое окно"
+  onclick="window.closeCount=(window.closeCount||0)+1;this.parentNode.classList.remove('t-popup_show')">×</button>
+<form id="form515650861" data-formactiontype="0" method="POST">
+  <button type="button" onclick="window.purchased=(window.purchased||0)+1">Купить за 0,39 р.</button>
+</form></div></body></html>'''
 
 
 def browser_ready():
@@ -70,6 +78,8 @@ class FreeFormBrowserTests(unittest.TestCase):
             status=200, content_type='text/html; charset=utf-8', body=MRPOPULAR_HTML))
         cls.page._p.route('https://smm8.com/**', lambda route: route.fulfill(
             status=200, content_type='text/html; charset=utf-8', body=SMM8_HTML))
+        cls.page._p.route('https://smmnakrutka.ru/**', lambda route: route.fulfill(
+            status=200, content_type='text/html; charset=utf-8', body=SMM_AD_HTML))
 
     @classmethod
     def tearDownClass(cls):
@@ -121,6 +131,20 @@ class FreeFormBrowserTests(unittest.TestCase):
             "e => e.value = 'synthetic-token-for-offline-test'")
         self.assertTrue(guard())
         self.assertFalse(guard('https://ru.mrpopular.net/?category=socialnetworks&type=vk&service=likes'))
+
+    def test_smmnakrutka_closes_only_the_named_paid_ad_not_its_buy_button(self):
+        self.page._p.goto(SMM_AD_URL)
+        self.assertEqual(drivers._smmnakrutka_close_paid_ad(self.page), 'closed')
+        self.assertEqual(self.page.js('window.closeCount || 0'), 1)
+        self.assertEqual(self.page.js('window.purchased || 0'), 0)
+        self.assertEqual(drivers._smmnakrutka_close_paid_ad(self.page), 'none')
+
+    def test_smmnakrutka_does_not_close_an_unexpected_ad(self):
+        self.page._p.goto(SMM_AD_URL)
+        self.page._p.locator('#form515650861').evaluate("e => e.dataset.formactiontype = '2'")
+        self.assertEqual(drivers._smmnakrutka_close_paid_ad(self.page), 'unsafe')
+        self.assertEqual(self.page.js('window.closeCount || 0'), 0)
+        self.assertEqual(self.page.js('window.purchased || 0'), 0)
 
     def test_smm8_guard_requires_the_specific_free_vk_widget(self):
         self.page._p.goto(SMM8_URL)

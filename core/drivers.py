@@ -1847,6 +1847,42 @@ def _same_service_location(expected: str, actual: str, *, compare_query: bool = 
         return False
 
 
+# This paid advert is initially over the free page. Close ONLY its explicitly
+# labelled close control, never its buy button or the eventual free order modal.
+SMMNAKRUTKA_AD_CLOSE_JS = r"""(() => {
+  const vis = e => { const r=e.getBoundingClientRect(), s=getComputedStyle(e);
+    return r.width>4 && r.height>4 && s.display!=='none' && s.visibility!=='hidden'; };
+  const ads=[...document.querySelectorAll('.t945__popup.t-popup.t-popup_show')].filter(vis);
+  if (!ads.length) return 'none';
+  if (ads.length !== 1) return 'unsafe';
+  const ad=ads[0], forms=[...ad.querySelectorAll('form')], text=(ad.innerText||'').toLowerCase();
+  const close=[...ad.querySelectorAll('button.t-popup__close-wrapper[aria-label="Закрыть диалоговое окно"]')]
+    .filter(vis);
+  if (forms.length !== 1 || forms[0].id !== 'form515650861' ||
+      forms[0].getAttribute('data-formactiontype') !== '0' || forms[0].querySelector('input[name="link"]') ||
+      !text.includes('подписчики вк без ожидания') || !text.includes('купить') || close.length !== 1 ||
+      close[0].closest('form')) return 'unsafe';
+  return 'close';
+})()"""
+SMMNAKRUTKA_AD_CLOSE_SELECTOR = ('.t945__popup.t-popup.t-popup_show '
+                                 'button.t-popup__close-wrapper[aria-label="Закрыть диалоговое окно"]')
+
+
+def _smmnakrutka_close_paid_ad(page) -> str:
+    try:
+        state = page.js(SMMNAKRUTKA_AD_CLOSE_JS)
+        if state == 'close':
+            if not page.click_human(SMMNAKRUTKA_AD_CLOSE_SELECTOR):
+                return 'unsafe'
+            page.wait(300)
+            return 'closed'
+        return state if state in ('none', 'unsafe') else 'none'
+    except OperationCancelled:
+        raise
+    except Exception:
+        return 'unsafe'
+
+
 def _smmnakrutka_state(page, platform: str, amount: int) -> dict:
     try:
         raw = page.js('(' + SMMNAKRUTKA_FORM_JS + ')(' + json.dumps(platform) + ',' + str(amount) + ')')
@@ -1887,6 +1923,12 @@ def _run_smmnakrutka(page, svc: dict, target_url: str, steps: list[str], *, dry_
         current = page.js('window.location.href') or ''
         if not _same_service_location(expected_url, current):
             return result('site_broken', 'SMMnakrutka: страница перенаправлена на другой адрес; заказ не отправлен')
+        ad = _smmnakrutka_close_paid_ad(page) if platform == 'vk' else 'none'
+        if ad == 'unsafe':
+            return result('need_human', 'SMMnakrutka: рекламное окно изменилось; заказ не отправлен')
+        if ad == 'closed':
+            steps.append('закрыто явно помеченное рекламное окно, платная кнопка не нажималась')
+            continue
         state = _smmnakrutka_state(page, platform, amount)
         kind = state.get('state')
         if kind == 'ready':
