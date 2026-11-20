@@ -1,0 +1,40 @@
+name: VK browser readiness (read only)
+
+# Prepared only for the one-off branch diagnostic. This job never fills a
+# target URL, never clicks an order button, and blocks browser POST requests.
+on:
+  push:
+    branches:
+      - arena/e372c48b-vkkk
+    paths:
+      - .github/workflows/vk-browser-readonly.yml
+
+permissions:
+  contents: read
+
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      VKFREE_DATA: ${{ runner.temp }}/vk-readonly-db
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install the small browser runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/vkci-env"
+          "$RUNNER_TEMP/vkci-env/bin/python" -m pip install --disable-pip-version-check playwright==1.65.2 curl_cffi==0.17.0
+          echo "$RUNNER_TEMP/vkci-env/bin" >> "$GITHUB_PATH"
+          if ! command -v google-chrome && ! command -v google-chrome-stable && ! command -v chromium && ! command -v chromium-browser; then
+            "$RUNNER_TEMP/vkci-env/bin/python" -m playwright install chromium
+          fi
+      - name: Check verifier safeguards without sending orders
+        run: |
+          python -m unittest discover -s tests -p 'test_verifier.py' -q
+          python -m unittest discover -s tests -p 'test_live_ci.py' -q
+      - name: Read VK and inspect public forms without ordering
+        run: python tools/ci_browser_probe.py

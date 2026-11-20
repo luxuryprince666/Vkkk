@@ -1,0 +1,18 @@
+# Python and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local databases, backups, credentials and runtime artifacts
+data/*.db
+data/*.db-*
+data/backups/
+data/logs/
+data/catalog-draft.json
+exports/
+logs/
+
+# Sandbox/browser and dependency caches
+.arena/
+.cache/
+node_modules/
