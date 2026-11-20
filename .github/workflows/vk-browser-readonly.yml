@@ -3,7 +3,8 @@ name: VK browser readiness (read only)
 # Prepared only for the one-off branch diagnostic. This job never fills a
 # target URL, never clicks an order button, and blocks browser POST requests.
 # A dedicated check records the complete, secret-free form observations,
-# including nested free-widget structure; no captcha tokens are collected.
+# including nested free-widget structure and the direct community service;
+# no captcha tokens are collected.
 on:
   push:
     branches:
