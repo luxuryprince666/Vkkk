@@ -21,6 +21,7 @@ jobs:
           python3 - <<'PY'
           import concurrent.futures
           import html.parser
+          import json
           import re
           import time
           import urllib.error
@@ -92,6 +93,12 @@ jobs:
                   return name, f'{type(exc).__name__}: {str(exc)[:160]}'
 
           with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
-              for name, info in executor.map(get, urls.items()):
-                  print(f'{name}: {info}', flush=True)
+              results = dict(executor.map(get, urls.items()))
+          for name, info in results.items():
+              print(f'{name}: {info}', flush=True)
+          # Check annotations can be retrieved through the GitHub API even
+          # when the separate Actions log-storage host is inaccessible.
+          payload = json.dumps(results, ensure_ascii=False, separators=(',', ':'))
+          payload = payload.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
+          print('::notice title=Read-only route results::' + payload, flush=True)
           PY
