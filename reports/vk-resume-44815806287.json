@@ -1400,6 +1400,69 @@
           "count": 1,
           "source": "виджет VK",
           "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210444.0003402,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210460.2607021,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210476.4905338,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210492.7053628,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210509.0170548,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210525.4180923,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210541.6043808,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210557.8764677,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
+        },
+        {
+          "result_id": 36,
+          "observed_at": 1795210574.1083536,
+          "count": 1,
+          "source": "виджет VK",
+          "route": "direct"
         }
       ],
       "attribution_warning": "Возможна запоздалая доставка DoctorSMM или предыдущих площадок; публичный счётчик не позволяет достоверно установить источник прироста."
@@ -1410,7 +1473,7 @@
   "error": null,
   "quarantine_deadline": 1795198951.0,
   "counter_error": null,
-  "updated_at": 1795210435.2264273,
+  "updated_at": 1795210585.0796547,
   "check_id": 136564526676,
   "check_status": "in_progress",
   "check_conclusion": null,

@@ -205,11 +205,25 @@ def render_report(state: dict) -> str:
         lines += ['', f"Отменённое продолжение: {earlier.get('run_url') or 'нет данных'}",
                   f"Последнее возможное время действия из прерванного запуска Unix: {_number(earlier.get('ended_at'))}."]
         for r in earlier.get('results') or []:
-            sample = (r.get('samples') or [])[-1:]
-            last = sample[0].get('count') if sample else None
-            lines.append(f"  {r.get('site_name') or r.get('site_id')}: {r.get('verifier_status')}; "
+            samples = r.get('samples') or []
+            last = samples[-1].get('count') if samples else None
+            submitted = r.get('submitted_at')
+            if submitted is not None:
+                # The old classifier once marked Avi1 as skipped after a click;
+                # that status is not proof of rejection or absence of an order.
+                label = 'возможное действие; ответ и доставка неизвестны'
+            else:
+                label = 'без зафиксированной отправки'
+            lines.append(f"  {r.get('site_name') or r.get('site_id')}: {label}; "
                          f"до {_number(r.get('baseline_count'))}, последний замер {_number(last)}; "
-                         f"возможное действие {_number(r.get('submitted_at'))}.")
+                         f"возможное действие {_number(submitted)}.")
+            if r.get('site_id') == 'avi1' and submitted is not None:
+                after = [s for s in samples if s.get('observed_at', 0) >= submitted]
+                if after:
+                    lines.append(f"    Последний замер через {after[-1]['observed_at'] - submitted:.1f} с: "
+                                 'это неполное окно; старое определение лимита было ошибочным.')
+            elif r.get('failure_reason'):
+                lines.append('    Ограничение: ' + str(r['failure_reason']))
         lines.append('  Prtut был прерван: действие после последнего снимка не исключено; повтор не выполняется.')
     qs = state.get('quarantine_samples') or []
     if qs:

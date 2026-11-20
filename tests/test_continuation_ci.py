@@ -141,6 +141,21 @@ class MeasurementTests(unittest.TestCase):
         self.assertEqual(result['observed_counter_change'], 0)
         self.assertIsNone(result['attributed_delivery_count'])
 
+    def test_old_skipped_after_possible_action_is_not_reported_as_no_order(self):
+        state = {'prior_continuation': {'results': [
+            {'site_id': 'avi1', 'site_name': 'Avi1', 'verifier_status': 'skipped',
+             'baseline_count': 1, 'submitted_at': 10, 'failure_reason': 'лимит площадки',
+             'samples': [{'observed_at': 11.7, 'count': 1}]},
+            {'site_id': 'likeboom', 'site_name': 'LikeBoom', 'verifier_status': 'skipped',
+             'baseline_count': 1, 'submitted_at': None, 'failure_reason': 'нужен e-mail',
+             'samples': [{'observed_at': 9, 'count': 1}]}]}}
+        text = continuation.render_report(state)
+        self.assertIn('Avi1: возможное действие; ответ и доставка неизвестны', text)
+        self.assertIn('Последний замер через 1.7 с: это неполное окно', text)
+        self.assertIn('LikeBoom: без зафиксированной отправки', text)
+        self.assertIn('Ограничение: нужен e-mail', text)
+        self.assertNotIn('Avi1: skipped', text)
+
     def test_growth_time_uses_first_post_submit_sample_but_never_claims_source(self):
         row = {'site_id': 'x', 'status': 'working', 'baseline_count': 1, 'final_count': 3,
                'submitted_at': 10, 'samples': [{'observed_at': 9, 'count': 4},
