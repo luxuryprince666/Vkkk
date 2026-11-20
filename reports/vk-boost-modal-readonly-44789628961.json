@@ -1,0 +1,455 @@
+{
+  "phase": "завершено: открытие без ссылки и сети",
+  "orders_sent": 0,
+  "target_entered": false,
+  "network_blocked_before_activation": true,
+  "blocked_after_activation": [
+    {
+      "method": "GET",
+      "host": "boost-like.ru",
+      "path": "/_nuxt/COznoz1m.js"
+    },
+    {
+      "method": "GET",
+      "host": "boost-like.ru",
+      "path": "/_nuxt/Bz1ww8cN.js"
+    },
+    {
+      "method": "GET",
+      "host": "boost-like.ru",
+      "path": "/_nuxt/DgXj0uSb.js"
+    },
+    {
+      "method": "GET",
+      "host": "boost-like.ru",
+      "path": "/_nuxt/SubscriptionProgress.BGQwgqSK.css"
+    },
+    {
+      "method": "GET",
+      "host": "boost-like.ru",
+      "path": "/_nuxt/C20NXYBI.js"
+    },
+    {
+      "method": "GET",
+      "host": "boost-like.ru",
+      "path": "/_nuxt/login.BSdocIYX.css"
+    },
+    {
+      "method": "GET",
+      "host": "boost-like.ru",
+      "path": "/_nuxt/CgteZURS.js"
+    },
+    {
+      "method": "GET",
+      "host": "boost-like.ru",
+      "path": "/_nuxt/register.DorTBBrl.css"
+    },
+    {
+      "method": "GET",
+      "host": "boost-like.ru",
+      "path": "/_nuxt/COznoz1m.js"
+    },
+    {
+      "method": "GET",
+      "host": "boost-like.ru",
+      "path": "/_nuxt/C20NXYBI.js"
+    },
+    {
+      "method": "GET",
+      "host": "boost-like.ru",
+      "path": "/_nuxt/CgteZURS.js"
+    },
+    {
+      "method": "GET",
+      "host": "mc.yandex.com",
+      "path": "/watch/60749869"
+    },
+    {
+      "method": "GET",
+      "host": "mc.yandex.com",
+      "path": "/watch/60749869"
+    },
+    {
+      "method": "GET",
+      "host": "mc.yandex.com",
+      "path": "/watch/60749869"
+    }
+  ],
+  "before": {
+    "title": "Бесплатная накрутка подписчиков ВК",
+    "mainText": "Главная Услуги Блог Отзывы Контакты RU EN Отследить заказы Войти Регистрация TikTok Instagram Telegram VK MAX YouTube Likee Rutube Twitch Одноклассники Spotify Трафик Wibes Яндекс Музыка Главная VK Бесплатные подписчики ВК VK Бесплатно Бесплатная накрутка подписчиков VK Демо-версия сервиса накрутки +10 БЕСПЛАТНО Осталось 2 попытки Пробная услуга накрутки подписчиков ВК в количестве 10 штук. Есть ограничения Получить После активации не покидайте страницу до завершения таймера. По истечении времени нажмите кнопку «Получить». Последние заказы 81 онлайн Пользователь получил +10 подписчиков TIKTOK 33 секунды назад Пользователь получил +20 лайков TIKTOK 6 минут назад Пользователь получил +20 лайков TIKTOK 10 минут назад Пользователь получил +10 подписчиков VK 25 минут назад Пользователь получил +20 лайков TIKTOK 51 минуту назад Бесплатная накрутка подписчиков ВКонтакте Хотите быстро увеличить аудиторию группы или паблика ВК? Бесплатная накрутка подписчиков ВКонтакте — простой способ набрать первых участников без вложений и сложных настроек. Подписчики влияют на восприятие сообщества: чем их больше, тем выше доверие новых посетителей и охват публикаций. На этой странице вы можете получить бесплатных подписчиков — достаточно вставить ссылку на группу формата https://vk.com/yourgroup в фо",
+    "forms": [
+      {
+        "id": "",
+        "classes": "space-y-5",
+        "method": "get",
+        "actionPath": "https://boost-like.ru/vk/besplatnaya-nakrutka-podpischikov-v-vk",
+        "visible": true,
+        "text": "СОЦ. СЕТЬ Выберите TikTok Instagram Telegram VK MAX YouTube Likee Rutube Twitch Kick Одноклассники Facebook Spotify Яндекс Трафик Wibes Яндекс Музыка КАТЕГОРИЯ Выберите ВЫБЕРИТЕ УСЛУГУ Выберите услугу ССЫЛКА КОЛИЧЕСТВО Стоимость заказа 0,00 ₽ Добавить в корзину Есть аккаунт? Войти для больших скидок",
+        "fields": [
+          {
+            "id": "",
+            "name": "",
+            "type": "select-one",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "",
+            "hasValue": false,
+            "options": [
+              {
+                "text": "Выберите"
+              },
+              {
+                "text": "TikTok"
+              },
+              {
+                "text": "Instagram"
+              },
+              {
+                "text": "Telegram"
+              },
+              {
+                "text": "VK"
+              },
+              {
+                "text": "MAX"
+              },
+              {
+                "text": "YouTube"
+              },
+              {
+                "text": "Likee"
+              },
+              {
+                "text": "Rutube"
+              },
+              {
+                "text": "Twitch"
+              },
+              {
+                "text": "Kick"
+              },
+              {
+                "text": "Одноклассники"
+              },
+              {
+                "text": "Facebook"
+              },
+              {
+                "text": "Spotify"
+              },
+              {
+                "text": "Яндекс"
+              },
+              {
+                "text": "Трафик"
+              },
+              {
+                "text": "Wibes"
+              },
+              {
+                "text": "Яндекс Музыка"
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "type": "select-one",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "",
+            "hasValue": false,
+            "options": [
+              {
+                "text": "Выберите"
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "type": "select-one",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "",
+            "hasValue": false,
+            "options": [
+              {
+                "text": "Выберите услугу"
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "type": "text",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "https://...",
+            "hasValue": false,
+            "options": null
+          },
+          {
+            "id": "quick-order-quantity",
+            "name": "",
+            "type": "number",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "0",
+            "hasValue": false,
+            "options": null
+          }
+        ],
+        "buttons": [
+          {
+            "id": "",
+            "type": "submit",
+            "text": "Добавить в корзину",
+            "visible": true,
+            "disabled": true
+          }
+        ]
+      }
+    ],
+    "looseControls": [
+      {
+        "id": "",
+        "text": "Получить"
+      },
+      {
+        "id": "",
+        "text": "Сколько подписчиков можно получить бесплатно?"
+      },
+      {
+        "id": "",
+        "text": "Нужно ли давать доступ к группе?"
+      },
+      {
+        "id": "",
+        "text": "Подписчики отпишутся?"
+      },
+      {
+        "id": "",
+        "text": "Заблокирует ли ВК группу за накрутку?"
+      },
+      {
+        "id": "",
+        "text": "Что делать, если подписчики не пришли?"
+      },
+      {
+        "id": "",
+        "text": ""
+      }
+    ],
+    "selectedPublicService": null,
+    "scripts": [
+      "https://mc.yandex.ru/metrika/tag.js",
+      "https://boost-like.ru/_nuxt/D4TEjF7Z.js"
+    ],
+    "freeHandler": {
+      "eventTypes": [],
+      "hasInlineClick": false,
+      "handlerCount": 0,
+      "mentionsAjax": false,
+      "paths": []
+    }
+  },
+  "candidate": {
+    "unique": true,
+    "context": "VK Бесплатно Бесплатная накрутка подписчиков VK Демо-версия сервиса накрутки +10 БЕСПЛАТНО Осталось 2 попытки Пробная услуга накрутки подписчиков ВК в количестве 10 штук. Есть ограничения Получить После активации не покидайте страницу до завершения таймера. По истечении времени нажмите кнопку «Получить».",
+    "insideForm": false,
+    "insideLink": false,
+    "enabled": true
+  },
+  "after": {
+    "title": "Бесплатная накрутка подписчиков ВК",
+    "mainText": "Главная Услуги Блог Отзывы Контакты RU EN Отследить заказы Войти Регистрация TikTok Instagram Telegram VK MAX YouTube Likee Rutube Twitch Одноклассники Spotify Трафик Wibes Яндекс Музыка Главная VK Бесплатные подписчики ВК VK Бесплатно Бесплатная накрутка подписчиков VK Демо-версия сервиса накрутки +10 БЕСПЛАТНО Осталось 2 попытки Введите ссылку Пробная услуга накрутки подписчиков ВК в количестве 10 штук. Есть ограничения Получить После активации не покидайте страницу до завершения таймера. По истечении времени нажмите кнопку «Получить». Последние заказы 81 онлайн Пользователь получил +10 подписчиков TIKTOK 33 секунды назад Пользователь получил +20 лайков TIKTOK 6 минут назад Пользователь получил +20 лайков TIKTOK 10 минут назад Пользователь получил +10 подписчиков VK 25 минут назад Пользователь получил +20 лайков TIKTOK 51 минуту назад Бесплатная накрутка подписчиков ВКонтакте Хотите быстро увеличить аудиторию группы или паблика ВК? Бесплатная накрутка подписчиков ВКонтакте — простой способ набрать первых участников без вложений и сложных настроек. Подписчики влияют на восприятие сообщества: чем их больше, тем выше доверие новых посетителей и охват публикаций. На этой странице вы можете получить бесплатных подписчиков — достаточно вставить ссылку на группу формата https://vk.com",
+    "forms": [
+      {
+        "id": "",
+        "classes": "space-y-5",
+        "method": "get",
+        "actionPath": "https://boost-like.ru/vk/besplatnaya-nakrutka-podpischikov-v-vk",
+        "visible": true,
+        "text": "СОЦ. СЕТЬ Выберите TikTok Instagram Telegram VK MAX YouTube Likee Rutube Twitch Kick Одноклассники Facebook Spotify Яндекс Трафик Wibes Яндекс Музыка КАТЕГОРИЯ Выберите ВЫБЕРИТЕ УСЛУГУ Выберите услугу ССЫЛКА КОЛИЧЕСТВО Стоимость заказа 0,00 ₽ Добавить в корзину Есть аккаунт? Войти для больших скидок",
+        "fields": [
+          {
+            "id": "",
+            "name": "",
+            "type": "select-one",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "",
+            "hasValue": false,
+            "options": [
+              {
+                "text": "Выберите"
+              },
+              {
+                "text": "TikTok"
+              },
+              {
+                "text": "Instagram"
+              },
+              {
+                "text": "Telegram"
+              },
+              {
+                "text": "VK"
+              },
+              {
+                "text": "MAX"
+              },
+              {
+                "text": "YouTube"
+              },
+              {
+                "text": "Likee"
+              },
+              {
+                "text": "Rutube"
+              },
+              {
+                "text": "Twitch"
+              },
+              {
+                "text": "Kick"
+              },
+              {
+                "text": "Одноклассники"
+              },
+              {
+                "text": "Facebook"
+              },
+              {
+                "text": "Spotify"
+              },
+              {
+                "text": "Яндекс"
+              },
+              {
+                "text": "Трафик"
+              },
+              {
+                "text": "Wibes"
+              },
+              {
+                "text": "Яндекс Музыка"
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "type": "select-one",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "",
+            "hasValue": false,
+            "options": [
+              {
+                "text": "Выберите"
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "type": "select-one",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "",
+            "hasValue": false,
+            "options": [
+              {
+                "text": "Выберите услугу"
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "type": "text",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "https://...",
+            "hasValue": false,
+            "options": null
+          },
+          {
+            "id": "quick-order-quantity",
+            "name": "",
+            "type": "number",
+            "visible": true,
+            "required": false,
+            "ariaRequired": "",
+            "placeholder": "0",
+            "hasValue": false,
+            "options": null
+          }
+        ],
+        "buttons": [
+          {
+            "id": "",
+            "type": "submit",
+            "text": "Добавить в корзину",
+            "visible": true,
+            "disabled": true
+          }
+        ]
+      }
+    ],
+    "looseControls": [
+      {
+        "id": "",
+        "text": "Получить"
+      },
+      {
+        "id": "",
+        "text": "Сколько подписчиков можно получить бесплатно?"
+      },
+      {
+        "id": "",
+        "text": "Нужно ли давать доступ к группе?"
+      },
+      {
+        "id": "",
+        "text": "Подписчики отпишутся?"
+      },
+      {
+        "id": "",
+        "text": "Заблокирует ли ВК группу за накрутку?"
+      },
+      {
+        "id": "",
+        "text": "Что делать, если подписчики не пришли?"
+      },
+      {
+        "id": "",
+        "text": ""
+      }
+    ],
+    "selectedPublicService": null,
+    "scripts": [
+      "https://mc.yandex.ru/metrika/tag.js",
+      "https://boost-like.ru/_nuxt/D4TEjF7Z.js"
+    ],
+    "freeHandler": {
+      "eventTypes": [],
+      "hasInlineClick": false,
+      "handlerCount": 0,
+      "mentionsAjax": false,
+      "paths": []
+    }
+  }
+}
