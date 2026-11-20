@@ -47,6 +47,13 @@ def main() -> int:
                 state['initial_card'] = trial.initial_state(raw)
                 state['allowed_requests'] = fence.allowed
                 state['blocked_requests'] = fence.blocked
+                state['blocked_paths'] = fence.blocked_paths
+                state['diagnostic'] = raw.evaluate('''() => ({
+                  path:location.pathname, title:document.title,
+                  freePages:document.querySelectorAll('.free-page').length,
+                  freeCards:document.querySelectorAll('.free-form').length,
+                  headings:[...document.querySelectorAll('h1')].slice(0,3).map(e => (e.innerText||'').slice(0,100))
+                })''')
                 if not state['initial_card'].get('valid'):
                     raise RuntimeError('Бесплатная карточка не прошла строгую проверку')
                 if fence.start_seen or fence.complete_seen or fence.stage != 'loading':

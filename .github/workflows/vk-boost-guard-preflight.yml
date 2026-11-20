@@ -1,7 +1,8 @@
 name: Boost-Like strict trial preflight without order
 
 # Only read-only page/asset requests through the strict free-trial allowlist.
-# No target, no button click, and no changing request is allowed.
+# No target, no button click, and no changing request is allowed. Record
+# only blocked same-origin pathnames for diagnosing missing read-only assets.
 on:
   push:
     branches:

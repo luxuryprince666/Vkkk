@@ -41,6 +41,7 @@ class TrialFence:
         self.early_complete_blocked = False
         self.allowed = 0
         self.blocked = 0
+        self.blocked_paths: list[dict] = []  # method + same-origin path only; no query or body
         self.handler = self._route
         self.raw = None
 
@@ -115,6 +116,13 @@ class TrialFence:
             route.continue_()
             return
         self.blocked += 1
+        try:
+            u = urlsplit(address)
+            if u.hostname == HOST and len(self.blocked_paths) < 30:
+                path = re.sub(r'/[^/]{40,}', '/[redacted]', u.path)[:160]
+                self.blocked_paths.append({'method': method, 'path': path})
+        except ValueError:
+            pass
         if self.stage == 'input':
             # Any unexpected changing request or any GET containing the target
             # while filling is a reason not to proceed to the explicit click.
