@@ -23,6 +23,7 @@ class FenceTests(unittest.TestCase):
     def test_loading_allows_only_scoped_readonly_resources(self):
         for url in (trial.PAGE_URL, BASE + trial.SERVICE_CHECK, BASE + '/api/v1/free/check',
                     BASE + '/_nuxt/CCrX1cDL.js', BASE + '/_nuxt/index.css',
+                    BASE + '/_nuxt/builds/meta/abcdef12-3456-7890-abcd-ef1234567890.json',
                     BASE + '/api/v1/free/activity?limit=5'):
             self.assertTrue(self.fence._allowed('GET', url, None), url)
         for url in (BASE + '/api/v1/free/start', BASE + '/shop/order/buy',

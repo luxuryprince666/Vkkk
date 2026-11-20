@@ -24,6 +24,7 @@ PAGE_URL = 'https://' + HOST + PAGE_PATH
 TARGET = 'https://vk.com/club243396555'
 SERVICE_CHECK = '/api/v1/free/services/check/vk/' + SERVICE_SLUG
 STATIC = re.compile(r'^/_nuxt/[A-Za-z0-9_.-]+\.(?:js|css|woff2?|ttf|svg|png|webp)$')
+BUILD_META = re.compile(r'^/_nuxt/builds/meta/[A-Za-z0-9_-]{1,80}\.json$')
 ASSET = re.compile(r'^/(?:images|storage)/[A-Za-z0-9_./-]+\.(?:svg|png|jpe?g|webp|gif|ico|woff2?)$')
 
 
@@ -73,7 +74,7 @@ class TrialFence:
                 if not query and (path in (PAGE_PATH, '/favicon.ico', '/api/v1/website',
                                            '/api/v1/platforms', SERVICE_CHECK,
                                            '/api/v1/free/check')
-                                  or STATIC.fullmatch(path) or ASSET.fullmatch(path)):
+                                  or STATIC.fullmatch(path) or BUILD_META.fullmatch(path) or ASSET.fullmatch(path)):
                     return True
                 if path == '/api/v1/free/activity' and parse_qs(query, keep_blank_values=True) == {'limit': ['5']}:
                     return True
