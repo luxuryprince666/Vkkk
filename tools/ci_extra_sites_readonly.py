@@ -3,7 +3,8 @@
 """Inspect additional free VK pages without entering a target or placing orders.
 
 All non-GET/HEAD browser traffic is aborted. The collected structure omits input
-values, tokens, request bodies and URL query strings. This is not a delivery test.
+values, tokens, request bodies and URL query strings, except that a numeric
+public free-service selector is recorded for comparison. This is not a delivery test.
 """
 from __future__ import annotations
 
