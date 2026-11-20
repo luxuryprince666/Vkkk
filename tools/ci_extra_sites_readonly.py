@@ -8,9 +8,10 @@ values, tokens, request bodies and URL query strings. This is not a delivery tes
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import parse_qsl, urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -46,7 +47,11 @@ STRUCTURE = r'''() => {
       }))
     })),
     looseControls:[...document.querySelectorAll('button,input[type=submit]')].filter(e=>!e.closest('form') && vis(e))
-      .slice(0,15).map(e=>({id:e.id||'',text:(e.innerText||e.value||'').trim().slice(0,120)}))
+      .slice(0,15).map(e=>({id:e.id||'',text:(e.innerText||e.value||'').trim().slice(0,120)})),
+    selectedPublicService:(()=>{const e=document.querySelector('select#get_free_id');
+      return e && /^\d+$/.test(e.value||'') ? {id:e.value, text:(e.selectedOptions[0]?.textContent||'').trim()} : null})(),
+    scripts:[...document.querySelectorAll('script[src]')].slice(0,30).map(e=>{
+      try{const u=new URL(e.src);return u.origin+u.pathname}catch{return ''}})
   };
 }'''
 
@@ -75,6 +80,16 @@ def main() -> int:
                     return route.continue_()
                 parsed = urlsplit(request.url)
                 entry = {'method': request.method, 'host': parsed.hostname or '', 'path': parsed.path}
+                raw = request.post_data or ''
+                try:
+                    if raw.lstrip().startswith('{'):
+                        data = json.loads(raw)
+                        keys = list(data) if isinstance(data, dict) else []
+                    else:
+                        keys = [k for k, _ in parse_qsl(raw, keep_blank_values=True, max_num_fields=60)]
+                    entry['body_keys'] = sorted({k for k in keys if re.fullmatch(r'[\w.\[\]-]{1,60}', k)})[:25]
+                except (ValueError, TypeError, json.JSONDecodeError):
+                    entry['body_keys'] = []
                 if entry not in blocked and len(blocked) < 30:
                     blocked.append(entry)
                 return route.abort()
