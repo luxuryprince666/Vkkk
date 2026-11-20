@@ -1,0 +1,39 @@
+name: Boost-Like strict trial preflight without order
+
+# Only read-only page/asset requests through the strict free-trial allowlist.
+# No target, no button click, and no changing request is allowed.
+on:
+  push:
+    branches:
+      - arena/e372c48b-vkkk
+    paths:
+      - .github/workflows/vk-boost-guard-preflight.yml
+
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  inspect-with-allowlist:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      VKKK_PROGRESS_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install isolated browser runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/vkci-env"
+          "$RUNNER_TEMP/vkci-env/bin/python" -m pip install --disable-pip-version-check playwright==1.65.2 curl_cffi==0.17.0
+          echo "$RUNNER_TEMP/vkci-env/bin" >> "$GITHUB_PATH"
+          if ! command -v google-chrome && ! command -v google-chrome-stable && ! command -v chromium && ! command -v chromium-browser; then
+            "$RUNNER_TEMP/vkci-env/bin/python" -m playwright install chromium
+          fi
+      - name: Run offline trial-guard tests
+        run: python -m unittest discover -s tests -p 'test_boost_trial.py' -q
+      - name: Check the free card without a target or click
+        run: python tools/ci_boost_guard_preflight.py
