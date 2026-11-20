@@ -99,6 +99,10 @@ def main() -> int:
                           return [...document.querySelectorAll('.t-popup.t-popup_show')].filter(vis).map(p => ({
                             id:p.id, classes:String(p.className).slice(0,100),
                             text:(p.innerText || '').trim().replace(/\\s+/g,' ').slice(0,400),
+                            closers:[...p.querySelectorAll('[class*=close],button,[role=button]')].filter(e =>
+                              /close|закрыть/i.test(String(e.className)+' '+(e.getAttribute('aria-label')||'')))
+                              .map(e=>({tag:e.tagName,id:e.id,classes:String(e.className).slice(0,120),
+                                aria:e.getAttribute('aria-label')||'',visible:vis(e),inForm:!!e.closest('form')})).slice(0,8),
                             forms:[...p.querySelectorAll('form')].map(f=>({id:f.id,visible:vis(f),
                               method:f.getAttribute('method')||'',actionType:f.getAttribute('data-formactiontype')||'',
                               fields:[...f.querySelectorAll('input,select')].map(e=>({name:e.name,id:e.id,
