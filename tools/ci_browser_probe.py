@@ -85,6 +85,9 @@ def main() -> int:
                       const free = document.querySelector('#giveaway-form');
                       const describe = root => root ? {
                         tag: root.tagName, id: root.id || '',
+                        action: (root.getAttribute('action') || '').split('?')[0],
+                        method: root.getAttribute('method') || '',
+                        hidden_names: [...root.querySelectorAll('input[type=hidden]')].map(e=>e.name).slice(0,20),
                         fields: [...root.querySelectorAll('input, textarea')].filter(e => e.type !== 'hidden')
                           .map(e => ({id:e.id, name:e.name, ph:e.placeholder, type:e.type})).slice(0,12),
                         buttons: [...root.querySelectorAll('button, input[type=submit], a')]
@@ -93,6 +96,24 @@ def main() -> int:
                       } : null;
                       return {form:describe(form), free_section:describe(free)};
                     }''', field.get('sel') if field else '')
+                    if site['id'] == 'prskill':
+                        out['prskill_giveaway'] = page._p.evaluate('''() => {
+                          const i = [...document.querySelectorAll('input')].find(e =>
+                            (e.placeholder || '') === 'https://vk.com/***');
+                          if (!i) return null;
+                          const chain = [];
+                          for (let e = i, depth = 0; e && depth < 6; e = e.parentElement, depth++) {
+                            chain.push({tag:e.tagName, id:e.id, classes:String(e.className || '').slice(0,120),
+                              text:(e.innerText || '').trim().replace(/\\s+/g,' ').slice(0,900),
+                              fields:[...e.querySelectorAll('input')].map(x => ({id:x.id, ph:x.placeholder,
+                                type:x.type, name:x.name})).slice(0,12),
+                              buttons:[...e.querySelectorAll('button')].map(x => ({id:x.id,
+                                text:(x.innerText||'').trim().slice(0,80)})).slice(0,10)});
+                          }
+                          return {chain, widgetCount:document.querySelectorAll('[data-sitekey],iframe[src*=turnstile]').length,
+                            tokenInputs:[...document.querySelectorAll('input[name*=turnstile],input[name*=captcha]')]
+                              .map(x=>({name:x.name, nonempty:!!x.value}))};
+                        }''')
                 except Exception as exc:
                     out['error'] = verifier._safe_detail(str(exc))
                 observations.append(out)
