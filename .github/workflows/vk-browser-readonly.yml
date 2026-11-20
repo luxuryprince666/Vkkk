@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      VKFREE_DATA: ${{ runner.temp }}/vk-readonly-db
+      VKFREE_DATA: /tmp/vkkk-readonly-probe
     steps:
       - uses: actions/checkout@v4
         with:
