@@ -31,15 +31,20 @@ CANDIDATE = r'''() => {
     (e.innerText||'').trim().toLowerCase()==='получить');
   if (buttons.length!==1) return {unique:false,count:buttons.length};
   const b=buttons[0];
-  let p=b, context='';
+  let p=b, context='', card=null;
   for (let i=0;i<8 && p;i++,p=p.parentElement) {
     const t=(p.innerText||'').replace(/\s+/g,' ').trim();
     if (t.length<1200 && /бесплатно/i.test(t) && /подписчик/i.test(t) && /\+\s*10/.test(t)) {
-      context=t; break;
+      context=t; card=p; break;
     }
   }
+  const fields=card?[...card.querySelectorAll('input,textarea')].filter(visible).map(f=>({
+    id:f.id||'', name:f.name||'', type:f.type||f.tagName.toLowerCase(),
+    placeholder:f.getAttribute('placeholder')||'', ariaLabel:f.getAttribute('aria-label')||'',
+    required:!!f.required, insideForm:!!f.closest('form'), hasValue:!!String(f.value||'').trim()
+  })):[];
   return {unique:true,context,insideForm:!!b.closest('form'),insideLink:!!b.closest('a[href]'),
-          enabled:!b.disabled && b.getAttribute('aria-disabled')!=='true'};
+          enabled:!b.disabled && b.getAttribute('aria-disabled')!=='true', fields};
 }'''
 
 
@@ -89,6 +94,7 @@ def main() -> int:
                 raw.get_by_role('button', name='Получить', exact=True).click(timeout=5000)
                 page.wait(2000)
                 state['after'] = raw.evaluate(STRUCTURE)
+                state['candidate_after'] = raw.evaluate(CANDIDATE)
                 state['blocked_after_activation'] = blocked
                 state['phase'] = 'завершено: открытие без ссылки и сети'
         publisher.update(state, title='Осмотр без заявки завершён', conclusion='success')
