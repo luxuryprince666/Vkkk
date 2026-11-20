@@ -1,0 +1,68 @@
+name: Previously unsent VK sites sequential continuation
+
+# One real-order continuation for the user's specified community. Merely adding
+# this file does not run it: the unique marker and commit subject are required.
+# The Python guard validates the exact earlier failed run before opening a site,
+# never retries DoctorSMM, and records late-delivery uncertainty throughout.
+on:
+  push:
+    branches:
+      - arena/e372c48b-vkkk
+    paths:
+      - .github/vk-continuation-club243396555.once
+
+permissions:
+  contents: read
+  checks: write
+  actions: read
+
+concurrency:
+  group: vk-live-club243396555
+  cancel-in-progress: false
+
+jobs:
+  continue-sequentially:
+    if: >-
+      github.event_name == 'push' &&
+      github.repository == 'luxuryprince666/Vkkk' &&
+      github.run_attempt == 1 &&
+      startsWith(github.event.head_commit.message, 'Run previously unsent VK sequential continuation')
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      VKFREE_DATA: /tmp/vkkk-continuation-db
+      VKKK_PROGRESS_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install isolated browser runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/vkci-env"
+          "$RUNNER_TEMP/vkci-env/bin/python" -m pip install --disable-pip-version-check playwright==1.65.2 curl_cffi==0.17.0
+          echo "$RUNNER_TEMP/vkci-env/bin" >> "$GITHUB_PATH"
+          if ! command -v google-chrome && ! command -v google-chrome-stable && ! command -v chromium && ! command -v chromium-browser; then
+            "$RUNNER_TEMP/vkci-env/bin/python" -m playwright install chromium
+          fi
+      - name: Check counters, duplicate barriers and free forms offline
+        run: |
+          python -m unittest discover -s tests -p 'test_continuation_ci.py' -q
+          python -m unittest discover -s tests -p 'test_verifier.py' -q
+          python -m unittest discover -s tests -p 'test_live_ci.py' -q
+          python -m unittest discover -s tests -p 'test_ci_progress.py' -q
+          python -m unittest discover -s tests -p 'test_free_form_safety.py' -q
+      - name: Observe previous attempt and test only unsent sites, one at a time
+        env:
+          VKKK_LIVE_RUN: authorized-once
+          VKKK_CONTINUATION: previously-unsent-with-attribution-warning
+        run: python tools/run_continuation_ci.py --output-dir /tmp/vkkk-continuation-report
+      - name: Save report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vk-continuation-report
+          path: /tmp/vkkk-continuation-report/vk-continuation.*
+          if-no-files-found: ignore
+          retention-days: 7
