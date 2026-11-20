@@ -30,17 +30,20 @@ class ResumeEvidenceTests(unittest.TestCase):
     def setUp(self):
         self.recovered = json.loads((ROOT / 'reports/vk-continuation-44771191791.json').read_text(encoding='utf-8'))
         self.extra = json.loads((ROOT / 'reports/vk-extra-readonly-44785954124.json').read_text(encoding='utf-8'))
+        self.preflight = json.loads((ROOT / 'reports/vk-resume-preflight-44789182092.json').read_text(encoding='utf-8'))
         self.cancel = workflow(resume.CANCEL_RUN, resume.CANCEL_SHA, 'cancelled')
         self.recovery = workflow(resume.RECOVERY_RUN, resume.RECOVERY_SHA)
         self.extra_run = workflow(resume.EXTRA_RUN, resume.EXTRA_SHA)
+        self.preflight_run = workflow(resume.PREFLIGHT_RUN, resume.PREFLIGHT_SHA)
 
     def validate(self):
         rc = check(resume.RECOVERY_CHECK, resume.RECOVERY_SHA,
                    'VK cancelled continuation artifact recovery (read only)', self.recovered)
         ec = check(resume.EXTRA_CHECK, resume.EXTRA_SHA, 'VK additional free sites read-only', self.extra)
+        pc = check(resume.PREFLIGHT_CHECK, resume.PREFLIGHT_SHA, 'VK safe resume preflight (read only)', self.preflight)
         with patch.object(resume.continuation, 'validate_previous', return_value=self.recovered['prior']):
             return resume.validate_evidence(self.cancel, self.recovery, rc, {}, {}, self.extra_run, ec,
-                                            now=1795197000)
+                                            self.preflight_run, pc, now=1795199000)
 
     def test_exact_evidence_waits_from_runner_completion_and_never_retries_interrupted_sites(self):
         result = self.validate()
@@ -99,6 +102,19 @@ class ResumeEvidenceTests(unittest.TestCase):
                 self.extra = old
         row = next(x for x in self.extra['sites'] if x['site'] == 'MartiniSMM')
         row['structure']['selectedPublicService']['id'] = '123'
+        with self.assertRaises(ValueError):
+            self.validate()
+
+    def test_price_and_sprinter_require_the_matching_readonly_preflight(self):
+        for name in ('PriceSMM', 'SprinterSMM'):
+            with self.subTest(site=name):
+                old = copy.deepcopy(self.preflight)
+                row = next(x for x in self.preflight['inspected_forms_without_input'] if x['site'] == name)
+                row['free_guard_on_empty_field'] = False
+                with self.assertRaises(ValueError):
+                    self.validate()
+                self.preflight = old
+        self.preflight_run['conclusion'] = 'failure'
         with self.assertRaises(ValueError):
             self.validate()
 

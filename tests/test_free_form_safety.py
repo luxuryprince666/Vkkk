@@ -4,6 +4,7 @@ import unittest
 from unittest.mock import patch
 
 from core import drivers, stealth
+from tools.ci_boost_modal_readonly import CANDIDATE as BOOST_CANDIDATE
 
 
 URL = 'https://mock.test/service'
@@ -106,6 +107,17 @@ class FreeFormBrowserTests(unittest.TestCase):
         self.__class__.html = HTML
         self.__class__.prskill_html = PRSKILL_HTML
         self.page._p.goto(URL)
+
+    def test_boost_readonly_candidate_is_unique_free_control_not_paid_form(self):
+        self.page._p.set_content('''<!doctype html><body>
+          <div>+10 БЕСПЛАТНО подписчиков ВК <button type="button">Получить</button></div>
+          <form><button type="submit">Добавить в корзину</button></form>
+        </body>''')
+        c = self.page._p.evaluate(BOOST_CANDIDATE)
+        self.assertTrue(c['unique'] and c['context'] and c['enabled'])
+        self.assertFalse(c['insideForm'] or c['insideLink'])
+        self.page._p.evaluate("document.body.insertAdjacentHTML('beforeend','<button>Получить</button>')")
+        self.assertFalse(self.page._p.evaluate(BOOST_CANDIDATE)['unique'])
 
     def test_scope_excludes_paid_form_review_and_link_nested_button(self):
         state = drivers.discover(self.page)

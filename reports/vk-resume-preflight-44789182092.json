@@ -1,0 +1,352 @@
+{
+  "phase": "завершено",
+  "orders_sent": 0,
+  "blocked_mutating_requests": 8,
+  "inspected_forms_without_input": [
+    {
+      "site": "PriceSMM",
+      "orders_sent": 0,
+      "structure": {
+        "title": "Накрутка подписчиков в группу ВК бесплатно и быстро",
+        "mainText": "ГЛАВНАЯ УСЛУГИ ПРОДВИЖЕНИЯ СОВЕТЫ ПРОДВИЖЕНИЯ ПОПРОБОВАТЬ КАБИНЕТ Накрутка подписчиков в группу ВК бесплатно и быстро Укажите ссылку в окне для накрутки подписчиков в группу. Или купите подписчиков в группу ВК тут! Пример ссылки: https://vk.com/***** СТАРТ ЧЕРЕЗ 5:00 СДЕЛАТЬ ЕЩЁ БОЛЬШЕ! В общем 5-7 подписчиков Внимание! Дождитесь 5 минут. Таймер остановится, если Вы покинете страницу. Перейдите по ссылке и закажите живые и качественные услуги намного быстрее! Предлагаем сыграть в одну из бесплатных игр, пока идёт отсчёт времени: \"Три в ряд\", \"Шарики\" или \"Lines98\" Накрутка подписчиков в ВК сообщество бесплатно – окутана множеством тайн. Но в этой статье я развею их все! Меня зовут Мария Найдёнова, и моя профессиональная жизнь уже более десятилетия неразрывно связана с цифровым маркетингом. Сегодня я хочу поделиться своим экспертным мнением, чтобы развеять туман предубеждений вокруг одной из самых обсуждаемых стратегий — стартового ускорения роста аудитории. Мы поговорим о том, как использовать начальный импульс для привлечения подлинной, живой аудитории, превращая скромную группу цифр в мощный трамплин для маркетинговых свершений. ПЛЮСЫ НАКРУТКИ ПОДПИСЧИКОВ В ВК СООБЩЕСТВО БЕСПЛАТНО Какие плюсы имеет грамотная накрутка подписчиков ВК сообщество? Формирование социального доказател",
+        "forms": [
+          {
+            "id": "get_free_form",
+            "classes": "",
+            "method": "get",
+            "actionPath": "https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+            "visible": true,
+            "text": "Укажите ссылку в окне для накрутки подписчиков в группу. Или купите подписчиков в группу ВК тут! Пример ссылки: https://vk.com/***** СТАРТ ЧЕРЕЗ 5:00 СДЕЛАТЬ ЕЩЁ БОЛЬШЕ! В общем 5-7 подписчиков",
+            "fields": [
+              {
+                "id": "get_free_hidden",
+                "name": "",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "get_free_id",
+                "name": "get_free_id",
+                "type": "select-one",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": [
+                  {
+                    "text": "service"
+                  }
+                ]
+              },
+              {
+                "id": "link",
+                "name": "link",
+                "type": "text",
+                "visible": true,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "Ссылка (URL) для продвижения",
+                "hasValue": false,
+                "options": null
+              },
+              {
+                "id": "get_free_key",
+                "name": "",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              }
+            ],
+            "buttons": [
+              {
+                "id": "get_free_start",
+                "type": "submit",
+                "text": "СТАРТ ЧЕРЕЗ 5:00",
+                "visible": true,
+                "disabled": false
+              },
+              {
+                "id": "",
+                "type": "button",
+                "text": "СДЕЛАТЬ ЕЩЁ БОЛЬШЕ!",
+                "visible": true,
+                "disabled": false
+              }
+            ]
+          }
+        ],
+        "looseControls": [
+          {
+            "id": "",
+            "text": "ПРИНЯТЬ"
+          }
+        ],
+        "selectedPublicService": {
+          "id": "8559",
+          "text": "service"
+        },
+        "scripts": [
+          "https://mc.yandex.ru/metrika/watch.js",
+          "https://pricesmm.com/templates/pricesmm/plugins/jquery.min.js",
+          "https://pricesmm.com/templates/pricesmm/plugins/jquery-migrate.min.js",
+          "https://pricesmm.com/templates/pricesmm/plugins/bootstrap/js/bootstrap.min.js",
+          "https://pricesmm.com/templates/pricesmm/plugins/jquery.easing.min.js",
+          "https://pricesmm.com/templates/pricesmm/plugins/reveal-animate/wow.js",
+          "https://pricesmm.com/templates/pricesmm/js/scripts/reveal-animate/reveal-animate.js",
+          "https://pricesmm.com/templates/pricesmm/plugins/cubeportfolio/js/jquery.cubeportfolio.min.js",
+          "https://pricesmm.com/templates/pricesmm/plugins/counterup/jquery.counterup.min.js",
+          "https://pricesmm.com/templates/pricesmm/plugins/fancybox/jquery.fancybox.pack.js",
+          "https://pricesmm.com/templates/pricesmm/plugins/smooth-scroll/jquery.smooth-scroll.js",
+          "https://pricesmm.com/templates/pricesmm/plugins/typed/typed.min.js",
+          "https://pricesmm.com/templates/pricesmm/plugins/js-cookie/js.cookie.js",
+          "https://pricesmm.com/templates/pricesmm/js/components.js",
+          "https://pricesmm.com/templates/pricesmm/js/app.js",
+          "https://pricesmm.com/templates/pricesmm/js/main.js",
+          "https://www.googletagmanager.com/gtag/js",
+          "https://pricesmm.com/templates/pricesmm/js/jcarousel.nofolow.min.js",
+          "https://pricesmm.com/templates/pricesmm/js/jcarousel.responsive.js"
+        ],
+        "freeHandler": {
+          "eventTypes": [],
+          "hasInlineClick": false,
+          "handlerCount": 0,
+          "mentionsAjax": false,
+          "paths": []
+        }
+      },
+      "field_selector": "#link",
+      "button_selector": "#get_free_start",
+      "free_guard_on_empty_field": true,
+      "countdown_sec": 300
+    },
+    {
+      "site": "SprinterSMM",
+      "orders_sent": 0,
+      "structure": {
+        "title": "Накрутка подписчиков в группу ВК бесплатно и без регистрации",
+        "mainText": "support@sprintersmm.com Добрый вечер! Сегодня Пятница 20 ноября 2026 г. SprinterSmm ГЛАВНАЯ УСЛУГИ БЕСПЛАТНО О НАС КОНТАКТЫ 1 Корзина × 100 Подписчиков 1 11руб. × Товаров: 1 Итого: 11 руб. В КОРЗИНУ Накрутка подписчиков в группу ВК бесплатно Поставьте ссылку в форму, чтобы накрутить подписчиков в группу. Купить подписчиков в группу ВК можно по ссылке! Пример ссылки: https://vk.com/***** ЗАПУСК ЧЕРЕЗ 5:00 СДЕЛАТЬ БОЛЬШЕ! Прибавим 5-7 подписчиков Не покидайте страницу пока идёт отсчёт времени на таймере, иначе он будет остановлен! Если не хотите ждать, перейдите по ссылке и закажите услуги на свой выбор намного быстрее. Бесплатная накрутка подписчиков группы ВК без регистрации Н ужна накрутка подписчиков в группу ВК бесплатно и без регистрации? Тогда не спешите покидать данную страницу. Мы приготовили для Вас много полезной инфы. Как можно распиарить соц. сети, не потратив на это ни копейки? Рассмотрим на примере Спринтерсмм: зайдите в раздел «Попробовать»; выберите нужное предложение; прикрепите ссылку на Вашу группу; не уходите с сайта пока счётчик не дойдёт до 0; кликайте на «Старт»; ждите зачисления. Пользуясь данной опцией, Вы можете добывать до 50 рандомных отметок ежедневно, но только один раз в сутки. Учтите, что если Вы укажете неверный линк, тогда и результата не дождётес",
+        "forms": [
+          {
+            "id": "js-modal-cart-form",
+            "classes": "ajax",
+            "method": "post",
+            "actionPath": "https://sprintersmm.com/raskrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/[object%20HTMLInputElement]",
+            "visible": true,
+            "text": "100 Подписчиков 1 11руб. × Товаров: 1 Итого: 11 руб. В КОРЗИНУ",
+            "fields": [
+              {
+                "id": "",
+                "name": "module",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "",
+                "name": "action",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "",
+                "name": "form_tag",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "del12_a0_",
+                "name": "del12_a0_",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "",
+                "name": "ajax",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              }
+            ],
+            "buttons": []
+          },
+          {
+            "id": "get_free_form",
+            "classes": "",
+            "method": "get",
+            "actionPath": "https://sprintersmm.com/raskrutka/nakrutka-podpischikov-v-gruppu-vk-besplatno/",
+            "visible": true,
+            "text": "Поставьте ссылку в форму, чтобы накрутить подписчиков в группу. Купить подписчиков в группу ВК можно по ссылке! Пример ссылки: https://vk.com/***** ЗАПУСК ЧЕРЕЗ 5:00 СДЕЛАТЬ БОЛЬШЕ! Прибавим 5-7 подписчиков",
+            "fields": [
+              {
+                "id": "get_free_hidden",
+                "name": "",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              },
+              {
+                "id": "get_free_id",
+                "name": "get_free_id",
+                "type": "select-one",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": [
+                  {
+                    "text": "service"
+                  }
+                ]
+              },
+              {
+                "id": "link",
+                "name": "link",
+                "type": "text",
+                "visible": true,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "Ссылка (URL) для продвижения",
+                "hasValue": false,
+                "options": null
+              },
+              {
+                "id": "get_free_key",
+                "name": "",
+                "type": "hidden",
+                "visible": false,
+                "required": false,
+                "ariaRequired": "",
+                "placeholder": "",
+                "hasValue": true,
+                "options": null
+              }
+            ],
+            "buttons": [
+              {
+                "id": "get_free_start",
+                "type": "submit",
+                "text": "ЗАПУСК ЧЕРЕЗ 5:00",
+                "visible": true,
+                "disabled": false
+              },
+              {
+                "id": "",
+                "type": "button",
+                "text": "СДЕЛАТЬ БОЛЬШЕ!",
+                "visible": true,
+                "disabled": false
+              }
+            ]
+          }
+        ],
+        "looseControls": [
+          {
+            "id": "",
+            "text": "Хорошо"
+          }
+        ],
+        "selectedPublicService": {
+          "id": "8559",
+          "text": "service"
+        },
+        "scripts": [
+          "https://www.googletagmanager.com/gtag/js",
+          "https://mc.yandex.ru/metrika/watch.js",
+          "https://sprintersmm.com/custom/doc/js/jquery-3.2.1.min.js",
+          "https://sprintersmm.com/custom/doc/js/main.js",
+          "https://sprintersmm.com/custom/doc/js/cd-top.js",
+          "https://sprintersmm.com/custom/doc/js/site.js",
+          "https://sprintersmm.com/custom/doc/js/top-menu.js",
+          "https://sprintersmm.com/js/jquery.form.min.js",
+          "https://sprintersmm.com/custom/doc/modules/shop/js/shop.buy_form.js",
+          "https://sprintersmm.com/custom/doc/js/jquery.jcarousel.min.js",
+          "https://www.googletagmanager.com/gtag/js"
+        ],
+        "freeHandler": {
+          "eventTypes": [],
+          "hasInlineClick": false,
+          "handlerCount": 0,
+          "mentionsAjax": false,
+          "paths": []
+        }
+      },
+      "field_selector": "#link",
+      "button_selector": "#get_free_start",
+      "free_guard_on_empty_field": true,
+      "countdown_sec": 300
+    }
+  ],
+  "target": "https://vk.ru/club243396555",
+  "prior_cancel_run": 44771191791,
+  "prior_runner_ended_at": 1795195351.0,
+  "earliest_after_one_hour": 1795198951.0,
+  "prior_recovery_check": 136450360836,
+  "extra_check": 136460832549,
+  "excluded_uncertain": [
+    "doctorsmm",
+    "avi1",
+    "nakruti",
+    "prtut"
+  ],
+  "queue": [
+    "pricesmm",
+    "sprintersmm",
+    "lowcostsmm",
+    "martinismm",
+    "capitansmm",
+    "captainsmm",
+    "smm8"
+  ],
+  "counter_samples": [
+    {
+      "observed_at": 1795197848.7817762,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795197852.3107028,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    }
+  ]
+}

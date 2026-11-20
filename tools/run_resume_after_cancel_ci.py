@@ -38,6 +38,9 @@ RECOVERY_ARTIFACT = 14651164651
 EXTRA_RUN = 44785954124
 EXTRA_CHECK = 136460832549
 EXTRA_SHA = '115b02ebb6cc72bf27bd369e63a024248fe887aa'
+PREFLIGHT_RUN = 44789182092
+PREFLIGHT_CHECK = 136472080961
+PREFLIGHT_SHA = 'd79aa803978a7cdf2d72b05cfd4e9c9ff3a59882'
 CHECK_NAME = 'VK resumed sequential measurement snapshot'
 WORKFLOW = 'vk-resume-after-cancel.yml'
 BRANCH = 'arena/e372c48b-vkkk'
@@ -76,12 +79,13 @@ def _completed(workflow: dict, run_id: int, sha: str, conclusion: str) -> None:
 
 def validate_evidence(cancel_run: dict, recovery_run: dict, recovery_check: dict,
                       first_run: dict, first_check: dict, extra_run: dict, extra_check: dict,
-                      *, now: float | None = None) -> dict:
+                      preflight_run: dict, preflight_check: dict, *, now: float | None = None) -> dict:
     """Fail closed unless all previous actions and newly inspected forms match."""
     now = time.time() if now is None else now
     _completed(cancel_run, CANCEL_RUN, CANCEL_SHA, 'cancelled')
     _completed(recovery_run, RECOVERY_RUN, RECOVERY_SHA, 'success')
     _completed(extra_run, EXTRA_RUN, EXTRA_SHA, 'success')
+    _completed(preflight_run, PREFLIGHT_RUN, PREFLIGHT_SHA, 'success')
     prior = continuation.validate_previous(first_check, first_run)
     recovered = _check_snapshot(recovery_check, RECOVERY_CHECK, RECOVERY_SHA,
                                 'VK cancelled continuation artifact recovery (read only)')
@@ -142,8 +146,30 @@ def validate_evidence(cancel_run: dict, recovery_run: dict, recovery_check: dict
                 or not isinstance(candidate.get('visible_countdown_sec'), int)
                 or candidate['visible_countdown_sec'] <= 0):
             raise ValueError('Бесплатная форма не подтверждена read-only осмотром: ' + name)
+
+    preflight = _check_snapshot(preflight_check, PREFLIGHT_CHECK, PREFLIGHT_SHA,
+                                'VK safe resume preflight (read only)')
+    if (preflight.get('phase') != 'завершено' or preflight.get('orders_sent') != 0
+            or preflight.get('target') != TARGET or preflight.get('prior_cancel_run') != CANCEL_RUN
+            or preflight.get('prior_recovery_check') != RECOVERY_CHECK or preflight.get('extra_check') != EXTRA_CHECK
+            or tuple(preflight.get('queue') or []) != QUEUE):
+        raise ValueError('Preflight без заявок не соответствует продолжению')
+    inspected2 = {x.get('site'): x for x in preflight.get('inspected_forms_without_input') or []}
+    for name in ('PriceSMM', 'SprinterSMM'):
+        row = inspected2.get(name) or {}
+        if (row.get('orders_sent') != 0 or row.get('free_guard_on_empty_field') is not True
+                or (row.get('structure', {}).get('selectedPublicService') or {}).get('id') != '8559'
+                or not isinstance(row.get('countdown_sec'), int) or row['countdown_sec'] <= 0):
+            raise ValueError('Не подтверждён предварительный осмотр бесплатной формы: ' + name)
+    counts = preflight.get('counter_samples') or []
+    if (len(counts) < 2 or any(type(x.get('count')) is not int or x['count'] < 0
+                               or isinstance(x.get('observed_at'), bool)
+                               or not isinstance(x.get('observed_at'), (int, float))
+                               or not ended_at <= x['observed_at'] <= now + 60 for x in counts)
+            or counts[-1]['observed_at'] < counts[0]['observed_at']):
+        raise ValueError('В preflight нет точных публичных счётчиков после отмены')
     return {'prior': prior, 'recovered': recovered, 'ended_at': ended_at,
-            'last_snapshot_at': updated_at, 'inspected_count': (inspected.get('counter') or {}).get('count')}
+            'last_snapshot_at': updated_at, 'inspected_count': counts[-1]['count']}
 
 
 def validate_catalog(catalog: dict) -> None:
@@ -169,7 +195,9 @@ def evidence(token: str) -> dict:
         github_get(f'/actions/runs/{PRIOR_RUN}', token),
         github_get(f'/check-runs/{PRIOR_CHECK}', token),
         github_get(f'/actions/runs/{EXTRA_RUN}', token),
-        github_get(f'/check-runs/{EXTRA_CHECK}', token))
+        github_get(f'/check-runs/{EXTRA_CHECK}', token),
+        github_get(f'/actions/runs/{PREFLIGHT_RUN}', token),
+        github_get(f'/check-runs/{PREFLIGHT_CHECK}', token))
 
 
 def ensure_one_run(token: str, current_id: int, *, attempts: int = 10, delay: float = 2) -> None:
