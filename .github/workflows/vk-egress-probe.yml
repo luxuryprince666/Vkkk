@@ -1,0 +1,97 @@
+name: VK route diagnostic (read only)
+
+# This workflow only fetches public pages. It never submits orders.
+on:
+  push:
+    branches:
+      - arena/e372c48b-vkkk
+    paths:
+      - .github/workflows/vk-egress-probe.yml
+
+permissions: {}
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Fetch VK and the listed service pages without ordering
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import concurrent.futures
+          import html.parser
+          import re
+          import time
+          import urllib.error
+          import urllib.request
+          from urllib.parse import urlsplit
+
+          nonce = str(time.time_ns())
+          urls = {
+              'VK widget': 'https://vk.ru/widget_community.php?app=0&width=300px&mode=0&gid=243396555&_=' + nonce,
+              'VK mobile': 'https://m.vk.ru/club243396555?_=' + nonce,
+              'PRSkill': 'https://prskill.ru/services/vk-vstupivshie',
+              'SMMnakrutka': 'https://smmnakrutka.ru/free-vk-followers',
+              'DoctorSMM': 'https://doctorsmm.com/nakrutka-podpischikov-vk-platno/',
+              'LikeBoom': 'https://likeboom.ru/free-trial',
+              'Avi1': 'https://avi1.ru/piar/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+              'Nakruti.net': 'https://nakruti.net/besplatnaya-nakrutka/besplatnye-podpischiki-vk',
+              'MRPOPULAR': 'https://ru.mrpopular.net/',
+              'SMMYT': 'https://smmyt.ru/',
+              'Prtut': 'https://prtut.ru/free-smm/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+              'PriceSMM': 'https://pricesmm.com/prodvizhenie/nakrutka-podpischikov-v-gruppu-vk-besplatno/',
+              'SMMCode': 'https://smmcode.shop/nakrutka/vkontakte/podpischikov-na-akkaunt',
+              'SMM8': 'https://smm8.com/free-vk-followers',
+              'SMMPrime': 'https://smmprime.com/free',
+          }
+
+          class WidgetParser(html.parser.HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.in_count = False
+                  self.href = ''
+                  self.text = ''
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if tag == 'a' and attrs.get('id') == 'members_count':
+                      self.in_count = True
+                      self.href = attrs.get('href', '')
+              def handle_data(self, data):
+                  if self.in_count:
+                      self.text += data
+              def handle_endtag(self, tag):
+                  if tag == 'a':
+                      self.in_count = False
+
+          def get(item):
+              name, url = item
+              req = urllib.request.Request(url, headers={
+                  'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/141.0.0.0 Safari/537.36',
+                  'Cache-Control': 'no-cache, no-store',
+                  'Pragma': 'no-cache',
+              })
+              try:
+                  with urllib.request.urlopen(req, timeout=18) as response:
+                      raw = response.read(1024 * 1024)
+                      final = response.geturl()
+                      status = response.status
+                      encoding = response.headers.get_content_charset() or 'utf-8'
+                  text = raw.decode(encoding, errors='replace')
+                  info = f'HTTP {status}; {len(raw)} bytes; final host={urlsplit(final).hostname}'
+                  if name == 'VK widget':
+                      p = WidgetParser()
+                      p.feed(text)
+                      owner_ok = bool(re.search(r'\boid\s*:\s*-243396555\b', text))
+                      href_ok = bool(re.search(r'/club243396555(?:[/?#]|$)', p.href))
+                      info += f'; expected owner={owner_ok}; expected link={href_ok}; count text={p.text.strip()!r}'
+                  return name, info
+              except urllib.error.HTTPError as exc:
+                  return name, f'HTTP {exc.code}; final host={urlsplit(exc.url).hostname}'
+              except Exception as exc:
+                  return name, f'{type(exc).__name__}: {str(exc)[:160]}'
+
+          with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+              for name, info in executor.map(get, urls.items()):
+                  print(f'{name}: {info}', flush=True)
+          PY
