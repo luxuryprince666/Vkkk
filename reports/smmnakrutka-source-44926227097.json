@@ -1,0 +1,286 @@
+{
+  "phase": "завершено",
+  "actions_run_id": "44926227097",
+  "orders_sent": 0,
+  "target_entered": false,
+  "clicked": false,
+  "changing_requests": 0,
+  "script_sources": [
+    {
+      "host": "neo.tildaapi.com",
+      "path": "/js/tilda-fallback-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-polyfill-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/jquery-1.10.2.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-scripts-3.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/ws/project4412478/[redacted]"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-lazyload-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-animation-2.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-forms-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-popup-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-cards-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-menusub-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-menu-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/[redacted]"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-submenublocks-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-skiplink-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-events-1.0.min.js"
+    },
+    {
+      "host": "code.jquery.com",
+      "path": "/jquery-3.6.1.min.js"
+    }
+  ],
+  "inline_script_count": 89,
+  "marker_matches": [
+    {
+      "script_index": 72,
+      "marker": "endtime",
+      "sha256": "d364a53c9949c07b9fcb311ecdc7d516ef9112d17f7728306d49548340fcc681",
+      "nearby_code_words": [
+        "function",
+        "ajax",
+        "url",
+        "json",
+        "success",
+        "function",
+        "data",
+        "rand",
+        "data",
+        "response",
+        "rand",
+        "endtime",
+        "data",
+        "response",
+        "function",
+        "ajax",
+        "type",
+        "POST",
+        "url",
+        "json",
+        "data",
+        "verify",
+        "true",
+        "success"
+      ]
+    },
+    {
+      "script_index": 72,
+      "marker": "verify",
+      "sha256": "d364a53c9949c07b9fcb311ecdc7d516ef9112d17f7728306d49548340fcc681",
+      "nearby_code_words": [
+        "function",
+        "ajax",
+        "type",
+        "POST",
+        "url",
+        "json",
+        "data",
+        "verify",
+        "true",
+        "success",
+        "function",
+        "data",
+        "verify",
+        "data",
+        "response",
+        "verify",
+        "function"
+      ]
+    },
+    {
+      "script_index": 77,
+      "marker": "permissionKey",
+      "sha256": "c14ac4100c5cadad1c2b029de6bde566b1146c8941fbd9487ea79bff86309a2b",
+      "nearby_code_words": [
+        "return",
+        "async",
+        "function",
+        "sessionToken",
+        "getItem",
+        "sessionToken",
+        "await",
+        "sessionToken",
+        "data",
+        "permissionKey",
+        "data",
+        "permissionKey",
+        "function",
+        "setTimeout",
+        "function",
+        "function"
+      ]
+    },
+    {
+      "script_index": 77,
+      "marker": "sessionToken",
+      "sha256": "c14ac4100c5cadad1c2b029de6bde566b1146c8941fbd9487ea79bff86309a2b",
+      "nearby_code_words": [
+        "getItem",
+        "setItem",
+        "return",
+        "async",
+        "function",
+        "sessionToken",
+        "getItem",
+        "sessionToken",
+        "await",
+        "sessionToken",
+        "data",
+        "permissionKey",
+        "data",
+        "permissionKey",
+        "function",
+        "setTimeout",
+        "function",
+        "function"
+      ]
+    },
+    {
+      "script_index": 78,
+      "marker": "countTimePermission",
+      "sha256": "fb6b794bddc507e72a6ba90198e5b337a29d04de18bc74c1bb18456de5ec97c7",
+      "nearby_code_words": [
+        "permissionKey",
+        "data",
+        "sessionToken",
+        "getItem",
+        "sessionToken",
+        "permissionKey",
+        "permissionKey",
+        "function",
+        "sessionToken",
+        "rand",
+        "rand",
+        "return",
+        "sessionToken",
+        "rand",
+        "function",
+        "return",
+        "async",
+        "function",
+        "sessionToken",
+        "url",
+        "countTimePermission",
+        "sessionToken",
+        "type",
+        "POST",
+        "headers",
+        "json",
+        "response",
+        "await",
+        "fetch",
+        "url",
+        "method",
+        "type",
+        "headers",
+        "body",
+        "return",
+        "await",
+        "response",
+        "json"
+      ]
+    },
+    {
+      "script_index": 78,
+      "marker": "permissionKey",
+      "sha256": "fb6b794bddc507e72a6ba90198e5b337a29d04de18bc74c1bb18456de5ec97c7",
+      "nearby_code_words": [
+        "permissionKey",
+        "function",
+        "sessionToken",
+        "setItem",
+        "sessionToken",
+        "sessionToken",
+        "sessionToken",
+        "setInterval",
+        "async",
+        "function",
+        "await",
+        "getItem",
+        "sessionToken",
+        "data",
+        "permissionKey",
+        "data",
+        "sessionToken",
+        "getItem",
+        "sessionToken"
+      ]
+    },
+    {
+      "script_index": 78,
+      "marker": "sessionToken",
+      "sha256": "fb6b794bddc507e72a6ba90198e5b337a29d04de18bc74c1bb18456de5ec97c7",
+      "nearby_code_words": [
+        "permissionKey",
+        "function",
+        "sessionToken",
+        "setItem",
+        "sessionToken",
+        "sessionToken",
+        "sessionToken",
+        "setInterval",
+        "async",
+        "function",
+        "await",
+        "getItem",
+        "sessionToken",
+        "data",
+        "permissionKey",
+        "data",
+        "sessionToken",
+        "getItem",
+        "sessionToken",
+        "permissionKey",
+        "permissionKey"
+      ]
+    }
+  ],
+  "check_id": 136912850348,
+  "check_status": "completed",
+  "check_conclusion": "success"
+}

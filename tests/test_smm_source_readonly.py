@@ -23,6 +23,13 @@ class SourceInspectionTests(unittest.TestCase):
         self.assertEqual(result['script_sources'][0]['path'], '/static/site.js')
         self.assertTrue(all(w in probe.SAFE_WORDS
                             for x in result['marker_matches'] for w in x['nearby_code_words']))
+        self.assertNotIn('private', probe.safe_structure("fetch('private-short-secret')"))
+
+    def test_only_fixed_public_endpoint_hosts_are_exposed_without_query(self):
+        text = ('https://smmbakparse.ru/php/countTimePermission.php?token=secret '
+                'https://other.example/php/untrusted.php?email=private')
+        self.assertEqual(probe.public_endpoints(text),
+                         [{'host': 'smmbakparse.ru', 'path': '/php/countTimePermission.php'}])
 
     def test_public_path_is_sanitized_and_cross_protocol_rejected(self):
         self.assertEqual(probe.public_script_url('/js/' + 'x' * 40 + '.js?key=secret')['path'], '/js/[redacted]')

@@ -30,7 +30,10 @@ SAFE_WORDS = {'GET', 'POST', 'get', 'post', 'json', 'success', 'error', 'rand', 
               'verify', 'url_page', 'sessionToken', 'permissionKey', 'service', 'quantity',
               'countTimePermission', 'function', 'fetch', 'ajax', 'data', 'headers', 'form',
               'response', 'request', 'body', 'url', 'method', 'type', 'async', 'await', 'then',
-              'return', 'true', 'false', 'setTimeout', 'setInterval', 'setItem', 'getItem'}
+              'return', 'true', 'false', 'setTimeout', 'setInterval', 'setItem', 'getItem',
+              'const', 'let', 'var', 'if', 'else', 'catch', 'finally', 'JSON', 'stringify',
+              'localStorage', 'window', 'document', 'Math', 'random', 'Date', 'now',
+              'querySelector', 'value', 'status', 'ok', 'null', 'length', 'createElement'}
 
 
 class Scripts(HTMLParser):
@@ -78,6 +81,32 @@ def public_script_url(value: str) -> dict | None:
         return None
 
 
+def safe_structure(text: str) -> str:
+    """Show only allowlisted words and punctuation, never untrusted literals."""
+    tokens = re.findall(r'[A-Za-z_$][A-Za-z0-9_$]*|[0-9]+|===|!==|=>|&&|\|\||[{}\[\]():;.,=+!?<>/|-]', text)
+    result = []
+    for token in tokens[:200]:
+        if token in SAFE_WORDS:
+            result.append(token)
+        elif token[0].isalpha() or token[0] in '_$':
+            result.append('_')
+        elif token[0].isdigit():
+            result.append('#')
+        else:
+            result.append(token)
+    return ' '.join(result)[:1200]
+
+
+def public_endpoints(text: str) -> list[dict]:
+    """Only explicitly named provider hosts and simple public PHP paths."""
+    found = []
+    for match in re.findall(r'https://(?:smmbakparse\.ru|smmnakrutka\.ru)/php/[A-Za-z0-9_.-]+\.php', text):
+        item = public_script_url(match)
+        if item and item not in found:
+            found.append(item)
+    return found[:20]
+
+
 def analyze(html: str) -> dict:
     scripts = Scripts()
     scripts.feed(html)
@@ -99,7 +128,8 @@ def analyze(html: str) -> dict:
                      if word in SAFE_WORDS]
             matches.append({'script_index': index, 'marker': marker,
                             'sha256': hashlib.sha256(text.encode('utf8')).hexdigest(),
-                            'nearby_code_words': words[:80]})
+                            'nearby_code_words': words[:80], 'nearby_structure': safe_structure(near),
+                            'public_endpoints': public_endpoints(text)})
     return {'script_sources': sources[:100], 'inline_script_count': len(scripts.inline),
             'marker_matches': matches[:25]}
 
