@@ -1,0 +1,37 @@
+name: SMMnakrutka public script inventory (no orders)
+
+# A single GET of public HTML. It never opens a browser or sends a target,
+# changes no form and publishes only allowlisted code words and public paths.
+on:
+  push:
+    branches:
+      - arena/e372c48b-vkkk
+    paths:
+      - .github/workflows/vk-smm-source-readonly.yml
+      - tools/ci_smm_source_readonly.py
+
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      VKKK_PROGRESS_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install public HTTP runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/smm-inspect-env"
+          "$RUNNER_TEMP/smm-inspect-env/bin/python" -m pip install --disable-pip-version-check curl_cffi==0.17.0
+          echo "$RUNNER_TEMP/smm-inspect-env/bin" >> "$GITHUB_PATH"
+      - name: Check inspection safeguards offline
+        run: python -m unittest discover -s tests -p 'test_smm_source_readonly.py' -q
+      - name: Read public HTML only
+        run: python tools/ci_smm_source_readonly.py

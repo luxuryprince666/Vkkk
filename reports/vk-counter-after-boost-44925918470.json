@@ -1,0 +1,36 @@
+{
+  "phase": "завершено",
+  "actions_run_id": "44925918470",
+  "target": "https://vk.ru/club243396555",
+  "orders_sent": 0,
+  "samples": [
+    {
+      "source": "виджет VK",
+      "observed_at": 1795279285.077828,
+      "count": 11,
+      "error": null
+    },
+    {
+      "source": "мобильная страница VK",
+      "observed_at": 1795279285.905571,
+      "count": 11,
+      "error": null
+    }
+  ],
+  "sources_agree": true,
+  "consensus_count": 11,
+  "prior": {
+    "run_id": 44821581807,
+    "check_id": 136654434098,
+    "baseline": 1,
+    "final_count": 11,
+    "last_sample_at": 1795228208.058143,
+    "possible_start_at": 1795223689.788673,
+    "possible_complete_at": 1795224591.9889991,
+    "provider_claimed_order": true
+  },
+  "check_id": 136911895566,
+  "check_status": "completed",
+  "check_conclusion": "success",
+  "actions_run_url": "https://github.com/luxuryprince666/Vkkk/actions/runs/44925918470"
+}
