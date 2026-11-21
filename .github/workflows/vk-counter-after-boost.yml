@@ -1,0 +1,48 @@
+name: VK counter after Boost (read only)
+
+# Public counter and prior evidence only. No service pages, links in forms,
+# order buttons, credentials or POST requests to the providers are used.
+on:
+  push:
+    branches:
+      - arena/e372c48b-vkkk
+    paths:
+      - .github/workflows/vk-counter-after-boost.yml
+      - tools/ci_vk_counter_followup.py
+
+permissions:
+  contents: read
+  checks: write
+  actions: read
+
+jobs:
+  counter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      VKKK_PROGRESS_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install read-only HTTP runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/vk-counter-env"
+          "$RUNNER_TEMP/vk-counter-env/bin/python" -m pip install --disable-pip-version-check curl_cffi==0.17.0
+          echo "$RUNNER_TEMP/vk-counter-env/bin" >> "$GITHUB_PATH"
+      - name: Test counter and read-only evidence offline
+        run: |
+          python -m unittest discover -s tests -p 'test_counter_followup.py' -q
+          python -m unittest discover -s tests -p 'test_vk_page_counter.py' -q
+      - name: Read widget and mobile page only
+        run: python tools/ci_vk_counter_followup.py --output-dir /tmp/vkkk-counter-followup
+      - name: Save report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vk-counter-after-boost
+          path: /tmp/vkkk-counter-followup/vk-counter.*
+          if-no-files-found: ignore
+          retention-days: 7

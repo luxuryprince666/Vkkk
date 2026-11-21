@@ -132,3 +132,12 @@ class QuarantineTests(unittest.TestCase):
         self.assertIn('последний замер: нет данных; чистое изменение: нет данных', text)
         state['samples'].append({'observed_at': 102, 'count': 1})
         self.assertIn('последний замер: 1; чистое изменение: 0', run.render(state))
+
+    def test_first_growth_after_completion_has_its_own_elapsed_time(self):
+        state = {'start': {'possible_at': 100}, 'complete': {'possible_at': 200}, 'baseline_count': 1,
+                 'samples': [{'observed_at': 100, 'count': 1}, {'observed_at': 235.7, 'count': 10},
+                             {'observed_at': 425, 'count': 11}], 'quarantine_samples': []}
+        text = run.render(state)
+        self.assertIn('роста после возможного действия: 135.7 с', text)
+        self.assertIn('роста после возможного завершения: 35.7 с', text)
+        self.assertIn('последний замер: 11; чистое изменение: 10', text)

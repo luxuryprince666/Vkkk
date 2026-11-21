@@ -1,0 +1,1779 @@
+{
+  "phase": "завершено",
+  "actions_run_id": "44821581807",
+  "target": "https://vk.ru/club243396555",
+  "prior_ended_at": 1795220072.0,
+  "prior_sites": [
+    {
+      "site_id": "pricesmm",
+      "status": "unverified",
+      "possible_at": 1795208714.2781692
+    },
+    {
+      "site_id": "sprintersmm",
+      "status": "unverified",
+      "possible_at": 1795210067.8754413
+    },
+    {
+      "site_id": "lowcostsmm",
+      "status": "unverified",
+      "possible_at": 1795211423.1957953
+    },
+    {
+      "site_id": "martinismm",
+      "status": "unverified",
+      "possible_at": 1795212776.3564613
+    },
+    {
+      "site_id": "capitansmm",
+      "status": "unverified",
+      "possible_at": 1795214131.5977342
+    },
+    {
+      "site_id": "captainsmm",
+      "status": "unverified",
+      "possible_at": 1795215485.2157264
+    },
+    {
+      "site_id": "smm8",
+      "status": "unverified",
+      "possible_at": 1795216419.8372605
+    }
+  ],
+  "quarantine_samples": [
+    {
+      "observed_at": 1795220132.4009416,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220164.2394605,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220195.8582184,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220227.5057037,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220259.3135087,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220291.0508106,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220322.8564775,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220354.478953,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220386.1293044,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220417.8475692,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220449.47405,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220481.1886318,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220512.9561422,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220544.65052,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220576.2673738,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220607.9658654,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220639.5824876,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220671.230724,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220702.7986743,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220734.6745,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220766.3051865,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220798.0206482,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220829.7334619,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220861.3594365,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220892.9573112,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220924.5880914,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220956.3234468,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795220988.0508728,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221019.635644,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221051.5863807,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221083.1044312,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221114.7514944,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221146.4446769,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221178.1040025,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221209.8448827,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221241.4567323,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221273.1500561,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221304.7792609,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221336.4377654,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221368.1736243,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221399.7508764,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221431.3884976,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221463.0255353,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221494.7108052,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221526.3520918,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221557.9842198,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221589.5502846,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221621.2032847,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221652.974252,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221684.596933,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221716.313371,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221747.9955695,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221779.5649545,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221811.298545,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221842.9964592,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221874.701843,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221906.349778,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221937.975558,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795221970.0572493,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222001.7834055,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222033.423519,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222065.1685307,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222096.8913991,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222128.5143864,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222160.1988952,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222191.7835486,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222223.3698905,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222255.0035028,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222286.575249,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222318.3887951,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222349.9639792,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222381.6445074,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222413.3442376,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222445.1025097,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222476.8630536,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222508.5576217,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222540.162927,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222571.743794,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222603.445986,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222635.2591672,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222666.89631,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222698.5622892,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222730.1704726,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222761.803749,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222793.4755845,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222825.1860812,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222856.979803,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222889.0785449,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222920.7149005,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222952.5520937,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795222984.215928,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223015.908193,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223047.470378,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223079.0713408,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223110.662468,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223142.2851126,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223173.8987093,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223205.7368975,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223237.4416327,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223269.182866,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223300.7456381,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223332.2978952,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223363.9347193,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223395.6758146,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223427.3346634,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223458.9632437,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223490.6488311,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223522.246977,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223553.998486,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223585.592892,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223617.2439506,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223648.870944,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    },
+    {
+      "observed_at": 1795223680.450649,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK"
+    }
+  ],
+  "samples": [
+    {
+      "observed_at": 1795223689.788671,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "перед вводом"
+    },
+    {
+      "observed_at": 1795223723.7045367,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795223755.4493284,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795223787.3218818,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795223819.4493906,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795223851.2837162,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795223883.2809918,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795223915.1016817,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795223946.958053,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795223978.9782405,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224010.8970068,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224042.7057014,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224074.5201278,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224106.3502023,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224138.244455,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224170.0716786,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224201.9035501,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224233.802633,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224265.8592763,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224297.7166755,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224330.1026008,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224362.0514612,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224394.0167992,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224426.0907385,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224457.9103258,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224490.2352078,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224522.4327962,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224554.2207413,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224586.2114868,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "во время таймера"
+    },
+    {
+      "observed_at": 1795224591.9889965,
+      "count": 1,
+      "source": "виджет VK",
+      "route": "direct",
+      "point": "перед завершением"
+    },
+    {
+      "observed_at": 1795224596.03534,
+      "count": 1,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795224627.7008975,
+      "count": 10,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795224659.3593054,
+      "count": 10,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795224691.0386105,
+      "count": 10,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795224723.4774725,
+      "count": 10,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795224755.2062762,
+      "count": 10,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795224786.886386,
+      "count": 10,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795224818.5004926,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795224850.1119306,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795224881.8276038,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795224913.59098,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795224945.2438781,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795224976.9874132,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225008.6824527,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225040.4410746,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225072.1382213,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225103.7341926,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225135.4685364,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225167.1941469,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225198.8387136,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225230.47337,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225262.0394647,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225293.6123376,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225325.3409657,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225357.0242283,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225388.5916648,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225420.2314782,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225451.8117828,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225483.3536777,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225514.9249842,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225546.5333402,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225578.2462876,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225609.8791935,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225641.6474853,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225673.466046,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225705.1682117,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225736.840297,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225768.4719453,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225800.0466857,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225831.7383354,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225863.3355172,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225894.901912,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225926.5541208,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225958.309786,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795225990.0410016,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226021.8579662,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226053.5812232,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226085.18873,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226116.8240187,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226148.5219877,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226180.1554756,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226211.7425835,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226243.427154,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226275.0470395,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226306.826134,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226338.4787679,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226370.1797144,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226401.8462818,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226433.4711468,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226465.1636245,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226496.813472,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226528.5157232,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226560.2736645,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226591.965062,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226623.781743,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226655.379193,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226686.9900906,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226718.7465703,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226750.4376266,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226782.166739,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226813.7996457,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226845.6023138,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226877.3806787,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226909.203113,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226940.7797992,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795226972.488665,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227004.1243875,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227035.8152566,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227067.515167,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227099.164432,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227130.8087244,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227162.4228868,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227194.0248861,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227225.7897491,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227257.5440586,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227289.2305083,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227320.969174,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227352.630966,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227384.2911918,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227416.0003314,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227447.79199,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227479.5535676,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227511.2079716,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227542.8678641,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227574.754262,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227606.4984112,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227638.101794,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227669.8446996,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227701.4130323,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227733.124191,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227764.6390293,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227796.308252,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227827.8497794,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227859.694985,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227891.4972703,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227923.2703207,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227954.962173,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795227986.5579848,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795228018.2325912,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795228050.011814,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795228081.692593,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795228113.2300017,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795228144.896513,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795228176.4552677,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    },
+    {
+      "observed_at": 1795228208.058143,
+      "count": 11,
+      "route": "direct",
+      "source": "виджет VK",
+      "point": "после закрытия браузера"
+    }
+  ],
+  "baseline_count": 1,
+  "start": {
+    "possible_at": 1795223689.788673,
+    "request_released": true,
+    "http_status": 200
+  },
+  "complete": {
+    "possible_at": 1795224591.9889991,
+    "request_released": true,
+    "http_status": 200,
+    "baseline_count": 1
+  },
+  "provider_claimed_order": true,
+  "site_response": "Заказ оформлен! Подписчики начнут поступать в течение нескольких минут Количество:+10 Получить больше",
+  "reason": null,
+  "counter_error": null,
+  "observation": {
+    "status": "working",
+    "window_sec": 3600,
+    "final_count": 11,
+    "net_change": 10,
+    "reason": ""
+  },
+  "warning": "Возможна поздняя доставка предыдущих площадок или органическое изменение счётчика; источник любого роста не установлен.",
+  "updated_at": 1795228208.4693422,
+  "initial_card": {
+    "valid": true,
+    "attempts_left": 2,
+    "field_count": 1,
+    "button_count": 1,
+    "field_matches": true,
+    "button_ready": true,
+    "captcha": false
+  },
+  "timer": "00:00",
+  "check_id": 136654434098,
+  "check_status": "completed",
+  "check_conclusion": "success",
+  "actions_run_url": "https://github.com/luxuryprince666/Vkkk/actions/runs/44821581807"
+}

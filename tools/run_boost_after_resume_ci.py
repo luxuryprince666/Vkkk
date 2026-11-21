@@ -130,6 +130,12 @@ def render(state: dict) -> str:
     first = next((s for s in after if type(s.get('count')) is int and type(baseline) is int
                   and s['count'] > baseline), None)
     first_after = round(first['observed_at'] - possible, 1) if first else None
+    completion_at = complete.get('possible_at')
+    first_completed = next((s for s in after if type(completion_at) in (int, float)
+                            and s.get('observed_at', 0) >= completion_at
+                            and type(s.get('count')) is int and type(baseline) is int
+                            and s['count'] > baseline), None)
+    after_completion = round(first_completed['observed_at'] - completion_at, 1) if first_completed else None
     show = lambda x: 'нет данных' if x is None else str(x)
     yesno = lambda x: 'да' if x is True else ('нет' if x is False else 'нет данных')
     claimed = state.get('provider_claimed_order')
@@ -152,6 +158,8 @@ def render(state: dict) -> str:
              f'чистое изменение: {show(delta)}.',
              f'  Первое обнаружение роста после возможного действия: {show(first_after)}' +
              (' с.' if first_after is not None else '.'),
+             f'  Первое обнаружение роста после возможного завершения: {show(after_completion)}' +
+             (' с.' if after_completion is not None else '.'),
              '  Доставка именно Boost-Like: неизвестна; рекламный объём не считается доставкой.']
     if state.get('reason'):
         lines.append('  Ограничение: ' + str(state['reason']))
