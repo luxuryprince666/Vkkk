@@ -1,0 +1,389 @@
+{
+  "phase": "завершено",
+  "actions_run_id": "44926407397",
+  "orders_sent": 0,
+  "target_entered": false,
+  "clicked": false,
+  "changing_requests": 0,
+  "script_sources": [
+    {
+      "host": "neo.tildaapi.com",
+      "path": "/js/tilda-fallback-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-polyfill-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/jquery-1.10.2.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-scripts-3.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/ws/project4412478/[redacted]"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-lazyload-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-animation-2.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-forms-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-popup-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-cards-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-menusub-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-menu-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/[redacted]"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-submenublocks-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-skiplink-1.0.min.js"
+    },
+    {
+      "host": "static.tildacdn.com",
+      "path": "/js/tilda-events-1.0.min.js"
+    },
+    {
+      "host": "code.jquery.com",
+      "path": "/jquery-3.6.1.min.js"
+    }
+  ],
+  "inline_script_count": 89,
+  "marker_matches": [
+    {
+      "script_index": 72,
+      "marker": "endtime",
+      "sha256": "d364a53c9949c07b9fcb311ecdc7d516ef9112d17f7728306d49548340fcc681",
+      "nearby_code_words": [
+        "document",
+        "function",
+        "ajax",
+        "url",
+        "json",
+        "success",
+        "function",
+        "data",
+        "rand",
+        "data",
+        "response",
+        "rand",
+        "endtime",
+        "data",
+        "response",
+        "function",
+        "document",
+        "document",
+        "document",
+        "if",
+        "ajax",
+        "type",
+        "POST",
+        "url",
+        "json",
+        "data",
+        "verify",
+        "true",
+        "success"
+      ],
+      "nearby_structure": "_ ( document ) . _ ( function ( ) { _ . ajax ( { url : _ : / / _ . _ / _ . _ , _ : json , success : function ( data ) { _ ( . _ - _ _ [ _ = rand ] ) . _ ( data . response . rand ) ; _ ( . _ - _ _ [ _ = endtime ] ) . _ ( data . response . _ ) ; } } ) ; function _ ( [ _ , _ ] , _ ) { document . _ ( _ ) . _ . _ = _ ; document . _ ( _ - _ ) . _ = _ ; document . _ ( _ - _ ) . _ = _ ; if ( _ ) { _ . ajax ( { type : POST , url : _ : / / _ . _ / _ . _ , _ : json , data : { verify : true } , success : _",
+      "public_endpoints": []
+    },
+    {
+      "script_index": 72,
+      "marker": "verify",
+      "sha256": "d364a53c9949c07b9fcb311ecdc7d516ef9112d17f7728306d49548340fcc681",
+      "nearby_code_words": [
+        "function",
+        "document",
+        "document",
+        "document",
+        "if",
+        "ajax",
+        "type",
+        "POST",
+        "url",
+        "json",
+        "data",
+        "verify",
+        "true",
+        "success",
+        "function",
+        "data",
+        "verify",
+        "data",
+        "response",
+        "verify",
+        "const",
+        "document",
+        "querySelector",
+        "function",
+        "const",
+        "document",
+        "querySelector"
+      ],
+      "nearby_structure": "} ) ; function _ ( [ _ , _ ] , _ ) { document . _ ( _ ) . _ . _ = _ ; document . _ ( _ - _ ) . _ = _ ; document . _ ( _ - _ ) . _ = _ ; if ( _ ) { _ . ajax ( { type : POST , url : _ : / / _ . _ / _ . _ , _ : json , data : { verify : true } , success : function ( data ) { _ ( . _ - _ _ [ _ = verify ] ) . _ ( data . response . verify ) ; } } ) ; const _ = document . _ ( _ ) . querySelector ( . _ - _ ) ; _ . _ . _ ( _ - _ ) ; _ . _ . _ = _ ; } } function _ ( _ ) { const _ = document . _ ( _ ) . querySelector ( . _ - _ ) ; _ . _ ( _ ,",
+      "public_endpoints": []
+    },
+    {
+      "script_index": 77,
+      "marker": "permissionKey",
+      "sha256": "c14ac4100c5cadad1c2b029de6bde566b1146c8941fbd9487ea79bff86309a2b",
+      "nearby_code_words": [
+        "return",
+        "async",
+        "function",
+        "if",
+        "const",
+        "length",
+        "const",
+        "const",
+        "let",
+        "sessionToken",
+        "localStorage",
+        "getItem",
+        "sessionToken",
+        "let",
+        "await",
+        "sessionToken",
+        "const",
+        "data",
+        "let",
+        "permissionKey",
+        "data",
+        "permissionKey",
+        "function",
+        "document",
+        "setTimeout",
+        "function",
+        "function",
+        "document"
+      ],
+      "nearby_structure": "( _ , _ ) ; return _ ; } , _ : async function ( ) { if ( _ = = # ) { const _ = _ . _ . length ; const _ = # / _ ; / / const _ = _ . _ ( ) ; let sessionToken = localStorage . getItem ( sessionToken ) let _ = await _ ( sessionToken ) const _ = _ . data . _ let permissionKey = _ . data . permissionKey _ . _ . _ ( function ( _ , _ ) { _ ( document . _ ( _ + _ ) ) . _ ( { _ : _ ( + ( _ ( _ - _ + _ ) + # # ) + _ ) , } ) ; } ) ; setTimeout ( function ( ) { _ . _ . _ ( function ( _ , _ ) { _ ( document . _ ( _ + _ ) ) . _ ( { _ : _ ( + ( _ ( _ - _ + _ ) ) + _ ) ,",
+      "public_endpoints": [
+        {
+          "host": "smmbakparse.ru",
+          "path": "/php/playwheel.php"
+        }
+      ]
+    },
+    {
+      "script_index": 77,
+      "marker": "sessionToken",
+      "sha256": "c14ac4100c5cadad1c2b029de6bde566b1146c8941fbd9487ea79bff86309a2b",
+      "nearby_code_words": [
+        "if",
+        "getItem",
+        "setItem",
+        "return",
+        "async",
+        "function",
+        "if",
+        "const",
+        "length",
+        "const",
+        "const",
+        "let",
+        "sessionToken",
+        "localStorage",
+        "getItem",
+        "sessionToken",
+        "let",
+        "await",
+        "sessionToken",
+        "const",
+        "data",
+        "let",
+        "permissionKey",
+        "data",
+        "permissionKey",
+        "function",
+        "document",
+        "setTimeout",
+        "function",
+        "function"
+      ],
+      "nearby_structure": "} } if ( _ . getItem ( _ ) === _ ) { _ = _ . _ ( ) ; } _ . setItem ( _ , _ ) ; return _ ; } , _ : async function ( ) { if ( _ = = # ) { const _ = _ . _ . length ; const _ = # / _ ; / / const _ = _ . _ ( ) ; let sessionToken = localStorage . getItem ( sessionToken ) let _ = await _ ( sessionToken ) const _ = _ . data . _ let permissionKey = _ . data . permissionKey _ . _ . _ ( function ( _ , _ ) { _ ( document . _ ( _ + _ ) ) . _ ( { _ : _ ( + ( _ ( _ - _ + _ ) + # # ) + _ ) , } ) ; } ) ; setTimeout ( function ( ) { _ . _ . _ ( function ( _",
+      "public_endpoints": [
+        {
+          "host": "smmbakparse.ru",
+          "path": "/php/playwheel.php"
+        }
+      ]
+    },
+    {
+      "script_index": 78,
+      "marker": "countTimePermission",
+      "sha256": "fb6b794bddc507e72a6ba90198e5b337a29d04de18bc74c1bb18456de5ec97c7",
+      "nearby_code_words": [
+        "permissionKey",
+        "data",
+        "sessionToken",
+        "localStorage",
+        "getItem",
+        "sessionToken",
+        "permissionKey",
+        "permissionKey",
+        "function",
+        "let",
+        "sessionToken",
+        "rand",
+        "rand",
+        "return",
+        "sessionToken",
+        "rand",
+        "function",
+        "return",
+        "Math",
+        "random",
+        "async",
+        "function",
+        "sessionToken",
+        "let",
+        "url",
+        "countTimePermission",
+        "sessionToken",
+        "let",
+        "type",
+        "POST",
+        "headers",
+        "json",
+        "let",
+        "response",
+        "await",
+        "fetch",
+        "url",
+        "method",
+        "type",
+        "headers",
+        "body",
+        "JSON",
+        "stringify",
+        "return",
+        "await",
+        "response",
+        "json"
+      ],
+      "nearby_structure": "permissionKey = _ . data _ ( _ [ _ = sessionToken ] ) . _ ( localStorage . getItem ( sessionToken ) ) _ ( _ [ _ = permissionKey ] ) . _ ( permissionKey ) } } function _ ( ) { let sessionToken = rand ( ) + rand ( ) return sessionToken } rand = function ( ) { return Math . random ( ) . _ ( # ) . _ ( # ) ; / / _ # . } ; async function _ ( sessionToken ) { let url = _ : / / _ . _ / _ / countTimePermission . _ _ = { sessionToken } let _ = { type : POST , headers : { _ - _ : _ / json ; _ = _ - # } , } let response = await fetch ( url , { method : _ . type , headers : _ . _ , body : JSON . stringify ( _ ) } ) return await response . json ( ) ; }",
+      "public_endpoints": [
+        {
+          "host": "smmbakparse.ru",
+          "path": "/php/countTimePermission.php"
+        }
+      ]
+    },
+    {
+      "script_index": 78,
+      "marker": "permissionKey",
+      "sha256": "fb6b794bddc507e72a6ba90198e5b337a29d04de18bc74c1bb18456de5ec97c7",
+      "nearby_code_words": [
+        "let",
+        "permissionKey",
+        "window",
+        "function",
+        "let",
+        "sessionToken",
+        "localStorage",
+        "setItem",
+        "sessionToken",
+        "sessionToken",
+        "sessionToken",
+        "setInterval",
+        "async",
+        "function",
+        "let",
+        "await",
+        "localStorage",
+        "getItem",
+        "sessionToken",
+        "if",
+        "data",
+        "permissionKey",
+        "data",
+        "sessionToken",
+        "localStorage",
+        "getItem",
+        "sessionToken"
+      ],
+      "nearby_structure": "let _ , permissionKey _ ( window ) . _ ( _ , function ( ) { let sessionToken = _ ( ) localStorage . setItem ( sessionToken , sessionToken ) ; _ ( sessionToken ) _ = setInterval ( _ , # ) } ) ; async function _ ( ) { let _ = await _ ( localStorage . getItem ( sessionToken ) ) if ( ! ! _ . data ) { _ ( _ ) permissionKey = _ . data _ ( _ [ _ = sessionToken ] ) . _ ( localStorage . getItem ( sessionToken ) ) _ ( _ [ _ = _",
+      "public_endpoints": [
+        {
+          "host": "smmbakparse.ru",
+          "path": "/php/countTimePermission.php"
+        }
+      ]
+    },
+    {
+      "script_index": 78,
+      "marker": "sessionToken",
+      "sha256": "fb6b794bddc507e72a6ba90198e5b337a29d04de18bc74c1bb18456de5ec97c7",
+      "nearby_code_words": [
+        "let",
+        "permissionKey",
+        "window",
+        "function",
+        "let",
+        "sessionToken",
+        "localStorage",
+        "setItem",
+        "sessionToken",
+        "sessionToken",
+        "sessionToken",
+        "setInterval",
+        "async",
+        "function",
+        "let",
+        "await",
+        "localStorage",
+        "getItem",
+        "sessionToken",
+        "if",
+        "data",
+        "permissionKey",
+        "data",
+        "sessionToken",
+        "localStorage",
+        "getItem",
+        "sessionToken",
+        "permissionKey",
+        "permissionKey"
+      ],
+      "nearby_structure": "let _ , permissionKey _ ( window ) . _ ( _ , function ( ) { let sessionToken = _ ( ) localStorage . setItem ( sessionToken , sessionToken ) ; _ ( sessionToken ) _ = setInterval ( _ , # ) } ) ; async function _ ( ) { let _ = await _ ( localStorage . getItem ( sessionToken ) ) if ( ! ! _ . data ) { _ ( _ ) permissionKey = _ . data _ ( _ [ _ = sessionToken ] ) . _ ( localStorage . getItem ( sessionToken ) ) _ ( _ [ _ = permissionKey ] ) . _ ( permissionKey ) } } _",
+      "public_endpoints": [
+        {
+          "host": "smmbakparse.ru",
+          "path": "/php/countTimePermission.php"
+        }
+      ]
+    }
+  ],
+  "check_id": 136913392361,
+  "check_status": "completed",
+  "check_conclusion": "success"
+}
